@@ -7,21 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
+		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
+		C5782B342782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
+		C5782B352782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
+		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
+		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
 		C59995062781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995072781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995082781B96700FE1EBA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F72781B96500FE1EBA /* ContentView.swift */; };
 		C59995092781B96700FE1EBA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F72781B96500FE1EBA /* ContentView.swift */; };
 		C599950A2781B96700FE1EBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C59994F82781B96700FE1EBA /* Assets.xcassets */; };
 		C599950B2781B96700FE1EBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C59994F82781B96700FE1EBA /* Assets.xcassets */; };
+		C59995162781B9E200FE1EBA /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
+		C59995172781B9E200FE1EBA /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
+		C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951C2781C93000FE1EBA /* SwiftJWT */; };
+		C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951F2781C93900FE1EBA /* SwiftJWT */; };
+		C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
+		C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
+		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C59994F82781B96700FE1EBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C59994FD2781B96700FE1EBA /* Aarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995032781B96700FE1EBA /* Aarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995052781B96700FE1EBA /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		C59995152781B9E200FE1EBA /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
+		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */,
+				C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,24 +54,39 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
+				C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5782B2F2781E96900321138 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C5782B302781E97900321138 /* LinkItemView.swift */,
+				C5782B332782E4A000321138 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
 				C59994F52781B96500FE1EBA /* Shared */,
 				C59995042781B96700FE1EBA /* macOS */,
 				C59994FE2781B96700FE1EBA /* Products */,
+				C599951E2781C93900FE1EBA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		C59994F52781B96500FE1EBA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C5782B2F2781E96900321138 /* Views */,
+				C59995212781C95600FE1EBA /* Networking */,
+				C59995142781B9CF00FE1EBA /* Models */,
 				C59994F62781B96500FE1EBA /* AarloApp.swift */,
 				C59994F72781B96500FE1EBA /* ContentView.swift */,
 				C59994F82781B96700FE1EBA /* Assets.xcassets */,
@@ -78,6 +111,29 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
+		C59995142781B9CF00FE1EBA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C59995152781B9E200FE1EBA /* Link.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C599951E2781C93900FE1EBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C59995212781C95600FE1EBA /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				C59995222781C97C00FE1EBA /* ShaarliClaims.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -94,6 +150,10 @@
 			dependencies = (
 			);
 			name = "Aarlo (iOS)";
+			packageProductDependencies = (
+				C599951C2781C93000FE1EBA /* SwiftJWT */,
+				C5782B392782E82800321138 /* KeychainAccess */,
+			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* Aarlo.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +171,10 @@
 			dependencies = (
 			);
 			name = "Aarlo (macOS)";
+			packageProductDependencies = (
+				C599951F2781C93900FE1EBA /* SwiftJWT */,
+				C5782B372782E53800321138 /* KeychainAccess */,
+			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* Aarlo.app */;
 			productType = "com.apple.product-type.application";
@@ -142,6 +206,10 @@
 				Base,
 			);
 			mainGroup = C59994F02781B96500FE1EBA;
+			packageReferences = (
+				C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */,
+				C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = C59994FE2781B96700FE1EBA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,8 +244,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
+				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
+				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
+				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +257,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
+				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
+				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
+				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +528,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kitura/Swift-JWT";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C5782B372782E53800321138 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C5782B392782E82800321138 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C599951C2781C93000FE1EBA /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
+		C599951F2781C93900FE1EBA /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C59994F12781B96500FE1EBA /* Project object */;
 }
