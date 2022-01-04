@@ -30,22 +30,30 @@ struct ContentView: View {
                 }
         }
         .toolbar {
-            Button("Load") {
-                Task {
-                    do {
-                        try await load()
-                    } catch let error {
-                        isLoading = false
-                        print(error)
+            ToolbarItem(placement: itemPlacement) {
+                Button("Load") {
+                    Task {
+                        do {
+                            try await load()
+                        } catch let error {
+                            isLoading = false
+                            print(error)
+                        }
                     }
                 }
             }
-            Button("Settings") {
-                showsSettings = true
+            ToolbarItem(placement: itemPlacement) {
+                Button("Settings") {
+                    showsSettings = true
+                }
+                .sheet(
+                    isPresented: $showsSettings,
+                    onDismiss: nil,
+                    content: {
+                        SettingsView(showsSettings: $showsSettings)
+                    }
+                )
             }
-            .sheet(isPresented: $showsSettings, onDismiss: nil, content: {
-                SettingsView(showsSettings: $showsSettings)
-            })
         }
         .task {
             do {
@@ -55,6 +63,14 @@ struct ContentView: View {
                 print(error)
             }
         }
+    }
+
+    private var itemPlacement: ToolbarItemPlacement {
+        #if os(macOS)
+        return .automatic
+        #else
+        return .navigationBarTrailing
+        #endif
     }
 
     private func load() async throws {
