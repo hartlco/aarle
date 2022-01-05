@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct AarloApp: App {
+    let linkStore = LinkStore(client: ShaarliClient())
+
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView()
+                ContentView(linkStore: linkStore)
             }
         }
     }

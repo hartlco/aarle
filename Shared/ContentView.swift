@@ -7,36 +7,43 @@
 
 import SwiftUI
 import SwiftJWT
+import SwiftUIX
+import WebKit
 
 struct ContentView: View {
-    @State var links: [Link] = []
     @State var showsSettings = false
     @State var settingsField = ""
 
-    @State var isLoading = false
+    @ObservedObject var linkStore: LinkStore
+
+    init(linkStore: LinkStore) {
+        self.linkStore = linkStore
+    }
 
     var body: some View {
-        List(links) { link in
-            LinkItemView(link: link)
-                .onAppear {
-                    Task {
-                        do {
-                            try await loadMoreIfNeeded(link: link)
-                        } catch let error {
-                            isLoading = false
-                            print(error)
+        List(linkStore.links) { link in
+            NavigationLink {
+                Text("Test")
+            } label: {
+                LinkItemView(link: link)
+                    .onAppear {
+                        Task {
+                            do {
+                                try await linkStore.loadMoreIfNeeded(link: link)
+                            } catch let error {
+                                print(error)
+                            }
                         }
                     }
-                }
+            }
         }
         .toolbar {
             ToolbarItem(placement: itemPlacement) {
                 Button("Load") {
                     Task {
                         do {
-                            try await load()
+                            try await linkStore.load()
                         } catch let error {
-                            isLoading = false
                             print(error)
                         }
                     }
@@ -54,12 +61,29 @@ struct ContentView: View {
                     }
                 )
             }
+            ToolbarItem(placement: itemPlacement) {
+                Button("Add") {
+                    Task {
+                        let link = Link(
+                            id: 0,
+                            url: URL(string: "https://hartl.co")!,
+                            title: "hartl.co",
+                            description: "my site",
+                            tags: [],
+                            private: false,
+                            created: Date.now,
+                            updated: Date.now
+                        )
+
+                        try await linkStore.add(link: link)
+                    }
+                }
+            }
         }
         .task {
             do {
-                try await load()
+                try await linkStore.load()
             } catch let error {
-                isLoading = false
                 print(error)
             }
         }
@@ -71,76 +95,6 @@ struct ContentView: View {
         #else
         return .navigationBarTrailing
         #endif
-    }
-
-    private func load() async throws {
-        guard isLoading == false else { return }
-
-        isLoading = true
-
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
-
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
-        guard let URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else { return }
-        var request = URLRequest(url: URL)
-        request.httpMethod = "GET"
-
-        request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
-
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-        let links = try JSONDecoder().decode([Link].self, from: data)
-
-        // TODO: Catch Unauthorized
-
-        self.links = links
-
-        isLoading = false
-    }
-
-    private func loadMoreIfNeeded(link: Link) async throws {
-        guard isLoading == false else { return }
-
-        guard var URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links"),
-              link.id == links.last?.id else { return }
-
-        isLoading = true
-
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
-
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
-        URL = URL.appendingQueryParameters(["offset": "\(links.count)"])
-
-        var request = URLRequest(url: URL)
-        request.httpMethod = "GET"
-
-        request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
-
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-        let links = try JSONDecoder().decode([Link].self, from: data)
-
-        // TODO: Catch Unauthorized
-
-        self.links.append(contentsOf: links)
-
-        isLoading = false
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
 

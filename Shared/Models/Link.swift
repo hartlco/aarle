@@ -13,9 +13,10 @@ struct Link: Codable, Identifiable {
     let title: String?
     let description: String?
     let tags: [String]
+    let `private`: Bool
 
     // TODO: Handle Date
 
-//    let created: Date
-//    let updated: Date
+    let created: Date
+    let updated: Date?
 }

@@ -47,7 +47,10 @@ struct LinkItemView_Previews: PreviewProvider {
             url: .init(string: "https://hartl.co")!,
             title: "Title",
             description: "Description with a few more words than just the title",
-            tags: ["swift", "macos"]
+            tags: ["swift", "macos"],
+            private: false,
+            created: Date.now,
+            updated: Date.now
         )
         LinkItemView(link: link)
     }

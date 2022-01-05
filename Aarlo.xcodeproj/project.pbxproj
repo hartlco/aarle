@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
+		C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
+		C53ED62727856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
+		C53ED62827856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B342782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
@@ -25,9 +29,13 @@
 		C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951F2781C93900FE1EBA /* SwiftJWT */; };
 		C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
+		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
+		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
+		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
@@ -45,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */,
 				C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */,
 				C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */,
 			);
@@ -54,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
 				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
 				C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */,
 			);
@@ -62,6 +72,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C53ED62527856CD900397910 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				C53ED62627856CE900397910 /* LinkStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
 		C5782B2F2781E96900321138 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +102,7 @@
 		C59994F52781B96500FE1EBA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C53ED62527856CD900397910 /* Stores */,
 				C5782B2F2781E96900321138 /* Views */,
 				C59995212781C95600FE1EBA /* Networking */,
 				C59995142781B9CF00FE1EBA /* Models */,
@@ -130,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				C59995222781C97C00FE1EBA /* ShaarliClaims.swift */,
+				C53ED62227856B5000397910 /* ShaarliClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -153,6 +173,7 @@
 			packageProductDependencies = (
 				C599951C2781C93000FE1EBA /* SwiftJWT */,
 				C5782B392782E82800321138 /* KeychainAccess */,
+				C5F71F822784CA7A009CF84C /* SwiftUIX */,
 			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* Aarlo.app */;
@@ -174,6 +195,7 @@
 			packageProductDependencies = (
 				C599951F2781C93900FE1EBA /* SwiftJWT */,
 				C5782B372782E53800321138 /* KeychainAccess */,
+				C5F71F842784CA96009CF84C /* SwiftUIX */,
 			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* Aarlo.app */;
@@ -209,6 +231,7 @@
 			packageReferences = (
 				C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */,
 				C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = C59994FE2781B96700FE1EBA /* Products */;
 			projectDirPath = "";
@@ -249,6 +272,8 @@
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
+				C53ED62727856CE900397910 /* LinkStore.swift in Sources */,
+				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +287,8 @@
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
+				C53ED62827856CE900397910 /* LinkStore.swift in Sources */,
+				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +573,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -568,6 +603,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
+		};
+		C5F71F822784CA7A009CF84C /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+		C5F71F842784CA96009CF84C /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
