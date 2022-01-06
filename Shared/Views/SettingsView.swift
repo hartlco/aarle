@@ -10,17 +10,16 @@ import KeychainAccess
 
 // TODO: Move secret storage out of view
 struct SettingsView: View {
-    static let keychain = Keychain(accessGroup: "secret")
+    static let keychain = Keychain(service: "co.hartl.Aarlo")
     static let keychainKey = "secret"
 
     @Binding var showsSettings: Bool
 
-    @State private var settingsField = ""
+    @State private var settingsField: String
 
     init(showsSettings: Binding<Bool>) {
         self._showsSettings = showsSettings
-
-        settingsField = Self.keychain[string: Self.keychainKey] ?? ""
+        self._settingsField = State(initialValue: Self.keychain[string: Self.keychainKey] ?? "")
     }
 
 

@@ -49,8 +49,7 @@ struct LinkItemView_Previews: PreviewProvider {
             description: "Description with a few more words than just the title",
             tags: ["swift", "macos"],
             private: false,
-            created: Date.now,
-            updated: Date.now
+            created: Date.now
         )
         LinkItemView(link: link)
     }

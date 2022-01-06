@@ -23,7 +23,7 @@ struct ContentView: View {
     var body: some View {
         List(linkStore.links) { link in
             NavigationLink {
-                Text("Test")
+                LinkEditView(link: link, linkStore: linkStore)
             } label: {
                 LinkItemView(link: link)
                     .onAppear {
@@ -64,15 +64,13 @@ struct ContentView: View {
             ToolbarItem(placement: itemPlacement) {
                 Button("Add") {
                     Task {
-                        let link = Link(
-                            id: 0,
+                        let link = PostLink(
                             url: URL(string: "https://hartl.co")!,
                             title: "hartl.co",
                             description: "my site",
                             tags: [],
                             private: false,
-                            created: Date.now,
-                            updated: Date.now
+                            created: Date.now
                         )
 
                         try await linkStore.add(link: link)

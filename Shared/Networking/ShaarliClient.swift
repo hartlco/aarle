@@ -68,7 +68,7 @@ final class ShaarliClient {
         return links
     }
 
-    func createLink(link: Link) async throws {
+    func createLink(link: PostLink) async throws {
         let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
         let header = SwiftJWT.Header(typ: "JWT")
 
@@ -84,8 +84,36 @@ final class ShaarliClient {
         var request = URLRequest(url: URL)
         request.httpMethod = "POST"
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let linkData = try JSONEncoder().encode(link)
+        request.httpBody = linkData
+
+        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let dataString = String(data: data, encoding: .utf8)
+        print(dataString)
+    }
+
+    func updateLink(link: Link) async throws {
+        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
+        let header = SwiftJWT.Header(typ: "JWT")
+
+        var jwt = SwiftJWT.JWT(header: header, claims: claims)
+
+        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
+        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
+        let signedJWT = try jwt.sign(using: jwtSigner)
+
+        guard let URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links/\(link.id)") else {
+            throw ClientError.unknownURL
+        }
+        var request = URLRequest(url: URL)
+        request.httpMethod = "PUT"
+        request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let postLink = PostLink(link: link)
+        let linkData = try JSONEncoder().encode(postLink)
         request.httpBody = linkData
 
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)

@@ -29,6 +29,8 @@
 		C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951F2781C93900FE1EBA /* SwiftJWT */; };
 		C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
+		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
+		C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
 		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 /* End PBXBuildFile section */
@@ -36,6 +38,7 @@
 /* Begin PBXFileReference section */
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
+		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 		C59995052781B96700FE1EBA /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		C59995152781B9E200FE1EBA /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
+		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			children = (
 				C5782B302781E97900321138 /* LinkItemView.swift */,
 				C5782B332782E4A000321138 /* SettingsView.swift */,
+				C5E4E3632786C833000E79F0 /* LinkEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -92,6 +97,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */,
 				C59994F52781B96500FE1EBA /* Shared */,
 				C59995042781B96700FE1EBA /* macOS */,
 				C59994FE2781B96700FE1EBA /* Products */,
@@ -268,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
+				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
@@ -283,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
+				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
@@ -412,6 +420,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Aarlo (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;
@@ -442,6 +451,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Aarlo (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;

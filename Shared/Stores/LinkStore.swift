@@ -22,6 +22,10 @@ final class LinkStore: ObservableObject {
         self.isLoading = false
     }
 
+#if DEBUG
+    static let mock = LinkStore(client: ShaarliClient())
+#endif
+
     @MainActor func load() async throws {
         guard isLoading == false else { return }
         isLoading = true
@@ -43,11 +47,20 @@ final class LinkStore: ObservableObject {
 //        isLoading = false
     }
 
-    @MainActor func add(link: Link) async throws {
+    @MainActor func add(link: PostLink) async throws {
         guard isLoading == false else { return }
         isLoading = true
 
         try await client.createLink(link: link)
+
+        isLoading = false
+    }
+
+    @MainActor func update(link: Link) async throws {
+        guard isLoading == false else { return }
+        isLoading = true
+
+        try await client.updateLink(link: link)
 
         isLoading = false
     }
