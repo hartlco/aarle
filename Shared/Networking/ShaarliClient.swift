@@ -13,7 +13,7 @@ final class ShaarliClient {
         case unknownURL
     }
 
-    func load() async throws -> [Link] {
+    func load(filteredByTags tags: [String] = []) async throws -> [Link] {
         let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
         let header = SwiftJWT.Header(typ: "JWT")
 
@@ -23,9 +23,14 @@ final class ShaarliClient {
         let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
         let signedJWT = try jwt.sign(using: jwtSigner)
 
-        guard let URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
+        guard var URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
             throw ClientError.unknownURL
         }
+
+        if !tags.isEmpty {
+            URL = URL.appendingQueryParameters(["searchtags": tags.joined(separator: "+")])
+        }
+
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"
 
@@ -39,7 +44,7 @@ final class ShaarliClient {
         return links
     }
 
-    func loadMore(offset: Int) async throws -> [Link] {
+    func loadMore(offset: Int, filteredByTags tags: [String] = []) async throws -> [Link] {
         guard var URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
             throw ClientError.unknownURL
         }
@@ -54,6 +59,11 @@ final class ShaarliClient {
         let signedJWT = try jwt.sign(using: jwtSigner)
 
         URL = URL.appendingQueryParameters(["offset": "\(offset)"])
+
+        if !tags.isEmpty {
+            URL = URL.appendingQueryParameters(["searchtags": tags.joined(separator: "+")])
+        }
+
 
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"

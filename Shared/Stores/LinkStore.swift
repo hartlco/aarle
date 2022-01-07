@@ -13,13 +13,27 @@ final class LinkStore: ObservableObject {
     @Published var isLoading: Bool
 
     private let client: ShaarliClient
+    private let tagScope: String?
 
     init(
-        client: ShaarliClient
+        client: ShaarliClient,
+        tagScope: String? = nil
     ) {
         self.client = client
+        self.tagScope = tagScope
         self.links = []
         self.isLoading = false
+    }
+
+    private var tags: [String] {
+        let tags: [String]
+        if let tagScope = tagScope {
+            tags = [tagScope]
+        } else {
+            tags = []
+        }
+
+        return tags
     }
 
 #if DEBUG
@@ -30,7 +44,7 @@ final class LinkStore: ObservableObject {
         guard isLoading == false else { return }
         isLoading = true
 
-        links = try await client.load()
+        links = try await client.load(filteredByTags: tags)
 
         isLoading = false
     }
@@ -41,7 +55,7 @@ final class LinkStore: ObservableObject {
 //
 //        isLoading = true
 //
-//        let links = try await client.loadMore(offset: links.count)
+//        let links = try await client.loadMore(offset: links.count, filteredByTags: tags)
 //        self.links.append(contentsOf: links)
 //
 //        isLoading = false

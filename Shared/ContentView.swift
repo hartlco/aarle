@@ -13,29 +13,40 @@ import WebKit
 struct ContentView: View {
     @State var showsSettings = false
     @State var settingsField = ""
+    @State var showingEditLink: Link?
 
     @ObservedObject var linkStore: LinkStore
+    @ObservedObject var webViewData: WebViewData
 
-    init(linkStore: LinkStore) {
+    init(
+        linkStore: LinkStore,
+        webViewData: WebViewData
+    ) {
         self.linkStore = linkStore
+        self.webViewData = webViewData
     }
 
     var body: some View {
         List(linkStore.links) { link in
-            NavigationLink {
-                LinkEditView(link: link, linkStore: linkStore)
-            } label: {
-                LinkItemView(link: link)
-                    .onAppear {
-                        Task {
-                            do {
-                                try await linkStore.loadMoreIfNeeded(link: link)
-                            } catch let error {
-                                print(error)
-                            }
+            LinkItemView(link: link)
+                .onAppear {
+                    Task {
+                        do {
+                            try await linkStore.loadMoreIfNeeded(link: link)
+                        } catch let error {
+                            print(error)
                         }
                     }
-            }
+                }
+                .onPress {
+                    webViewData.url = link.url
+                }
+                .contextMenu {
+                        Button("Edit", action: { showingEditLink = link })
+                }
+        }
+        .popover(item: $showingEditLink) { link in
+            LinkEditView(link: link, linkStore: linkStore)
         }
         .toolbar {
             ToolbarItem(placement: itemPlacement) {
@@ -60,22 +71,6 @@ struct ContentView: View {
                         SettingsView(showsSettings: $showsSettings)
                     }
                 )
-            }
-            ToolbarItem(placement: itemPlacement) {
-                Button("Add") {
-                    Task {
-                        let link = PostLink(
-                            url: URL(string: "https://hartl.co")!,
-                            title: "hartl.co",
-                            description: "my site",
-                            tags: [],
-                            private: false,
-                            created: Date.now
-                        )
-
-                        try await linkStore.add(link: link)
-                    }
-                }
             }
         }
         .task {
