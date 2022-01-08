@@ -14,36 +14,43 @@ struct ContentView: View {
     @State var showsSettings = false
     @State var settingsField = ""
     @State var showingEditLink: Link?
+    @State var selection: Link?
 
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var webViewData: WebViewData
 
     init(
-        linkStore: LinkStore,
-        webViewData: WebViewData
+        linkStore: LinkStore
     ) {
         self.linkStore = linkStore
-        self.webViewData = webViewData
     }
 
     var body: some View {
-        List(linkStore.links) { link in
-            LinkItemView(link: link)
-                .onAppear {
-                    Task {
-                        do {
-                            try await linkStore.loadMoreIfNeeded(link: link)
-                        } catch let error {
-                            print(error)
+        List(linkStore.links, id: \.self, selection: $selection) { link in
+            NavigationLink {
+                #if os(macOS)
+                HSplitView {
+                    WebView(data: WebViewData(url: link.url))
+                    LinkEditView(link: link, linkStore: linkStore)
+                }
+                #else
+                WebView(data: WebViewData(url: link.url))
+                #endif
+
+            } label: {
+                LinkItemView(link: link)
+                    .onAppear {
+                        Task {
+                            do {
+                                try await linkStore.loadMoreIfNeeded(link: link)
+                            } catch let error {
+                                print(error)
+                            }
                         }
                     }
-                }
-                .onPress {
-                    webViewData.url = link.url
-                }
-                .contextMenu {
-                        Button("Edit", action: { showingEditLink = link })
-                }
+                    .contextMenu {
+                            Button("Edit", action: { showingEditLink = link })
+                    }
+            }
         }
         .popover(item: $showingEditLink) { link in
             LinkEditView(link: link, linkStore: linkStore)

@@ -10,6 +10,10 @@ class WebViewData: ObservableObject {
     @Published var url: URL? = nil
     @Published var urlBar: String = "https://nasa.gov"
 
+    init(url: URL?) {
+        self._url = Published(initialValue: url)
+    }
+
     var scrollOnLoad: Float? = nil
 }
 

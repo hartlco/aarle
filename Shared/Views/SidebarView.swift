@@ -13,17 +13,16 @@ struct SidebarView: View {
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var readLaterLinkStore: LinkStore
-    @ObservedObject var webViewData: WebViewData
 
     var body: some View {
         List {
             Text("Links")
                 .font(.caption)
                 .foregroundColor(.secondary)
-            NavigationLink(destination: ContentView(linkStore: linkStore, webViewData: webViewData), isActive: $isDefaultItemActive) {
+            NavigationLink(destination: ContentView(linkStore: linkStore), isActive: $isDefaultItemActive) {
                 Label("All", systemImage: "tray.2")
             }
-            NavigationLink(destination: ContentView(linkStore: readLaterLinkStore, webViewData: webViewData)) {
+            NavigationLink(destination: ContentView(linkStore: readLaterLinkStore)) {
                 Label("Read Later", systemImage: "paperplane")
             }
         }.listStyle(SidebarListStyle())

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Link: Codable, Identifiable {
+struct Link: Codable, Identifiable, Hashable {
     let id: Int
     let url: URL
     let title: String?
