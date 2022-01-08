@@ -38,15 +38,6 @@ struct ContentView: View {
 
             } label: {
                 LinkItemView(link: link)
-                    .onAppear {
-                        Task {
-                            do {
-                                try await linkStore.loadMoreIfNeeded(link: link)
-                            } catch let error {
-                                print(error)
-                            }
-                        }
-                    }
                     .contextMenu {
                             Button("Edit", action: { showingEditLink = link })
                     }
@@ -56,7 +47,7 @@ struct ContentView: View {
             LinkEditView(link: link, linkStore: linkStore)
         }
         .toolbar {
-            ToolbarItem(placement: itemPlacement) {
+            ToolbarItem(placement: navigationBarItemPlacement) {
                 Button("Load") {
                     Task {
                         do {
@@ -67,7 +58,7 @@ struct ContentView: View {
                     }
                 }
             }
-            ToolbarItem(placement: itemPlacement) {
+            ToolbarItem(placement: navigationBarItemPlacement) {
                 Button("Settings") {
                     showsSettings = true
                 }
@@ -79,6 +70,18 @@ struct ContentView: View {
                     }
                 )
             }
+            ToolbarItem(placement: bottomBarItemPlacement) {
+                Button("Load More") {
+                    Task {
+                        do {
+                            guard let lastLink = linkStore.links.last else { return }
+                            try await linkStore.loadMoreIfNeeded(link: lastLink)
+                        } catch {
+                            print(error)
+                        }
+                    }
+                }
+            }
         }
         .task {
             do {
@@ -89,37 +92,19 @@ struct ContentView: View {
         }
     }
 
-    private var itemPlacement: ToolbarItemPlacement {
+    private var navigationBarItemPlacement: ToolbarItemPlacement {
         #if os(macOS)
         return .automatic
         #else
         return .navigationBarTrailing
         #endif
     }
-}
 
-// PAW Helpers
-protocol URLQueryParameterStringConvertible {
-    var queryParameters: String {get}
-}
-
-extension Dictionary : URLQueryParameterStringConvertible {
-    var queryParameters: String {
-        var parts: [String] = []
-        for (key, value) in self {
-            let part = String(format: "%@=%@",
-                String(describing: key).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
-                String(describing: value).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-            parts.append(part as String)
-        }
-        return parts.joined(separator: "&")
-    }
-
-}
-
-extension URL {
-    func appendingQueryParameters(_ parametersDictionary : Dictionary<String, String>) -> URL {
-        let URLString : String = String(format: "%@?%@", self.absoluteString, parametersDictionary.queryParameters)
-        return URL(string: URLString)!
+    private var bottomBarItemPlacement: ToolbarItemPlacement {
+        #if os(macOS)
+        return .automatic
+        #else
+        return .bottomBar
+        #endif
     }
 }

@@ -33,11 +33,39 @@
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
 		C5AE15892788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
+		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
+		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
+		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
+		C5C9BB5F27895F580005086C /* Aarlo-macOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
 		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C5C9BB5D27895F580005086C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C59994F12781B96500FE1EBA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C5C9BB5127895F580005086C;
+			remoteInfo = "Aarlo-macOS-ShareExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C5C9BB6027895F580005086C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C5C9BB5F27895F580005086C /* Aarlo-macOS-ShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
@@ -55,6 +83,12 @@
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarlo-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		C5C9BB5627895F580005086C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		C5C9BB5927895F580005086C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
+		C5C9BB5B27895F580005086C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aarlo_macOS_ShareExtension.entitlements; sourceTree = "<group>"; };
 		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +110,13 @@
 				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
 				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
 				C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5C9BB4F27895F580005086C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +149,7 @@
 				C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */,
 				C59994F52781B96500FE1EBA /* Shared */,
 				C59995042781B96700FE1EBA /* macOS */,
+				C5C9BB5327895F580005086C /* Aarlo-macOS-ShareExtension */,
 				C59994FE2781B96700FE1EBA /* Products */,
 				C599951E2781C93900FE1EBA /* Frameworks */,
 			);
@@ -132,6 +174,7 @@
 			children = (
 				C59994FD2781B96700FE1EBA /* Aarlo.app */,
 				C59995032781B96700FE1EBA /* Aarlo.app */,
+				C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,6 +211,18 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		C5C9BB5327895F580005086C /* Aarlo-macOS-ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				C5C9BB5427895F580005086C /* icon.icns */,
+				C5C9BB5627895F580005086C /* ShareViewController.swift */,
+				C5C9BB5827895F580005086C /* ShareViewController.xib */,
+				C5C9BB5B27895F580005086C /* Info.plist */,
+				C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */,
+			);
+			path = "Aarlo-macOS-ShareExtension";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -200,10 +255,12 @@
 				C59994FF2781B96700FE1EBA /* Sources */,
 				C59995002781B96700FE1EBA /* Frameworks */,
 				C59995012781B96700FE1EBA /* Resources */,
+				C5C9BB6027895F580005086C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C5C9BB5E27895F580005086C /* PBXTargetDependency */,
 			);
 			name = "Aarlo (macOS)";
 			packageProductDependencies = (
@@ -214,6 +271,23 @@
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* Aarlo.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarlo-macOS-ShareExtension" */;
+			buildPhases = (
+				C5C9BB4E27895F580005086C /* Sources */,
+				C5C9BB4F27895F580005086C /* Frameworks */,
+				C5C9BB5027895F580005086C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Aarlo-macOS-ShareExtension";
+			productName = "Aarlo-macOS-ShareExtension";
+			productReference = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -229,6 +303,9 @@
 						CreatedOnToolsVersion = 13.2.1;
 					};
 					C59995022781B96700FE1EBA = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					C5C9BB5127895F580005086C = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
@@ -253,6 +330,7 @@
 			targets = (
 				C59994FC2781B96700FE1EBA /* Aarlo (iOS) */,
 				C59995022781B96700FE1EBA /* Aarlo (macOS) */,
+				C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -271,6 +349,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				C599950B2781B96700FE1EBA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5C9BB5027895F580005086C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */,
+				C5C9BB5527895F580005086C /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,7 +400,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5C9BB4E27895F580005086C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C5C9BB5E27895F580005086C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */;
+			targetProxy = C5C9BB5D27895F580005086C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C5C9BB5827895F580005086C /* ShareViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C5C9BB5927895F580005086C /* Base */,
+			);
+			name = ShareViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C599950C2781B96700FE1EBA /* Debug */ = {
@@ -493,6 +607,7 @@
 		C59995122781B96700FE1EBA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
@@ -521,6 +636,7 @@
 		C59995132781B96700FE1EBA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
@@ -541,6 +657,64 @@
 				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarlo;
 				PRODUCT_NAME = Aarlo;
 				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C5C9BB6127895F580005086C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Aarlo-macOS-ShareExtension/Aarlo_macOS_ShareExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9E8SXF3Y36;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarlo-macOS-ShareExtension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-macOS-ShareExtension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-macOS-ShareExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C5C9BB6227895F580005086C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Aarlo-macOS-ShareExtension/Aarlo_macOS_ShareExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9E8SXF3Y36;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarlo-macOS-ShareExtension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-macOS-ShareExtension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-macOS-ShareExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -572,6 +746,15 @@
 			buildConfigurations = (
 				C59995122781B96700FE1EBA /* Debug */,
 				C59995132781B96700FE1EBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarlo-macOS-ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5C9BB6127895F580005086C /* Debug */,
+				C5C9BB6227895F580005086C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

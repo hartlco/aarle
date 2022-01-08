@@ -50,15 +50,15 @@ final class LinkStore: ObservableObject {
     }
 
     @MainActor func loadMoreIfNeeded(link: Link) async throws {
-//        guard isLoading == false else { return }
-//        guard link.id == links.last?.id else { return }
-//
-//        isLoading = true
-//
-//        let links = try await client.loadMore(offset: links.count, filteredByTags: tags)
-//        self.links.append(contentsOf: links)
-//
-//        isLoading = false
+        guard isLoading == false else { return }
+        guard link.id == links.last?.id else { return }
+
+        isLoading = true
+
+        let links = try await client.loadMore(offset: links.count, filteredByTags: tags)
+        self.links.append(contentsOf: links)
+
+        isLoading = false
     }
 
     @MainActor func add(link: PostLink) async throws {
