@@ -14,16 +14,23 @@ struct SidebarView: View {
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var readLaterLinkStore: LinkStore
 
+    @Binding var selection: Link?
+
     var body: some View {
         ZStack {
             List {
                 Text("Links")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                NavigationLink(destination: ContentView(linkStore: linkStore), isActive: $isDefaultItemActive) {
+                NavigationLink(
+                    destination: ContentView(linkStore: linkStore, linkSelection: $selection),
+                    isActive: $isDefaultItemActive
+                ) {
                     Label("All", systemImage: "tray.2")
                 }
-                NavigationLink(destination: ContentView(linkStore: readLaterLinkStore)) {
+                NavigationLink(
+                    destination: ContentView(linkStore: readLaterLinkStore, linkSelection: $selection)
+                ) {
                     Label("Read Later", systemImage: "paperplane")
                 }
             }.listStyle(SidebarListStyle())
@@ -34,7 +41,11 @@ struct SidebarView: View {
 #if DEBUG
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(linkStore: LinkStore.mock, readLaterLinkStore: LinkStore.mock)
+        SidebarView(
+            linkStore: LinkStore.mock,
+            readLaterLinkStore: LinkStore.mock,
+            selection: State<Link?>(initialValue: nil).projectedValue
+        )
     }
 }
 #endif

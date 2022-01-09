@@ -15,7 +15,7 @@ struct ContentView: View {
     @State var showsAddView = false
     @State var settingsField = ""
     @State var showingEditLink: Link?
-    @State var selection: Link?
+    @Binding var selection: Link?
 
     @ObservedObject var linkStore: LinkStore
 
@@ -23,10 +23,12 @@ struct ContentView: View {
 
     init(
         linkStore: LinkStore,
-        pasteboard: Pasteboard = DefaultPasteboard()
+        pasteboard: Pasteboard = DefaultPasteboard(),
+        linkSelection: Binding<Link?>
     ) {
         self.linkStore = linkStore
         self.pasteboard = pasteboard
+        self._selection = linkSelection
     }
 
     var body: some View {
