@@ -32,8 +32,6 @@ struct LinkEditView: View {
 
     var body: some View {
         Form {
-            Text("Edit Link")
-                .font(.title)
             TextField("URL:", text: $urlString)
             TextField("Title:", text: $title)
             VStack {
@@ -45,6 +43,7 @@ struct LinkEditView: View {
                 save()
             }
         }
+        .padding()
     }
 
     private func save() {

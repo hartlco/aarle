@@ -15,22 +15,26 @@ struct SidebarView: View {
     @ObservedObject var readLaterLinkStore: LinkStore
 
     var body: some View {
-        List {
-            Text("Links")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            NavigationLink(destination: ContentView(linkStore: linkStore), isActive: $isDefaultItemActive) {
-                Label("All", systemImage: "tray.2")
-            }
-            NavigationLink(destination: ContentView(linkStore: readLaterLinkStore)) {
-                Label("Read Later", systemImage: "paperplane")
-            }
-        }.listStyle(SidebarListStyle())
+        ZStack {
+            List {
+                Text("Links")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                NavigationLink(destination: ContentView(linkStore: linkStore), isActive: $isDefaultItemActive) {
+                    Label("All", systemImage: "tray.2")
+                }
+                NavigationLink(destination: ContentView(linkStore: readLaterLinkStore)) {
+                    Label("Read Later", systemImage: "paperplane")
+                }
+            }.listStyle(SidebarListStyle())
+        }
     }
 }
 
-//struct SidebarView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SidebarView()
-//    }
-//}
+#if DEBUG
+struct SidebarView_Previews: PreviewProvider {
+    static var previews: some View {
+        SidebarView(linkStore: LinkStore.mock, readLaterLinkStore: LinkStore.mock)
+    }
+}
+#endif

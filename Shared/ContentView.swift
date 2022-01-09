@@ -12,6 +12,7 @@ import WebKit
 
 struct ContentView: View {
     @State var showsSettings = false
+    @State var showsAddView = false
     @State var settingsField = ""
     @State var showingEditLink: Link?
     @State var selection: Link?
@@ -31,6 +32,7 @@ struct ContentView: View {
                 HSplitView {
                     WebView(data: WebViewData(url: link.url))
                     LinkEditView(link: link, linkStore: linkStore)
+                        .frame(minWidth: 180, idealWidth: 400, maxWidth: 500)
                 }
                 #else
                 WebView(data: WebViewData(url: link.url))
@@ -81,6 +83,18 @@ struct ContentView: View {
                         }
                     }
                 }
+            }
+            ToolbarItem(placement: bottomBarItemPlacement) {
+                Button("Add") {
+                    showsAddView = true
+                }
+                .sheet(
+                    isPresented: $showsAddView,
+                    onDismiss: nil,
+                    content: {
+                        LinkAddView(linkStore: linkStore)
+                    }
+                )
             }
         }
         .task {
