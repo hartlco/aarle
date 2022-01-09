@@ -19,10 +19,14 @@ struct ContentView: View {
 
     @ObservedObject var linkStore: LinkStore
 
+    private let pasteboard: Pasteboard
+
     init(
-        linkStore: LinkStore
+        linkStore: LinkStore,
+        pasteboard: Pasteboard = DefaultPasteboard()
     ) {
         self.linkStore = linkStore
+        self.pasteboard = pasteboard
     }
 
     var body: some View {
@@ -40,9 +44,10 @@ struct ContentView: View {
 
             } label: {
                 LinkItemView(link: link)
-                    .contextMenu {
-                            Button("Edit", action: { showingEditLink = link })
-                    }
+            }
+            .contextMenu {
+                Button("Edit", action: { showingEditLink = link })
+                Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
             }
         }
         .popover(item: $showingEditLink) { link in

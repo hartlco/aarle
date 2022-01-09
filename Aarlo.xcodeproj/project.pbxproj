@@ -13,6 +13,10 @@
 		C53ED62827856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
 		C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
+		C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */; };
+		C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */; };
+		C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
+		C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B342782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
@@ -73,6 +77,8 @@
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
+		C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Constants.swift"; sourceTree = "<group>"; };
+		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -169,6 +175,8 @@
 				C59994F62781B96500FE1EBA /* AarloApp.swift */,
 				C59994F72781B96500FE1EBA /* ContentView.swift */,
 				C59994F82781B96700FE1EBA /* Assets.xcassets */,
+				C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */,
+				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -374,7 +382,9 @@
 			files = (
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
+				C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
+				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
@@ -393,7 +403,9 @@
 			files = (
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
+				C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
+				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,

@@ -21,6 +21,7 @@ struct AarloApp: App {
                 Text("No Sidebar Selection") // You won't see this in practice (default selection)
                 WebView(data: webViewData)
             }
+            .tint(.tint)
         }
     }
 }

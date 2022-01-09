@@ -22,7 +22,7 @@ struct LinkItemView: View {
                     .bold()
             }
             Text(link.url.host ?? link.url.absoluteString)
-                .foregroundColor(Color.blue)
+                .foregroundColor(.tint)
             if let description = link.description {
                 Text(description)
                     .font(.body)
@@ -31,7 +31,7 @@ struct LinkItemView: View {
                 ForEach(link.tags, id: \.self) { item in
                     Text(item)
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .background(Color.mint)
+                        .background(.tint)
                         .cornerRadius(4.0)
                 }
             }

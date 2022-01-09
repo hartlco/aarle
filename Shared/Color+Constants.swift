@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+
+extension Color {
+    static let tint = Color("tint")
+}
