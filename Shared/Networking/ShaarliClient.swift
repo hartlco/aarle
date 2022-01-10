@@ -14,16 +14,7 @@ final class ShaarliClient {
     }
 
     func load(filteredByTags tags: [String] = []) async throws -> [Link] {
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
-
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
-        guard var URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
+        guard var URL = URL(string: apiEndpoint) else {
             throw ClientError.unknownURL
         }
 
@@ -33,6 +24,7 @@ final class ShaarliClient {
 
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"
+        let signedJWT = try signedJWT()
 
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
 
@@ -45,19 +37,11 @@ final class ShaarliClient {
     }
 
     func loadMore(offset: Int, filteredByTags tags: [String] = []) async throws -> [Link] {
-        guard var URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
+        guard var URL = URL(string: apiEndpoint) else {
             throw ClientError.unknownURL
         }
 
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
-
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
+        let signedJWT = try signedJWT()
         URL = URL.appendingQueryParameters(["offset": "\(offset)"])
 
         if !tags.isEmpty {
@@ -79,16 +63,9 @@ final class ShaarliClient {
     }
 
     func createLink(link: PostLink) async throws {
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
+        let signedJWT = try signedJWT()
 
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
-        guard let URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links") else {
+        guard let URL = URL(string: apiEndpoint) else {
             throw ClientError.unknownURL
         }
         var request = URLRequest(url: URL)
@@ -105,16 +82,9 @@ final class ShaarliClient {
     }
 
     func updateLink(link: Link) async throws {
-        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
-        let header = SwiftJWT.Header(typ: "JWT")
+        let signedJWT = try signedJWT()
 
-        var jwt = SwiftJWT.JWT(header: header, claims: claims)
-
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
-        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
-        let signedJWT = try jwt.sign(using: jwtSigner)
-
-        guard let URL = URL(string: "https://hartlco.uber.space/shaarli/index.php/api/v1/links/\(link.id)") else {
+        guard let URL = URL(string: "\(apiEndpoint)/\(link.id)") else {
             throw ClientError.unknownURL
         }
         var request = URLRequest(url: URL)
@@ -129,6 +99,38 @@ final class ShaarliClient {
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
         let dataString = String(data: data, encoding: .utf8)
         print(dataString)
+    }
+
+    func deleteLink(link: Link) async throws {
+        let signedJWT = try signedJWT()
+
+        guard let URL = URL(string: "\(apiEndpoint)/\(link.id)") else {
+            throw ClientError.unknownURL
+        }
+        var request = URLRequest(url: URL)
+        request.httpMethod = "DELETE"
+        request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let dataString = String(data: data, encoding: .utf8)
+        print(dataString)
+    }
+
+    private func signedJWT() throws -> String {
+        let claims = ShaarliClaims(iat: .now.addingTimeInterval(-10.0))
+        let header = SwiftJWT.Header(typ: "JWT")
+
+        var jwt = SwiftJWT.JWT(header: header, claims: claims)
+
+        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
+        let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
+        let signedJWT = try jwt.sign(using: jwtSigner)
+        return signedJWT
+    }
+
+    private var apiEndpoint: String {
+        return SettingsView.keychain[string: SettingsView.endpointKey] ?? ""
     }
 }
 

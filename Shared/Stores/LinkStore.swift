@@ -78,4 +78,13 @@ final class LinkStore: ObservableObject {
 
         isLoading = false
     }
+
+    @MainActor func delete(link: Link) async throws {
+        guard isLoading == false else { return }
+        isLoading = true
+
+        try await client.deleteLink(link: link)
+
+        isLoading = false
+    }
 }

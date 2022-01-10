@@ -35,7 +35,7 @@ struct AarloApp: App {
 
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
-                .keyboardShortcut("b", modifiers: .command)
+                .keyboardShortcut("C", modifiers: [.command, .shift])
                 .disabled(false)
             }
         }

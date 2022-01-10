@@ -18,7 +18,7 @@ struct LinkItemView: View {
         VStack(alignment: .leading, spacing: 2.0) {
             if let title = link.title {
                 Text(title)
-                    .font(.headline)
+                    .font(.title3)
                     .bold()
             }
             Text(link.url.host ?? link.url.absoluteString)

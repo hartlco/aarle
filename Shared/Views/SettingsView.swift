@@ -12,24 +12,28 @@ import KeychainAccess
 struct SettingsView: View {
     static let keychain = Keychain(service: "co.hartl.Aarlo")
     static let keychainKey = "secret"
+    static let endpointKey = "endpoint"
 
-    @Binding var showsSettings: Bool
+    @Environment(\.presentationMode) var presentationMode
 
     @State private var settingsField: String
+    @State private var apiEndpointField: String
 
-    init(showsSettings: Binding<Bool>) {
-        self._showsSettings = showsSettings
+    init() {
         self._settingsField = State(initialValue: Self.keychain[string: Self.keychainKey] ?? "")
+        self._apiEndpointField = State(initialValue: Self.keychain[string: Self.endpointKey] ?? "")
     }
 
 
     var body: some View {
-        VStack {
+        Form {
             Text("Settings")
             TextField("Key", text: $settingsField)
+            TextField("API Endpoint:", text: $apiEndpointField)
             Button("Save") {
-                showsSettings = false
+                presentationMode.dismiss()
                 Self.keychain[Self.keychainKey] = settingsField
+                Self.keychain[Self.endpointKey] = apiEndpointField
             }
         }
         .padding()

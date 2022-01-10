@@ -50,6 +50,13 @@ struct ContentView: View {
             .contextMenu {
                 Button("Edit", action: { showingEditLink = link })
                 Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
+                Button(role: .destructive) {
+                    Task {
+                        try await linkStore.delete(link: link)
+                    }
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
             }
         }
         .popover(item: $showingEditLink) { link in
@@ -75,7 +82,7 @@ struct ContentView: View {
                     isPresented: $showsSettings,
                     onDismiss: nil,
                     content: {
-                        SettingsView(showsSettings: $showsSettings)
+                        SettingsView()
                     }
                 )
             }
