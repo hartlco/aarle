@@ -19,19 +19,18 @@ struct SidebarView: View {
     var body: some View {
         ZStack {
             List {
-                Text("Links")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                NavigationLink(
-                    destination: ContentView(linkStore: linkStore, linkSelection: $selection),
-                    isActive: $isDefaultItemActive
-                ) {
-                    Label("All", systemImage: "tray.2")
-                }
-                NavigationLink(
-                    destination: ContentView(linkStore: readLaterLinkStore, linkSelection: $selection)
-                ) {
-                    Label("Read Later", systemImage: "paperplane")
+                Section(header: "Links") {
+                    NavigationLink(
+                        destination: ContentView(title: "Links", linkStore: linkStore, linkSelection: $selection),
+                        isActive: $isDefaultItemActive
+                    ) {
+                        Label("All", systemImage: "tray.2")
+                    }
+                    NavigationLink(
+                        destination: ContentView(title: "Read Later", linkStore: readLaterLinkStore, linkSelection: $selection)
+                    ) {
+                        Label("Read Later", systemImage: "paperplane")
+                    }
                 }
             }.listStyle(SidebarListStyle())
         }

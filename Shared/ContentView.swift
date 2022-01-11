@@ -20,12 +20,15 @@ struct ContentView: View {
     @ObservedObject var linkStore: LinkStore
 
     private let pasteboard: Pasteboard
+    private let title: String
 
     init(
+        title: String,
         linkStore: LinkStore,
         pasteboard: Pasteboard = DefaultPasteboard(),
         linkSelection: Binding<Link?>
     ) {
+        self.title = title
         self.linkStore = linkStore
         self.pasteboard = pasteboard
         self._selection = linkSelection
@@ -111,6 +114,9 @@ struct ContentView: View {
                 )
             }
         }
+        #if os(iOS)
+        .navigationBarTitle(title)
+        #endif
         .task {
             do {
                 try await linkStore.load()

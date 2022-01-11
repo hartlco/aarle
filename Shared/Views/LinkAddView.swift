@@ -29,13 +29,16 @@ struct LinkAddView: View {
 
     var body: some View {
         Form {
-            TextField("URL:", text: $urlString)
-            TextField("Title:", text: $title)
-            VStack {
-                Text("Description")
+            Section(header: "Main Information") {
+                TextField("URL:", text: $urlString)
+                TextField("Title:", text: $title)
+            }
+            Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            TextField("Tags:", text: $tagsString)
+            Section(header: "Meta") {
+                TextField("Tags:", text: $tagsString)
+            }
             Button("Add") {
                 save()
             }.disabled(saveButtonDisabled)
