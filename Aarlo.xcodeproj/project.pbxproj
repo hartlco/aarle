@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
+		C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C53ED62727856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
@@ -74,6 +76,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C5165652278EB849006A55A7 /* InitialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialContentView.swift; sourceTree = "<group>"; };
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
@@ -149,6 +152,7 @@
 				C5E4E3632786C833000E79F0 /* LinkEditView.swift */,
 				C5AE15872788196C00480C83 /* SidebarView.swift */,
 				C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */,
+				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,6 +397,7 @@
 				C53ED62727856CE900397910 /* LinkStore.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
+				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,6 +419,7 @@
 				C53ED62827856CE900397910 /* LinkStore.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
+				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
