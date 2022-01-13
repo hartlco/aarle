@@ -23,15 +23,15 @@ struct LinkItemView: View {
             }
             Text(link.url.host ?? link.url.absoluteString)
                 .foregroundColor(.tint)
-            if let description = link.description {
+            if let description = link.description, !description.isEmpty {
                 Text(description)
                     .font(.body)
             }
-            LazyHGrid(rows: columns, spacing: 20) {
+            LazyHGrid(rows: columns, spacing: 4) {
                 ForEach(link.tags, id: \.self) { item in
                     Text(item)
                         .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .background(.tint)
+                        .background(.faintTint)
                         .cornerRadius(4.0)
                 }
             }

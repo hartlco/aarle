@@ -10,4 +10,5 @@ import SwiftUI
 
 extension Color {
     static let tint = Color("tint")
+    static let faintTint = Color("tint-faint")
 }

@@ -45,6 +45,8 @@
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
 		C5C9BB5F27895F580005086C /* Aarlo-macOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
+		C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
@@ -101,6 +103,7 @@
 		C5C9BB5927895F580005086C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
 		C5C9BB5B27895F580005086C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aarlo_macOS_ShareExtension.entitlements; sourceTree = "<group>"; };
+		C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +156,7 @@
 				C5AE15872788196C00480C83 /* SidebarView.swift */,
 				C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */,
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
+				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -396,6 +400,7 @@
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62727856CE900397910 /* LinkStore.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
+				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
@@ -418,6 +423,7 @@
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62827856CE900397910 /* LinkStore.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
+				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,

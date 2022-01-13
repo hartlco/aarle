@@ -37,16 +37,7 @@ struct ContentView: View {
     var body: some View {
         List(linkStore.links, id: \.self, selection: $selection) { link in
             NavigationLink {
-                #if os(macOS)
-                HSplitView {
-                    WebView(data: WebViewData(url: link.url))
-                    LinkEditView(link: link, linkStore: linkStore)
-                        .frame(minWidth: 180, idealWidth: 400, maxWidth: 500)
-                }
-                #else
-                WebView(data: WebViewData(url: link.url))
-                #endif
-
+                ItemDetailView(link: link, linkStore: linkStore)
             } label: {
                 LinkItemView(link: link)
             }
@@ -62,6 +53,7 @@ struct ContentView: View {
                 }
             }
         }
+        .listStyle(PlainListStyle())
         .popover(item: $showingEditLink) { link in
             LinkEditView(link: link, linkStore: linkStore)
         }
