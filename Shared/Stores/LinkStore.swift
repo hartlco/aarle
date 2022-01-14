@@ -10,6 +10,7 @@ import Combine
 
 final class LinkStore: ObservableObject {
     @Published var links: [Link]
+    @Published var tags: [Tag]
     @Published var isLoading: Bool
 
     private let client: ShaarliClient
@@ -22,10 +23,11 @@ final class LinkStore: ObservableObject {
         self.client = client
         self.tagScope = tagScope
         self.links = []
+        self.tags = []
         self.isLoading = false
     }
 
-    private var tags: [String] {
+    private var scopedTages: [String] {
         let tags: [String]
         if let tagScope = tagScope {
             tags = [tagScope]
@@ -44,7 +46,7 @@ final class LinkStore: ObservableObject {
         guard isLoading == false else { return }
         isLoading = true
 
-        links = try await client.load(filteredByTags: tags)
+        links = try await client.load(filteredByTags: scopedTages)
 
         isLoading = false
     }
@@ -55,7 +57,7 @@ final class LinkStore: ObservableObject {
 
         isLoading = true
 
-        let links = try await client.loadMore(offset: links.count, filteredByTags: tags)
+        let links = try await client.loadMore(offset: links.count, filteredByTags: scopedTages)
         self.links.append(contentsOf: links)
 
         isLoading = false
@@ -84,6 +86,15 @@ final class LinkStore: ObservableObject {
         isLoading = true
 
         try await client.deleteLink(link: link)
+
+        isLoading = false
+    }
+
+    @MainActor func loadTags() async throws {
+        guard isLoading == false else { return }
+        isLoading = true
+
+        tags = try await client.loadTags()
 
         isLoading = false
     }

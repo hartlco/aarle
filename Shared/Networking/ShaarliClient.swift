@@ -14,7 +14,7 @@ final class ShaarliClient {
     }
 
     func load(filteredByTags tags: [String] = []) async throws -> [Link] {
-        guard var URL = URL(string: apiEndpoint) else {
+        guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
         }
 
@@ -37,7 +37,7 @@ final class ShaarliClient {
     }
 
     func loadMore(offset: Int, filteredByTags tags: [String] = []) async throws -> [Link] {
-        guard var URL = URL(string: apiEndpoint) else {
+        guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
         }
 
@@ -65,7 +65,7 @@ final class ShaarliClient {
     func createLink(link: PostLink) async throws {
         let signedJWT = try signedJWT()
 
-        guard let URL = URL(string: apiEndpoint) else {
+        guard let URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
         }
         var request = URLRequest(url: URL)
@@ -84,7 +84,7 @@ final class ShaarliClient {
     func updateLink(link: Link) async throws {
         let signedJWT = try signedJWT()
 
-        guard let URL = URL(string: "\(apiEndpoint)/\(link.id)") else {
+        guard let URL = URL(string: "\(apiEndpoint + "/links")/\(link.id)") else {
             throw ClientError.unknownURL
         }
         var request = URLRequest(url: URL)
@@ -104,7 +104,7 @@ final class ShaarliClient {
     func deleteLink(link: Link) async throws {
         let signedJWT = try signedJWT()
 
-        guard let URL = URL(string: "\(apiEndpoint)/\(link.id)") else {
+        guard let URL = URL(string: "\(apiEndpoint + "/links")/\(link.id)") else {
             throw ClientError.unknownURL
         }
         var request = URLRequest(url: URL)
@@ -115,6 +115,26 @@ final class ShaarliClient {
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
         let dataString = String(data: data, encoding: .utf8)
         print(dataString)
+    }
+
+    func loadTags() async throws -> [Tag] {
+        guard var URL = URL(string: "\(apiEndpoint)/tags") else {
+            throw ClientError.unknownURL
+        }
+
+        var request = URLRequest(url: URL)
+        request.httpMethod = "GET"
+        let signedJWT = try signedJWT()
+
+        request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
+
+        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let dataString = String(data: data, encoding: .utf8)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let links = try decoder.decode([Tag].self, from: data)
+
+        return links
     }
 
     private func signedJWT() throws -> String {

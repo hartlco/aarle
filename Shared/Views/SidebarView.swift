@@ -31,6 +31,11 @@ struct SidebarView: View {
                     ) {
                         Label("Read Later", systemImage: "paperplane")
                     }
+                    NavigationLink(
+                        destination: TagListView(linkStore: linkStore)
+                    ) {
+                        Label("Tags", systemImage: "tag")
+                    }
                 }
             }.listStyle(SidebarListStyle())
         }

@@ -41,6 +41,10 @@
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
 		C5AE15892788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
+		C5B37B26279166E50080B988 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B25279166E50080B988 /* TagListView.swift */; };
+		C5B37B27279166E50080B988 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B25279166E50080B988 /* TagListView.swift */; };
+		C5B37B29279167150080B988 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
+		C5B37B2A279167150080B988 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
 		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
@@ -97,6 +101,8 @@
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		C5B37B25279166E50080B988 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
+		C5B37B28279167150080B988 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarlo-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		C5C9BB5627895F580005086C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +163,7 @@
 				C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */,
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
+				C5B37B25279166E50080B988 /* TagListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				C59995152781B9E200FE1EBA /* Link.swift */,
+				C5B37B28279167150080B988 /* Tag.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,11 +402,13 @@
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
+				C5B37B29279167150080B988 /* Tag.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62727856CE900397910 /* LinkStore.swift in Sources */,
+				C5B37B26279166E50080B988 /* TagListView.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
@@ -417,11 +427,13 @@
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
+				C5B37B2A279167150080B988 /* Tag.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62827856CE900397910 /* LinkStore.swift in Sources */,
+				C5B37B27279166E50080B988 /* TagListView.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
