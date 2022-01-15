@@ -7,12 +7,36 @@
 
 import SwiftUI
 
+// TODO: Add tag renaming
 struct TagListView: View {
-    let linkStore: LinkStore
+    @ObservedObject var linkStore: LinkStore
+
+    let webViewData = WebViewData(url: nil)
+    @State var selectedLink: Link?
 
     var body: some View {
         List(linkStore.tags) { tag in
-            Text(tag.name)
+            NavigationLink {
+                #if os(macOS)
+                // TODO: Handle selection App wide
+                NavigationView {
+                    ContentView(
+                        title: "Links",
+                        linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
+                        linkSelection: $selectedLink
+                    )
+                    WebView(data: webViewData)
+                }
+                #else
+                ContentView(
+                    title: "Links",
+                    linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
+                    linkSelection: $selectedLink
+                )
+                #endif
+            } label: {
+                TagView(tag: tag)
+            }
         }
         .task {
             do {

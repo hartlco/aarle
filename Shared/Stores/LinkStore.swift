@@ -94,7 +94,9 @@ final class LinkStore: ObservableObject {
         guard isLoading == false else { return }
         isLoading = true
 
-        tags = try await client.loadTags()
+        tags = try await client.loadTags().sorted(by: { tag1, tag2 in
+            tag1.name < tag2.name
+        })
 
         isLoading = false
     }

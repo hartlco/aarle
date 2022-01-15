@@ -19,6 +19,8 @@
 		C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */; };
 		C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
 		C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
+		C5760E4A2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
+		C5760E4B2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B342782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
@@ -89,6 +91,7 @@
 		C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Constants.swift"; sourceTree = "<group>"; };
 		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
+		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
 				C5B37B25279166E50080B988 /* TagListView.swift */,
+				C5760E492792A42000688EB3 /* TagView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -396,6 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5760E4A2792A42000688EB3 /* TagView.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
 				C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
@@ -421,6 +426,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5760E4B2792A42000688EB3 /* TagView.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
 				C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
