@@ -34,6 +34,7 @@ struct ItemDetailView: View {
                         Label("Open in Safari ", systemImage: "safari")
                     })
                 }
+                // TODO: Show share sheet instead
                 ToolbarItem(placement: .bottomBar) {
                     Button(action: {
                         pasteboard.copyToPasteboard(string: link.url.absoluteString)

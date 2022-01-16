@@ -16,18 +16,21 @@ struct TagView: View {
         HStack {
             Text(tag.name)
                 .font(.headline)
+            Spacer()
             Text(String(tag.occurrences))
                 .font(.caption)
                 .padding(4.0)
                 .background(.faintTint)
                 .cornerRadius(6.0)
-            Spacer()
             Button {
                 favorite()
             } label: {
-                Label("Favorite", systemImage: isFavorite ? "star.fill" : "star")
-                    .labelStyle(.iconOnly)
+                Label(
+                    isFavorite ? "Unfavorite" : "Favorite",
+                    systemImage: isFavorite ? "star.fill" : "star"
+                ).labelStyle(.iconOnly)
             }
+            .buttonStyle(PlainButtonStyle()) 
 
         }
         .padding(2.0)
