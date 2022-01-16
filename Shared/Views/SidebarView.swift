@@ -12,7 +12,7 @@ struct SidebarView: View {
     @State private var isDefaultItemActive = true
 
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var readLaterLinkStore: LinkStore
+    @ObservedObject var tagStore: TagStore
 
     @Binding var selection: Link?
 
@@ -27,14 +27,18 @@ struct SidebarView: View {
                         Label("All", systemImage: "tray.2")
                     }
                     NavigationLink(
-                        destination: ContentView(title: "Read Later", linkStore: readLaterLinkStore, linkSelection: $selection)
-                    ) {
-                        Label("Read Later", systemImage: "paperplane")
-                    }
-                    NavigationLink(
-                        destination: TagListView(linkStore: linkStore)
+                        destination: TagListView(tagStore: tagStore)
                     ) {
                         Label("Tags", systemImage: "tag")
+                    }
+                }
+                Section(header: "Favorites") {
+                    ForEach(tagStore.favoriteTags) { tag in
+                        NavigationLink(
+                            destination: ContentView(title: tag.name, linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name), linkSelection: $selection)
+                        ) {
+                            Label(tag.name, systemImage: "tag")
+                        }
                     }
                 }
             }.listStyle(SidebarListStyle())
@@ -47,7 +51,7 @@ struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(
             linkStore: LinkStore.mock,
-            readLaterLinkStore: LinkStore.mock,
+            tagStore: TagStore.mock,
             selection: State<Link?>(initialValue: nil).projectedValue
         )
     }

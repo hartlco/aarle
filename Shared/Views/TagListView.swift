@@ -9,13 +9,13 @@ import SwiftUI
 
 // TODO: Add tag renaming
 struct TagListView: View {
-    @ObservedObject var linkStore: LinkStore
+    @ObservedObject var tagStore: TagStore
 
     let webViewData = WebViewData(url: nil)
     @State var selectedLink: Link?
 
     var body: some View {
-        List(linkStore.tags) { tag in
+        List(tagStore.tags) { tag in
             NavigationLink {
                 #if os(macOS)
                 // TODO: Handle selection App wide
@@ -35,12 +35,21 @@ struct TagListView: View {
                 )
                 #endif
             } label: {
-                TagView(tag: tag)
+                TagView(
+                    tag: tag,
+                    isFavorite: tagStore.favoriteTags.contains(tag)
+                ) {
+                    if tagStore.favoriteTags.contains(tag) {
+                        tagStore.remove(favoriteTag: tag)
+                    } else {
+                        tagStore.add(favoriteTag: tag)
+                    }
+                }
             }
         }
         .task {
             do {
-                try await linkStore.loadTags()
+                try await tagStore.loadTags()
             } catch let error {
                 print(error)
             }
@@ -51,7 +60,7 @@ struct TagListView: View {
 #if DEBUG
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
-        TagListView(linkStore: .mock)
+        TagListView(tagStore: .mock)
     }
 }
 #endif

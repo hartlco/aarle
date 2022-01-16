@@ -7,7 +7,7 @@
 
 import Swift
 
-struct Tag: Codable, Identifiable {
+struct Tag: Codable, Identifiable, Equatable {
     let name: String
     let occurrences: Int
 

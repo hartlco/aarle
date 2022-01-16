@@ -10,7 +10,6 @@ import Combine
 
 final class LinkStore: ObservableObject {
     @Published var links: [Link]
-    @Published var tags: [Tag]
     @Published var isLoading: Bool
 
     private let client: ShaarliClient
@@ -23,7 +22,6 @@ final class LinkStore: ObservableObject {
         self.client = client
         self.tagScope = tagScope
         self.links = []
-        self.tags = []
         self.isLoading = false
     }
 
@@ -86,17 +84,6 @@ final class LinkStore: ObservableObject {
         isLoading = true
 
         try await client.deleteLink(link: link)
-
-        isLoading = false
-    }
-
-    @MainActor func loadTags() async throws {
-        guard isLoading == false else { return }
-        isLoading = true
-
-        tags = try await client.loadTags().sorted(by: { tag1, tag2 in
-            tag1.name < tag2.name
-        })
 
         isLoading = false
     }
