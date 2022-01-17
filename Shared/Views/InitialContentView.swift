@@ -23,8 +23,10 @@ struct InitialContentView: View {
     var body: some View {
         if compactEnvironment {
             SidebarView(linkStore: linkStore, tagStore: tagStore, selection: $selectedLink)
+                .multiplatformNavigationBarTitle("Aarlo")
         } else {
             SidebarView(linkStore: linkStore, tagStore: tagStore, selection: $selectedLink)
+                .multiplatformNavigationBarTitle("Aarlo")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)
         }

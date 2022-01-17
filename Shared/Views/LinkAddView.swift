@@ -10,6 +10,8 @@ import SwiftUIX
 
 struct LinkAddView: View {
     @ObservedObject private var linkStore: LinkStore
+    @ObservedObject private var tagStore: TagStore
+
     @Environment(\.presentationMode) var presentationMode
 
     @State var urlString: String
@@ -18,9 +20,11 @@ struct LinkAddView: View {
     @State var tagsString: String
 
     init(
-        linkStore: LinkStore
+        linkStore: LinkStore,
+        tagStore: TagStore
     ) {
         self.linkStore = linkStore
+        self.tagStore = tagStore
         self._urlString = State<String>(initialValue: "")
         self._title = State(initialValue: "")
         self._description = State(initialValue: "")
@@ -36,9 +40,26 @@ struct LinkAddView: View {
             Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            Section(header: "Meta") {
-                TextField("Tags:", text: $tagsString)
+            Section(header: "Favorites") {
+                ForEach(tagStore.favoriteTags) { tag in
+                    Toggle(
+                        tag.name,
+                        isOn: Binding(
+                            get: {
+                                return tagStore.tagsString(tagsString, contains: tag)
+                            },
+                            set: { newValue in
+                                if newValue {
+                                    tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
+                                } else {
+                                    tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+                                }
+                            }
+                        )
+                    )
+                }
             }
+            TextField("Tags:", text: $tagsString)
             Button("Add") {
                 save()
             }.disabled(saveButtonDisabled)
@@ -84,7 +105,7 @@ struct LinkAddView: View {
 #if DEBUG
 struct LinkAddView_Previews: PreviewProvider {
     static var previews: some View {
-        LinkAddView(linkStore: LinkStore.mock)
+        LinkAddView(linkStore: LinkStore.mock, tagStore: .mock)
     }
 }
 #endif

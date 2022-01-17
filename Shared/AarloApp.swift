@@ -32,5 +32,10 @@ struct AarloApp: App {
                 .disabled(false)
             }
         }
+#if os(macOS)
+        Settings {
+            SettingsView()
+        }
+#endif
     }
 }

@@ -21,7 +21,12 @@ struct SidebarView: View {
             List {
                 Section(header: "Links") {
                     NavigationLink(
-                        destination: ContentView(title: "Links", linkStore: linkStore, linkSelection: $selection),
+                        destination: ContentView(
+                            title: "Links",
+                            linkStore: linkStore,
+                            tagStore: tagStore,
+                            linkSelection: $selection
+                        ),
                         isActive: $isDefaultItemActive
                     ) {
                         Label("All", systemImage: "tray.2")
@@ -35,7 +40,12 @@ struct SidebarView: View {
                 Section(header: "Favorites") {
                     ForEach(tagStore.favoriteTags) { tag in
                         NavigationLink(
-                            destination: ContentView(title: tag.name, linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name), linkSelection: $selection)
+                            destination: ContentView(
+                                title: tag.name,
+                                linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
+                                tagStore: tagStore,
+                                linkSelection: $selection
+                            )
                         ) {
                             Label(tag.name, systemImage: "tag")
                         }

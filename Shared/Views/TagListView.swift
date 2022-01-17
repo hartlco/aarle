@@ -22,7 +22,11 @@ struct TagListView: View {
                 NavigationView {
                     ContentView(
                         title: "Links",
-                        linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
+                        linkStore: LinkStore(
+                            client: ShaarliClient(),
+                            tagScope: tag.name
+                        ),
+                        tagStore: tagStore,
                         linkSelection: $selectedLink
                     )
                     WebView(data: webViewData)
@@ -30,7 +34,11 @@ struct TagListView: View {
                 #else
                 ContentView(
                     title: "Links",
-                    linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
+                    linkStore: LinkStore(
+                        client: ShaarliClient(),
+                        tagScope: tag.name
+                    ),
+                    tagStore: tagStore,
                     linkSelection: $selectedLink
                 )
                 #endif

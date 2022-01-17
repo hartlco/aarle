@@ -18,6 +18,7 @@ struct ContentView: View {
     @Binding var selection: Link?
 
     @ObservedObject var linkStore: LinkStore
+    @ObservedObject var tagStore: TagStore
 
     private let pasteboard: Pasteboard
     private let title: String
@@ -25,11 +26,13 @@ struct ContentView: View {
     init(
         title: String,
         linkStore: LinkStore,
+        tagStore: TagStore,
         pasteboard: Pasteboard = DefaultPasteboard(),
         linkSelection: Binding<Link?>
     ) {
         self.title = title
         self.linkStore = linkStore
+        self.tagStore = tagStore
         self.pasteboard = pasteboard
         self._selection = linkSelection
     }
@@ -37,7 +40,7 @@ struct ContentView: View {
     var body: some View {
         List(linkStore.links, id: \.self, selection: $selection) { link in
             NavigationLink {
-                ItemDetailView(link: link, linkStore: linkStore)
+                ItemDetailView(link: link, linkStore: linkStore, tagStore: tagStore)
             } label: {
                 LinkItemView(link: link)
             }
@@ -55,7 +58,7 @@ struct ContentView: View {
         }
         .listStyle(PlainListStyle())
         .popover(item: $showingEditLink) { link in
-            LinkEditView(link: link, linkStore: linkStore)
+            LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
         }
         .toolbar {
             ToolbarItem(placement: navigationBarItemPlacement) {
@@ -101,7 +104,10 @@ struct ContentView: View {
                     isPresented: $showsAddView,
                     onDismiss: nil,
                     content: {
-                        LinkAddView(linkStore: linkStore)
+                        LinkAddView(
+                            linkStore: linkStore,
+                            tagStore: tagStore
+                        )
                     }
                 )
             }

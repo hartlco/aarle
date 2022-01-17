@@ -12,6 +12,7 @@ struct LinkEditView: View {
     let link: Link
 
     @ObservedObject private var linkStore: LinkStore
+    @ObservedObject private var tagStore: TagStore
 
     @State var urlString: String
     @State var title: String
@@ -20,10 +21,12 @@ struct LinkEditView: View {
 
     init(
         link: Link,
-        linkStore: LinkStore
+        linkStore: LinkStore,
+        tagStore: TagStore
     ) {
         self.link = link
         self.linkStore = linkStore
+        self.tagStore = tagStore
         self._urlString = State<String>(initialValue: link.url.absoluteString)
         self._title = State(initialValue: link.title ?? "")
         self._description = State(initialValue: link.description ?? "")
@@ -39,9 +42,26 @@ struct LinkEditView: View {
             Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            Section(header: "Meta") {
-                TextField("Tags:", text: $tagsString)
+            Section(header: "Favorites") {
+                ForEach(tagStore.favoriteTags) { tag in
+                    Toggle(
+                        tag.name,
+                        isOn: Binding(
+                            get: {
+                                return tagStore.tagsString(tagsString, contains: tag)
+                            },
+                            set: { newValue in
+                                if newValue {
+                                    tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
+                                } else {
+                                    tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+                                }
+                            }
+                        )
+                    )
+                }
             }
+            TextField("Tags:", text: $tagsString)
             Button("Save") {
                 save()
             }
@@ -72,7 +92,7 @@ struct LinkEditView: View {
 struct LinkEditView_Previews: PreviewProvider {
     static var previews: some View {
         let link = Link.mock
-        LinkEditView(link: link, linkStore: LinkStore.mock)
+        LinkEditView(link: link, linkStore: .mock, tagStore: .mock)
     }
 }
 #endif

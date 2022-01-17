@@ -9,7 +9,18 @@ import SwiftUI
 
 struct ItemDetailView: View {
     let link: Link
-    let linkStore: LinkStore
+    @ObservedObject private var linkStore: LinkStore
+    @ObservedObject private var tagStore: TagStore
+
+    init(
+        link: Link,
+        linkStore: LinkStore,
+        tagStore: TagStore
+    ) {
+        self.link = link
+        self.linkStore = linkStore
+        self.tagStore = tagStore
+    }
 
     private let pasteboard = DefaultPasteboard()
 
@@ -17,7 +28,7 @@ struct ItemDetailView: View {
 #if os(macOS)
         HSplitView {
             WebView(data: WebViewData(url: link.url))
-            LinkEditView(link: link, linkStore: linkStore)
+            LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
                 .frame(minWidth: 180, idealWidth: 400, maxWidth: 500)
         }
 #else
@@ -44,7 +55,7 @@ struct ItemDetailView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        LinkEditView(link: link, linkStore: linkStore)
+                        LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }
@@ -59,7 +70,7 @@ struct ItemDetailView: View {
 #if DEBUG
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemDetailView(link: Link.mock, linkStore: LinkStore.mock)
+        ItemDetailView(link: Link.mock, linkStore: LinkStore.mock, tagStore: .mock)
     }
 }
 #endif

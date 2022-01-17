@@ -43,6 +43,30 @@ final class TagStore: ObservableObject {
         isLoading = false
     }
 
+    func tagsString(_ tagsString: String, contains tag: Tag) -> Bool {
+        tagsString
+            .components(separatedBy: " ")
+            .contains(tag.name)
+    }
+
+    func addingTag(_ tag: Tag, toTagsString tagsString: String) -> String {
+        var components = tagsString.components(separatedBy: " ")
+        components.append(tag.name)
+        return components.joined(separator: " ")
+    }
+
+    func removingTag(_ tag: Tag, fromTagsString tagsString: String) -> String {
+        var components = tagsString.components(separatedBy: " ")
+        components.removeAll { component in
+            component == tag.name
+        }
+        return components.joined(separator: " ")
+    }
+
+    func isTagFavorite(tag: Tag) -> Bool {
+        favoriteTags.contains(tag)
+    }
+
     func add(favoriteTag: Tag) {
         userDefaults.favoriteTags.append(favoriteTag)
         self.favoriteTags = userDefaults.favoriteTags
