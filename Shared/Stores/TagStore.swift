@@ -22,7 +22,7 @@ final class TagStore: ObservableObject {
 
     init(
         client: ShaarliClient,
-        userDefaults: UserDefaults = .standard
+        userDefaults: UserDefaults = .suite
     ) {
         self.client = client
         self.tags = []

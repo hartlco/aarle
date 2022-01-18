@@ -6,15 +6,14 @@
 //
 
 import Cocoa
+import SwiftUI
 
 class ShareViewController: NSViewController {
-
-    override var nibName: NSNib.Name? {
-        return NSNib.Name("ShareViewController")
-    }
+    let linkStore = LinkStore(client: .init(), tagScope: nil)
+    let tagStore = TagStore(client: .init())
 
     override func loadView() {
-        super.loadView()
+        view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
     
         // Insert code here to customize the view
         let item = self.extensionContext!.inputItems[0] as! NSExtensionItem
@@ -23,6 +22,17 @@ class ShareViewController: NSViewController {
         } else {
             NSLog("No Attachments")
         }
+
+        let addView = LinkAddView(linkStore: linkStore, tagStore: tagStore)
+        let hosting = NSHostingView(rootView: addView)
+        hosting.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hosting)
+        NSLayoutConstraint.activate([
+            hosting.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hosting.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hosting.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            hosting.topAnchor.constraint(equalTo: view.topAnchor),
+        ])
     }
 
     @IBAction func send(_ sender: AnyObject?) {

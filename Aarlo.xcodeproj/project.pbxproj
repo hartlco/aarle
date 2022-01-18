@@ -13,6 +13,20 @@
 		C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C53ED62727856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
 		C53ED62827856CE900397910 /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
+		C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
+		C54210B92796A6AB000F07DC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
+		C54210BA2796A6AE000F07DC /* LinkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkStore.swift */; };
+		C54210BB2796A6B0000F07DC /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagStore.swift */; };
+		C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
+		C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
+		C54210BE2796A6D1000F07DC /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
+		C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
+		C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C02796A6F9000F07DC /* SwiftUIX */; };
+		C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C22796A6FF000F07DC /* KeychainAccess */; };
+		C54210C52796A704000F07DC /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C42796A704000F07DC /* SwiftJWT */; };
+		C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
+		C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
+		C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
 		C547D6662793F16400DEC857 /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagStore.swift */; };
 		C547D6672793F16400DEC857 /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagStore.swift */; };
 		C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
@@ -89,6 +103,7 @@
 		C5165652278EB849006A55A7 /* InitialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialContentView.swift; sourceTree = "<group>"; };
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
+		C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Suite.swift"; sourceTree = "<group>"; };
 		C547D6652793F16400DEC857 /* TagStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStore.swift; sourceTree = "<group>"; };
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
 		C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Constants.swift"; sourceTree = "<group>"; };
@@ -144,6 +159,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */,
+				C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */,
+				C54210C52796A704000F07DC /* SwiftJWT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +217,7 @@
 				C59994F72781B96500FE1EBA /* ContentView.swift */,
 				C59994F82781B96700FE1EBA /* Assets.xcassets */,
 				C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */,
+				C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */,
 				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
 			);
 			path = Shared;
@@ -321,6 +340,11 @@
 			dependencies = (
 			);
 			name = "Aarlo-macOS-ShareExtension";
+			packageProductDependencies = (
+				C54210C02796A6F9000F07DC /* SwiftUIX */,
+				C54210C22796A6FF000F07DC /* KeychainAccess */,
+				C54210C42796A704000F07DC /* SwiftJWT */,
+			);
 			productName = "Aarlo-macOS-ShareExtension";
 			productReference = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -412,6 +436,7 @@
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
 				C5B37B29279167150080B988 /* Tag.swift in Sources */,
+				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
 				C547D6662793F16400DEC857 /* TagStore.swift in Sources */,
@@ -439,6 +464,7 @@
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
 				C5B37B2A279167150080B988 /* Tag.swift in Sources */,
+				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
 				C547D6672793F16400DEC857 /* TagStore.swift in Sources */,
@@ -458,6 +484,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C54210BB2796A6B0000F07DC /* TagStore.swift in Sources */,
+				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
+				C54210B92796A6AB000F07DC /* Tag.swift in Sources */,
+				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
+				C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */,
+				C54210BE2796A6D1000F07DC /* Link.swift in Sources */,
+				C54210BA2796A6AE000F07DC /* LinkStore.swift in Sources */,
+				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
+				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -843,6 +878,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C54210C02796A6F9000F07DC /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+		C54210C22796A6FF000F07DC /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C54210C42796A704000F07DC /* SwiftJWT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
+			productName = SwiftJWT;
+		};
 		C5782B372782E53800321138 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
