@@ -14,16 +14,28 @@ class ShareViewController: NSViewController {
 
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
-    
-        // Insert code here to customize the view
+
         let item = self.extensionContext!.inputItems[0] as! NSExtensionItem
         if let attachments = item.attachments {
-            NSLog("Attachments = %@", attachments as NSArray)
-        } else {
-            NSLog("No Attachments")
-        }
+            if let attachment = attachments.first {
+                _ = attachment.loadObject(ofClass: URL.self) { url, error in
+                    guard let url = url else {
+                        return
+                    }
 
-        let addView = LinkAddView(linkStore: linkStore, tagStore: tagStore)
+                    DispatchQueue.main.async {
+                        self.showView(for: url)
+                        print(url)
+                    }
+                }
+            }
+        } else {
+            fatalError("No URL found")
+        }
+    }
+
+    private func showView(for url: URL) {
+        let addView = LinkAddView(linkStore: linkStore, tagStore: tagStore, urlString: url.absoluteString)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

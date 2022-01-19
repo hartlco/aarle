@@ -21,11 +21,12 @@ struct LinkAddView: View {
 
     init(
         linkStore: LinkStore,
-        tagStore: TagStore
+        tagStore: TagStore,
+        urlString: String = ""
     ) {
         self.linkStore = linkStore
         self.tagStore = tagStore
-        self._urlString = State<String>(initialValue: "")
+        self._urlString = State<String>(initialValue: urlString)
         self._title = State(initialValue: "")
         self._description = State(initialValue: "")
         self._tagsString = State(initialValue: "")
