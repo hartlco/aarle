@@ -15,9 +15,18 @@ class ShareViewController: NSViewController {
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
 
+        let propertyList = String(kUTTypePropertyList)
         let item = self.extensionContext!.inputItems[0] as! NSExtensionItem
         if let attachments = item.attachments {
-            if let attachment = attachments.first {
+            // TODO: Parse all items
+            if let attachment = attachments.last {
+                attachment.loadItem(forTypeIdentifier: propertyList, options: nil) { coder , error in
+                    guard let coder = coder,
+                    let model = WebsiteInformation(fromJavaScriptPreprocessing: coder as! NSDictionary) else { return
+                        print("coder: \(coder)")
+                    }
+                    print(model)
+                }
                 _ = attachment.loadObject(ofClass: URL.self) { url, error in
                     guard let url = url else {
                         return
