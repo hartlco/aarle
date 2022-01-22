@@ -94,8 +94,8 @@
 		C5FAE12D279BE360007E763B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
 		C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */; };
 		C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */; };
-		C5FAE133279BE510007E763B /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = C5C11F80279A8FAC006981CE /* ExtensionClass.js */; };
-		C5FAE135279BE68A007E763B /* ExtensionClassIOS.js in Resources */ = {isa = PBXBuildFile; fileRef = C5FAE134279BE68A007E763B /* ExtensionClassIOS.js */; };
+		C5FAE135279BE68A007E763B /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = C5FAE134279BE68A007E763B /* ExtensionClass.js */; };
+		C5FAE148279BE91A007E763B /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = C5C11F80279A8FAC006981CE /* ExtensionClass.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,7 +181,7 @@
 		C5FAE114279BE0ED007E763B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5FAE12C279BE32F007E763B /* Aarlo-iOS-ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo-iOS-ShareExtension.entitlements"; sourceTree = "<group>"; };
 		C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+Async.swift"; sourceTree = "<group>"; };
-		C5FAE134279BE68A007E763B /* ExtensionClassIOS.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ExtensionClassIOS.js; sourceTree = "<group>"; };
+		C5FAE134279BE68A007E763B /* ExtensionClass.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,7 +346,7 @@
 		C5FAE10E279BE0ED007E763B /* Aarlo-iOS-ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				C5FAE134279BE68A007E763B /* ExtensionClassIOS.js */,
+				C5FAE134279BE68A007E763B /* ExtensionClass.js */,
 				C5FAE12C279BE32F007E763B /* Aarlo-iOS-ShareExtension.entitlements */,
 				C5FAE10F279BE0ED007E763B /* ShareViewController.swift */,
 				C5FAE111279BE0ED007E763B /* MainInterface.storyboard */,
@@ -522,6 +522,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */,
+				C5FAE148279BE91A007E763B /* ExtensionClass.js in Resources */,
 				C5C9BB5527895F580005086C /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,8 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FAE113279BE0ED007E763B /* MainInterface.storyboard in Resources */,
-				C5FAE135279BE68A007E763B /* ExtensionClassIOS.js in Resources */,
-				C5FAE133279BE510007E763B /* ExtensionClass.js in Resources */,
+				C5FAE135279BE68A007E763B /* ExtensionClass.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
