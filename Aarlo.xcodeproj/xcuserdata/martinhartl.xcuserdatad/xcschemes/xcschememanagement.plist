@@ -24,10 +24,18 @@
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>iOS-Share-2.xcscheme_^#shared#^_</key>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>C59994FC2781B96700FE1EBA</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5FAE10C279BE0ED007E763B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

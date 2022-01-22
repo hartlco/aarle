@@ -1,13 +1,18 @@
-var ExtensionClass = function() {};
+var MyExtensionJavaScriptClass = function() {};
 
-ExtensionClass.prototype = {
+MyExtensionJavaScriptClass.prototype = {
     run: function(arguments) {
+    // Pass the baseURI of the webpage to the extension.
         arguments.completionFunction({
-            "title": document.title,
-            "hostname": document.location.hostname,
-            "description": document.querySelector('meta[name="description"]').content
+            "baseURI": document.baseURI,
+            "title": document.title
         });
+    },
+
+// Note that the finalize function is only available in iOS.
+    finalize: function(arguments) {
     }
 };
 
-var ExtensionPreprocessingJS = new ExtensionClass;
+// The JavaScript file must contain a global object named "ExtensionPreprocessingJS".
+var ExtensionPreprocessingJS = new MyExtensionJavaScriptClass;

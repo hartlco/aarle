@@ -5,7 +5,8 @@ ExtensionClass.prototype = {
         arguments.completionFunction({
             "title": document.title,
             "hostname": document.location.hostname,
-            "description": document.querySelector('meta[name="description"]').content
+            "description": document.querySelector('meta[name="description"]').content,
+            "baseURI": document.baseURI
         });
     }
 };

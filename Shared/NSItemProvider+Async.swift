@@ -29,6 +29,7 @@ extension NSItemProvider {
 
                     if let coding = coding as? NSDictionary,
                        let model = WebsiteInformation(fromJavaScriptPreprocessing: coding) {
+                        print(coding)
                         return continuation.resume(returning: model)
                     }
 

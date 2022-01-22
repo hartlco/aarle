@@ -10,13 +10,15 @@ import Foundation
 struct WebsiteInformation: Codable {
     var title: String?
     var description: String?
+    var baseURI: String?
 }
 
 extension WebsiteInformation {
     init?(fromJavaScriptPreprocessing dictionary: NSDictionary?) {
         guard let dictionary = dictionary?["NSExtensionJavaScriptPreprocessingResultsKey"] as? [String: String] else { return nil }
 
-        self.title = dictionary["title"] as? String
-        self.description = dictionary["description"] as? String
+        self.title = dictionary["title"]
+        self.description = dictionary["description"]
+        self.baseURI = dictionary["baseURI"]
     }
 }
