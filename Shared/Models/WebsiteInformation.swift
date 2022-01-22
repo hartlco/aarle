@@ -9,6 +9,7 @@ import Foundation
 
 struct WebsiteInformation: Codable {
     var title: String?
+    var description: String?
 }
 
 extension WebsiteInformation {
@@ -16,5 +17,6 @@ extension WebsiteInformation {
         guard let dictionary = dictionary?["NSExtensionJavaScriptPreprocessingResultsKey"] as? [String: String] else { return nil }
 
         self.title = dictionary["title"] as? String
+        self.description = dictionary["description"] as? String
     }
 }

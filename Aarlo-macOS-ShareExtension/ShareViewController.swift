@@ -8,6 +8,52 @@
 import Cocoa
 import SwiftUI
 
+extension NSItemProvider {
+    enum ProviderError: Error {
+        case dataNotConvertible
+    }
+
+    func loadWebsiteInformation() async throws -> WebsiteInformation {
+        try await withCheckedThrowingContinuation { continuation in
+            loadItem(
+                forTypeIdentifier: String(kUTTypePropertyList),
+                options: nil) { coding, error in
+                    if let error = error {
+                        return continuation.resume(throwing: error)
+                    }
+
+                    if let coding = coding as? NSDictionary,
+                       let model = WebsiteInformation(fromJavaScriptPreprocessing: coding) {
+                        return continuation.resume(returning: model)
+                    }
+
+                    return continuation.resume(throwing: ProviderError.dataNotConvertible)
+                }
+        }
+    }
+
+    func loadURL() async throws -> URL {
+        try await withCheckedThrowingContinuation { continuation in
+            guard canLoadObject(ofClass: URL.self) else {
+                return continuation.resume(throwing: ProviderError.dataNotConvertible)
+            }
+
+            _ = loadObject(ofClass: URL.self) { url, error in
+                if let error = error {
+                    return continuation.resume(throwing: error)
+                }
+
+                if let url = url {
+                    return continuation.resume(returning: url)
+                }
+
+                return continuation.resume(throwing: ProviderError.dataNotConvertible)
+            }
+        }
+    }
+}
+
+@MainActor
 class ShareViewController: NSViewController {
     let linkStore = LinkStore(client: .init(), tagScope: nil)
     let tagStore = TagStore(client: .init())
@@ -15,36 +61,44 @@ class ShareViewController: NSViewController {
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
 
-        let propertyList = String(kUTTypePropertyList)
-        let item = self.extensionContext!.inputItems[0] as! NSExtensionItem
-        if let attachments = item.attachments {
-            // TODO: Parse all items
-            if let attachment = attachments.last {
-                attachment.loadItem(forTypeIdentifier: propertyList, options: nil) { coder , error in
-                    guard let coder = coder,
-                    let model = WebsiteInformation(fromJavaScriptPreprocessing: coder as! NSDictionary) else { return
-                        print("coder: \(coder)")
-                    }
-                    print(model)
-                }
-                _ = attachment.loadObject(ofClass: URL.self) { url, error in
-                    guard let url = url else {
-                        return
-                    }
+        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] else {
+            // TODO: Show error
+            return
+        }
 
-                    DispatchQueue.main.async {
-                        self.showView(for: url)
-                        print(url)
-                    }
+        Task {
+            var title: String?
+            var description: String?
+            var url: URL?
+
+            for item in inputItems {
+                for attachment in (item.attachments ?? []) {
+                    let websiteInformation = try? await attachment.loadWebsiteInformation()
+                    title = websiteInformation?.title ?? title
+                    description = websiteInformation?.description ?? description
+
+                    let loadedURL = try? await attachment.loadURL()
+                    url = loadedURL ?? url
                 }
             }
-        } else {
-            fatalError("No URL found")
+
+            self.showView(for: url, title: title, description: description)
         }
     }
 
-    private func showView(for url: URL) {
-        let addView = LinkAddView(linkStore: linkStore, tagStore: tagStore, urlString: url.absoluteString)
+    @MainActor
+    private func showView(for url: URL?, title: String?, description: String?) {
+        let addView = LinkAddView(
+            linkStore: linkStore,
+            tagStore: tagStore,
+            urlString: url?.absoluteString ?? "",
+            title: title ?? "",
+            description: description ?? ""
+        ) {
+            self.send(self)
+        }.onDisappear {
+            self.cancel(self)
+        }
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

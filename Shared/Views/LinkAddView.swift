@@ -19,16 +19,23 @@ struct LinkAddView: View {
     @State var description: String
     @State var tagsString: String
 
+    private var onSaveBlock: (() -> Void)?
+
     init(
         linkStore: LinkStore,
         tagStore: TagStore,
-        urlString: String = ""
+        urlString: String = "",
+        title: String = "",
+        description: String = "",
+        onSaveBlock: (() -> Void)? = nil
     ) {
         self.linkStore = linkStore
         self.tagStore = tagStore
+        self.onSaveBlock = onSaveBlock
+
         self._urlString = State<String>(initialValue: urlString)
-        self._title = State(initialValue: "")
-        self._description = State(initialValue: "")
+        self._title = State(initialValue: title)
+        self._description = State(initialValue: description)
         self._tagsString = State(initialValue: "")
     }
 
@@ -67,7 +74,7 @@ struct LinkAddView: View {
         }
         .padding()
     }
-
+    
     private var saveButtonDisabled: Bool {
         guard !urlString.isEmpty,
               URL(string: urlString) != nil
@@ -99,6 +106,7 @@ struct LinkAddView: View {
         Task {
             try await linkStore.add(link: newLink)
             presentationMode.dismiss()
+            self.onSaveBlock?()
         }
     }
 }
