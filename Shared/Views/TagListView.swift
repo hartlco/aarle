@@ -63,6 +63,7 @@ struct TagListView: View {
                 }
             }
         }
+        .navigationTitle("Tags")
         .toolbar {
             ToolbarItem(placement: navigationBarItemPlacement) {
                 Button("Load") {

@@ -11,6 +11,7 @@ import Combine
 final class LinkStore: ObservableObject {
     @Published var links: [Link]
     @Published var isLoading: Bool
+    @Published var canLoadMore = false
 
     private let client: ShaarliClient
     private let tagScope: String?
@@ -42,23 +43,32 @@ final class LinkStore: ObservableObject {
 
     @MainActor func load() async throws {
         guard isLoading == false else { return }
+
+        defer {
+            isLoading = false
+        }
+
         isLoading = true
 
         links = try await client.load(filteredByTags: scopedTages)
 
-        isLoading = false
+        canLoadMore = links.count == client.pageSize
     }
 
     @MainActor func loadMoreIfNeeded(link: Link) async throws {
         guard isLoading == false else { return }
         guard link.id == links.last?.id else { return }
 
+        defer {
+            isLoading = false
+        }
+
         isLoading = true
 
         let links = try await client.loadMore(offset: links.count, filteredByTags: scopedTages)
         self.links.append(contentsOf: links)
 
-        isLoading = false
+        canLoadMore = links.count == client.pageSize
     }
 
     @MainActor func add(link: PostLink) async throws {

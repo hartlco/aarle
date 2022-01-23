@@ -13,6 +13,8 @@ final class ShaarliClient {
         case unknownURL
     }
 
+    let pageSize = 20
+
     func load(filteredByTags tags: [String] = []) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL

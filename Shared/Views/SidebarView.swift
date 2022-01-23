@@ -10,6 +10,7 @@ import SwiftUIX
 
 struct SidebarView: View {
     @State private var isDefaultItemActive = true
+    @State var showsSettings = false
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
@@ -52,7 +53,26 @@ struct SidebarView: View {
                     }
                 }
             }.listStyle(SidebarListStyle())
+            #if os(iOS)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showsSettings = true
+                        } label: {
+                            Label("Settings", systemImage: "gear")
+                        }
+                        .sheet(
+                            isPresented: $showsSettings,
+                            onDismiss: nil,
+                            content: {
+                                SettingsView()
+                            }
+                        )
+                    }
+                }
+            #endif
         }
+        
     }
 }
 

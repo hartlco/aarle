@@ -11,7 +11,6 @@ import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    @State var showsSettings = false
     @State var showsAddView = false
     @State var settingsField = ""
     @State var showingEditLink: Link?
@@ -38,67 +37,59 @@ struct ContentView: View {
     }
 
     var body: some View {
-        List(linkStore.links, id: \.self, selection: $selection) { link in
-            NavigationLink {
-                ItemDetailView(link: link, linkStore: linkStore, tagStore: tagStore)
-            } label: {
-                LinkItemView(link: link)
-            }
-            .contextMenu {
-                Button("Edit", action: { showingEditLink = link })
-                Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
-                Button(role: .destructive) {
-                    Task {
-                        try await linkStore.delete(link: link)
+        List(selection: $selection) {
+            ForEach(linkStore.links) { link in
+                NavigationLink(
+                    destination: ItemDetailView(link: link, linkStore: linkStore, tagStore: tagStore),
+                    tag: link,
+                    selection: $selection,
+                    label: { LinkItemView(link: link) }
+                )
+                .contextMenu {
+                    Button("Edit", action: { showingEditLink = link })
+                    Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
+                    Button(role: .destructive) {
+                        Task {
+                            try await linkStore.delete(link: link)
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
-                } label: {
-                    Label("Delete", systemImage: "trash")
                 }
             }
+            if linkStore.canLoadMore {
+                HStack {
+                    Spacer()
+                    Button {
+                        Task {
+                            do {
+                                guard let lastLink = linkStore.links.last else { return }
+                                try await linkStore.loadMoreIfNeeded(link: lastLink)
+                            } catch {
+                                print(error)
+                            }
+                        }
+                    } label: {
+                        Label("Load More", systemImage: "ellipsis")
+                    }.buttonStyle(BorderlessButtonStyle()).padding()
+                    Spacer()
+                }
+            }
+        }
+        // TODO: Add macOS shortcut / menu item
+        .refreshable {
+            try? await linkStore.load()
         }
         .listStyle(PlainListStyle())
         .popover(item: $showingEditLink) { link in
             LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
         }
         .toolbar {
-            ToolbarItem(placement: navigationBarItemPlacement) {
-                Button("Load") {
-                    Task {
-                        do {
-                            try await linkStore.load()
-                        } catch let error {
-                            print(error)
-                        }
-                    }
-                }
-            }
-            ToolbarItem(placement: navigationBarItemPlacement) {
-                Button("Settings") {
-                    showsSettings = true
-                }
-                .sheet(
-                    isPresented: $showsSettings,
-                    onDismiss: nil,
-                    content: {
-                        SettingsView()
-                    }
-                )
-            }
-            ToolbarItem(placement: bottomBarItemPlacement) {
-                Button("Load More") {
-                    Task {
-                        do {
-                            guard let lastLink = linkStore.links.last else { return }
-                            try await linkStore.loadMoreIfNeeded(link: lastLink)
-                        } catch {
-                            print(error)
-                        }
-                    }
-                }
-            }
-            ToolbarItem(placement: bottomBarItemPlacement) {
-                Button("Add") {
+            ToolbarItem {
+                Button {
                     showsAddView = true
+                } label: {
+                    Label("Add", systemImage: "plus")
                 }
                 .sheet(
                     isPresented: $showsAddView,
@@ -127,14 +118,6 @@ struct ContentView: View {
         return .automatic
         #else
         return .navigationBarTrailing
-        #endif
-    }
-
-    private var bottomBarItemPlacement: ToolbarItemPlacement {
-        #if os(macOS)
-        return .automatic
-        #else
-        return .bottomBar
         #endif
     }
 }
