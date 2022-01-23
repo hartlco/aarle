@@ -112,7 +112,7 @@ struct ContentView: View {
                 )
             }
         }
-        .multiplatformNavigationBarTitle(title)
+        .navigationTitle(title)
         .task {
             do {
                 try await linkStore.load()
@@ -135,16 +135,6 @@ struct ContentView: View {
         return .automatic
         #else
         return .bottomBar
-        #endif
-    }
-}
-
-extension View {
-    func multiplatformNavigationBarTitle(_ title: String) -> some View {
-        #if os(iOS)
-        self.navigationTitle(title)
-        #elseif os(macOS)
-        self
         #endif
     }
 }

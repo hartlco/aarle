@@ -14,6 +14,14 @@ struct TagListView: View {
     let webViewData = WebViewData(url: nil)
     @State var selectedLink: Link?
 
+    private var navigationBarItemPlacement: ToolbarItemPlacement {
+        #if os(macOS)
+        return .automatic
+        #else
+        return .navigationBarTrailing
+        #endif
+    }
+
     var body: some View {
         List(tagStore.tags) { tag in
             NavigationLink {
@@ -51,6 +59,19 @@ struct TagListView: View {
                         tagStore.remove(favoriteTag: tag)
                     } else {
                         tagStore.add(favoriteTag: tag)
+                    }
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: navigationBarItemPlacement) {
+                Button("Load") {
+                    Task {
+                        do {
+                            try await tagStore.loadTags()
+                        } catch let error {
+                            print(error)
+                        }
                     }
                 }
             }

@@ -74,7 +74,7 @@ struct LinkAddView: View {
         }
         .padding()
     }
-    
+
     private var saveButtonDisabled: Bool {
         guard !urlString.isEmpty,
               URL(string: urlString) != nil

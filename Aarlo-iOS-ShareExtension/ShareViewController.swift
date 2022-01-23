@@ -11,7 +11,6 @@ import Social
 
 final class ShareViewController: UIViewController {
     let linkStore = LinkStore(client: .init(), tagScope: nil)
-    // TODO: Test if fav works
     let tagStore = TagStore(client: .init())
 
     override func viewDidLoad() {
