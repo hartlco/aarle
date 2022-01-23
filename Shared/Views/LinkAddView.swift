@@ -40,6 +40,18 @@ struct LinkAddView: View {
     }
 
     var body: some View {
+        #if os(macOS)
+        form
+            .padding()
+        #else
+        NavigationView {
+            form
+                .navigationTitle("Add Link")
+        }
+        #endif
+    }
+
+    var form: some View {
         Form {
             Section(header: "Main Information") {
                 TextField("URL:", text: $urlString)
@@ -72,7 +84,6 @@ struct LinkAddView: View {
                 save()
             }.disabled(saveButtonDisabled)
         }
-        .padding()
     }
 
     private var saveButtonDisabled: Bool {

@@ -12,6 +12,8 @@ struct ItemDetailView: View {
     @ObservedObject private var linkStore: LinkStore
     @ObservedObject private var tagStore: TagStore
 
+    @State var showSidebar = false
+
     init(
         link: Link,
         linkStore: LinkStore,
@@ -28,8 +30,20 @@ struct ItemDetailView: View {
 #if os(macOS)
         HSplitView {
             WebView(data: WebViewData(url: link.url))
-            LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
-                .frame(minWidth: 180, idealWidth: 400, maxWidth: 500)
+                .toolbar {
+                    Spacer()
+                    Button {
+                        showSidebar.toggle()
+                    } label: {
+                        Label("Show Edit Link", systemImage: "sidebar.right")
+                    }
+                    // TODO: Add keyboard shortcut
+
+                }
+            if showSidebar {
+                LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
+                    .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
+            }
         }
 #else
         WebView(data: WebViewData(url: link.url))
