@@ -27,16 +27,18 @@ struct LinkItemView: View {
                 Text(description)
                     .font(.body)
             }
-            LazyHGrid(rows: columns, spacing: 4) {
-                ForEach(link.tags, id: \.self) { item in
-                    Text(item)
-                        .padding(EdgeInsets(top: 2, leading: 4, bottom: 2, trailing: 4))
-                        .background(.faintTint)
-                        .cornerRadius(4.0)
-                }
+            if !tagsString.isEmpty {
+                Text(tagsString)
+                    .font(.footnote)
+                    .foregroundColor(.secondaryLabel)
+                    .padding(2.0)
             }
         }
         .padding(4.0)
+    }
+
+    private var tagsString: String {
+        return link.tags.joined(separator: " • ")
     }
 }
 

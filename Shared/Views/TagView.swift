@@ -16,12 +16,10 @@ struct TagView: View {
         HStack {
             Text(tag.name)
                 .font(.headline)
+            Text(String("• \(tag.occurrences)"))
+                .font(.footnote)
+                .foregroundColor(.secondaryLabel)
             Spacer()
-            Text(String(tag.occurrences))
-                .font(.caption)
-                .padding(4.0)
-                .background(.faintTint)
-                .cornerRadius(6.0)
             Button {
                 favorite()
             } label: {

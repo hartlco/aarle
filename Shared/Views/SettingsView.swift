@@ -27,8 +27,18 @@ struct SettingsView: View {
 
 
     var body: some View {
+        #if os(macOS)
+        form
+            .padding()
+        #else
+        NavigationView {
+            form
+        }
+        #endif
+    }
+
+    var form: some View {
         Form {
-            Text("Settings")
             TextField("Key", text: $settingsField)
             TextField("API Endpoint:", text: $apiEndpointField)
             Button("Save") {
@@ -37,6 +47,6 @@ struct SettingsView: View {
                 Self.keychain[Self.endpointKey] = apiEndpointField
             }
         }
-        .padding()
+        .navigationTitle("Settings")
     }
 }
