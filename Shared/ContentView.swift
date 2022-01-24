@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var showsAddView = false
     @State var settingsField = ""
     @State var showingEditLink: Link?
-    @Binding var selection: Link?
+    @Binding var appState: AppState
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
@@ -27,22 +27,27 @@ struct ContentView: View {
         linkStore: LinkStore,
         tagStore: TagStore,
         pasteboard: Pasteboard = DefaultPasteboard(),
-        linkSelection: Binding<Link?>
+        appState: Binding<AppState>
     ) {
         self.title = title
         self.linkStore = linkStore
         self.tagStore = tagStore
         self.pasteboard = pasteboard
-        self._selection = linkSelection
+        self._appState = appState
     }
 
     var body: some View {
-        List(selection: $selection) {
+        List(selection: $appState.selectedLink) {
             ForEach(linkStore.links) { link in
                 NavigationLink(
-                    destination: ItemDetailView(link: link, linkStore: linkStore, tagStore: tagStore),
+                    destination: ItemDetailView(
+                        link: link,
+                        linkStore: linkStore,
+                        tagStore: tagStore,
+                        appState: $appState
+                    ),
                     tag: link,
-                    selection: $selection,
+                    selection: $appState.selectedLink,
                     label: { LinkItemView(link: link) }
                 )
                 .contextMenu {

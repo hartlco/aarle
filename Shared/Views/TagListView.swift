@@ -13,6 +13,7 @@ struct TagListView: View {
 
     let webViewData = WebViewData(url: nil)
     @State var selectedLink: Link?
+    @Binding var appState: AppState
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
         #if os(macOS)
@@ -35,7 +36,7 @@ struct TagListView: View {
                             tagScope: tag.name
                         ),
                         tagStore: tagStore,
-                        linkSelection: $selectedLink
+                        appState: $appState
                     )
                     WebView(data: webViewData)
                 }
@@ -90,7 +91,7 @@ struct TagListView: View {
 #if DEBUG
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
-        TagListView(tagStore: .mock)
+        TagListView(tagStore: .mock, appState: AppState.stateMock)
     }
 }
 #endif

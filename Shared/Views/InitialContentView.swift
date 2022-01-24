@@ -18,14 +18,14 @@ struct InitialContentView: View {
     let readLaterLinkStore = LinkStore(client: ShaarliClient(), tagScope: "toread")
     let webViewData = WebViewData(url: nil)
 
-    @Binding var selectedLink: Link?
+    @Binding var appState: AppState
 
     var body: some View {
         if compactEnvironment {
-            SidebarView(linkStore: linkStore, tagStore: tagStore, selection: $selectedLink)
+            SidebarView(linkStore: linkStore, tagStore: tagStore, appState: $appState)
                 .navigationTitle("Aarlo")
         } else {
-            SidebarView(linkStore: linkStore, tagStore: tagStore, selection: $selectedLink)
+            SidebarView(linkStore: linkStore, tagStore: tagStore, appState: $appState)
                 .navigationTitle("Aarlo")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)

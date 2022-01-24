@@ -12,16 +12,18 @@ struct ItemDetailView: View {
     @ObservedObject private var linkStore: LinkStore
     @ObservedObject private var tagStore: TagStore
 
-    @State var showSidebar = false
+    @Binding var appState: AppState
 
     init(
         link: Link,
         linkStore: LinkStore,
-        tagStore: TagStore
+        tagStore: TagStore,
+        appState: Binding<AppState>
     ) {
         self.link = link
         self.linkStore = linkStore
         self.tagStore = tagStore
+        self._appState = appState
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -33,14 +35,14 @@ struct ItemDetailView: View {
                 .toolbar {
                     Spacer()
                     Button {
-                        showSidebar.toggle()
+                        appState.showLinkEditorSidebar.toggle()
                     } label: {
                         Label("Show Edit Link", systemImage: "sidebar.right")
                     }
                     // TODO: Add keyboard shortcut
 
                 }
-            if showSidebar {
+            if appState.showLinkEditorSidebar {
                 LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
@@ -84,7 +86,12 @@ struct ItemDetailView: View {
 #if DEBUG
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemDetailView(link: Link.mock, linkStore: LinkStore.mock, tagStore: .mock)
+        ItemDetailView(
+            link: Link.mock,
+            linkStore: LinkStore.mock,
+            tagStore: .mock,
+            appState: AppState.stateMock
+        )
     }
 }
 #endif
