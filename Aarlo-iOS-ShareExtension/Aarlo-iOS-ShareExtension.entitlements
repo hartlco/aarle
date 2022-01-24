@@ -6,5 +6,9 @@
 	<array>
 		<string>group.co.hartl.aarlo</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)co.hartl.Aarlo</string>
+	</array>
 </dict>
 </plist>
