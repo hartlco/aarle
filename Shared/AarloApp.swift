@@ -7,24 +7,26 @@
 
 import SwiftUI
 
-struct AppState {
-    var selectedLink: Link?
-    var showLinkEditorSidebar = false
+// TODO: inject as env: https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-environmentobject-to-share-data-between-views
+final class AppState: ObservableObject {
+    @Published var selectedLink: Link?
+    @Published var showLinkEditorSidebar = false
 #if DEBUG
-    static let stateMock = State(initialValue: AppState()).projectedValue
+    static let stateMock = AppState()
 #endif
 }
 
 @main
 struct AarloApp: App {
     let pasteboard = DefaultPasteboard()
-    @State var appState = AppState()
+    var appState = AppState()
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                InitialContentView(appState: $appState)
+                InitialContentView()
             }
+            .environmentObject(appState)
             .tint(.tint)
         }
         .commands {

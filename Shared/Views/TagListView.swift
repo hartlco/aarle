@@ -12,8 +12,6 @@ struct TagListView: View {
     @ObservedObject var tagStore: TagStore
 
     let webViewData = WebViewData(url: nil)
-    @State var selectedLink: Link?
-    @Binding var appState: AppState
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
         #if os(macOS)
@@ -35,8 +33,7 @@ struct TagListView: View {
                             client: ShaarliClient(),
                             tagScope: tag.name
                         ),
-                        tagStore: tagStore,
-                        appState: $appState
+                        tagStore: tagStore
                     )
                     WebView(data: webViewData)
                 }
@@ -47,8 +44,7 @@ struct TagListView: View {
                         client: ShaarliClient(),
                         tagScope: tag.name
                     ),
-                    tagStore: tagStore,
-                    linkSelection: $selectedLink
+                    tagStore: tagStore
                 )
                 #endif
             } label: {
@@ -91,7 +87,8 @@ struct TagListView: View {
 #if DEBUG
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
-        TagListView(tagStore: .mock, appState: AppState.stateMock)
+        TagListView(tagStore: .mock)
+            .environmentObject(AppState.stateMock)
     }
 }
 #endif

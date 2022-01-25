@@ -13,8 +13,10 @@ import WebKit
 struct ContentView: View {
     @State var showsAddView = false
     @State var settingsField = ""
+    // TODO: Add to AppState
     @State var showingEditLink: Link?
-    @Binding var appState: AppState
+
+    @EnvironmentObject var appState: AppState
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
@@ -26,25 +28,22 @@ struct ContentView: View {
         title: String,
         linkStore: LinkStore,
         tagStore: TagStore,
-        pasteboard: Pasteboard = DefaultPasteboard(),
-        appState: Binding<AppState>
+        pasteboard: Pasteboard = DefaultPasteboard()
     ) {
         self.title = title
         self.linkStore = linkStore
         self.tagStore = tagStore
         self.pasteboard = pasteboard
-        self._appState = appState
     }
 
     var body: some View {
-        List(selection: $appState.selectedLink) {
+        List() {
             ForEach(linkStore.links) { link in
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link,
                         linkStore: linkStore,
-                        tagStore: tagStore,
-                        appState: $appState
+                        tagStore: tagStore
                     ),
                     tag: link,
                     selection: $appState.selectedLink,
@@ -109,11 +108,16 @@ struct ContentView: View {
             }
         }
         .navigationTitle(title)
-        .task {
-            do {
-                try await linkStore.load()
-            } catch let error {
-                print(error)
+        .onAppear {
+            if !linkStore.links.isEmpty {
+                return
+            }
+            Task {
+                do {
+                    try await linkStore.load()
+                } catch let error {
+                    print(error)
+                }
             }
         }
     }

@@ -12,20 +12,19 @@ struct InitialContentView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
 
-    let linkStore = LinkStore(client: ShaarliClient())
-    let tagStore = TagStore(client: ShaarliClient())
+    // TODO: Inject them from the AppState
+    @StateObject var linkStore = LinkStore(client: ShaarliClient())
+    @StateObject var tagStore = TagStore(client: ShaarliClient())
     // TODO: Make tagScope configurable
     let readLaterLinkStore = LinkStore(client: ShaarliClient(), tagScope: "toread")
     let webViewData = WebViewData(url: nil)
 
-    @Binding var appState: AppState
-
     var body: some View {
         if compactEnvironment {
-            SidebarView(linkStore: linkStore, tagStore: tagStore, appState: $appState)
+            SidebarView(linkStore: linkStore, tagStore: tagStore)
                 .navigationTitle("Aarlo")
         } else {
-            SidebarView(linkStore: linkStore, tagStore: tagStore, appState: $appState)
+            SidebarView(linkStore: linkStore, tagStore: tagStore)
                 .navigationTitle("Aarlo")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)

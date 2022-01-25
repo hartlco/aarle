@@ -15,8 +15,6 @@ struct SidebarView: View {
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
 
-    @Binding var appState: AppState
-
     var body: some View {
         ZStack {
             List {
@@ -25,8 +23,7 @@ struct SidebarView: View {
                         destination: ContentView(
                             title: "Links",
                             linkStore: linkStore,
-                            tagStore: tagStore,
-                            appState: $appState
+                            tagStore: tagStore
                         ),
                         isActive: $isDefaultItemActive
                     ) {
@@ -34,8 +31,7 @@ struct SidebarView: View {
                     }
                     NavigationLink(
                         destination: TagListView(
-                            tagStore: tagStore,
-                            appState: $appState
+                            tagStore: tagStore
                         )
                     ) {
                         Label("Tags", systemImage: "tag")
@@ -47,8 +43,7 @@ struct SidebarView: View {
                             destination: ContentView(
                                 title: tag.name,
                                 linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
-                                tagStore: tagStore,
-                                appState: $appState
+                                tagStore: tagStore
                             )
                         ) {
                             Label(tag.name, systemImage: "tag")
@@ -84,9 +79,8 @@ struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(
             linkStore: LinkStore.mock,
-            tagStore: TagStore.mock,
-            appState: AppState.stateMock
-        )
+            tagStore: TagStore.mock
+        ).environmentObject(AppState.stateMock)
     }
 }
 #endif

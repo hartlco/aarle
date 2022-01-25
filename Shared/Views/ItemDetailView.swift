@@ -12,18 +12,16 @@ struct ItemDetailView: View {
     @ObservedObject private var linkStore: LinkStore
     @ObservedObject private var tagStore: TagStore
 
-    @Binding var appState: AppState
+    @EnvironmentObject var appState: AppState
 
     init(
         link: Link,
         linkStore: LinkStore,
-        tagStore: TagStore,
-        appState: Binding<AppState>
+        tagStore: TagStore
     ) {
         self.link = link
         self.linkStore = linkStore
         self.tagStore = tagStore
-        self._appState = appState
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -89,9 +87,8 @@ struct ItemDetailView_Previews: PreviewProvider {
         ItemDetailView(
             link: Link.mock,
             linkStore: LinkStore.mock,
-            tagStore: .mock,
-            appState: AppState.stateMock
-        )
+            tagStore: .mock
+        ).environmentObject(AppState.stateMock)
     }
 }
 #endif
