@@ -11,7 +11,6 @@ import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    @State var showsAddView = false
     @State var settingsField = ""
     // TODO: Add to AppState
     @State var showingEditLink: Link?
@@ -37,7 +36,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        List() {
+        List(selection: $appState.selectedLink) {
             ForEach(linkStore.links) { link in
                 NavigationLink(
                     destination: ItemDetailView(
@@ -91,12 +90,12 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    showsAddView = true
+                    appState.showsAddView = true
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
                 .sheet(
-                    isPresented: $showsAddView,
+                    isPresented: $appState.showsAddView,
                     onDismiss: nil,
                     content: {
                         LinkAddView(

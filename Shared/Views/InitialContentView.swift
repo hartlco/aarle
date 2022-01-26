@@ -13,8 +13,8 @@ struct InitialContentView: View {
     #endif
 
     // TODO: Inject them from the AppState
-    @StateObject var linkStore = LinkStore(client: ShaarliClient())
-    @StateObject var tagStore = TagStore(client: ShaarliClient())
+    @ObservedObject var linkStore: LinkStore
+    @ObservedObject var tagStore: TagStore
     // TODO: Make tagScope configurable
     let readLaterLinkStore = LinkStore(client: ShaarliClient(), tagScope: "toread")
     let webViewData = WebViewData(url: nil)

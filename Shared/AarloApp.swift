@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 // TODO: inject as env: https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-environmentobject-to-share-data-between-views
 final class AppState: ObservableObject {
     @Published var selectedLink: Link?
     @Published var showLinkEditorSidebar = false
+    @Published var showsAddView = false
 #if DEBUG
     static let stateMock = AppState()
 #endif
@@ -19,12 +21,14 @@ final class AppState: ObservableObject {
 @main
 struct AarloApp: App {
     let pasteboard = DefaultPasteboard()
-    var appState = AppState()
+    @ObservedObject var appState = AppState()
+    @StateObject var linkStore = LinkStore(client: ShaarliClient())
+    @StateObject var tagStore = TagStore(client: ShaarliClient())
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                InitialContentView()
+                InitialContentView(linkStore: linkStore, tagStore: tagStore)
             }
             .environmentObject(appState)
             .tint(.tint)
@@ -41,6 +45,7 @@ struct AarloApp: App {
                     appState.showLinkEditorSidebar.toggle()
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
+                .disabled(appState.selectedLink == nil)
             }
             CommandMenu("Link") {
                 Button("Copy link to clipboard") {
@@ -51,9 +56,16 @@ struct AarloApp: App {
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(false)
+                .disabled(appState.selectedLink == nil)
             }
         }
+        // Use https://developer.apple.com/forums/thread/651592 to present add window only on macOS
+//        WindowGroup {
+//            LinkAddView(
+//                linkStore: linkStore,
+//                tagStore: tagStore
+//            )
+//        }
 #if os(macOS)
         Settings {
             SettingsView()
