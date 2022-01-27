@@ -150,6 +150,7 @@
 		C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Constants.swift"; sourceTree = "<group>"; };
 		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
+		C56A379627A1DCA2005A5B8E /* Aarlo--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarlo--macOS--Info.plist"; sourceTree = "<group>"; };
 		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C56A379627A1DCA2005A5B8E /* Aarlo--macOS--Info.plist */,
 				C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */,
 				C59994F52781B96500FE1EBA /* Shared */,
 				C59995042781B96700FE1EBA /* macOS */,
@@ -860,6 +862,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarlo--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -889,6 +892,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarlo--macOS--Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

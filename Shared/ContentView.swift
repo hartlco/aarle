@@ -94,6 +94,7 @@ struct ContentView: View {
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
+#if os(iOS)
                 .sheet(
                     isPresented: $appState.showsAddView,
                     onDismiss: nil,
@@ -104,6 +105,7 @@ struct ContentView: View {
                         )
                     }
                 )
+#endif
             }
         }
         .navigationTitle(title)

@@ -12,7 +12,16 @@ import SwiftUIX
 final class AppState: ObservableObject {
     @Published var selectedLink: Link?
     @Published var showLinkEditorSidebar = false
-    @Published var showsAddView = false
+    @Published var showsAddView = false {
+        didSet {
+#if os(macOS)
+            // TODO: Introduce Reducer to handle changes/side-effect to the state
+            if showsAddView == true {
+                WindowRoutes.addLink.open()
+            }
+#endif
+        }
+    }
 #if DEBUG
     static let stateMock = AppState()
 #endif
@@ -24,6 +33,8 @@ struct AarloApp: App {
     @ObservedObject var appState = AppState()
     @StateObject var linkStore = LinkStore(client: ShaarliClient())
     @StateObject var tagStore = TagStore(client: ShaarliClient())
+
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -59,17 +70,47 @@ struct AarloApp: App {
                 .disabled(appState.selectedLink == nil)
             }
         }
-        // Use https://developer.apple.com/forums/thread/651592 to present add window only on macOS
-//        WindowGroup {
-//            LinkAddView(
-//                linkStore: linkStore,
-//                tagStore: tagStore
-//            )
-//        }
+        LinkAddScene(
+            linkStore: linkStore,
+            tagStore: tagStore,
+            appState: appState
+        ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
+
 #if os(macOS)
         Settings {
             SettingsView()
         }
 #endif
     }
+}
+
+struct LinkAddScene: Scene {
+    @Environment(\.scenePhase) private var scenePhase
+
+    @ObservedObject var linkStore: LinkStore
+    @ObservedObject var tagStore: TagStore
+    @ObservedObject var appState: AppState
+
+    var body: some Scene {
+        WindowGroup {
+            LinkAddView(
+                linkStore: linkStore,
+                tagStore: tagStore
+            ).onDisappear {
+                appState.showsAddView = false
+            }
+        }
+    }
+}
+
+enum WindowRoutes: String {
+    case addLink
+
+    #if os(macOS)
+    func open() {
+        if let url = URL(string: "aarli://\(self.rawValue)") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    #endif
 }
