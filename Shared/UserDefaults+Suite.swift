@@ -9,7 +9,7 @@ import Foundation
 
 extension UserDefaults {
     static var suite: UserDefaults {
-        guard let defaults = UserDefaults(suiteName: "group.co.hartl.aarlo") else {
+        guard let defaults = UserDefaults(suiteName: "group.co.hartl.Aarle") else {
             fatalError("UserDefaults suite could not be created")
         }
 

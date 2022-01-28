@@ -21,11 +21,14 @@ struct InitialContentView: View {
 
     var body: some View {
         if compactEnvironment {
-            SidebarView(linkStore: linkStore, tagStore: tagStore)
-                .navigationTitle("Aarlo")
+            SidebarView(
+                isDefaultItemActive: false,
+                linkStore: linkStore,
+                tagStore: tagStore
+            ).navigationTitle("aarle")
         } else {
             SidebarView(linkStore: linkStore, tagStore: tagStore)
-                .navigationTitle("Aarlo")
+                .navigationTitle("aarle")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)
         }

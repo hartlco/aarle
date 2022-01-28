@@ -4,11 +4,11 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.co.hartl.aarlo</string>
+		<string>group.co.hartl.Aarle</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)co.hartl.Aarlo</string>
+		<string>$(AppIdentifierPrefix)co.hartl.Aarle</string>
 	</array>
 </dict>
 </plist>

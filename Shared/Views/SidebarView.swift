@@ -9,11 +9,21 @@ import SwiftUI
 import SwiftUIX
 
 struct SidebarView: View {
-    @State private var isDefaultItemActive = true
+    @State private var isDefaultItemActive: Bool
     @State var showsSettings = false
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
+
+    init(
+        isDefaultItemActive: Bool = true,
+        linkStore: LinkStore,
+        tagStore: TagStore
+    ) {
+        self._isDefaultItemActive = State(initialValue: isDefaultItemActive)
+        self.linkStore = linkStore
+        self.tagStore = tagStore
+    }
 
     var body: some View {
         ZStack {
@@ -78,6 +88,7 @@ struct SidebarView: View {
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(
+            isDefaultItemActive: false,
             linkStore: LinkStore.mock,
             tagStore: TagStore.mock
         )

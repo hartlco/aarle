@@ -71,7 +71,7 @@
 		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
-		C5C9BB5F27895F580005086C /* Aarlo-macOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C5C9BB5F27895F580005086C /* Aarle-macOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
@@ -80,7 +80,7 @@
 		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 		C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE10F279BE0ED007E763B /* ShareViewController.swift */; };
 		C5FAE113279BE0ED007E763B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5FAE111279BE0ED007E763B /* MainInterface.storyboard */; };
-		C5FAE117279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5FAE10D279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C5FAE117279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
@@ -124,7 +124,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C5C9BB5F27895F580005086C /* Aarlo-macOS-ShareExtension.appex in Embed App Extensions */,
+				C5C9BB5F27895F580005086C /* Aarle-macOS-ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +135,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C5FAE117279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex in Embed App Extensions */,
+				C5FAE117279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,8 +160,8 @@
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C59994F82781B96700FE1EBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C59994FD2781B96700FE1EBA /* aarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C59995032781B96700FE1EBA /* Aarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C59994FD2781B96700FE1EBA /* aarle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarle.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C59995032781B96700FE1EBA /* aarle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995052781B96700FE1EBA /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		C59995152781B9E200FE1EBA /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 		C5B37B28279167150080B988 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
 		C5C11F82279A9485006981CE /* WebsiteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteInformation.swift; sourceTree = "<group>"; };
-		C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarlo-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		C5C9BB5627895F580005086C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C5C9BB5927895F580005086C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aarlo_macOS_ShareExtension.entitlements; sourceTree = "<group>"; };
 		C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
-		C5FAE10D279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarlo-iOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-iOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FAE10F279BE0ED007E763B /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C5FAE112279BE0ED007E763B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		C5FAE114279BE0ED007E763B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -302,10 +302,10 @@
 		C59994FE2781B96700FE1EBA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C59994FD2781B96700FE1EBA /* aarlo.app */,
-				C59995032781B96700FE1EBA /* Aarlo.app */,
-				C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */,
-				C5FAE10D279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex */,
+				C59994FD2781B96700FE1EBA /* aarle.app */,
+				C59995032781B96700FE1EBA /* aarle.app */,
+				C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */,
+				C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -372,9 +372,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C59994FC2781B96700FE1EBA /* Aarlo (iOS) */ = {
+		C59994FC2781B96700FE1EBA /* Aarle (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C599950E2781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarlo (iOS)" */;
+			buildConfigurationList = C599950E2781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarle (iOS)" */;
 			buildPhases = (
 				C59994F92781B96700FE1EBA /* Sources */,
 				C59994FA2781B96700FE1EBA /* Frameworks */,
@@ -386,19 +386,19 @@
 			dependencies = (
 				C5FAE116279BE0ED007E763B /* PBXTargetDependency */,
 			);
-			name = "Aarlo (iOS)";
+			name = "Aarle (iOS)";
 			packageProductDependencies = (
 				C599951C2781C93000FE1EBA /* SwiftJWT */,
 				C5782B392782E82800321138 /* KeychainAccess */,
 				C5F71F822784CA7A009CF84C /* SwiftUIX */,
 			);
 			productName = "Aarlo (iOS)";
-			productReference = C59994FD2781B96700FE1EBA /* aarlo.app */;
+			productReference = C59994FD2781B96700FE1EBA /* aarle.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C59995022781B96700FE1EBA /* Aarlo (macOS) */ = {
+		C59995022781B96700FE1EBA /* Aarle (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C59995112781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarlo (macOS)" */;
+			buildConfigurationList = C59995112781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarle (macOS)" */;
 			buildPhases = (
 				C59994FF2781B96700FE1EBA /* Sources */,
 				C59995002781B96700FE1EBA /* Frameworks */,
@@ -410,19 +410,19 @@
 			dependencies = (
 				C5C9BB5E27895F580005086C /* PBXTargetDependency */,
 			);
-			name = "Aarlo (macOS)";
+			name = "Aarle (macOS)";
 			packageProductDependencies = (
 				C599951F2781C93900FE1EBA /* SwiftJWT */,
 				C5782B372782E53800321138 /* KeychainAccess */,
 				C5F71F842784CA96009CF84C /* SwiftUIX */,
 			);
 			productName = "Aarlo (macOS)";
-			productReference = C59995032781B96700FE1EBA /* Aarlo.app */;
+			productReference = C59995032781B96700FE1EBA /* aarle.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */ = {
+		C5C9BB5127895F580005086C /* Aarle-macOS-ShareExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarlo-macOS-ShareExtension" */;
+			buildConfigurationList = C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarle-macOS-ShareExtension" */;
 			buildPhases = (
 				C5C9BB4E27895F580005086C /* Sources */,
 				C5C9BB4F27895F580005086C /* Frameworks */,
@@ -432,19 +432,19 @@
 			);
 			dependencies = (
 			);
-			name = "Aarlo-macOS-ShareExtension";
+			name = "Aarle-macOS-ShareExtension";
 			packageProductDependencies = (
 				C54210C02796A6F9000F07DC /* SwiftUIX */,
 				C54210C22796A6FF000F07DC /* KeychainAccess */,
 				C54210C42796A704000F07DC /* SwiftJWT */,
 			);
 			productName = "Aarlo-macOS-ShareExtension";
-			productReference = C5C9BB5227895F580005086C /* Aarlo-macOS-ShareExtension.appex */;
+			productReference = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		C5FAE10C279BE0ED007E763B /* Aarlo-iOS-ShareExtension */ = {
+		C5FAE10C279BE0ED007E763B /* Aarle-iOS-ShareExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C5FAE11B279BE0ED007E763B /* Build configuration list for PBXNativeTarget "Aarlo-iOS-ShareExtension" */;
+			buildConfigurationList = C5FAE11B279BE0ED007E763B /* Build configuration list for PBXNativeTarget "Aarle-iOS-ShareExtension" */;
 			buildPhases = (
 				C5FAE109279BE0ED007E763B /* Sources */,
 				C5FAE10A279BE0ED007E763B /* Frameworks */,
@@ -454,14 +454,14 @@
 			);
 			dependencies = (
 			);
-			name = "Aarlo-iOS-ShareExtension";
+			name = "Aarle-iOS-ShareExtension";
 			packageProductDependencies = (
 				C5FAE126279BE31F007E763B /* KeychainAccess */,
 				C5FAE128279BE324007E763B /* SwiftJWT */,
 				C5FAE12A279BE324007E763B /* SwiftUIX */,
 			);
 			productName = "Aarlo-iOS-ShareExtension";
-			productReference = C5FAE10D279BE0ED007E763B /* Aarlo-iOS-ShareExtension.appex */;
+			productReference = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -506,10 +506,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C59994FC2781B96700FE1EBA /* Aarlo (iOS) */,
-				C59995022781B96700FE1EBA /* Aarlo (macOS) */,
-				C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */,
-				C5FAE10C279BE0ED007E763B /* Aarlo-iOS-ShareExtension */,
+				C59994FC2781B96700FE1EBA /* Aarle (iOS) */,
+				C59995022781B96700FE1EBA /* Aarle (macOS) */,
+				C5C9BB5127895F580005086C /* Aarle-macOS-ShareExtension */,
+				C5FAE10C279BE0ED007E763B /* Aarle-iOS-ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -656,12 +656,12 @@
 /* Begin PBXTargetDependency section */
 		C5C9BB5E27895F580005086C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C5C9BB5127895F580005086C /* Aarlo-macOS-ShareExtension */;
+			target = C5C9BB5127895F580005086C /* Aarle-macOS-ShareExtension */;
 			targetProxy = C5C9BB5D27895F580005086C /* PBXContainerItemProxy */;
 		};
 		C5FAE116279BE0ED007E763B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C5FAE10C279BE0ED007E763B /* Aarlo-iOS-ShareExtension */;
+			target = C5FAE10C279BE0ED007E763B /* Aarle-iOS-ShareExtension */;
 			targetProxy = C5FAE115279BE0ED007E763B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -820,8 +820,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarlo;
-				PRODUCT_NAME = aarlo;
+				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
+				PRODUCT_NAME = aarle;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -852,8 +852,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarlo;
-				PRODUCT_NAME = aarlo;
+				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
+				PRODUCT_NAME = aarle;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -884,8 +884,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarlo;
-				PRODUCT_NAME = Aarlo;
+				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
+				PRODUCT_NAME = aarle;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -914,8 +914,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarlo;
-				PRODUCT_NAME = Aarlo;
+				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
+				PRODUCT_NAME = aarle;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -933,7 +933,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Aarlo-macOS-ShareExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-macOS-ShareExtension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarle-macOS-ShareExtension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -942,7 +942,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-macOS-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-macOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -962,7 +962,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Aarlo-macOS-ShareExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-macOS-ShareExtension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarle-macOS-ShareExtension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -971,7 +971,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-macOS-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-macOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -989,7 +989,7 @@
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Aarlo-iOS-ShareExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-iOS-ShareExtension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarle-iOS-ShareExtension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -998,7 +998,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-iOS-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-iOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1017,7 +1017,7 @@
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Aarlo-iOS-ShareExtension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Aarlo-iOS-ShareExtension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Aarle-iOS-ShareExtension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1026,7 +1026,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarlo.Aarlo-iOS-ShareExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-iOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1049,7 +1049,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C599950E2781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarlo (iOS)" */ = {
+		C599950E2781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarle (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C599950F2781B96700FE1EBA /* Debug */,
@@ -1058,7 +1058,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C59995112781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarlo (macOS)" */ = {
+		C59995112781B96700FE1EBA /* Build configuration list for PBXNativeTarget "Aarle (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C59995122781B96700FE1EBA /* Debug */,
@@ -1067,7 +1067,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarlo-macOS-ShareExtension" */ = {
+		C5C9BB6327895F580005086C /* Build configuration list for PBXNativeTarget "Aarle-macOS-ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5C9BB6127895F580005086C /* Debug */,
@@ -1076,7 +1076,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C5FAE11B279BE0ED007E763B /* Build configuration list for PBXNativeTarget "Aarlo-iOS-ShareExtension" */ = {
+		C5FAE11B279BE0ED007E763B /* Build configuration list for PBXNativeTarget "Aarle-iOS-ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C5FAE119279BE0ED007E763B /* Debug */,

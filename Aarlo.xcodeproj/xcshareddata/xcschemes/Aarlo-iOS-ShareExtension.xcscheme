@@ -17,7 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C5FAE10C279BE0ED007E763B"
                BuildableName = "Aarlo-iOS-ShareExtension.appex"
-               BlueprintName = "Aarlo-iOS-ShareExtension"
+               BlueprintName = "Aarle-iOS-ShareExtension"
                ReferencedContainer = "container:Aarlo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,8 +30,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-               BuildableName = "aarlo.app"
-               BlueprintName = "Aarlo (iOS)"
+               BuildableName = "aarle.app"
+               BlueprintName = "Aarle (iOS)"
                ReferencedContainer = "container:Aarlo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -66,8 +66,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-            BuildableName = "aarlo.app"
-            BlueprintName = "Aarlo (iOS)"
+            BuildableName = "aarle.app"
+            BlueprintName = "Aarle (iOS)"
             ReferencedContainer = "container:Aarlo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -84,8 +84,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-            BuildableName = "aarlo.app"
-            BlueprintName = "Aarlo (iOS)"
+            BuildableName = "aarle.app"
+            BlueprintName = "Aarle (iOS)"
             ReferencedContainer = "container:Aarlo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

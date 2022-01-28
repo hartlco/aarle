@@ -9,13 +9,11 @@ import SwiftUI
 import SwiftUIX
 
 @main
-struct AarloApp: App {
+struct AarleApp: App {
     let pasteboard = DefaultPasteboard()
     @ObservedObject var appStore = AppStore()
     @StateObject var linkStore = LinkStore(client: ShaarliClient())
     @StateObject var tagStore = TagStore(client: ShaarliClient())
-
-    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
@@ -70,8 +68,6 @@ struct AarloApp: App {
 }
 
 struct LinkAddScene: Scene {
-    @Environment(\.scenePhase) private var scenePhase
-
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
     @ObservedObject var appStore: AppStore

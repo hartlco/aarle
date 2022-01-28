@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-               BuildableName = "aarlo.app"
-               BlueprintName = "Aarlo (iOS)"
+               BuildableName = "aarle.app"
+               BlueprintName = "Aarle (iOS)"
                ReferencedContainer = "container:Aarlo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-            BuildableName = "aarlo.app"
-            BlueprintName = "Aarlo (iOS)"
+            BuildableName = "aarle.app"
+            BlueprintName = "Aarle (iOS)"
             ReferencedContainer = "container:Aarlo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C59994FC2781B96700FE1EBA"
-            BuildableName = "aarlo.app"
-            BlueprintName = "Aarlo (iOS)"
+            BuildableName = "aarle.app"
+            BlueprintName = "Aarle (iOS)"
             ReferencedContainer = "container:Aarlo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

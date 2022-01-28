@@ -11,7 +11,7 @@ import KeychainAccess
 // TODO: Move secret storage out of view
 // TODO: Use https://developer.apple.com/documentation/swiftui/settings on macOS
 struct SettingsView: View {
-    static let keychain = Keychain(service: "co.hartl.Aarlo")
+    static let keychain = Keychain(service: "co.hartl.Aarle")
     static let keychainKey = "secret"
     static let endpointKey = "endpoint"
 
