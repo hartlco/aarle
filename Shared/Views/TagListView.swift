@@ -88,7 +88,6 @@ struct TagListView: View {
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
         TagListView(tagStore: .mock)
-            .environmentObject(AppState.stateMock)
     }
 }
 #endif

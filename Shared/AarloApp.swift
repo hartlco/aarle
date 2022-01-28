@@ -8,29 +8,10 @@
 import SwiftUI
 import SwiftUIX
 
-// TODO: inject as env: https://www.hackingwithswift.com/quick-start/swiftui/how-to-use-environmentobject-to-share-data-between-views
-final class AppState: ObservableObject {
-    @Published var selectedLink: Link?
-    @Published var showLinkEditorSidebar = false
-    @Published var showsAddView = false {
-        didSet {
-#if os(macOS)
-            // TODO: Introduce Reducer to handle changes/side-effect to the state
-            if showsAddView == true {
-                WindowRoutes.addLink.open()
-            }
-#endif
-        }
-    }
-#if DEBUG
-    static let stateMock = AppState()
-#endif
-}
-
 @main
 struct AarloApp: App {
     let pasteboard = DefaultPasteboard()
-    @ObservedObject var appState = AppState()
+    @ObservedObject var appStore = AppStore()
     @StateObject var linkStore = LinkStore(client: ShaarliClient())
     @StateObject var tagStore = TagStore(client: ShaarliClient())
 
@@ -41,7 +22,7 @@ struct AarloApp: App {
             NavigationView {
                 InitialContentView(linkStore: linkStore, tagStore: tagStore)
             }
-            .environmentObject(appState)
+            .environmentObject(appStore)
             .tint(.tint)
         }
         .commands {
@@ -53,27 +34,31 @@ struct AarloApp: App {
             CommandGroup(after: .sidebar) {
                 // TODO: Make title dynamic
                 Button("Show Link Editor") {
-                    appState.showLinkEditorSidebar.toggle()
+                    if appStore.showLinkEditorSidebar {
+                        appStore.reduce(.hideLinkEditorSidebar)
+                    } else {
+                        appStore.reduce(.showLinkEditorSidebar)
+                    }
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
-                .disabled(appState.selectedLink == nil)
+                .disabled(appStore.selectedLink.wrappedValue == nil)
             }
             CommandMenu("Link") {
                 Button("Copy link to clipboard") {
-                    guard let selectedLink = appState.selectedLink else {
+                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
                         return
                     }
 
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(appState.selectedLink == nil)
+                .disabled(appStore.selectedLink.wrappedValue == nil)
             }
         }
         LinkAddScene(
             linkStore: linkStore,
             tagStore: tagStore,
-            appState: appState
+            appStore: appStore
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
 
 #if os(macOS)
@@ -89,7 +74,7 @@ struct LinkAddScene: Scene {
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
-    @ObservedObject var appState: AppState
+    @ObservedObject var appStore: AppStore
 
     var body: some Scene {
         WindowGroup {
@@ -97,7 +82,7 @@ struct LinkAddScene: Scene {
                 linkStore: linkStore,
                 tagStore: tagStore
             ).onDisappear {
-                appState.showsAddView = false
+                appStore.reduce(.hideAddView)
             }
         }
     }

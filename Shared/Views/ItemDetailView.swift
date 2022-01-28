@@ -12,7 +12,7 @@ struct ItemDetailView: View {
     @ObservedObject private var linkStore: LinkStore
     @ObservedObject private var tagStore: TagStore
 
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appStore: AppStore
 
     init(
         link: Link,
@@ -33,14 +33,18 @@ struct ItemDetailView: View {
                 .toolbar {
                     Spacer()
                     Button {
-                        appState.showLinkEditorSidebar.toggle()
+                        if appStore.showLinkEditorSidebar {
+                            appStore.reduce(.hideLinkEditorSidebar)
+                        } else {
+                            appStore.reduce(.showLinkEditorSidebar)
+                        }
                     } label: {
                         Label("Show Edit Link", systemImage: "sidebar.right")
                     }
                     // TODO: Add keyboard shortcut
 
                 }
-            if appState.showLinkEditorSidebar {
+            if appStore.showLinkEditorSidebar {
                 LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
@@ -88,7 +92,7 @@ struct ItemDetailView_Previews: PreviewProvider {
             link: Link.mock,
             linkStore: LinkStore.mock,
             tagStore: .mock
-        ).environmentObject(AppState.stateMock)
+        )
     }
 }
 #endif

@@ -80,7 +80,7 @@ struct SidebarView_Previews: PreviewProvider {
         SidebarView(
             linkStore: LinkStore.mock,
             tagStore: TagStore.mock
-        ).environmentObject(AppState.stateMock)
+        )
     }
 }
 #endif

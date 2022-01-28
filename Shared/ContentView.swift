@@ -15,7 +15,7 @@ struct ContentView: View {
     // TODO: Add to AppState
     @State var showingEditLink: Link?
 
-    @EnvironmentObject var appState: AppState
+    @EnvironmentObject var appStore: AppStore
 
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
@@ -36,7 +36,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        List(selection: $appState.selectedLink) {
+        List(selection: appStore.selectedLink) {
             ForEach(linkStore.links) { link in
                 NavigationLink(
                     destination: ItemDetailView(
@@ -45,7 +45,7 @@ struct ContentView: View {
                         tagStore: tagStore
                     ),
                     tag: link,
-                    selection: $appState.selectedLink,
+                    selection: appStore.selectedLink,
                     label: { LinkItemView(link: link) }
                 )
                 .contextMenu {
@@ -84,19 +84,20 @@ struct ContentView: View {
             try? await linkStore.load()
         }
         .listStyle(PlainListStyle())
+        // TODO: Move into store
         .popover(item: $showingEditLink) { link in
             LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
         }
         .toolbar {
             ToolbarItem {
                 Button {
-                    appState.showsAddView = true
+                    appStore.reduce(.showAddView)
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
 #if os(iOS)
                 .sheet(
-                    isPresented: $appState.showsAddView,
+                    isPresented: appStore.showsAddView,
                     onDismiss: nil,
                     content: {
                         LinkAddView(
