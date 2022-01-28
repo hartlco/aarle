@@ -108,7 +108,7 @@ enum WindowRoutes: String {
 
     #if os(macOS)
     func open() {
-        if let url = URL(string: "aarli://\(self.rawValue)") {
+        if let url = URL(string: "aarle://\(self.rawValue)") {
             NSWorkspace.shared.open(url)
         }
     }
