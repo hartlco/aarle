@@ -13,16 +13,14 @@ struct SidebarView: View {
     @State var showsSettings = false
 
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var tagStore: TagStore
+    @EnvironmentObject var tagStore: TagStore
 
     init(
         isDefaultItemActive: Bool = true,
-        linkStore: LinkStore,
-        tagStore: TagStore
+        linkStore: LinkStore
     ) {
         self._isDefaultItemActive = State(initialValue: isDefaultItemActive)
         self.linkStore = linkStore
-        self.tagStore = tagStore
     }
 
     var body: some View {
@@ -32,8 +30,7 @@ struct SidebarView: View {
                     NavigationLink(
                         destination: ContentView(
                             title: "Links",
-                            linkStore: linkStore,
-                            tagStore: tagStore
+                            linkStore: linkStore
                         ),
                         isActive: $isDefaultItemActive
                     ) {
@@ -52,8 +49,10 @@ struct SidebarView: View {
                         NavigationLink(
                             destination: ContentView(
                                 title: tag.name,
-                                linkStore: LinkStore(client: ShaarliClient(), tagScope: tag.name),
-                                tagStore: tagStore
+                                linkStore: LinkStore(
+                                    client: ShaarliClient(),
+                                    tagScope: tag.name
+                                )
                             )
                         ) {
                             Label(tag.name, systemImage: "tag")
@@ -89,9 +88,8 @@ struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(
             isDefaultItemActive: false,
-            linkStore: LinkStore.mock,
-            tagStore: TagStore.mock
-        )
+            linkStore: LinkStore.mock
+        ).environmentObject(TagStore.mock)
     }
 }
 #endif

@@ -18,9 +18,10 @@ struct AarleApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                InitialContentView(linkStore: linkStore, tagStore: tagStore)
+                InitialContentView(linkStore: linkStore)
             }
             .environmentObject(appStore)
+            .environmentObject(tagStore)
             .tint(.tint)
         }
         .commands {
@@ -75,11 +76,10 @@ struct LinkAddScene: Scene {
     var body: some Scene {
         WindowGroup {
             LinkAddView(
-                linkStore: linkStore,
-                tagStore: tagStore
+                linkStore: linkStore
             ).onDisappear {
                 appStore.reduce(.hideAddView)
-            }
+            }.environmentObject(tagStore)
         }
     }
 }

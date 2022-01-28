@@ -32,8 +32,7 @@ struct TagListView: View {
                         linkStore: LinkStore(
                             client: ShaarliClient(),
                             tagScope: tag.name
-                        ),
-                        tagStore: tagStore
+                        )
                     )
                     WebView(data: webViewData)
                 }
@@ -43,8 +42,7 @@ struct TagListView: View {
                     linkStore: LinkStore(
                         client: ShaarliClient(),
                         tagScope: tag.name
-                    ),
-                    tagStore: tagStore
+                    )
                 )
                 #endif
             } label: {
@@ -53,9 +51,9 @@ struct TagListView: View {
                     isFavorite: tagStore.favoriteTags.contains(tag)
                 ) {
                     if tagStore.favoriteTags.contains(tag) {
-                        tagStore.remove(favoriteTag: tag)
+                        tagStore.reduce(.removeFavorite(tag))
                     } else {
-                        tagStore.add(favoriteTag: tag)
+                        tagStore.reduce(.addFavorite(tag))
                     }
                 }
             }
@@ -65,21 +63,13 @@ struct TagListView: View {
             ToolbarItem(placement: navigationBarItemPlacement) {
                 Button("Load") {
                     Task {
-                        do {
-                            try await tagStore.loadTags()
-                        } catch let error {
-                            print(error)
-                        }
+                        tagStore.reduce(.load)
                     }
                 }
             }
         }
         .task {
-            do {
-                try await tagStore.loadTags()
-            } catch let error {
-                print(error)
-            }
+            tagStore.reduce(.load)
         }
     }
 }

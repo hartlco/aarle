@@ -14,7 +14,8 @@ struct InitialContentView: View {
 
     // TODO: Inject them from the AppState
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var tagStore: TagStore
+    @EnvironmentObject var tagStore: TagStore
+    
     // TODO: Make tagScope configurable
     let readLaterLinkStore = LinkStore(client: ShaarliClient(), tagScope: "toread")
     let webViewData = WebViewData(url: nil)
@@ -23,11 +24,10 @@ struct InitialContentView: View {
         if compactEnvironment {
             SidebarView(
                 isDefaultItemActive: false,
-                linkStore: linkStore,
-                tagStore: tagStore
+                linkStore: linkStore
             ).navigationTitle("aarle")
         } else {
-            SidebarView(linkStore: linkStore, tagStore: tagStore)
+            SidebarView(linkStore: linkStore)
                 .navigationTitle("aarle")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)

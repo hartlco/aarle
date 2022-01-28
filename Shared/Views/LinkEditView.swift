@@ -12,7 +12,7 @@ struct LinkEditView: View {
     let link: Link
 
     @ObservedObject private var linkStore: LinkStore
-    @ObservedObject private var tagStore: TagStore
+    @EnvironmentObject var tagStore: TagStore
 
     @State var urlString: String
     @State var title: String
@@ -21,12 +21,10 @@ struct LinkEditView: View {
 
     init(
         link: Link,
-        linkStore: LinkStore,
-        tagStore: TagStore
+        linkStore: LinkStore
     ) {
         self.link = link
         self.linkStore = linkStore
-        self.tagStore = tagStore
         self._urlString = State<String>(initialValue: link.url.absoluteString)
         self._title = State(initialValue: link.title ?? "")
         self._description = State(initialValue: link.description ?? "")
@@ -92,7 +90,8 @@ struct LinkEditView: View {
 struct LinkEditView_Previews: PreviewProvider {
     static var previews: some View {
         let link = Link.mock
-        LinkEditView(link: link, linkStore: .mock, tagStore: .mock)
+        LinkEditView(link: link,
+                     linkStore: .mock).environmentObject(TagStore.mock)
     }
 }
 #endif

@@ -10,18 +10,16 @@ import SwiftUI
 struct ItemDetailView: View {
     let link: Link
     @ObservedObject private var linkStore: LinkStore
-    @ObservedObject private var tagStore: TagStore
 
+    @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var appStore: AppStore
 
     init(
         link: Link,
-        linkStore: LinkStore,
-        tagStore: TagStore
+        linkStore: LinkStore
     ) {
         self.link = link
         self.linkStore = linkStore
-        self.tagStore = tagStore
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -45,7 +43,7 @@ struct ItemDetailView: View {
 
                 }
             if appStore.showLinkEditorSidebar {
-                LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
+                LinkEditView(link: link, linkStore: linkStore)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
         }
@@ -73,7 +71,7 @@ struct ItemDetailView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
+                        LinkEditView(link: link, linkStore: linkStore)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }
@@ -90,9 +88,8 @@ struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ItemDetailView(
             link: Link.mock,
-            linkStore: LinkStore.mock,
-            tagStore: .mock
-        )
+            linkStore: LinkStore.mock
+        ).environmentObject(TagStore.mock)
     }
 }
 #endif

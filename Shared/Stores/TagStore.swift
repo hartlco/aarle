@@ -8,9 +8,19 @@
 import Foundation
 
 final class TagStore: ObservableObject {
-    @Published var isLoading: Bool
-    @Published var tags: [Tag]
-    @Published var favoriteTags: [Tag] = []
+    enum Action {
+        case load
+        case addFavorite(Tag)
+        case removeFavorite(Tag)
+    }
+
+    struct State {
+        var isLoading = false
+        var tags: [Tag] = []
+        var favoriteTags: [Tag] = []
+    }
+
+    @Published private var state: State
 
     private let client: ShaarliClient
     private let userDefaults: UserDefaults
@@ -25,22 +35,51 @@ final class TagStore: ObservableObject {
         userDefaults: UserDefaults = .suite
     ) {
         self.client = client
-        self.tags = []
         self.userDefaults = userDefaults
-        self.isLoading = false
-
-        self.favoriteTags = userDefaults.favoriteTags
+        self._state = Published(
+            initialValue: State(
+                isLoading: false,
+                tags: [],
+                favoriteTags: userDefaults.favoriteTags
+            )
+        )
     }
 
-    @MainActor func loadTags() async throws {
-        guard isLoading == false else { return }
-        isLoading = true
+    var favoriteTags: [Tag] {
+        state.favoriteTags
+    }
 
-        tags = try await client.loadTags().sorted(by: { tag1, tag2 in
+    var tags: [Tag] {
+        state.tags
+    }
+
+    @MainActor func reduce(_ action: Action) {
+        switch action {
+        case .load:
+            Task {
+                do {
+                    try await loadTags()
+                } catch {
+                    // TODO: Error handling
+                    print(error)
+                }
+            }
+        case let .addFavorite(tag):
+            add(favoriteTag: tag)
+        case let .removeFavorite(tag):
+            remove(favoriteTag: tag)
+        }
+    }
+
+    @MainActor private func loadTags() async throws {
+        guard state.isLoading == false else { return }
+        state.isLoading = true
+
+        state.tags = try await client.loadTags().sorted(by: { tag1, tag2 in
             tag1.name < tag2.name
         })
 
-        isLoading = false
+        state.isLoading = false
     }
 
     func tagsString(_ tagsString: String, contains tag: Tag) -> Bool {
@@ -64,19 +103,19 @@ final class TagStore: ObservableObject {
     }
 
     func isTagFavorite(tag: Tag) -> Bool {
-        favoriteTags.contains(tag)
+        state.favoriteTags.contains(tag)
     }
 
-    func add(favoriteTag: Tag) {
+    private func add(favoriteTag: Tag) {
         userDefaults.favoriteTags.append(favoriteTag)
-        self.favoriteTags = userDefaults.favoriteTags
+        state.favoriteTags = userDefaults.favoriteTags
     }
 
-    func remove(favoriteTag: Tag) {
+    private func remove(favoriteTag: Tag) {
         userDefaults.favoriteTags.removeAll { tag in
             tag == favoriteTag
         }
-        self.favoriteTags = userDefaults.favoriteTags
+        state.favoriteTags = userDefaults.favoriteTags
     }
 }
 

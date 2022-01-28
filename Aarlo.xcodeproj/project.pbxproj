@@ -235,6 +235,7 @@
 		C53ED62527856CD900397910 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				C588DEA427A3E0640034C1F2 /* AppStore.swift */,
 				C53ED62627856CE900397910 /* LinkStore.swift */,
 				C547D6652793F16400DEC857 /* TagStore.swift */,
 			);
@@ -258,14 +259,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		C588DEA327A3E04F0034C1F2 /* Redux */ = {
-			isa = PBXGroup;
-			children = (
-				C588DEA427A3E0640034C1F2 /* AppStore.swift */,
-			);
-			path = Redux;
-			sourceTree = "<group>";
-		};
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +276,6 @@
 		C59994F52781B96500FE1EBA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				C588DEA327A3E04F0034C1F2 /* Redux */,
 				C53ED62527856CD900397910 /* Stores */,
 				C5782B2F2781E96900321138 /* Views */,
 				C59995212781C95600FE1EBA /* Networking */,

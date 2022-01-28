@@ -10,9 +10,9 @@ import SwiftUIX
 
 struct LinkAddView: View {
     @ObservedObject private var linkStore: LinkStore
-    @ObservedObject private var tagStore: TagStore
 
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var tagStore: TagStore
 
     @State var urlString: String
     @State var title: String
@@ -23,14 +23,12 @@ struct LinkAddView: View {
 
     init(
         linkStore: LinkStore,
-        tagStore: TagStore,
         urlString: String = "",
         title: String = "",
         description: String = "",
         onSaveBlock: (() -> Void)? = nil
     ) {
         self.linkStore = linkStore
-        self.tagStore = tagStore
         self.onSaveBlock = onSaveBlock
 
         self._urlString = State<String>(initialValue: urlString)
@@ -126,7 +124,7 @@ struct LinkAddView: View {
 #if DEBUG
 struct LinkAddView_Previews: PreviewProvider {
     static var previews: some View {
-        LinkAddView(linkStore: LinkStore.mock, tagStore: .mock)
+        LinkAddView(linkStore: LinkStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

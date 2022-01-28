@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C5FAE10C279BE0ED007E763B"
-               BuildableName = "Aarlo-iOS-ShareExtension.appex"
+               BuildableName = "Aarle-iOS-ShareExtension.appex"
                BlueprintName = "Aarle-iOS-ShareExtension"
                ReferencedContainer = "container:Aarlo.xcodeproj">
             </BuildableReference>

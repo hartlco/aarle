@@ -16,9 +16,9 @@ struct ContentView: View {
     @State var showingEditLink: Link?
 
     @EnvironmentObject var appStore: AppStore
+    @EnvironmentObject var tagStore: TagStore
 
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var tagStore: TagStore
 
     private let pasteboard: Pasteboard
     private let title: String
@@ -26,12 +26,10 @@ struct ContentView: View {
     init(
         title: String,
         linkStore: LinkStore,
-        tagStore: TagStore,
         pasteboard: Pasteboard = DefaultPasteboard()
     ) {
         self.title = title
         self.linkStore = linkStore
-        self.tagStore = tagStore
         self.pasteboard = pasteboard
     }
 
@@ -41,8 +39,7 @@ struct ContentView: View {
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link,
-                        linkStore: linkStore,
-                        tagStore: tagStore
+                        linkStore: linkStore
                     ),
                     tag: link,
                     selection: appStore.selectedLink,
@@ -86,7 +83,7 @@ struct ContentView: View {
         .listStyle(PlainListStyle())
         // TODO: Move into store
         .popover(item: $showingEditLink) { link in
-            LinkEditView(link: link, linkStore: linkStore, tagStore: tagStore)
+            LinkEditView(link: link, linkStore: linkStore)
         }
         .toolbar {
             ToolbarItem {
@@ -101,8 +98,7 @@ struct ContentView: View {
                     onDismiss: nil,
                     content: {
                         LinkAddView(
-                            linkStore: linkStore,
-                            tagStore: tagStore
+                            linkStore: linkStore
                         )
                     }
                 )
