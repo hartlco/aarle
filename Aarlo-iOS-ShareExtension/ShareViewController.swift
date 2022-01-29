@@ -10,8 +10,9 @@ import SwiftUI
 import Social
 
 final class ShareViewController: UIViewController {
-    let linkStore = LinkStore(client: .init(), tagScope: nil)
-    let tagStore = TagStore(client: .init())
+    static let settingsStore = SettingsStore()
+    let linkStore = LinkStore(client: UniversalClient(settingsStore: ShareViewController.settingsStore), tagScope: nil)
+    let tagStore = TagStore(client: UniversalClient(settingsStore: ShareViewController.settingsStore))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,7 @@ final class ShareViewController: UIViewController {
         }.onDisappear {
             self.cancel(self)
         }.environmentObject(tagStore)
+            .environmentObject(Self.settingsStore)
 
         let hosting = UIHostingController(rootView: addView)
         self.addChild(hosting)

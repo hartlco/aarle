@@ -42,8 +42,10 @@ struct LinkItemView: View {
     }
 }
 
+#if DEBUG
 struct LinkItemView_Previews: PreviewProvider {
     static var previews: some View {
         LinkItemView(link: Link.mock)
     }
 }
+#endif
