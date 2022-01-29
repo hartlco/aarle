@@ -27,7 +27,7 @@ final class TagStore: ObservableObject {
 
 
 #if DEBUG
-    static let mock = TagStore(client: ShaarliClient())
+    static let mock = TagStore(client: ShaarliClient(settingsStore: SettingsStore()))
 #endif
 
     init(

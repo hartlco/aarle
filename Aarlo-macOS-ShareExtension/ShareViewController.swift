@@ -10,8 +10,10 @@ import SwiftUI
 
 @MainActor
 class ShareViewController: NSViewController {
-    let linkStore = LinkStore(client: .init(), tagScope: nil)
-    let tagStore = TagStore(client: .init())
+    let linkStore = LinkStore(client: .init(settingsStore: SettingsStore()), tagScope: nil)
+
+    @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var tagStore: TagStore
 
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))

@@ -16,8 +16,6 @@ struct InitialContentView: View {
     @ObservedObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     
-    // TODO: Make tagScope configurable
-    let readLaterLinkStore = LinkStore(client: ShaarliClient(), tagScope: "toread")
     let webViewData = WebViewData(url: nil)
 
     var body: some View {

@@ -13,6 +13,8 @@ struct TagListView: View {
 
     let webViewData = WebViewData(url: nil)
 
+    @EnvironmentObject var settingsStore: SettingsStore
+
     private var navigationBarItemPlacement: ToolbarItemPlacement {
         #if os(macOS)
         return .automatic
@@ -30,7 +32,7 @@ struct TagListView: View {
                     ContentView(
                         title: "Links",
                         linkStore: LinkStore(
-                            client: ShaarliClient(),
+                            client: ShaarliClient(settingsStore: settingsStore),
                             tagScope: tag.name
                         )
                     )

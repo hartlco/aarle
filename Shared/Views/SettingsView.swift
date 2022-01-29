@@ -8,22 +8,9 @@
 import SwiftUI
 import KeychainAccess
 
-// TODO: Move secret storage out of view
-// TODO: Use https://developer.apple.com/documentation/swiftui/settings on macOS
 struct SettingsView: View {
-    static let keychain = Keychain(service: "co.hartl.Aarle")
-    static let keychainKey = "secret"
-    static let endpointKey = "endpoint"
-
     @Environment(\.presentationMode) var presentationMode
-
-    @State private var settingsField: String
-    @State private var apiEndpointField: String
-
-    init() {
-        self._settingsField = State(initialValue: Self.keychain[string: Self.keychainKey] ?? "")
-        self._apiEndpointField = State(initialValue: Self.keychain[string: Self.endpointKey] ?? "")
-    }
+    @EnvironmentObject var settingsStore: SettingsStore
 
 
     var body: some View {
@@ -39,12 +26,11 @@ struct SettingsView: View {
 
     var form: some View {
         Form {
-            TextField("Key", text: $settingsField)
-            TextField("API Endpoint:", text: $apiEndpointField)
+            TextField("Key", text: settingsStore.secret)
+            TextField("API Endpoint:", text: settingsStore.endpoint)
             Button("Save") {
                 presentationMode.dismiss()
-                Self.keychain[Self.keychainKey] = settingsField
-                Self.keychain[Self.endpointKey] = apiEndpointField
+                settingsStore.reduce(.login(accountType: .shaarli))
             }
         }
         .navigationTitle("Settings")

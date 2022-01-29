@@ -59,7 +59,6 @@ struct LinkAddView: View {
                 TextEditor(text: $description)
             }
             Section(header: "Favorites") {
-                // TODO: Move logic to AppStore/Reducer
                 ForEach(tagStore.favoriteTags) { tag in
                     Toggle(
                         tag.name,

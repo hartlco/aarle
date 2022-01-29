@@ -15,6 +15,12 @@ final class ShaarliClient {
 
     let pageSize = 20
 
+    let settingsStore: SettingsStore
+
+    init(settingsStore: SettingsStore) {
+        self.settingsStore = settingsStore
+    }
+
     func load(filteredByTags tags: [String] = []) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
@@ -145,14 +151,14 @@ final class ShaarliClient {
 
         var jwt = SwiftJWT.JWT(header: header, claims: claims)
 
-        let secret = SettingsView.keychain[string: SettingsView.keychainKey] ?? ""
+        let secret = settingsStore.secret.wrappedValue ?? ""
         let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
         let signedJWT = try jwt.sign(using: jwtSigner)
         return signedJWT
     }
 
     private var apiEndpoint: String {
-        return SettingsView.keychain[string: SettingsView.endpointKey] ?? ""
+        return settingsStore.endpoint.wrappedValue ?? ""
     }
 }
 

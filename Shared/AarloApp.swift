@@ -10,16 +10,19 @@ import SwiftUIX
 
 @main
 struct AarleApp: App {
+    static let settingsStore = SettingsStore()
+
     let pasteboard = DefaultPasteboard()
     @ObservedObject var appStore = AppStore()
-    @StateObject var linkStore = LinkStore(client: ShaarliClient())
-    @StateObject var tagStore = TagStore(client: ShaarliClient())
+    @StateObject var linkStore = LinkStore(client: ShaarliClient(settingsStore: Self.settingsStore))
+    @StateObject var tagStore = TagStore(client: ShaarliClient(settingsStore: Self.settingsStore))
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 InitialContentView(linkStore: linkStore)
             }
+            .environmentObject(Self.settingsStore)
             .environmentObject(appStore)
             .environmentObject(tagStore)
             .tint(.tint)
@@ -63,6 +66,8 @@ struct AarleApp: App {
 #if os(macOS)
         Settings {
             SettingsView()
+                .environmentObject(Self.settingsStore)
+
         }
 #endif
     }

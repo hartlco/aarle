@@ -38,7 +38,7 @@ final class LinkStore: ObservableObject {
     }
 
 #if DEBUG
-    static let mock = LinkStore(client: ShaarliClient())
+    static let mock = LinkStore(client: ShaarliClient(settingsStore: SettingsStore()))
 #endif
 
     @MainActor func load() async throws {

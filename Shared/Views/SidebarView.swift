@@ -14,6 +14,7 @@ struct SidebarView: View {
 
     @ObservedObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var settingsStore: SettingsStore
 
     init(
         isDefaultItemActive: Bool = true,
@@ -50,7 +51,7 @@ struct SidebarView: View {
                             destination: ContentView(
                                 title: tag.name,
                                 linkStore: LinkStore(
-                                    client: ShaarliClient(),
+                                    client: ShaarliClient(settingsStore: settingsStore),
                                     tagScope: tag.name
                                 )
                             )
