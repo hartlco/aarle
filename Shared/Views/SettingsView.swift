@@ -24,20 +24,25 @@ struct SettingsView: View {
     }
 
     var form: some View {
-        Form {
-            Picker("Service", selection: settingsStore.accountType) {
-                ForEach(AccountType.allCases, id: \.self) {
-                    Text($0.rawValue)
+        TabView {
+            Form {
+                Picker("Service", selection: settingsStore.accountType) {
+                    ForEach(AccountType.allCases, id: \.self) {
+                        Text($0.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+                TextField("Key", text: settingsStore.secret)
+                if settingsStore.accountType.wrappedValue == .shaarli {
+                    TextField("API Endpoint:", text: settingsStore.endpoint)
+                }
+                Button("Save") {
+                    presentationMode.dismiss()
+                    settingsStore.reduce(.login)
                 }
             }
-            .pickerStyle(.segmented)
-            TextField("Key", text: settingsStore.secret)
-            if settingsStore.accountType.wrappedValue == .shaarli {
-                TextField("API Endpoint:", text: settingsStore.endpoint)
-            }
-            Button("Save") {
-                presentationMode.dismiss()
-                settingsStore.reduce(.login)
+            .tabItem {
+                Label("Account", systemImage: "person.crop.circle")
             }
         }
         .navigationTitle("Settings")

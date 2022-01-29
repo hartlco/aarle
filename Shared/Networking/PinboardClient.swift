@@ -20,7 +20,8 @@ final class PinboardClient: BookmarkClient {
         self.settingsStore = settingsStore
     }
 
-    func load(filteredByTags tags: [String]) async throws -> [Link] {
+    // TODO: Add Search
+    func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/posts/all") else {
             throw ClientError.unknownURL
         }
@@ -49,7 +50,8 @@ final class PinboardClient: BookmarkClient {
         return links.map(Link.fromPinboardLink(link:))
     }
 
-    func loadMore(offset: Int, filteredByTags tags: [String]) async throws -> [Link] {
+    // TODO: Add search
+    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/posts/all") else {
             throw ClientError.unknownURL
         }

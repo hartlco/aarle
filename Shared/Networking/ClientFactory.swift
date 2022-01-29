@@ -14,8 +14,8 @@ enum ClientError: Error {
 protocol BookmarkClient {
     var pageSize: Int { get }
 
-    func load(filteredByTags tags: [String]) async throws -> [Link]
-    func loadMore(offset: Int, filteredByTags tags: [String]) async throws -> [Link]
+    func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link]
+    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link]
     func createLink(link: PostLink) async throws
     func updateLink(link: Link) async throws
     func deleteLink(link: Link) async throws
@@ -26,11 +26,11 @@ protocol BookmarkClient {
 final class MockClient: BookmarkClient {
     let pageSize = 20
 
-    func load(filteredByTags tags: [String]) async throws -> [Link] {
+    func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         return []
     }
 
-    func loadMore(offset: Int, filteredByTags tags: [String]) async throws -> [Link] {
+    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         []
     }
 
@@ -63,12 +63,12 @@ final class UniversalClient: BookmarkClient {
         client.pageSize
     }
 
-    func load(filteredByTags tags: [String]) async throws -> [Link] {
-        try await client.load(filteredByTags: tags)
+    func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
+        try await client.load(filteredByTags: tags, searchTerm: searchTerm)
     }
 
-    func loadMore(offset: Int, filteredByTags tags: [String]) async throws -> [Link] {
-        try await client.loadMore(offset: offset, filteredByTags: tags)
+    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
+        try await client.loadMore(offset: offset, filteredByTags: tags, searchTerm: searchTerm)
     }
 
     func createLink(link: PostLink) async throws {

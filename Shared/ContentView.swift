@@ -11,7 +11,6 @@ import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    @State var settingsField = ""
     // TODO: Add to AppState
     @State var showingEditLink: Link?
 
@@ -45,30 +44,24 @@ struct ContentView: View {
                     selection: appStore.selectedLink,
                     label: { LinkItemView(link: link) }
                 )
-                .contextMenu {
-                    Button("Edit", action: { showingEditLink = link })
-                    Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
-                    Button(role: .destructive) {
-                        Task {
-                            try await linkStore.delete(link: link)
+                    .contextMenu {
+                        Button("Edit", action: { showingEditLink = link })
+                        Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
+                        Button(role: .destructive) {
+                            Task {
+                                try await linkStore.delete(link: link)
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
                         }
-                    } label: {
-                        Label("Delete", systemImage: "trash")
                     }
-                }
             }
             if linkStore.canLoadMore {
                 HStack {
                     Spacer()
                     Button {
-                        Task {
-                            do {
-                                guard let lastLink = linkStore.links.last else { return }
-                                try await linkStore.loadMoreIfNeeded(link: lastLink)
-                            } catch {
-                                print(error)
-                            }
-                        }
+                        guard let lastLink = linkStore.links.last else { return }
+                        linkStore.reduce(.loadMoreIfNeeded(lastLink))
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
                     }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -76,9 +69,13 @@ struct ContentView: View {
                 }
             }
         }
+        .searchable(text: linkStore.searchText)
+        .onSubmit(of: .search) {
+            linkStore.reduce(.search)
+        }
         // TODO: Add macOS shortcut / menu item
         .refreshable {
-            try? await linkStore.load()
+            linkStore.reduce(.load)
         }
         .listStyle(PlainListStyle())
         // TODO: Move into store
@@ -110,13 +107,7 @@ struct ContentView: View {
             if !linkStore.links.isEmpty {
                 return
             }
-            Task {
-                do {
-                    try await linkStore.load()
-                } catch let error {
-                    print(error)
-                }
-            }
+            linkStore.reduce(.load)
         }
     }
 

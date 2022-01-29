@@ -17,14 +17,23 @@ final class ShaarliClient: BookmarkClient {
         self.settingsStore = settingsStore
     }
 
-    func load(filteredByTags tags: [String] = []) async throws -> [Link] {
+    func load(filteredByTags tags: [String] = [], searchTerm: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
         }
 
+        var queryParameters: [String: String] = [:]
+
         if !tags.isEmpty {
-            URL = URL.appendingQueryParameters(["searchtags": tags.joined(separator: "+")])
+            queryParameters["searchtags"] = tags.joined(separator: "+")
         }
+
+        if let searchTerm = searchTerm, !searchTerm.isEmpty {
+            queryParameters["searchterm"] = searchTerm
+        }
+
+
+        URL = URL.appendingQueryParameters(queryParameters)
 
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"
@@ -40,29 +49,36 @@ final class ShaarliClient: BookmarkClient {
         return links
     }
 
-    func loadMore(offset: Int, filteredByTags tags: [String] = []) async throws -> [Link] {
+    func loadMore(offset: Int, filteredByTags tags: [String] = [], searchTerm: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/links") else {
             throw ClientError.unknownURL
         }
 
         let signedJWT = try signedJWT()
-        URL = URL.appendingQueryParameters(["offset": "\(offset)"])
+
+        var queryParameters: [String: String] = [:]
+        queryParameters["offset"] = String(offset)
 
         if !tags.isEmpty {
-            URL = URL.appendingQueryParameters(["searchtags": tags.joined(separator: "+")])
+            queryParameters["searchtags"] = tags.joined(separator: "+")
         }
 
+        if let searchTerm = searchTerm, !searchTerm.isEmpty {
+            queryParameters["searchterm"] = searchTerm
+        }
+
+        URL = URL.appendingQueryParameters(queryParameters)
 
         var request = URLRequest(url: URL)
         request.httpMethod = "GET"
 
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
 
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let links = try decoder.decode([Link].self, from: data)
-
+        print(String(data: data, encoding: .utf8))
         return links
     }
 

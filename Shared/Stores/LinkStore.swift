@@ -7,14 +7,27 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 final class LinkStore: ObservableObject {
-    @Published var links: [Link]
-    @Published var isLoading: Bool
-    @Published var canLoadMore = false
+    enum Action {
+        case load
+        case loadMoreIfNeeded(Link)
+        case changeSearchText(String)
+        case search
+    }
+
+    struct State {
+        var links: [Link] = []
+        var isLoading = false
+        var canLoadMore = false
+        var searchText = ""
+    }
 
     private let client: BookmarkClient
     private let tagScope: String?
+
+    @Published private var state = State()
 
     init(
         client: BookmarkClient,
@@ -22,8 +35,52 @@ final class LinkStore: ObservableObject {
     ) {
         self.client = client
         self.tagScope = tagScope
-        self.links = []
-        self.isLoading = false
+    }
+
+    @MainActor var searchText: Binding<String> {
+        Binding { [weak self] in
+            return self?.state.searchText ?? ""
+        } set: { [weak self] searchText in
+            guard let self = self else { return }
+            self.reduce(.changeSearchText(searchText))
+        }
+    }
+
+    @MainActor func reduce(_ action: Action) {
+        switch action {
+        case .load, .search:
+            Task {
+                do {
+                    try await load()
+                } catch {
+                    // TODO: Error handling
+                    print(error)
+                }
+            }
+        case let .loadMoreIfNeeded(link):
+            Task {
+                do {
+                    try await loadMoreIfNeeded(link: link)
+                } catch {
+                    // TODO: Error handling
+                    print(error)
+                }
+            }
+        case let .changeSearchText(string):
+            state.searchText = string
+
+            if string.isEmpty {
+                reduce(.load)
+            }
+        }
+    }
+
+    var links: [Link] {
+        state.links
+    }
+
+    var canLoadMore: Bool {
+        state.canLoadMore
     }
 
     private var scopedTages: [String] {
@@ -41,60 +98,60 @@ final class LinkStore: ObservableObject {
     static let mock = LinkStore(client: MockClient())
 #endif
 
-    @MainActor func load() async throws {
-        guard isLoading == false else { return }
+    @MainActor private func load() async throws {
+        guard state.isLoading == false else { return }
 
         defer {
-            isLoading = false
+            state.isLoading = false
         }
 
-        isLoading = true
+        state.isLoading = true
 
-        links = try await client.load(filteredByTags: scopedTages)
+        state.links = try await client.load(filteredByTags: scopedTages, searchTerm: state.searchText)
 
-        canLoadMore = links.count == client.pageSize
+        state.canLoadMore = state.links.count == client.pageSize
     }
 
-    @MainActor func loadMoreIfNeeded(link: Link) async throws {
-        guard isLoading == false else { return }
-        guard link.id == links.last?.id else { return }
+    @MainActor private func loadMoreIfNeeded(link: Link) async throws {
+        guard state.isLoading == false else { return }
+        guard link.id == state.links.last?.id else { return }
 
         defer {
-            isLoading = false
+            state.isLoading = false
         }
 
-        isLoading = true
+        state.isLoading = true
 
-        let links = try await client.loadMore(offset: links.count, filteredByTags: scopedTages)
-        self.links.append(contentsOf: links)
+        let links = try await client.loadMore(offset: state.links.count, filteredByTags: scopedTages, searchTerm: state.searchText)
+        self.state.links.append(contentsOf: links)
 
-        canLoadMore = links.count == client.pageSize
+        state.canLoadMore = links.count == client.pageSize
     }
 
     @MainActor func add(link: PostLink) async throws {
-        guard isLoading == false else { return }
-        isLoading = true
+        guard state.isLoading == false else { return }
+        state.isLoading = true
 
         try await client.createLink(link: link)
 
-        isLoading = false
+        state.isLoading = false
     }
 
     @MainActor func update(link: Link) async throws {
-        guard isLoading == false else { return }
-        isLoading = true
+        guard state.isLoading == false else { return }
+        state.isLoading = true
 
         try await client.updateLink(link: link)
 
-        isLoading = false
+        state.isLoading = false
     }
 
     @MainActor func delete(link: Link) async throws {
-        guard isLoading == false else { return }
-        isLoading = true
+        guard state.isLoading == false else { return }
+        state.isLoading = true
 
         try await client.deleteLink(link: link)
 
-        isLoading = false
+        state.isLoading = false
     }
 }
