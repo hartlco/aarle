@@ -51,7 +51,7 @@ struct SidebarView: View {
                             destination: ContentView(
                                 title: tag.name,
                                 linkStore: LinkStore(
-                                    client: ShaarliClient(settingsStore: settingsStore),
+                                    client: UniversalClient(settingsStore: settingsStore),
                                     tagScope: tag.name
                                 )
                             )

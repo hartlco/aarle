@@ -32,7 +32,7 @@ struct TagListView: View {
                     ContentView(
                         title: "Links",
                         linkStore: LinkStore(
-                            client: ShaarliClient(settingsStore: settingsStore),
+                            client: UniversalClient(settingsStore: settingsStore),
                             tagScope: tag.name
                         )
                     )

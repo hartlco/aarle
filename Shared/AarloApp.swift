@@ -14,8 +14,8 @@ struct AarleApp: App {
 
     let pasteboard = DefaultPasteboard()
     @ObservedObject var appStore = AppStore()
-    @StateObject var linkStore = LinkStore(client: ShaarliClient(settingsStore: Self.settingsStore))
-    @StateObject var tagStore = TagStore(client: ShaarliClient(settingsStore: Self.settingsStore))
+    @StateObject var linkStore = LinkStore(client: UniversalClient(settingsStore: Self.settingsStore))
+    @StateObject var tagStore = TagStore(client: UniversalClient(settingsStore: Self.settingsStore))
 
     var body: some Scene {
         WindowGroup {

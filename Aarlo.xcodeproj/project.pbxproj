@@ -47,6 +47,10 @@
 		C585F1ED27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
 		C585F1EE27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
 		C585F1EF27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
+		C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
+		C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
+		C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
+		C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C588DEA527A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
 		C588DEA627A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
 		C59995062781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
@@ -161,6 +165,7 @@
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C588DEA427A3E0640034C1F2 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -338,6 +343,7 @@
 			children = (
 				C59995222781C97C00FE1EBA /* ShaarliClaims.swift */,
 				C53ED62227856B5000397910 /* ShaarliClient.swift */,
+				C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -579,6 +585,7 @@
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
+				C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +617,7 @@
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
+				C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +638,7 @@
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
 				C5C11F85279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
+				C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +659,7 @@
 				C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */,
 				C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */,
 				C5FAE12D279BE360007E763B /* SettingsView.swift in Sources */,
+				C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

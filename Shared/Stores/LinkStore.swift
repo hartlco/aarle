@@ -13,11 +13,11 @@ final class LinkStore: ObservableObject {
     @Published var isLoading: Bool
     @Published var canLoadMore = false
 
-    private let client: ShaarliClient
+    private let client: BookmarkClient
     private let tagScope: String?
 
     init(
-        client: ShaarliClient,
+        client: BookmarkClient,
         tagScope: String? = nil
     ) {
         self.client = client
@@ -38,7 +38,7 @@ final class LinkStore: ObservableObject {
     }
 
 #if DEBUG
-    static let mock = LinkStore(client: ShaarliClient(settingsStore: SettingsStore()))
+    static let mock = LinkStore(client: MockClient())
 #endif
 
     @MainActor func load() async throws {

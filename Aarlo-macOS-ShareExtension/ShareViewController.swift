@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor
 class ShareViewController: NSViewController {
-    let linkStore = LinkStore(client: .init(settingsStore: SettingsStore()), tagScope: nil)
+    let linkStore = LinkStore(client: UniversalClient(settingsStore: SettingsStore()), tagScope: nil)
 
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var tagStore: TagStore

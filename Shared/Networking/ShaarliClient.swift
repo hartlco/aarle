@@ -8,7 +8,7 @@
 import Foundation
 import SwiftJWT
 
-final class ShaarliClient {
+final class ShaarliClient: BookmarkClient {
     enum ClientError: Error {
         case unknownURL
     }
@@ -17,7 +17,7 @@ final class ShaarliClient {
 
     let settingsStore: SettingsStore
 
-    init(settingsStore: SettingsStore) {
+    init(settingsStore: SettingsStore, test: Bool) {
         self.settingsStore = settingsStore
     }
 

@@ -22,16 +22,16 @@ final class TagStore: ObservableObject {
 
     @Published private var state: State
 
-    private let client: ShaarliClient
+    private let client: BookmarkClient
     private let userDefaults: UserDefaults
 
 
 #if DEBUG
-    static let mock = TagStore(client: ShaarliClient(settingsStore: SettingsStore()))
+    static let mock = TagStore(client: MockClient())
 #endif
 
     init(
-        client: ShaarliClient,
+        client: BookmarkClient,
         userDefaults: UserDefaults = .suite
     ) {
         self.client = client
