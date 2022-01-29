@@ -51,6 +51,14 @@
 		C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
+		C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F527A5231E00AB0A6F /* PinboardClient.swift */; };
+		C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F527A5231E00AB0A6F /* PinboardClient.swift */; };
+		C585F1F827A5231E00AB0A6F /* PinboardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F527A5231E00AB0A6F /* PinboardClient.swift */; };
+		C585F1F927A5231E00AB0A6F /* PinboardClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F527A5231E00AB0A6F /* PinboardClient.swift */; };
+		C585F1FB27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
+		C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
+		C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
+		C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
 		C588DEA527A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
 		C588DEA627A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
 		C59995062781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
@@ -166,6 +174,8 @@
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
+		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
+		C585F1FA27A5239500AB0A6F /* PinboardLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardLink.swift; sourceTree = "<group>"; };
 		C588DEA427A3E0640034C1F2 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -327,6 +337,7 @@
 				C59995152781B9E200FE1EBA /* Link.swift */,
 				C5B37B28279167150080B988 /* Tag.swift */,
 				C5C11F82279A9485006981CE /* WebsiteInformation.swift */,
+				C585F1FA27A5239500AB0A6F /* PinboardLink.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -344,6 +355,7 @@
 				C59995222781C97C00FE1EBA /* ShaarliClaims.swift */,
 				C53ED62227856B5000397910 /* ShaarliClient.swift */,
 				C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */,
+				C585F1F527A5231E00AB0A6F /* PinboardClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -562,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5760E4A2792A42000688EB3 /* TagView.swift in Sources */,
+				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
 				C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
@@ -570,6 +583,7 @@
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
 				C5B37B29279167150080B988 /* Tag.swift in Sources */,
+				C585F1FB27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
@@ -594,6 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5760E4B2792A42000688EB3 /* TagView.swift in Sources */,
+				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
 				C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
@@ -602,6 +617,7 @@
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
 				C5B37B2A279167150080B988 /* Tag.swift in Sources */,
+				C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
@@ -635,10 +651,12 @@
 				C54210BE2796A6D1000F07DC /* Link.swift in Sources */,
 				C54210BA2796A6AE000F07DC /* LinkStore.swift in Sources */,
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
+				C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
 				C5C11F85279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
 				C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
+				C585F1F827A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,10 +674,12 @@
 				C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */,
 				C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */,
 				C5FAE125279BE30F007E763B /* LinkStore.swift in Sources */,
+				C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */,
 				C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */,
 				C5FAE12D279BE360007E763B /* SettingsView.swift in Sources */,
 				C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
+				C585F1F927A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

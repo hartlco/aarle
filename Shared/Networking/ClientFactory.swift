@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ClientError: Error {
+    case unknownURL
+}
+
 protocol BookmarkClient {
     var pageSize: Int { get }
 
@@ -47,12 +51,12 @@ final class MockClient: BookmarkClient {
 
 final class UniversalClient: BookmarkClient {
     private let shaarliClient: ShaarliClient
-    private let pinboardClient: ShaarliClient
+    private let pinboardClient: PinboardClient
 
     init(settingsStore: SettingsStore) {
         self.settingsStore = settingsStore
-        self.shaarliClient = ShaarliClient(settingsStore: settingsStore, test: true)
-        self.pinboardClient = ShaarliClient(settingsStore: settingsStore, test: true)
+        self.shaarliClient = ShaarliClient(settingsStore: settingsStore)
+        self.pinboardClient = PinboardClient(settingsStore: settingsStore)
     }
 
     var pageSize: Int {

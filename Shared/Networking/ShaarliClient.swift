@@ -9,15 +9,11 @@ import Foundation
 import SwiftJWT
 
 final class ShaarliClient: BookmarkClient {
-    enum ClientError: Error {
-        case unknownURL
-    }
-
     let pageSize = 20
 
     let settingsStore: SettingsStore
 
-    init(settingsStore: SettingsStore, test: Bool) {
+    init(settingsStore: SettingsStore) {
         self.settingsStore = settingsStore
     }
 
