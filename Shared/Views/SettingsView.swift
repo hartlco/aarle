@@ -12,7 +12,6 @@ struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settingsStore: SettingsStore
 
-
     var body: some View {
         #if os(macOS)
         form
@@ -26,13 +25,29 @@ struct SettingsView: View {
 
     var form: some View {
         Form {
+            Picker("Service", selection: settingsStore.accountType) {
+                ForEach(AccountType.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+            .pickerStyle(.segmented)
             TextField("Key", text: settingsStore.secret)
-            TextField("API Endpoint:", text: settingsStore.endpoint)
+            if settingsStore.accountType.wrappedValue == .shaarli {
+                TextField("API Endpoint:", text: settingsStore.endpoint)
+            }
             Button("Save") {
                 presentationMode.dismiss()
-                settingsStore.reduce(.login(accountType: .shaarli))
+                settingsStore.reduce(.login)
             }
         }
         .navigationTitle("Settings")
     }
 }
+
+#if DEBUG
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView().environmentObject(SettingsStore())
+    }
+}
+#endif

@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 import KeychainAccess
 
-enum AccountType: String {
+enum AccountType: String, CaseIterable {
     case shaarli
     case pinboard
 }
@@ -24,11 +24,12 @@ final class SettingsStore: ObservableObject {
     enum Action {
         case setSecret(String?)
         case setEndpoint(String?)
-        case login(accountType: AccountType)
+        case setAccountType(AccountType)
+        case login
     }
 
     struct State {
-        var accountType: AccountType?
+        var accountType: AccountType
         var secret: String?
         var endpoint: String?
     }
@@ -37,7 +38,7 @@ final class SettingsStore: ObservableObject {
 
     init() {
         let serviceString = Self.keychain[Self.servieKey]
-        let accountType = AccountType(rawValue: serviceString ?? "")
+        let accountType = AccountType(rawValue: serviceString ?? "") ?? .shaarli
         let secret = Self.keychain[Self.keychainKey]
         let endpoint = Self.keychain[Self.endpointKey]
 
@@ -66,16 +67,27 @@ final class SettingsStore: ObservableObject {
         }
     }
 
+    var accountType: Binding<AccountType> {
+        Binding { [weak self] in
+            return self?.state.accountType ?? .shaarli
+        } set: { [weak self] accountType in
+            guard let self = self else { return }
+            self.reduce(.setAccountType(accountType))
+        }
+    }
+
     func reduce(_ action: Action) {
         switch action {
-        case let .login(accountType):
+        case .login:
             Self.keychain[Self.keychainKey] = state.secret
             Self.keychain[Self.endpointKey] = state.endpoint
-            Self.keychain[Self.servieKey] = accountType.rawValue
+            Self.keychain[Self.servieKey] = state.accountType.rawValue
         case let .setSecret(secret):
             state.secret = secret
         case let .setEndpoint(endpoint):
             state.endpoint = endpoint
+        case let .setAccountType(type):
+            state.accountType = type
         }
     }
 }
