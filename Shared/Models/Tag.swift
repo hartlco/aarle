@@ -15,3 +15,11 @@ struct Tag: Codable, Identifiable, Equatable {
         return name
     }
 }
+
+extension Tag {
+    static func from(dictionary: [String: Int]) -> [Tag] {
+        dictionary.map { key, value in
+            Tag(name: key, occurrences: value)
+        }
+    }
+}

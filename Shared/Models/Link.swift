@@ -7,8 +7,28 @@
 
 import Foundation
 
+@propertyWrapper
+public struct IntRepresentedString: Codable, Equatable, Hashable {
+    public var wrappedValue: String
+
+    public init(wrappedValue: String) {
+        self.wrappedValue = wrappedValue
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let intValue = try container.decode(Int.self)
+        self.wrappedValue = String(intValue)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(wrappedValue)
+    }
+}
+
 struct Link: Codable, Identifiable, Hashable {
-    let id: Int
+    @IntRepresentedString var id: String
     let url: URL
     let title: String?
     let description: String?
@@ -22,7 +42,7 @@ struct Link: Codable, Identifiable, Hashable {
 
     #if DEBUG
     static let mock = Link(
-        id: 1,
+        id: "1",
         url: .init(string: "https://hartl.co")!,
         title: "Title",
         description: "Description with a few more words than just the title",

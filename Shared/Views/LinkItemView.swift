@@ -44,15 +44,6 @@ struct LinkItemView: View {
 
 struct LinkItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let link = Link(
-            id: 1,
-            url: .init(string: "https://hartl.co")!,
-            title: "Title",
-            description: "Description with a few more words than just the title",
-            tags: ["swift", "macos"],
-            private: false,
-            created: Date.now
-        )
-        LinkItemView(link: link)
+        LinkItemView(link: Link.mock)
     }
 }
