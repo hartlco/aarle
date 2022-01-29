@@ -176,6 +176,7 @@
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
 		C585F1FA27A5239500AB0A6F /* PinboardLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardLink.swift; sourceTree = "<group>"; };
+		C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarle--iOS--Info.plist"; sourceTree = "<group>"; };
 		C588DEA427A3E0640034C1F2 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -283,6 +284,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */,
 				C56A379627A1DCA2005A5B8E /* Aarlo--macOS--Info.plist */,
 				C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */,
 				C59994F52781B96500FE1EBA /* Shared */,
@@ -841,6 +843,7 @@
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarle--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -873,6 +876,7 @@
 				DEVELOPMENT_TEAM = 9E8SXF3Y36;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Aarle--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
