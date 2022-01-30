@@ -15,12 +15,15 @@ final class AppStore: ObservableObject {
         case hideLinkEditorSidebar
         case showAddView
         case hideAddView
+        case showSettings
+        case hideSettings
     }
 
     struct AppState {
         var selectedLink: Link?
         var showLinkEditorSidebar = false
         var showsAddView = false
+        var showsSettings = false
     }
 
     static func reduce(action: Action, into state: inout AppState) {
@@ -39,6 +42,15 @@ final class AppStore: ObservableObject {
 #endif
         case .hideAddView:
             state.showsAddView = false
+        case .showSettings:
+            state.showsSettings = true
+
+#if os(macOS)
+            // TODO: Move into side-effect
+            WindowRoutes.settings.open()
+#endif
+        case .hideSettings:
+            state.showsSettings = false
         }
     }
 
@@ -68,6 +80,19 @@ final class AppStore: ObservableObject {
                 self.reduce(.showAddView)
             } else {
                 self.reduce(.hideAddView)
+            }
+        }
+    }
+
+    var showsSettings: Binding<Bool> {
+        Binding { [weak self] in
+            return self?.state.showsSettings ?? false
+        } set: { [weak self] showsSettings in
+            guard let self = self else { return }
+            if showsSettings {
+                self.reduce(.showSettings)
+            } else {
+                self.reduce(.hideSettings)
             }
         }
     }

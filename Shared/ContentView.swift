@@ -80,7 +80,13 @@ struct ContentView: View {
         .listStyle(PlainListStyle())
         // TODO: Move into store
         .sheet(item: $showingEditLink) { link in
+#if os(macOS)
             LinkEditView(link: link, linkStore: linkStore, showCancelButton: true)
+#elseif os(iOS)
+            NavigationView {
+                LinkEditView(link: link, linkStore: linkStore, showCancelButton: true)
+            }
+#endif
         }
         .toolbar {
             ToolbarItem {

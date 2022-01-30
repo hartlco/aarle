@@ -10,11 +10,11 @@ import SwiftUIX
 
 struct SidebarView: View {
     @State private var isDefaultItemActive: Bool
-    @State var showsSettings = false
 
     @ObservedObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var appStore: AppStore
 
     init(
         isDefaultItemActive: Bool = true,
@@ -25,62 +25,65 @@ struct SidebarView: View {
     }
 
     var body: some View {
-        ZStack {
-            List {
-                Section(header: "Links") {
+        List {
+            Section(header: "Links") {
+                NavigationLink(
+                    destination: ContentView(
+                        title: "Links",
+                        linkStore: linkStore
+                    ),
+                    isActive: $isDefaultItemActive
+                ) {
+                    Label("All", systemImage: "tray.2")
+                }
+                NavigationLink(
+                    destination: TagListView(
+                        tagStore: tagStore
+                    )
+                ) {
+                    Label("Tags", systemImage: "tag")
+                }
+            }
+            Section(header: "Favorites") {
+                ForEach(tagStore.favoriteTags) { tag in
                     NavigationLink(
                         destination: ContentView(
-                            title: "Links",
-                            linkStore: linkStore
-                        ),
-                        isActive: $isDefaultItemActive
-                    ) {
-                        Label("All", systemImage: "tray.2")
-                    }
-                    NavigationLink(
-                        destination: TagListView(
-                            tagStore: tagStore
-                        )
-                    ) {
-                        Label("Tags", systemImage: "tag")
-                    }
-                }
-                Section(header: "Favorites") {
-                    ForEach(tagStore.favoriteTags) { tag in
-                        NavigationLink(
-                            destination: ContentView(
-                                title: tag.name,
-                                linkStore: LinkStore(
-                                    client: UniversalClient(settingsStore: settingsStore),
-                                    tagScope: tag.name
-                                )
+                            title: tag.name,
+                            linkStore: LinkStore(
+                                client: UniversalClient(settingsStore: settingsStore),
+                                tagScope: tag.name
                             )
-                        ) {
-                            Label(tag.name, systemImage: "tag")
-                        }
-                    }
-                }
-            }.listStyle(SidebarListStyle())
-            #if os(iOS)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            showsSettings = true
-                        } label: {
-                            Label("Settings", systemImage: "gear")
-                        }
-                        .sheet(
-                            isPresented: $showsSettings,
-                            onDismiss: nil,
-                            content: {
-                                SettingsView()
-                            }
                         )
+                    ) {
+                        Label(tag.name, systemImage: "tag")
                     }
                 }
-            #endif
+            }
         }
-        
+        .listStyle(SidebarListStyle())
+#if os(iOS)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    appStore.reduce(.showSettings)
+                } label: {
+                    Label("Settings", systemImage: "gear")
+                }
+                .sheet(
+                    isPresented: appStore.showsSettings,
+                    content: {
+                        SettingsView()
+                    }
+                )
+            }
+        }
+#endif
+        .onAppear {
+            if settingsStore.isLoggedOut {
+                appStore.reduce(.showSettings)
+            }
+        }
+        .equatable(by: appStore.showsSettings.wrappedValue)
     }
 }
 

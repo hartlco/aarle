@@ -62,8 +62,15 @@ struct AarleApp: App {
             tagStore: tagStore,
             appStore: appStore
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
-
 #if os(macOS)
+        WindowGroup {
+            SettingsView()
+                .onDisappear {
+                    appStore.reduce(.hideSettings)
+                }
+                .environmentObject(Self.settingsStore)
+        }
+        .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
         Settings {
             SettingsView()
                 .environmentObject(Self.settingsStore)
@@ -91,6 +98,7 @@ struct LinkAddScene: Scene {
 
 enum WindowRoutes: String {
     case addLink
+    case settings
 
     #if os(macOS)
     func open() {

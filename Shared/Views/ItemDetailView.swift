@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct ItemDetailView: View {
     let link: Link
@@ -13,6 +14,8 @@ struct ItemDetailView: View {
 
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var appStore: AppStore
+
+    @State var shareSheetPresented = false
 
     init(
         link: Link,
@@ -29,7 +32,6 @@ struct ItemDetailView: View {
         HSplitView {
             WebView(data: WebViewData(url: link.url))
                 .toolbar {
-//                    Spacer()
                     ToolbarItem {
                         Spacer()
                     }
@@ -66,34 +68,30 @@ struct ItemDetailView: View {
 #else
         WebView(data: WebViewData(url: link.url))
             .toolbar {
-                ToolbarItem(placement: .bottomBar) {
-                    Button(action: {
-                        UIApplication.shared.open(
-                            link.url,
-                            options: [:],
-                            completionHandler: nil
-                        )
-                    }, label: {
-                        Label("Open in Safari ", systemImage: "safari")
-                    })
-                }
-                // TODO: Show share sheet instead
-                ToolbarItem(placement: .bottomBar) {
-                    Button(action: {
-                        pasteboard.copyToPasteboard(string: link.url.absoluteString)
-                    }, label: {
-                        Label("Copy to Clipboard ", systemImage: "paperclip.circle")
-                    })
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
                         LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        shareSheetPresented = true
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }.sheet(isPresented: $shareSheetPresented) {
+                        AppActivityView(activityItems: [link.url], applicationActivities: nil)
+                    }
 
+                    NavigationLink {
+                        LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
+                    } label: {
+                        Label("Edit", systemImage: "pencil.circle")
+                    }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(link.title ?? "")
 #endif
     }

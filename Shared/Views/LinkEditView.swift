@@ -42,23 +42,21 @@ struct LinkEditView: View {
         form
         .padding()
 #elseif os(iOS)
-        NavigationView {
-            form.toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel", role: .cancel) {
+        form.toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Cancel", role: .cancel) {
+                    dismiss()
+                }.hidden(!showCancelButton)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Save") {
+                    save()
+                    if showCancelButton {
                         dismiss()
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        save()
-                        if showCancelButton {
-                            dismiss()
-                        }
-                    }
-                }
-            }.navigationTitle("Edit link")
-        }
+            }
+        }.navigationTitle("Edit link")
 #endif
     }
 

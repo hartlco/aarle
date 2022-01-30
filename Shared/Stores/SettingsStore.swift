@@ -29,8 +29,8 @@ final class SettingsStore: ObservableObject {
 
     struct State {
         var accountType: AccountType
-        var secret: String?
-        var endpoint: String?
+        var secret: String
+        var endpoint: String
     }
 
     @Published private var state: State
@@ -38,14 +38,23 @@ final class SettingsStore: ObservableObject {
     init() {
         let serviceString = Self.keychain[Self.servieKey]
         let accountType = AccountType(rawValue: serviceString ?? "") ?? .shaarli
-        let secret = Self.keychain[Self.keychainKey]
-        let endpoint = Self.keychain[Self.endpointKey]
+        let secret = Self.keychain[Self.keychainKey] ?? ""
+        let endpoint = Self.keychain[Self.endpointKey] ?? ""
 
         self._state = Published(
             initialValue: State(
                 accountType: accountType, secret: secret, endpoint: endpoint
             )
         )
+    }
+
+    var isLoggedOut: Bool {
+        switch state.accountType {
+        case .shaarli:
+            return state.secret.isEmpty || state.endpoint.isEmpty
+        case .pinboard:
+            return state.secret.isEmpty
+        }
     }
 
     var secret: Binding<String?> {
@@ -78,11 +87,21 @@ final class SettingsStore: ObservableObject {
     func reduce(_ action: Action) {
         switch action {
         case let .setSecret(secret):
-            state.secret = secret
-            Self.keychain[Self.keychainKey] = state.secret
+            state.secret = secret ?? ""
+
+            if state.secret.isEmpty {
+                try? Self.keychain.remove(Self.keychainKey)
+            } else {
+                Self.keychain[Self.keychainKey] = state.secret
+            }
         case let .setEndpoint(endpoint):
-            state.endpoint = endpoint
-            Self.keychain[Self.endpointKey] = state.endpoint
+            state.endpoint = endpoint ?? ""
+
+            if state.endpoint.isEmpty {
+                try? Self.keychain.remove(Self.endpointKey)
+            } else {
+                Self.keychain[Self.endpointKey] = state.endpoint
+            }
         case let .setAccountType(type):
             state.accountType = type
             Self.keychain[Self.servieKey] = state.accountType.rawValue
