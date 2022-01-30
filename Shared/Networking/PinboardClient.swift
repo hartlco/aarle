@@ -22,6 +22,10 @@ final class PinboardClient: BookmarkClient {
 
     // TODO: Add Search
     func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
+        if let searchTerm = searchTerm, !searchTerm.isEmpty {
+            return try await search(filteredByTags: tags, searchTerm: searchTerm)
+        }
+
         guard var URL = URL(string: apiEndpoint + "/posts/all") else {
             throw ClientError.unknownURL
         }
@@ -48,6 +52,49 @@ final class PinboardClient: BookmarkClient {
         let links = try decoder.decode([PinboardLink].self, from: data)
 
         return links.map(Link.fromPinboardLink(link:))
+    }
+
+    private func search(filteredByTags tags: [String], searchTerm: String) async throws -> [Link] {
+        guard var URL = URL(string: apiEndpoint + "/posts/all") else {
+            throw ClientError.unknownURL
+        }
+
+        var queryParams: [String: String] = [:]
+
+        if !tags.isEmpty {
+            queryParams["tag"] = tags.joined(separator: "+")
+        }
+
+        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["format"] = "json"
+        queryParams["results"] = "\(1000)"
+
+        URL = URL.appendingQueryParameters(queryParams)
+
+        var request = URLRequest(url: URL)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+
+        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let links = try decoder.decode([PinboardLink].self, from: data)
+
+        return links.filter { link in
+            if let description = link.description, description.lowercased().contains(searchTerm.lowercased()) {
+                return true
+            }
+
+            if let extended = link.extended, extended.lowercased().contains(searchTerm.lowercased()) {
+                return true
+            }
+
+            if link.href.lowercased().contains(searchTerm.lowercased()) {
+                return true
+            }
+
+            return false
+        }.map(Link.fromPinboardLink(link:))
     }
 
     // TODO: Add search
