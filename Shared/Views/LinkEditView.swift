@@ -11,6 +11,8 @@ import SwiftUIX
 struct LinkEditView: View {
     let link: Link
 
+    @Environment(\.dismiss) var dismiss
+
     @ObservedObject private var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
 
@@ -19,12 +21,16 @@ struct LinkEditView: View {
     @State var description: String
     @State var tagsString: String
 
+    private let showCancelButton: Bool
+
     init(
         link: Link,
-        linkStore: LinkStore
+        linkStore: LinkStore,
+        showCancelButton: Bool
     ) {
         self.link = link
         self.linkStore = linkStore
+        self.showCancelButton = showCancelButton
         self._urlString = State<String>(initialValue: link.url.absoluteString)
         self._title = State(initialValue: link.title ?? "")
         self._description = State(initialValue: link.description ?? "")
@@ -32,39 +38,78 @@ struct LinkEditView: View {
     }
 
     var body: some View {
+#if os(macOS)
+        form
+        .padding()
+#elseif os(iOS)
+        NavigationView {
+            form.toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel", role: .cancel) {
+                        dismiss()
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        save()
+                        if showCancelButton {
+                            dismiss()
+                        }
+                    }
+                }
+            }.navigationTitle("Edit link")
+        }
+#endif
+    }
+
+    private var form: some View {
         Form {
             Section(header: "Main Information") {
-                TextField("URL:", text: $urlString)
-                TextField("Title:", text: $title)
+                TextField("URL", text: $urlString)
+                TextField("Title", text: $title)
             }
             Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            Section(header: "Favorites") {
-                ForEach(tagStore.favoriteTags) { tag in
-                    Toggle(
-                        tag.name,
-                        isOn: Binding(
-                            get: {
-                                return tagStore.tagsString(tagsString, contains: tag)
-                            },
-                            set: { newValue in
-                                if newValue {
-                                    tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
-                                } else {
-                                    tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+            if !tagStore.favoriteTags.isEmpty {
+                Section(header: "Favorites") {
+                    ForEach(tagStore.favoriteTags) { tag in
+                        Toggle(
+                            tag.name,
+                            isOn: Binding(
+                                get: {
+                                    return tagStore.tagsString(tagsString, contains: tag)
+                                },
+                                set: { newValue in
+                                    if newValue {
+                                        tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
+                                    } else {
+                                        tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+                                    }
                                 }
-                            }
+                            )
                         )
-                    )
+                    }
                 }
             }
             TextField("Tags:", text: $tagsString)
-            Button("Save") {
-                save()
+#if os(macOS)
+            HStack {
+                Spacer()
+                if showCancelButton {
+                    Button("Cancel", role: .cancel) {
+                        dismiss()
+                    }
+                }
+                Button("Save") {
+                    save()
+                    if showCancelButton {
+                        dismiss()
+                    }
+                }.buttonStyle(.borderedProminent)
             }
+#endif
         }
-        .padding()
     }
 
     private func save() {
@@ -90,8 +135,11 @@ struct LinkEditView: View {
 struct LinkEditView_Previews: PreviewProvider {
     static var previews: some View {
         let link = Link.mock
-        LinkEditView(link: link,
-                     linkStore: .mock).environmentObject(TagStore.mock)
+        LinkEditView(
+            link: link,
+            linkStore: .mock,
+            showCancelButton: true
+        ).environmentObject(TagStore.mock)
     }
 }
 #endif

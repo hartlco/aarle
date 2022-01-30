@@ -79,8 +79,8 @@ struct ContentView: View {
         }
         .listStyle(PlainListStyle())
         // TODO: Move into store
-        .popover(item: $showingEditLink) { link in
-            LinkEditView(link: link, linkStore: linkStore)
+        .sheet(item: $showingEditLink) { link in
+            LinkEditView(link: link, linkStore: linkStore, showCancelButton: true)
         }
         .toolbar {
             ToolbarItem {
@@ -109,13 +109,5 @@ struct ContentView: View {
             }
             linkStore.reduce(.load)
         }
-    }
-
-    private var navigationBarItemPlacement: ToolbarItemPlacement {
-        #if os(macOS)
-        return .automatic
-        #else
-        return .navigationBarTrailing
-        #endif
     }
 }

@@ -43,7 +43,7 @@ struct ItemDetailView: View {
 
                 }
             if appStore.showLinkEditorSidebar {
-                LinkEditView(link: link, linkStore: linkStore)
+                LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
         }
@@ -71,7 +71,7 @@ struct ItemDetailView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        LinkEditView(link: link, linkStore: linkStore)
+                        LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }

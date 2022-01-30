@@ -25,7 +25,6 @@ final class SettingsStore: ObservableObject {
         case setSecret(String?)
         case setEndpoint(String?)
         case setAccountType(AccountType)
-        case login
     }
 
     struct State {
@@ -78,16 +77,15 @@ final class SettingsStore: ObservableObject {
 
     func reduce(_ action: Action) {
         switch action {
-        case .login:
-            Self.keychain[Self.keychainKey] = state.secret
-            Self.keychain[Self.endpointKey] = state.endpoint
-            Self.keychain[Self.servieKey] = state.accountType.rawValue
         case let .setSecret(secret):
             state.secret = secret
+            Self.keychain[Self.keychainKey] = state.secret
         case let .setEndpoint(endpoint):
             state.endpoint = endpoint
+            Self.keychain[Self.endpointKey] = state.endpoint
         case let .setAccountType(type):
             state.accountType = type
+            Self.keychain[Self.servieKey] = state.accountType.rawValue
         }
     }
 }
