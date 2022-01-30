@@ -29,18 +29,34 @@ struct ItemDetailView: View {
         HSplitView {
             WebView(data: WebViewData(url: link.url))
                 .toolbar {
-                    Spacer()
-                    Button {
-                        if appStore.showLinkEditorSidebar {
-                            appStore.reduce(.hideLinkEditorSidebar)
-                        } else {
-                            appStore.reduce(.showLinkEditorSidebar)
+//                    Spacer()
+                    ToolbarItem {
+                        Spacer()
+                    }
+                    ToolbarItem {
+                        Menu {
+                            ForEach(NSSharingService.sharingServices(forItems: [link.url]), id: \.title) { service in
+                                Button(action: { service.perform(withItems: [link.url]) }) {
+                                    Image(nsImage: service.image)
+                                    Text(service.title)
+                                }
+                            }
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
                         }
-                    } label: {
-                        Label("Show Edit Link", systemImage: "sidebar.right")
+                    }
+                    ToolbarItem {
+                        Button {
+                            if appStore.showLinkEditorSidebar {
+                                appStore.reduce(.hideLinkEditorSidebar)
+                            } else {
+                                appStore.reduce(.showLinkEditorSidebar)
+                            }
+                        } label: {
+                            Label("Show Edit Link", systemImage: "sidebar.right")
+                        }
                     }
                     // TODO: Add keyboard shortcut
-
                 }
             if appStore.showLinkEditorSidebar {
                 LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
