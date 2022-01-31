@@ -54,6 +54,14 @@ struct SidebarView: View {
                         )
                     ) {
                         Label(tag.name, systemImage: "tag")
+                    }.contextMenu {
+                        Button(role: .destructive) {
+                            Task {
+                                tagStore.reduce(.removeFavorite(tag))
+                            }
+                        } label: {
+                            Label("Remove Favorite", systemImage: "trash")
+                        }
                     }
                 }
             }

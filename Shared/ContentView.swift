@@ -39,18 +39,17 @@ struct ContentView: View {
                     tag: link,
                     selection: appStore.selectedLink,
                     label: { LinkItemView(link: link) }
-                )
-                    .contextMenu {
-                        Button("Edit", action: { showingEditLink = link })
-                        Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
-                        Button(role: .destructive) {
-                            Task {
-                                try await linkStore.delete(link: link)
-                            }
-                        } label: {
-                            Label("Delete", systemImage: "trash")
+                ).contextMenu {
+                    Button("Edit", action: { showingEditLink = link })
+                    Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
+                    Button(role: .destructive) {
+                        Task {
+                            try await linkStore.delete(link: link)
                         }
+                    } label: {
+                        Label("Delete", systemImage: "trash")
                     }
+                }
             }
             if linkStore.canLoadMore {
                 HStack {
