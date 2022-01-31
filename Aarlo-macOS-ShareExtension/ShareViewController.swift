@@ -46,7 +46,6 @@ class ShareViewController: NSViewController {
     @MainActor
     private func showView(for url: URL?, title: String?, description: String?) {
         let addView = LinkAddView(
-            linkStore: linkStore,
             urlString: url?.absoluteString ?? "",
             title: title ?? "",
             description: description ?? ""
@@ -54,7 +53,7 @@ class ShareViewController: NSViewController {
             self.send(self)
         }.onDisappear {
             self.cancel(self)
-        }.environmentObject(tagStore)
+        }.environmentObject(tagStore).environmentObject(linkStore)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

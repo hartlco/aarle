@@ -20,11 +20,12 @@ struct AarleApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                InitialContentView(linkStore: linkStore)
+                InitialContentView()
             }
             .environmentObject(Self.settingsStore)
             .environmentObject(appStore)
             .environmentObject(tagStore)
+            .environmentObject(linkStore)
             .tint(.tint)
         }
         .commands {
@@ -87,11 +88,10 @@ struct LinkAddScene: Scene {
 
     var body: some Scene {
         WindowGroup {
-            LinkAddView(
-                linkStore: linkStore
-            ).onDisappear {
+            LinkAddView().onDisappear {
                 appStore.reduce(.hideAddView)
-            }.environmentObject(tagStore)
+            }
+            .environmentObject(tagStore)
         }
     }
 }

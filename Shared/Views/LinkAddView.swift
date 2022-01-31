@@ -9,10 +9,9 @@ import SwiftUI
 import SwiftUIX
 
 struct LinkAddView: View {
-    @ObservedObject private var linkStore: LinkStore
-
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var linkStore: LinkStore
 
     @State var urlString: String
     @State var title: String
@@ -22,13 +21,11 @@ struct LinkAddView: View {
     private var onSaveBlock: (() -> Void)?
 
     init(
-        linkStore: LinkStore,
         urlString: String = "",
         title: String = "",
         description: String = "",
         onSaveBlock: (() -> Void)? = nil
     ) {
-        self.linkStore = linkStore
         self.onSaveBlock = onSaveBlock
 
         self._urlString = State<String>(initialValue: urlString)
@@ -123,7 +120,7 @@ struct LinkAddView: View {
 #if DEBUG
 struct LinkAddView_Previews: PreviewProvider {
     static var previews: some View {
-        LinkAddView(linkStore: LinkStore.mock).environmentObject(LinkStore.mock)
+        LinkAddView().environmentObject(LinkStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

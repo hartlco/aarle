@@ -12,8 +12,7 @@ struct InitialContentView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
 
-    // TODO: Inject them from the AppState
-    @ObservedObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     
     let webViewData = WebViewData(url: nil)
@@ -21,11 +20,10 @@ struct InitialContentView: View {
     var body: some View {
         if compactEnvironment {
             SidebarView(
-                isDefaultItemActive: false,
-                linkStore: linkStore
+                isDefaultItemActive: false
             ).navigationTitle("aarle")
         } else {
-            SidebarView(linkStore: linkStore)
+            SidebarView()
                 .navigationTitle("aarle")
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)

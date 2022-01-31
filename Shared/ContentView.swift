@@ -16,19 +16,16 @@ struct ContentView: View {
 
     @EnvironmentObject var appStore: AppStore
     @EnvironmentObject var tagStore: TagStore
-
-    @ObservedObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkStore
 
     private let pasteboard: Pasteboard
     private let title: String
 
     init(
         title: String,
-        linkStore: LinkStore,
         pasteboard: Pasteboard = DefaultPasteboard()
     ) {
         self.title = title
-        self.linkStore = linkStore
         self.pasteboard = pasteboard
     }
 
@@ -37,8 +34,7 @@ struct ContentView: View {
             ForEach(linkStore.links) { link in
                 NavigationLink(
                     destination: ItemDetailView(
-                        link: link,
-                        linkStore: linkStore
+                        link: link
                     ),
                     tag: link,
                     selection: appStore.selectedLink,
@@ -81,10 +77,10 @@ struct ContentView: View {
         // TODO: Move into store
         .sheet(item: $showingEditLink) { link in
 #if os(macOS)
-            LinkEditView(link: link, linkStore: linkStore, showCancelButton: true)
+            LinkEditView(link: link, showCancelButton: true)
 #elseif os(iOS)
             NavigationView {
-                LinkEditView(link: link, linkStore: linkStore, showCancelButton: true)
+                LinkEditView(link: link, showCancelButton: true)
             }
 #endif
         }
@@ -100,9 +96,7 @@ struct ContentView: View {
                     isPresented: appStore.showsAddView,
                     onDismiss: nil,
                     content: {
-                        LinkAddView(
-                            linkStore: linkStore
-                        )
+                        LinkAddView()
                     }
                 )
 #endif

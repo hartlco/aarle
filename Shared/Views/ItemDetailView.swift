@@ -10,19 +10,17 @@ import SwiftUIX
 
 struct ItemDetailView: View {
     let link: Link
-    @ObservedObject private var linkStore: LinkStore
 
+    @EnvironmentObject private var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var appStore: AppStore
 
     @State var shareSheetPresented = false
 
     init(
-        link: Link,
-        linkStore: LinkStore
+        link: Link
     ) {
         self.link = link
-        self.linkStore = linkStore
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -61,7 +59,7 @@ struct ItemDetailView: View {
                     // TODO: Add keyboard shortcut
                 }
             if appStore.showLinkEditorSidebar {
-                LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
+                LinkEditView(link: link, showCancelButton: false)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
         }
@@ -70,7 +68,7 @@ struct ItemDetailView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
+                        LinkEditView(link: link, showCancelButton: false)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }
@@ -85,7 +83,7 @@ struct ItemDetailView: View {
                     }
 
                     NavigationLink {
-                        LinkEditView(link: link, linkStore: linkStore, showCancelButton: false)
+                        LinkEditView(link: link, showCancelButton: false)
                     } label: {
                         Label("Edit", systemImage: "pencil.circle")
                     }
@@ -101,9 +99,8 @@ struct ItemDetailView: View {
 struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ItemDetailView(
-            link: Link.mock,
-            linkStore: LinkStore.mock
-        ).environmentObject(TagStore.mock)
+            link: Link.mock
+        ).environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

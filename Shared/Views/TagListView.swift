@@ -30,8 +30,9 @@ struct TagListView: View {
                 // TODO: Handle selection App wide
                 NavigationView {
                     ContentView(
-                        title: "Links",
-                        linkStore: LinkStore(
+                        title: "Links"
+                    ).environmentObject(
+                        LinkStore(
                             client: UniversalClient(settingsStore: settingsStore),
                             tagScope: tag.name
                         )
@@ -40,8 +41,9 @@ struct TagListView: View {
                 }
                 #else
                 ContentView(
-                    title: "Links",
-                    linkStore: LinkStore(
+                    title: "Links"
+                ).environmentObject(
+                    LinkStore(
                         client: UniversalClient(settingsStore: settingsStore),
                         tagScope: tag.name
                     )

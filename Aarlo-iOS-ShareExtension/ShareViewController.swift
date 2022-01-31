@@ -46,7 +46,6 @@ final class ShareViewController: UIViewController {
     @MainActor
     private func showView(for urlString: String?, title: String?, description: String?) {
         let addView = LinkAddView(
-            linkStore: linkStore,
             urlString: urlString ?? "",
             title: title ?? "",
             description: description ?? ""
@@ -54,8 +53,7 @@ final class ShareViewController: UIViewController {
             self.send(self)
         }.onDisappear {
             self.cancel(self)
-        }.environmentObject(tagStore)
-            .environmentObject(Self.settingsStore)
+        }.environmentObject(tagStore).environmentObject(Self.settingsStore).environmentObject(linkStore)
 
         let hosting = UIHostingController(rootView: addView)
         self.addChild(hosting)

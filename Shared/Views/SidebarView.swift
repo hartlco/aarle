@@ -11,17 +11,15 @@ import SwiftUIX
 struct SidebarView: View {
     @State private var isDefaultItemActive: Bool
 
-    @ObservedObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var appStore: AppStore
 
     init(
-        isDefaultItemActive: Bool = true,
-        linkStore: LinkStore
+        isDefaultItemActive: Bool = true
     ) {
         self._isDefaultItemActive = State(initialValue: isDefaultItemActive)
-        self.linkStore = linkStore
     }
 
     var body: some View {
@@ -29,8 +27,7 @@ struct SidebarView: View {
             Section(header: "Links") {
                 NavigationLink(
                     destination: ContentView(
-                        title: "Links",
-                        linkStore: linkStore
+                        title: "Links"
                     ),
                     isActive: $isDefaultItemActive
                 ) {
@@ -48,8 +45,9 @@ struct SidebarView: View {
                 ForEach(tagStore.favoriteTags) { tag in
                     NavigationLink(
                         destination: ContentView(
-                            title: tag.name,
-                            linkStore: LinkStore(
+                            title: tag.name
+                        ).environmentObject(
+                            LinkStore(
                                 client: UniversalClient(settingsStore: settingsStore),
                                 tagScope: tag.name
                             )
@@ -83,7 +81,7 @@ struct SidebarView: View {
                 appStore.reduce(.showSettings)
             }
         }
-        .equatable(by: appStore.showsSettings.wrappedValue)
+        .equatable(by: tagStore.favoriteTags)
     }
 }
 
@@ -91,9 +89,8 @@ struct SidebarView: View {
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(
-            isDefaultItemActive: false,
-            linkStore: LinkStore.mock
-        ).environmentObject(TagStore.mock)
+            isDefaultItemActive: false
+        ).environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

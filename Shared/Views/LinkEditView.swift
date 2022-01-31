@@ -13,7 +13,7 @@ struct LinkEditView: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @ObservedObject private var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
 
     @State var urlString: String
@@ -25,11 +25,9 @@ struct LinkEditView: View {
 
     init(
         link: Link,
-        linkStore: LinkStore,
         showCancelButton: Bool
     ) {
         self.link = link
-        self.linkStore = linkStore
         self.showCancelButton = showCancelButton
         self._urlString = State<String>(initialValue: link.url.absoluteString)
         self._title = State(initialValue: link.title ?? "")
@@ -135,9 +133,10 @@ struct LinkEditView_Previews: PreviewProvider {
         let link = Link.mock
         LinkEditView(
             link: link,
-            linkStore: .mock,
             showCancelButton: true
-        ).environmentObject(TagStore.mock)
+        )
+            .environmentObject(TagStore.mock)
+            .environmentObject(LinkStore.mock)
     }
 }
 #endif
