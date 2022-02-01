@@ -13,6 +13,10 @@ final class AppStore: ObservableObject {
         case setSelectedLink(Link?)
         case showLinkEditorSidebar
         case hideLinkEditorSidebar
+
+        case showEditLink(Link)
+        case hideEditLink
+
         case showAddView
         case hideAddView
         case showSettings
@@ -21,6 +25,7 @@ final class AppStore: ObservableObject {
 
     struct AppState {
         var selectedLink: Link?
+        var presentedEditLink: Link?
         var showLinkEditorSidebar = false
         var showsAddView = false
         var showsSettings = false
@@ -51,6 +56,10 @@ final class AppStore: ObservableObject {
 #endif
         case .hideSettings:
             state.showsSettings = false
+        case let .showEditLink(link):
+            state.presentedEditLink = link
+        case .hideEditLink:
+            state.presentedEditLink = nil
         }
     }
 
@@ -66,6 +75,20 @@ final class AppStore: ObservableObject {
         } set: { [weak self] link in
             guard let self = self else { return }
             self.reduce(.setSelectedLink(link))
+        }
+    }
+
+    var presentedEditLink: Binding<Link?> {
+        Binding { [weak self] in
+            return self?.state.presentedEditLink
+        } set: { [weak self] link in
+            guard let self = self else { return }
+
+            if let link = link {
+                self.reduce(.showEditLink(link))
+            } else {
+                self.reduce(.hideEditLink)
+            }
         }
     }
 

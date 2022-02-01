@@ -11,9 +11,6 @@ import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    // TODO: Add to AppState
-    @State var showingEditLink: Link?
-
     @EnvironmentObject var appStore: AppStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var linkStore: LinkStore
@@ -40,7 +37,7 @@ struct ContentView: View {
                     selection: appStore.selectedLink,
                     label: { LinkItemView(link: link) }
                 ).contextMenu {
-                    Button("Edit", action: { showingEditLink = link })
+                    Button("Edit", action: { appStore.reduce(.showEditLink(link)) })
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
                         Task {
@@ -73,8 +70,7 @@ struct ContentView: View {
             linkStore.reduce(.load)
         }
         .listStyle(PlainListStyle())
-        // TODO: Move into store
-        .sheet(item: $showingEditLink) { link in
+        .sheet(item: appStore.presentedEditLink) { link in
 #if os(macOS)
             LinkEditView(link: link, showCancelButton: true)
 #elseif os(iOS)
