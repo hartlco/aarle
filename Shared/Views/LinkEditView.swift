@@ -96,13 +96,16 @@ struct LinkEditView: View {
                     Button("Cancel", role: .cancel) {
                         dismiss()
                     }
+                    .keyboardShortcut(.cancelAction)
                 }
                 Button("Save") {
                     save()
                     if showCancelButton {
                         dismiss()
                     }
-                }.buttonStyle(.borderedProminent)
+                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut("s", modifiers: [.command])
             }
 #endif
         }

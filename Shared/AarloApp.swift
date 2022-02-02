@@ -48,6 +48,16 @@ struct AarleApp: App {
                 .disabled(appStore.selectedLink.wrappedValue == nil)
             }
             CommandMenu("Link") {
+                // TODO: Use same implementation as right click menu
+                Button("Edit link") {
+                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
+                        return
+                    }
+
+                    appStore.reduce(.showEditLink(selectedLink))
+                }
+                .keyboardShortcut("e", modifiers: [.command])
+                .disabled(appStore.selectedLink.wrappedValue == nil)
                 Button("Copy link to clipboard") {
                     guard let selectedLink = appStore.selectedLink.wrappedValue else {
                         return
