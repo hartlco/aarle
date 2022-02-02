@@ -20,7 +20,6 @@ final class PinboardClient: BookmarkClient {
         self.settingsStore = settingsStore
     }
 
-    // TODO: Add Search
     func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         if let searchTerm = searchTerm, !searchTerm.isEmpty {
             return try await search(filteredByTags: tags, searchTerm: searchTerm)
@@ -97,7 +96,6 @@ final class PinboardClient: BookmarkClient {
         }.map(Link.fromPinboardLink(link:))
     }
 
-    // TODO: Add search
     func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/posts/all") else {
             throw ClientError.unknownURL

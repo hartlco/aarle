@@ -13,7 +13,7 @@ struct AarleApp: App {
     static let settingsStore = SettingsStore()
 
     let pasteboard = DefaultPasteboard()
-    @ObservedObject var appStore = AppStore()
+    @StateObject var appStore = AppStore()
     @StateObject var linkStore = LinkStore(client: UniversalClient(settingsStore: Self.settingsStore))
     @StateObject var tagStore = TagStore(client: UniversalClient(settingsStore: Self.settingsStore))
 
@@ -31,8 +31,9 @@ struct AarleApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New Link") {
-                    print("save new link")
+                    appStore.reduce(.showAddView)
                 }
+                .keyboardShortcut("n", modifiers: [.command])
             }
             CommandGroup(after: .sidebar) {
                 // TODO: Make title dynamic

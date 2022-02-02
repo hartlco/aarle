@@ -9,10 +9,9 @@ import SwiftUI
 
 // TODO: Add tag renaming
 struct TagListView: View {
-    @ObservedObject var tagStore: TagStore
-
     let webViewData = WebViewData(url: nil)
 
+    @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var settingsStore: SettingsStore
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
@@ -81,7 +80,7 @@ struct TagListView: View {
 #if DEBUG
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
-        TagListView(tagStore: .mock)
+        TagListView().environmentObject(TagStore.mock)
     }
 }
 #endif

@@ -34,9 +34,7 @@ struct SidebarView: View {
                     Label("All", systemImage: "tray.2")
                 }
                 NavigationLink(
-                    destination: TagListView(
-                        tagStore: tagStore
-                    )
+                    destination: TagListView()
                 ) {
                     Label("Tags", systemImage: "tag")
                 }
