@@ -17,24 +17,26 @@ final class LinkStore: ObservableObject {
         case search
     }
 
+    // TODO: Move tag scope into state, introduce sub-state that is tracked per tag
+    // Unify all LinkStore into one
     struct State {
         var links: [Link] = []
+        var tagScope: String?
         var isLoading = false
         var canLoadMore = false
         var searchText = ""
     }
 
     private let client: BookmarkClient
-    private let tagScope: String?
 
-    @Published private var state = State()
+    @Published private var state: State
 
     init(
         client: BookmarkClient,
         tagScope: String? = nil
     ) {
+        self._state = Published(initialValue: State(tagScope: tagScope))
         self.client = client
-        self.tagScope = tagScope
     }
 
     @MainActor var searchText: Binding<String> {
@@ -85,7 +87,7 @@ final class LinkStore: ObservableObject {
 
     private var scopedTages: [String] {
         let tags: [String]
-        if let tagScope = tagScope {
+        if let tagScope = state.tagScope {
             tags = [tagScope]
         } else {
             tags = []

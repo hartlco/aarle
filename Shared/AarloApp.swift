@@ -47,6 +47,14 @@ struct AarleApp: App {
                 .keyboardShortcut("0", modifiers: [.command, .option])
                 .disabled(appStore.selectedLink.wrappedValue == nil)
             }
+            CommandMenu("List") {
+                Button("Refresh") {
+                    linkStore.reduce(.load)
+                    tagStore.reduce(.load)
+                }
+                .keyboardShortcut("R", modifiers: [.command])
+                .disabled(appStore.selectedLink.wrappedValue == nil)
+            }
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {

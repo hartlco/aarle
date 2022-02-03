@@ -65,7 +65,6 @@ struct ContentView: View {
         .onSubmit(of: .search) {
             linkStore.reduce(.search)
         }
-        // TODO: Add macOS shortcut / menu item
         .refreshable {
             linkStore.reduce(.load)
         }
