@@ -49,7 +49,7 @@ struct AarleApp: App {
             }
             CommandMenu("List") {
                 Button("Refresh") {
-                    linkStore.reduce(.load)
+                    linkStore.reduce(.loadAll)
                     tagStore.reduce(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])

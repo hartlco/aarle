@@ -29,23 +29,15 @@ struct TagListView: View {
                 // TODO: Handle selection App wide
                 NavigationView {
                     ContentView(
-                        title: "Links"
-                    ).environmentObject(
-                        LinkStore(
-                            client: UniversalClient(settingsStore: settingsStore),
-                            tagScope: tag.name
-                        )
+                        title: "Links",
+                        listType: .tagScoped(tag)
                     )
                     WebView(data: webViewData)
                 }
                 #else
                 ContentView(
-                    title: "Links"
-                ).environmentObject(
-                    LinkStore(
-                        client: UniversalClient(settingsStore: settingsStore),
-                        tagScope: tag.name
-                    )
+                    title: "Links",
+                    listType: .tagScoped(tag)
                 )
                 #endif
             } label: {

@@ -17,18 +17,21 @@ struct ContentView: View {
 
     private let pasteboard: Pasteboard
     private let title: String
+    private let listType: LinkStore.ListType
 
     init(
         title: String,
-        pasteboard: Pasteboard = DefaultPasteboard()
+        pasteboard: Pasteboard = DefaultPasteboard(),
+        listType: LinkStore.ListType
     ) {
         self.title = title
         self.pasteboard = pasteboard
+        self.listType = listType
     }
 
     var body: some View {
         List(selection: appStore.selectedLink) {
-            ForEach(linkStore.links) { link in
+            ForEach(linkStore.links(for: listType)) { link in
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link
@@ -48,12 +51,12 @@ struct ContentView: View {
                     }
                 }
             }
-            if linkStore.canLoadMore {
+            if linkStore.canLoadMore(for: listType) {
                 HStack {
                     Spacer()
                     Button {
-                        guard let lastLink = linkStore.links.last else { return }
-                        linkStore.reduce(.loadMoreIfNeeded(lastLink))
+                        guard let lastLink = linkStore.links(for: listType).last else { return }
+                        linkStore.reduce(.loadMoreIfNeeded(listType, lastLink))
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
                     }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -63,10 +66,10 @@ struct ContentView: View {
         }
         .searchable(text: linkStore.searchText)
         .onSubmit(of: .search) {
-            linkStore.reduce(.search)
+            linkStore.reduce(.search(listType))
         }
         .refreshable {
-            linkStore.reduce(.load)
+            linkStore.reduce(.load(listType))
         }
         .listStyle(PlainListStyle())
         .sheet(item: appStore.presentedEditLink) { link in
@@ -98,10 +101,10 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if !linkStore.links.isEmpty {
+            if !linkStore.links(for: listType).isEmpty {
                 return
             }
-            linkStore.reduce(.load)
+            linkStore.reduce(.load(listType))
         }
     }
 }

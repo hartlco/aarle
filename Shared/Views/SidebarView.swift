@@ -9,6 +9,11 @@ import SwiftUI
 import SwiftUIX
 
 struct SidebarView: View {
+    struct SidebarEquatable: Equatable {
+        var favoriteTags: [Tag]
+        var showsSettings: Bool
+    }
+
     @State private var isDefaultItemActive: Bool
 
     @EnvironmentObject var linkStore: LinkStore
@@ -27,7 +32,8 @@ struct SidebarView: View {
             Section(header: "Links") {
                 NavigationLink(
                     destination: ContentView(
-                        title: "Links"
+                        title: "Links",
+                        listType: .all
                     ),
                     isActive: $isDefaultItemActive
                 ) {
@@ -43,12 +49,8 @@ struct SidebarView: View {
                 ForEach(tagStore.favoriteTags) { tag in
                     NavigationLink(
                         destination: ContentView(
-                            title: tag.name
-                        ).environmentObject(
-                            LinkStore(
-                                client: UniversalClient(settingsStore: settingsStore),
-                                tagScope: tag.name
-                            )
+                            title: tag.name,
+                            listType: .tagScoped(tag)
                         )
                     ) {
                         Label(tag.name, systemImage: "tag")
@@ -87,7 +89,14 @@ struct SidebarView: View {
                 appStore.reduce(.showSettings)
             }
         }
-        .equatable(by: tagStore.favoriteTags)
+        .equatable(by: equation)
+    }
+
+    private var equation: SidebarEquatable {
+        SidebarEquatable(
+            favoriteTags: tagStore.favoriteTags,
+            showsSettings: appStore.showsSettings.wrappedValue
+        )
     }
 }
 

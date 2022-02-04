@@ -11,20 +11,29 @@ import SwiftUI
 
 final class LinkStore: ObservableObject {
     enum Action {
-        case load
-        case loadMoreIfNeeded(Link)
+        case loadAll
+        case load(ListType)
+        case loadMoreIfNeeded(ListType, Link)
         case changeSearchText(String)
-        case search
+        case search(ListType)
     }
 
-    // TODO: Move tag scope into state, introduce sub-state that is tracked per tag
-    // Unify all LinkStore into one
     struct State {
-        var links: [Link] = []
-        var tagScope: String?
-        var isLoading = false
-        var canLoadMore = false
+        // TODO: Move into subStore
+        struct ListState {
+            var links: [Link] = []
+            var tagScope: String?
+            var canLoadMore = false
+        }
+
         var searchText = ""
+        var isLoading = false
+        var listStates: [ListType: ListState] = [:]
+    }
+
+    enum ListType: Hashable {
+        case all
+        case tagScoped(Tag)
     }
 
     private let client: BookmarkClient
@@ -35,7 +44,7 @@ final class LinkStore: ObservableObject {
         client: BookmarkClient,
         tagScope: String? = nil
     ) {
-        self._state = Published(initialValue: State(tagScope: tagScope))
+        self._state = Published(initialValue: State())
         self.client = client
     }
 
@@ -50,19 +59,31 @@ final class LinkStore: ObservableObject {
 
     @MainActor func reduce(_ action: Action) {
         switch action {
-        case .load, .search:
+        case .loadAll:
+            // TODO: Add
+            break
+        case let .search(type):
             Task {
                 do {
-                    try await load()
+                    try await load(type: type)
                 } catch {
                     // TODO: Error handling
                     print(error)
                 }
             }
-        case let .loadMoreIfNeeded(link):
+        case let .load(type):
             Task {
                 do {
-                    try await loadMoreIfNeeded(link: link)
+                    try await load(type: type)
+                } catch {
+                    // TODO: Error handling
+                    print(error)
+                }
+            }
+        case let .loadMoreIfNeeded(type, link):
+            Task {
+                do {
+                    try await loadMoreIfNeeded(type: type, link: link)
                 } catch {
                     // TODO: Error handling
                     print(error)
@@ -70,53 +91,56 @@ final class LinkStore: ObservableObject {
             }
         case let .changeSearchText(string):
             state.searchText = string
-
-            if string.isEmpty {
-                reduce(.load)
-            }
         }
     }
 
-    var links: [Link] {
-        state.links
+    func links(for listType: ListType) -> [Link] {
+        state.listStates[listType]?.links ?? []
     }
 
-    var canLoadMore: Bool {
-        state.canLoadMore
+    func canLoadMore(for listType: ListType) -> Bool {
+        state.listStates[listType]?.canLoadMore ?? false
     }
 
-    private var scopedTages: [String] {
-        let tags: [String]
-        if let tagScope = state.tagScope {
-            tags = [tagScope]
-        } else {
-            tags = []
+    private func scopedTages(for type: ListType) -> [String] {
+        switch type {
+        case .all:
+            return []
+        case .tagScoped(let tag):
+            return [tag.name]
         }
-
-        return tags
     }
 
 #if DEBUG
     static let mock = LinkStore(client: MockClient())
 #endif
 
-    @MainActor private func load() async throws {
+    @MainActor private func load(type: ListType) async throws {
         guard state.isLoading == false else { return }
 
         defer {
             state.isLoading = false
         }
 
+        var listState = state.listStates[type] ?? State.ListState()
+
         state.isLoading = true
 
-        state.links = try await client.load(filteredByTags: scopedTages, searchTerm: state.searchText)
+        listState.links = try await client.load(
+            filteredByTags: scopedTages(for: type), 
+            searchTerm: state.searchText
+        )
 
-        state.canLoadMore = state.links.count == client.pageSize
+        listState.canLoadMore = listState.links.count == client.pageSize
+        state.listStates[type] = listState
     }
 
-    @MainActor private func loadMoreIfNeeded(link: Link) async throws {
+    @MainActor private func loadMoreIfNeeded(type: ListType, link: Link) async throws {
         guard state.isLoading == false else { return }
-        guard link.id == state.links.last?.id else { return }
+
+        var listState = state.listStates[type] ?? State.ListState()
+
+        guard link.id == listState.links.last?.id else { return }
 
         defer {
             state.isLoading = false
@@ -124,10 +148,14 @@ final class LinkStore: ObservableObject {
 
         state.isLoading = true
 
-        let links = try await client.loadMore(offset: state.links.count, filteredByTags: scopedTages, searchTerm: state.searchText)
-        self.state.links.append(contentsOf: links)
+        let links = try await client.loadMore(
+            offset: listState.links.count,
+            filteredByTags: scopedTages(for: type), searchTerm: state.searchText
+        )
+        listState.links.append(contentsOf: links)
 
-        state.canLoadMore = links.count == client.pageSize
+        listState.canLoadMore = links.count == client.pageSize
+        state.listStates[type] = listState
     }
 
     @MainActor func add(link: PostLink) async throws {
