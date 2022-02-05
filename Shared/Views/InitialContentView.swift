@@ -19,15 +19,33 @@ struct InitialContentView: View {
 
     var body: some View {
         if compactEnvironment {
-            SidebarView(
-                isDefaultItemActive: false
-            ).navigationTitle("aarle")
+            SidebarView()
+                .navigationTitle("aarle")
+                .alert(isPresented: linkStore.showLoadingError) {
+                    networkingAlert
+                }
+                .alert(isPresented: tagStore.showLoadingError) {
+                    networkingAlert
+                }
         } else {
             SidebarView()
                 .navigationTitle("aarle")
+                .alert(isPresented: linkStore.showLoadingError) {
+                    networkingAlert
+                }
+                .alert(isPresented: tagStore.showLoadingError) {
+                    networkingAlert
+                }
             Text("No Sidebar Selection") // You won't see this in practice (default selection)
             WebView(data: webViewData)
         }
+    }
+
+    private var networkingAlert: Alert {
+        Alert(
+            title: Text("Networking Error"),
+            message: Text("Please try again.")
+        )
     }
 
     private var compactEnvironment: Bool {

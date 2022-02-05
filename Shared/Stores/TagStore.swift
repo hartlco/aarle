@@ -6,18 +6,21 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class TagStore: ObservableObject {
     enum Action {
         case load
         case addFavorite(Tag)
         case removeFavorite(Tag)
+        case setShowLoadingError(Bool)
     }
 
     struct State {
         var isLoading = false
         var tags: [Tag] = []
         var favoriteTags: [Tag] = []
+        var showLoadingError = false
     }
 
     @Published private var state: State
@@ -45,6 +48,17 @@ final class TagStore: ObservableObject {
         )
     }
 
+    var showLoadingError: Binding<Bool> {
+        Binding { [weak self] in
+            return self?.state.showLoadingError ?? false
+        } set: { [weak self] value in
+            guard let self = self else { return }
+            Task {
+                await self.reduce(.setShowLoadingError(value))
+            }
+        }
+    }
+
     var favoriteTags: [Tag] {
         state.favoriteTags
     }
@@ -60,14 +74,15 @@ final class TagStore: ObservableObject {
                 do {
                     try await loadTags()
                 } catch {
-                    // TODO: Error handling
-                    print(error)
+                    state.showLoadingError = true
                 }
             }
         case let .addFavorite(tag):
             add(favoriteTag: tag)
         case let .removeFavorite(tag):
             remove(favoriteTag: tag)
+        case let .setShowLoadingError(show):
+            state.showLoadingError = show
         }
     }
 

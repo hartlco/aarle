@@ -48,7 +48,9 @@ struct AarleApp: App {
             }
             CommandMenu("List") {
                 Button("Refresh") {
-                    linkStore.reduce(.loadAll)
+                    if let linkType = appStore.selectedListType.wrappedValue  {
+                        linkStore.reduce(.load(linkType))
+                    }
                     tagStore.reduce(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])

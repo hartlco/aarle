@@ -17,12 +17,12 @@ struct ContentView: View {
 
     private let pasteboard: Pasteboard
     private let title: String
-    private let listType: LinkStore.ListType
+    private let listType: ListType
 
     init(
         title: String,
         pasteboard: Pasteboard = DefaultPasteboard(),
-        listType: LinkStore.ListType
+        listType: ListType
     ) {
         self.title = title
         self.pasteboard = pasteboard
@@ -64,7 +64,12 @@ struct ContentView: View {
                 }
             }
         }
-        .searchable(text: linkStore.searchText)
+        .searchable(
+            text: Binding(
+                get: { linkStore.searchText(for: listType) },
+                set: { linkStore.reduce(.changeSearchText($0, listType: listType)) }
+            )
+        )
         .onSubmit(of: .search) {
             linkStore.reduce(.search(listType))
         }

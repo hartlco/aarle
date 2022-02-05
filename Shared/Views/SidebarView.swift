@@ -12,35 +12,31 @@ struct SidebarView: View {
     struct SidebarEquatable: Equatable {
         var favoriteTags: [Tag]
         var showsSettings: Bool
+        var listSelection: ListType?
     }
-
-    @State private var isDefaultItemActive: Bool
 
     @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var appStore: AppStore
 
-    init(
-        isDefaultItemActive: Bool = true
-    ) {
-        self._isDefaultItemActive = State(initialValue: isDefaultItemActive)
-    }
-
     var body: some View {
-        List {
+        List(selection: appStore.selectedListType) {
             Section(header: "Links") {
                 NavigationLink(
                     destination: ContentView(
                         title: "Links",
                         listType: .all
                     ),
-                    isActive: $isDefaultItemActive
+                    tag: ListType.all,
+                    selection: appStore.selectedListType
                 ) {
                     Label("All", systemImage: "tray.2")
                 }
                 NavigationLink(
-                    destination: TagListView()
+                    destination: TagListView(),
+                    tag: ListType.tags,
+                    selection: appStore.selectedListType
                 ) {
                     Label("Tags", systemImage: "tag")
                 }
@@ -51,7 +47,9 @@ struct SidebarView: View {
                         destination: ContentView(
                             title: tag.name,
                             listType: .tagScoped(tag)
-                        )
+                        ),
+                        tag: ListType.tagScoped(tag),
+                        selection: appStore.selectedListType
                     ) {
                         Label(tag.name, systemImage: "tag")
                     }.contextMenu {
@@ -95,7 +93,8 @@ struct SidebarView: View {
     private var equation: SidebarEquatable {
         SidebarEquatable(
             favoriteTags: tagStore.favoriteTags,
-            showsSettings: appStore.showsSettings.wrappedValue
+            showsSettings: appStore.showsSettings.wrappedValue,
+            listSelection: appStore.selectedListType.wrappedValue
         )
     }
 }
@@ -103,9 +102,7 @@ struct SidebarView: View {
 #if DEBUG
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView(
-            isDefaultItemActive: false
-        ).environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
+        SidebarView().environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif
