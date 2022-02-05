@@ -26,7 +26,6 @@ struct AarleApp: App {
             .environmentObject(appStore)
             .environmentObject(tagStore)
             .environmentObject(linkStore)
-            .tint(.tint)
         }
         .commands {
             CommandGroup(replacing: .newItem) {

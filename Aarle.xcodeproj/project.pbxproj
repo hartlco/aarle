@@ -31,8 +31,6 @@
 		C547D6672793F16400DEC857 /* TagStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagStore.swift */; };
 		C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
-		C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */; };
-		C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */; };
 		C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
 		C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
 		C5760E4A2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
@@ -165,7 +163,6 @@
 		C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Suite.swift"; sourceTree = "<group>"; };
 		C547D6652793F16400DEC857 /* TagStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagStore.swift; sourceTree = "<group>"; };
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
-		C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Constants.swift"; sourceTree = "<group>"; };
 		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
@@ -306,7 +303,6 @@
 				C59994F62781B96500FE1EBA /* AarloApp.swift */,
 				C59994F72781B96500FE1EBA /* ContentView.swift */,
 				C59994F82781B96700FE1EBA /* Assets.xcassets */,
-				C54D98D3278ACFB8003B1EB9 /* Color+Constants.swift */,
 				C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */,
 				C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */,
 				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
@@ -579,7 +575,6 @@
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
-				C54D98D4278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
 				C585F1EC27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
@@ -613,7 +608,6 @@
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
-				C54D98D5278ACFB8003B1EB9 /* Color+Constants.swift in Sources */,
 				C585F1ED27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
