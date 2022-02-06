@@ -56,7 +56,6 @@ struct ItemDetailView: View {
                             Label("Show Edit Link", systemImage: "sidebar.right")
                         }
                     }
-                    // TODO: Add keyboard shortcut
                 }
             if appStore.showLinkEditorSidebar {
                 LinkEditView(link: link, showCancelButton: false)

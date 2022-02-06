@@ -22,7 +22,7 @@ struct LinkItemView: View {
                     .bold()
             }
             Text(link.url.host ?? link.url.absoluteString)
-                .foregroundColor(.tint)
+                .foregroundColor(.accentColor)
             if let description = link.description, !description.isEmpty {
                 Text(description)
                     .font(.body)

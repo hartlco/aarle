@@ -17,12 +17,12 @@ struct ContentView: View {
 
     private let pasteboard: Pasteboard
     private let title: String
-    private let listType: LinkStore.ListType
+    private let listType: ListType
 
     init(
         title: String,
         pasteboard: Pasteboard = DefaultPasteboard(),
-        listType: LinkStore.ListType
+        listType: ListType
     ) {
         self.title = title
         self.pasteboard = pasteboard
@@ -30,6 +30,13 @@ struct ContentView: View {
     }
 
     var body: some View {
+        // TODO: Add empty state if no data available, reload button
+        // TODO: causes jumping
+        // TODO: allow opening HTTPS links
+        if linkStore.isLoading {
+            ProgressView()
+                .padding()
+        }
         List(selection: appStore.selectedLink) {
             ForEach(linkStore.links(for: listType)) { link in
                 NavigationLink(
@@ -64,7 +71,12 @@ struct ContentView: View {
                 }
             }
         }
-        .searchable(text: linkStore.searchText)
+        .searchable(
+            text: Binding(
+                get: { linkStore.searchText(for: listType) },
+                set: { linkStore.reduce(.changeSearchText($0, listType: listType)) }
+            )
+        )
         .onSubmit(of: .search) {
             linkStore.reduce(.search(listType))
         }
@@ -101,7 +113,7 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if !linkStore.links(for: listType).isEmpty {
+            if linkStore.didLoad(listType: listType) {
                 return
             }
             linkStore.reduce(.load(listType))

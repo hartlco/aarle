@@ -22,11 +22,16 @@ struct AarleApp: App {
             NavigationView {
                 InitialContentView()
             }
+            // TODO: add iOS only modifier
+#if os(iOS)
+            .introspectSplitViewController { splitViewController in
+                splitViewController.preferredDisplayMode = .oneBesideSecondary
+            }
+#endif
             .environmentObject(Self.settingsStore)
             .environmentObject(appStore)
             .environmentObject(tagStore)
             .environmentObject(linkStore)
-            .tint(.tint)
         }
         .commands {
             CommandGroup(replacing: .newItem) {
@@ -49,11 +54,13 @@ struct AarleApp: App {
             }
             CommandMenu("List") {
                 Button("Refresh") {
-                    linkStore.reduce(.loadAll)
+                    if let linkType = appStore.selectedListType.wrappedValue  {
+                        linkStore.reduce(.load(linkType))
+                    }
                     tagStore.reduce(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedListType.wrappedValue == nil)
             }
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu
@@ -88,11 +95,13 @@ struct AarleApp: App {
                 .onDisappear {
                     appStore.reduce(.hideSettings)
                 }
+                .frame(width: 500, height: 300)
                 .environmentObject(Self.settingsStore)
         }
         .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
         Settings {
             SettingsView()
+                .frame(width: 500, height: 300)
                 .environmentObject(Self.settingsStore)
 
         }
@@ -119,11 +128,11 @@ enum WindowRoutes: String {
     case addLink
     case settings
 
-    #if os(macOS)
+#if os(macOS)
     func open() {
         if let url = URL(string: "aarle://\(self.rawValue)") {
             NSWorkspace.shared.open(url)
         }
     }
-    #endif
+#endif
 }

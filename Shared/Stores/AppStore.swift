@@ -11,6 +11,7 @@ import SwiftUI
 final class AppStore: ObservableObject {
     enum Action {
         case setSelectedLink(Link?)
+        case setSelectedListType(ListType?)
         case showLinkEditorSidebar
         case hideLinkEditorSidebar
 
@@ -24,6 +25,7 @@ final class AppStore: ObservableObject {
     }
 
     struct AppState {
+        var selectedListType: ListType?
         var selectedLink: Link?
         var presentedEditLink: Link?
         var showLinkEditorSidebar = false
@@ -35,6 +37,8 @@ final class AppStore: ObservableObject {
         switch action {
         case let .setSelectedLink(link):
             state.selectedLink = link
+        case let .setSelectedListType(type):
+            state.selectedListType = type
         case .showLinkEditorSidebar:
             state.showLinkEditorSidebar = true
         case .hideLinkEditorSidebar:
@@ -67,7 +71,11 @@ final class AppStore: ObservableObject {
         Self.reduce(action: action, into: &state)
     }
 
+    #if os(macOS)
+    @Published var state: AppState = AppState(selectedListType: ListType.all)
+    #else
     @Published var state: AppState = AppState()
+    #endif
 
     var selectedLink: Binding<Link?> {
         Binding { [weak self] in
@@ -75,6 +83,15 @@ final class AppStore: ObservableObject {
         } set: { [weak self] link in
             guard let self = self else { return }
             self.reduce(.setSelectedLink(link))
+        }
+    }
+
+    var selectedListType: Binding<ListType?> {
+        Binding { [weak self] in
+            return self?.state.selectedListType
+        } set: { [weak self] type in
+            guard let self = self else { return }
+            self.reduce(.setSelectedListType(type))
         }
     }
 

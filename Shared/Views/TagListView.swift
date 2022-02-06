@@ -12,6 +12,7 @@ struct TagListView: View {
     let webViewData = WebViewData(url: nil)
 
     @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var appStore: AppStore
     @EnvironmentObject var settingsStore: SettingsStore
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
@@ -23,10 +24,17 @@ struct TagListView: View {
     }
 
     var body: some View {
+        if tagStore.isLoading {
+            ProgressView()
+                .padding()
+        }
+        listView
+    }
+
+    var listView: some View {
         List(tagStore.tags) { tag in
             NavigationLink {
                 #if os(macOS)
-                // TODO: Handle selection App wide
                 NavigationView {
                     ContentView(
                         title: "Links",
@@ -55,16 +63,28 @@ struct TagListView: View {
         }
         .navigationTitle("Tags")
         .toolbar {
-            ToolbarItem(placement: navigationBarItemPlacement) {
-                Button("Load") {
-                    Task {
-                        tagStore.reduce(.load)
-                    }
+            // TODO: Dont show double plus
+            ToolbarItem {
+                Button {
+                    appStore.reduce(.showAddView)
+                } label: {
+                    Label("Add", systemImage: "plus")
                 }
+#if os(iOS)
+                .sheet(
+                    isPresented: appStore.showsAddView,
+                    onDismiss: nil,
+                    content: {
+                        LinkAddView()
+                    }
+                )
+#endif
             }
         }
         .task {
-            tagStore.reduce(.load)
+            if !tagStore.didLoad {
+                tagStore.reduce(.load)
+            }
         }
     }
 }
