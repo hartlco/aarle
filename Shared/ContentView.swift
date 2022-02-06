@@ -30,6 +30,10 @@ struct ContentView: View {
     }
 
     var body: some View {
+        if linkStore.isLoading {
+            ProgressView()
+                .padding()
+        }
         List(selection: appStore.selectedLink) {
             ForEach(linkStore.links(for: listType)) { link in
                 NavigationLink(
@@ -106,7 +110,7 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if !linkStore.links(for: listType).isEmpty {
+            if linkStore.didLoad {
                 return
             }
             linkStore.reduce(.load(listType))

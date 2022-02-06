@@ -34,6 +34,7 @@ final class LinkStore: ObservableObject {
         }
 
         var isLoading = false
+        var didLoad = false
         var listStates: [ListType: ListState] = [:]
         var showLoadingError = false
     }
@@ -77,6 +78,7 @@ final class LinkStore: ObservableObject {
                 }
             }
         case let .load(type):
+            state.didLoad = true
             Task {
                 do {
                     try await load(type: type)
@@ -103,6 +105,14 @@ final class LinkStore: ObservableObject {
         case let .setShowLoadingError(show):
             state.showLoadingError = show
         }
+    }
+
+    var isLoading: Bool {
+        state.isLoading
+    }
+
+    var didLoad: Bool {
+        state.didLoad
     }
 
     func links(for listType: ListType) -> [Link] {

@@ -24,6 +24,14 @@ struct TagListView: View {
     }
 
     var body: some View {
+        if tagStore.isLoading {
+            ProgressView()
+                .padding()
+        }
+        listView
+    }
+
+    var listView: some View {
         List(tagStore.tags) { tag in
             NavigationLink {
                 #if os(macOS)
@@ -74,7 +82,9 @@ struct TagListView: View {
             }
         }
         .task {
-            tagStore.reduce(.load)
+            if !tagStore.didLoad {
+                tagStore.reduce(.load)
+            }
         }
     }
 }

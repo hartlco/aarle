@@ -18,6 +18,7 @@ final class TagStore: ObservableObject {
 
     struct State {
         var isLoading = false
+        var didLoad = false
         var tags: [Tag] = []
         var favoriteTags: [Tag] = []
         var showLoadingError = false
@@ -67,9 +68,18 @@ final class TagStore: ObservableObject {
         state.tags
     }
 
+    var isLoading: Bool {
+        state.isLoading
+    }
+
+    var didLoad: Bool {
+        state.didLoad
+    }
+
     @MainActor func reduce(_ action: Action) {
         switch action {
         case .load:
+            state.didLoad = true
             Task {
                 do {
                     try await loadTags()
