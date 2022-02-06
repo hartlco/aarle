@@ -60,7 +60,7 @@ struct AarleApp: App {
                     tagStore.reduce(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedListType.wrappedValue == nil)
             }
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu

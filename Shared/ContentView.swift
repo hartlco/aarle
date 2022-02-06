@@ -31,6 +31,8 @@ struct ContentView: View {
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
+        // TODO: causes jumping
+        // TODO: allow opening HTTPS links
         if linkStore.isLoading {
             ProgressView()
                 .padding()
