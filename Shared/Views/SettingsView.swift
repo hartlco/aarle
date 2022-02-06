@@ -24,6 +24,7 @@ struct SettingsView: View {
     }
 
     var form: some View {
+        // TODO: Add API endpoint info
         TabView {
             Form {
                 Picker("Service", selection: settingsStore.accountType) {
@@ -35,10 +36,28 @@ struct SettingsView: View {
                 TextField("Key", text: settingsStore.secret)
                 if settingsStore.accountType.wrappedValue == .shaarli {
                     TextField("API Endpoint:", text: settingsStore.endpoint)
+                    Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
+                        .font(.caption)
                 }
             }
             .tabItem {
                 Label("Account", systemImage: "person.crop.circle")
+            }
+            Form {
+                Section {
+                    Text("aarle is made by Martin Hartl, https://hartl.co")
+                    Text("Open Source at https://github.com/hartlco/aarle")
+                } header: {
+                    Text("aarle").font(.headline)
+                }
+                Section {
+                    Text("https://github.com/shaarli/Shaarli")
+                } header: {
+                    Text("Shaarli").font(.headline)
+                }
+            }
+            .tabItem {
+                Label("About", systemImage: "info.circle")
             }
         }
         .navigationTitle("Settings")

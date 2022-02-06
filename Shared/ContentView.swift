@@ -30,6 +30,7 @@ struct ContentView: View {
     }
 
     var body: some View {
+        // TODO: Add empty state if no data available, reload button
         if linkStore.isLoading {
             ProgressView()
                 .padding()
@@ -110,7 +111,7 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if linkStore.didLoad {
+            if linkStore.didLoad(listType: listType) {
                 return
             }
             linkStore.reduce(.load(listType))

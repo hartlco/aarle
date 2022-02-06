@@ -31,10 +31,10 @@ final class LinkStore: ObservableObject {
             var tagScope: String?
             var canLoadMore = false
             var searchText = ""
+            var didLoad = false
         }
 
         var isLoading = false
-        var didLoad = false
         var listStates: [ListType: ListState] = [:]
         var showLoadingError = false
     }
@@ -78,7 +78,6 @@ final class LinkStore: ObservableObject {
                 }
             }
         case let .load(type):
-            state.didLoad = true
             Task {
                 do {
                     try await load(type: type)
@@ -111,8 +110,8 @@ final class LinkStore: ObservableObject {
         state.isLoading
     }
 
-    var didLoad: Bool {
-        state.didLoad
+    func didLoad(listType: ListType) -> Bool {
+        state.listStates[listType]?.didLoad ?? false
     }
 
     func links(for listType: ListType) -> [Link] {
@@ -146,6 +145,7 @@ final class LinkStore: ObservableObject {
         }
 
         var listState = state.listStates[type] ?? State.ListState()
+        listState.didLoad = true
 
         state.isLoading = true
 

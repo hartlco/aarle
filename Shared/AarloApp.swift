@@ -95,11 +95,13 @@ struct AarleApp: App {
                 .onDisappear {
                     appStore.reduce(.hideSettings)
                 }
+                .frame(width: 500, height: 300)
                 .environmentObject(Self.settingsStore)
         }
         .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
         Settings {
             SettingsView()
+                .frame(width: 500, height: 300)
                 .environmentObject(Self.settingsStore)
 
         }
