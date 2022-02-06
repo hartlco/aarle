@@ -22,6 +22,12 @@ struct AarleApp: App {
             NavigationView {
                 InitialContentView()
             }
+            // TODO: add iOS only modifier
+#if os(iOS)
+            .introspectSplitViewController { splitViewController in
+                splitViewController.preferredDisplayMode = .oneBesideSecondary
+            }
+#endif
             .environmentObject(Self.settingsStore)
             .environmentObject(appStore)
             .environmentObject(tagStore)
@@ -120,11 +126,11 @@ enum WindowRoutes: String {
     case addLink
     case settings
 
-    #if os(macOS)
+#if os(macOS)
     func open() {
         if let url = URL(string: "aarle://\(self.rawValue)") {
             NSWorkspace.shared.open(url)
         }
     }
-    #endif
+#endif
 }
