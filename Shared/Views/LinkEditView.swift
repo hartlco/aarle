@@ -62,6 +62,7 @@ struct LinkEditView: View {
         Form {
             Section(header: "Main Information") {
                 TextField("URL", text: $urlString)
+                    .disableAutocorrection(true)
                 TextField("Title", text: $title)
             }
             Section(header: "Description") {
@@ -88,7 +89,8 @@ struct LinkEditView: View {
                     }
                 }
             }
-            TextField("Tags:", text: $tagsString)
+            TextField("Tags", text: $tagsString)
+                .disableAutocorrection(true)
 #if os(macOS)
             HStack {
                 Spacer()

@@ -34,8 +34,10 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 TextField("Key", text: settingsStore.secret)
+                    .disableAutocorrection(true)
                 if settingsStore.accountType.wrappedValue == .shaarli {
-                    TextField("API Endpoint:", text: settingsStore.endpoint)
+                    TextField("API Endpoint", text: settingsStore.endpoint)
+                        .disableAutocorrection(true)
                     Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
                         .font(.caption)
                 }

@@ -49,8 +49,9 @@ struct LinkAddView: View {
     var form: some View {
         Form {
             Section(header: "Main Information") {
-                TextField("URL:", text: $urlString)
-                TextField("Title:", text: $title)
+                TextField("URL", text: $urlString)
+                    .disableAutocorrection(true)
+                TextField("Title", text: $title)
             }
             Section(header: "Description") {
                 TextEditor(text: $description)
@@ -74,7 +75,8 @@ struct LinkAddView: View {
                     )
                 }
             }
-            TextField("Tags:", text: $tagsString)
+            TextField("Tags", text: $tagsString)
+                .disableAutocorrection(true)
             Button("Add") {
                 save()
             }.disabled(saveButtonDisabled)

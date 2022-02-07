@@ -150,7 +150,7 @@ final class LinkStore: ObservableObject {
         state.isLoading = true
 
         listState.links = try await client.load(
-            filteredByTags: scopedTages(for: type), 
+            filteredByTags: scopedTages(for: type),
             searchTerm: searchText(for: type)
         )
 

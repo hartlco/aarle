@@ -31,12 +31,55 @@ struct ContentView: View {
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
-        // TODO: causes jumping
         // TODO: allow opening HTTPS links
-        if linkStore.isLoading {
-            ProgressView()
-                .padding()
+        ZStack {
+            list
+            if linkStore.isLoading {
+                VStack {
+                    ProgressView()
+                        .padding()
+                    Spacer()
+
+                }
+            }
         }
+        .sheet(item: appStore.presentedEditLink) { link in
+#if os(macOS)
+            LinkEditView(link: link, showCancelButton: true)
+#elseif os(iOS)
+            NavigationView {
+                LinkEditView(link: link, showCancelButton: true)
+            }
+#endif
+        }
+        .toolbar {
+            ToolbarItem {
+                Button {
+                    appStore.reduce(.showAddView)
+                } label: {
+                    Label("Add", systemImage: "plus")
+                }
+#if os(iOS)
+                .sheet(
+                    isPresented: appStore.showsAddView,
+                    onDismiss: nil,
+                    content: {
+                        LinkAddView()
+                    }
+                )
+#endif
+            }
+        }
+        .navigationTitle(title)
+        .onAppear {
+            if linkStore.didLoad(listType: listType) {
+                return
+            }
+            linkStore.reduce(.load(listType))
+        }
+    }
+
+    private var list: some View {
         List(selection: appStore.selectedLink) {
             ForEach(linkStore.links(for: listType)) { link in
                 NavigationLink(
@@ -84,39 +127,5 @@ struct ContentView: View {
             linkStore.reduce(.load(listType))
         }
         .listStyle(PlainListStyle())
-        .sheet(item: appStore.presentedEditLink) { link in
-#if os(macOS)
-            LinkEditView(link: link, showCancelButton: true)
-#elseif os(iOS)
-            NavigationView {
-                LinkEditView(link: link, showCancelButton: true)
-            }
-#endif
-        }
-        .toolbar {
-            ToolbarItem {
-                Button {
-                    appStore.reduce(.showAddView)
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
-#if os(iOS)
-                .sheet(
-                    isPresented: appStore.showsAddView,
-                    onDismiss: nil,
-                    content: {
-                        LinkAddView()
-                    }
-                )
-#endif
-            }
-        }
-        .navigationTitle(title)
-        .onAppear {
-            if linkStore.didLoad(listType: listType) {
-                return
-            }
-            linkStore.reduce(.load(listType))
-        }
     }
 }
