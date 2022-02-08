@@ -22,6 +22,7 @@ final class LinkStore: ObservableObject {
         case changeSearchText(String, listType: ListType)
         case search(ListType)
         case setShowLoadingError(Bool)
+        case delete(ListType, Link)
     }
 
     struct State {
@@ -103,6 +104,14 @@ final class LinkStore: ObservableObject {
             }
         case let .setShowLoadingError(show):
             state.showLoadingError = show
+        case let .delete(_, link):
+            Task {
+                do {
+                    try await delete(link: link)
+                } catch {
+                    state.showLoadingError = true
+                }
+            }
         }
     }
 
@@ -199,7 +208,7 @@ final class LinkStore: ObservableObject {
         state.isLoading = false
     }
 
-    @MainActor func delete(link: Link) async throws {
+    @MainActor private func delete(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 

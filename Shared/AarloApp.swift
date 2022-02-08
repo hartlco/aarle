@@ -33,6 +33,7 @@ struct AarleApp: App {
             .environmentObject(tagStore)
             .environmentObject(linkStore)
         }
+        //TODO: Refactor out creation of commands
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New Link") {
@@ -82,6 +83,16 @@ struct AarleApp: App {
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
                 .disabled(appStore.selectedLink.wrappedValue == nil)
+                Button("Delete") {
+                    guard let selectedLink = appStore.selectedLink.wrappedValue,
+                          let listType = appStore.selectedListType.wrappedValue else {
+                        return
+                    }
+
+                    linkStore.reduce(.delete(listType, selectedLink))
+                }
+                .keyboardShortcut(.delete, modifiers: [.command])
+                .disabled(appStore.selectedLink.wrappedValue == nil)
             }
         }
         LinkAddScene(
@@ -119,6 +130,7 @@ struct LinkAddScene: Scene {
             LinkAddView().onDisappear {
                 appStore.reduce(.hideAddView)
             }
+            .environmentObject(linkStore)
             .environmentObject(tagStore)
         }
     }

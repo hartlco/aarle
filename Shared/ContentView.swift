@@ -93,9 +93,7 @@ struct ContentView: View {
                     Button("Edit", action: { appStore.reduce(.showEditLink(link)) })
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
-                        Task {
-                            try await linkStore.delete(link: link)
-                        }
+                        linkStore.reduce(.delete(listType, link))
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
