@@ -89,6 +89,7 @@ struct AarleApp: App {
                         return
                     }
 
+                    // TODO: Clear selection after delete
                     linkStore.reduce(.delete(listType, selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])

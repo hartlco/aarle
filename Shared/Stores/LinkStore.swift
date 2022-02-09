@@ -104,10 +104,10 @@ final class LinkStore: ObservableObject {
             }
         case let .setShowLoadingError(show):
             state.showLoadingError = show
-        case let .delete(_, link):
+        case let .delete(listType, link):
             Task {
                 do {
-                    try await delete(link: link)
+                    try await delete(listType: listType, link: link)
                 } catch {
                     state.showLoadingError = true
                 }
@@ -190,30 +190,45 @@ final class LinkStore: ObservableObject {
         state.listStates[type] = listState
     }
 
+    // TODO: Make private
     @MainActor func add(link: PostLink) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
-        try await client.createLink(link: link)
+        defer {
+            state.isLoading = false
+        }
 
-        state.isLoading = false
+        try await client.createLink(link: link)
     }
 
     @MainActor func update(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
-        try await client.updateLink(link: link)
+        defer {
+            state.isLoading = false
+        }
 
-        state.isLoading = false
+        try await client.updateLink(link: link)
     }
 
-    @MainActor private func delete(link: Link) async throws {
+    // TODO: Make delete, update universal (find all occurrences of link and delete them)
+    @MainActor private func delete(listType: ListType, link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
+        defer {
+            state.isLoading = false
+        }
+
         try await client.deleteLink(link: link)
 
-        state.isLoading = false
+        var listState = state.listStates[listType]
+        listState?.links.removeAll(where: {
+            link == $0
+        })
+
+        state.listStates[listType] = listState
     }
 }
