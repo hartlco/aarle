@@ -22,7 +22,7 @@ final class LinkStore: ObservableObject {
         case changeSearchText(String, listType: ListType)
         case search(ListType)
         case setShowLoadingError(Bool)
-        case delete(ListType, Link)
+        case delete(Link)
     }
 
     struct State {
@@ -104,10 +104,10 @@ final class LinkStore: ObservableObject {
             }
         case let .setShowLoadingError(show):
             state.showLoadingError = show
-        case let .delete(listType, link):
+        case let .delete(link):
             Task {
                 do {
-                    try await delete(listType: listType, link: link)
+                    try await delete(link: link)
                 } catch {
                     state.showLoadingError = true
                 }
@@ -190,7 +190,7 @@ final class LinkStore: ObservableObject {
         state.listStates[type] = listState
     }
 
-    // TODO: Make private
+    // TODO: Make private, local add for tags
     @MainActor func add(link: PostLink) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
@@ -202,6 +202,7 @@ final class LinkStore: ObservableObject {
         try await client.createLink(link: link)
     }
 
+    // TODO: Make private, update existing links
     @MainActor func update(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
@@ -213,8 +214,7 @@ final class LinkStore: ObservableObject {
         try await client.updateLink(link: link)
     }
 
-    // TODO: Make delete, update universal (find all occurrences of link and delete them)
-    @MainActor private func delete(listType: ListType, link: Link) async throws {
+    @MainActor private func delete(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
@@ -224,11 +224,17 @@ final class LinkStore: ObservableObject {
 
         try await client.deleteLink(link: link)
 
-        var listState = state.listStates[listType]
-        listState?.links.removeAll(where: {
-            link == $0
-        })
+        for (key, value) in state.listStates {
+            state.listStates[key] = deleted(link: link, from: value)
+        }
+    }
 
-        state.listStates[listType] = listState
+    private func deleted(link: Link, from listState: State.ListState) -> State.ListState {
+        var listState = listState
+        listState.links.removeAll {
+            link == $0
+        }
+
+        return listState
     }
 }

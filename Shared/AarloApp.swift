@@ -84,13 +84,12 @@ struct AarleApp: App {
                 .keyboardShortcut("C", modifiers: [.command, .shift])
                 .disabled(appStore.selectedLink.wrappedValue == nil)
                 Button("Delete") {
-                    guard let selectedLink = appStore.selectedLink.wrappedValue,
-                          let listType = appStore.selectedListType.wrappedValue else {
+                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
                         return
                     }
 
                     // TODO: Clear selection after delete
-                    linkStore.reduce(.delete(listType, selectedLink))
+                    linkStore.reduce(.delete(selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
                 .disabled(appStore.selectedLink.wrappedValue == nil)
