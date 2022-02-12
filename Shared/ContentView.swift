@@ -80,14 +80,14 @@ struct ContentView: View {
     }
 
     private var list: some View {
-        List(selection: appStore.selectedLink) {
+        List {
             ForEach(linkStore.links(for: listType)) { link in
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link
                     ),
-                    tag: link,
-                    selection: appStore.selectedLink,
+                    tag: link.id,
+                    selection: appStore.selectedLinkID,
                     label: { LinkItemView(link: link) }
                 ).contextMenu {
                     Button("Edit", action: { appStore.reduce(.showEditLink(link)) })

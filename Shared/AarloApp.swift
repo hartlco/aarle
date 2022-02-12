@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftUIX
 
+// TODO: Fix crash: Have 2 lists (Main, and tag). Modify link in tag view, go back to main. Crash
+// Can be prevented if list has .id(UUID()) but this break pagination
 @main
 struct AarleApp: App {
     static let settingsStore = SettingsStore()
@@ -51,7 +53,7 @@ struct AarleApp: App {
                     }
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedLinkID.wrappedValue == nil)
             }
             CommandMenu("List") {
                 Button("Refresh") {
@@ -66,25 +68,28 @@ struct AarleApp: App {
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {
-                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
+                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                          let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
 
                     appStore.reduce(.showEditLink(selectedLink))
                 }
                 .keyboardShortcut("e", modifiers: [.command])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedLinkID.wrappedValue == nil)
                 Button("Copy link to clipboard") {
-                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
+                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                          let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
 
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedLinkID.wrappedValue == nil)
                 Button("Delete") {
-                    guard let selectedLink = appStore.selectedLink.wrappedValue else {
+                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                          let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
 
@@ -92,7 +97,7 @@ struct AarleApp: App {
                     linkStore.reduce(.delete(selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
-                .disabled(appStore.selectedLink.wrappedValue == nil)
+                .disabled(appStore.selectedLinkID.wrappedValue == nil)
             }
         }
         LinkAddScene(

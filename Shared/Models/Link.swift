@@ -32,7 +32,7 @@ struct Link: Codable, Identifiable, Hashable {
     let url: URL
     let title: String?
     let description: String?
-    let tags: [String]
+    var tags: [String]
     let `private`: Bool
 
     // TODO: Handle Date

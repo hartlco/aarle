@@ -23,6 +23,7 @@ final class LinkStore: ObservableObject {
         case search(ListType)
         case setShowLoadingError(Bool)
         case delete(Link)
+        case update(Link)
     }
 
     struct State {
@@ -112,6 +113,14 @@ final class LinkStore: ObservableObject {
                     state.showLoadingError = true
                 }
             }
+        case let .update(link):
+            Task {
+                do {
+                    try await update(link: link)
+                } catch {
+                    state.showLoadingError = true
+                }
+            }
         }
     }
 
@@ -125,6 +134,16 @@ final class LinkStore: ObservableObject {
 
     func links(for listType: ListType) -> [Link] {
         state.listStates[listType]?.links ?? []
+    }
+
+    func link(for ID: String) -> Link? {
+        for listStates in state.listStates {
+            for link in listStates.value.links where link.id == ID {
+                return link
+            }
+        }
+
+        return nil
     }
 
     func canLoadMore(for listType: ListType) -> Bool {
@@ -203,7 +222,7 @@ final class LinkStore: ObservableObject {
     }
 
     // TODO: Make private, update existing links
-    @MainActor func update(link: Link) async throws {
+    @MainActor private func update(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
@@ -212,6 +231,10 @@ final class LinkStore: ObservableObject {
         }
 
         try await client.updateLink(link: link)
+
+        for (key, value) in state.listStates {
+            state.listStates[key] = updated(link: link, from: value)
+        }
     }
 
     @MainActor private func delete(link: Link) async throws {
@@ -227,6 +250,15 @@ final class LinkStore: ObservableObject {
         for (key, value) in state.listStates {
             state.listStates[key] = deleted(link: link, from: value)
         }
+    }
+
+    private func updated(link: Link, from listState: State.ListState) -> State.ListState {
+        var listState = listState
+        if let index = listState.links.firstIndex(where: { $0.id == link.id }) {
+            listState.links[index] = link
+        }
+
+        return listState
     }
 
     private func deleted(link: Link, from listState: State.ListState) -> State.ListState {

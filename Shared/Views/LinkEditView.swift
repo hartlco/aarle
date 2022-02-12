@@ -126,9 +126,7 @@ struct LinkEditView: View {
             created: link.created
         )
 
-        Task {
-            try await linkStore.update(link: newLink)
-        }
+        linkStore.reduce(.update(newLink))
     }
 }
 
