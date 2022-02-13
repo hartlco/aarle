@@ -15,6 +15,7 @@ enum ListType: Hashable, Equatable, Sendable {
     case tagScoped(Tag)
 }
 
+@MainActor
 final class LinkStore: ObservableObject {
     enum Action: Sendable {
         case load(ListType)
@@ -58,9 +59,7 @@ final class LinkStore: ObservableObject {
             return self?.state.showLoadingError ?? false
         } set: { [weak self] value in
             guard let self = self else { return }
-            Task {
-                await self.reduce(.setShowLoadingError(value))
-            }
+            self.reduce(.setShowLoadingError(value))
         }
     }
 

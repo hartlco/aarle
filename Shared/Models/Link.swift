@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-public struct IntRepresentedString: Codable, Equatable, Hashable {
+public struct IntRepresentedString: Codable, Equatable, Hashable, Sendable {
     public var wrappedValue: String
 
     public init(wrappedValue: String) {
@@ -27,7 +27,7 @@ public struct IntRepresentedString: Codable, Equatable, Hashable {
     }
 }
 
-struct Link: Codable, Identifiable, Hashable {
+struct Link: Codable, Identifiable, Hashable, Sendable {
     @IntRepresentedString var id: String
     let url: URL
     let title: String?
@@ -74,3 +74,6 @@ extension PostLink {
 //        self.updated = link.updated
     }
 }
+
+extension URL: Sendable { }
+extension Date: Sendable { }
