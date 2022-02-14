@@ -5,7 +5,7 @@
 //  Created by martinhartl on 08.01.22.
 //
 
-import Cocoa
+@_predatesConcurrency import Cocoa
 import SwiftUI
 
 @MainActor
@@ -43,16 +43,15 @@ class ShareViewController: NSViewController {
         }
     }
 
+    // TODO: Fix dismissing of ShareSheet
     @MainActor
     private func showView(for url: URL?, title: String?, description: String?) {
         let addView = LinkAddView(
             urlString: url?.absoluteString ?? "",
             title: title ?? "",
             description: description ?? ""
-        ) {
+        ).onDisappear {
             self.send(self)
-        }.onDisappear {
-            self.cancel(self)
         }.environmentObject(tagStore).environmentObject(linkStore)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false

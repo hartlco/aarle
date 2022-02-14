@@ -17,12 +17,13 @@ enum ListType: Hashable, Equatable, Sendable {
 
 @MainActor
 final class LinkStore: ObservableObject {
-    enum Action: Sendable {
+    enum Action {
         case load(ListType)
         case loadMoreIfNeeded(ListType, Link)
         case changeSearchText(String, listType: ListType)
         case search(ListType)
         case setShowLoadingError(Bool)
+        case add(PostLink)
         case delete(Link)
         case update(Link)
     }
@@ -120,6 +121,14 @@ final class LinkStore: ObservableObject {
                     state.showLoadingError = true
                 }
             }
+        case let .add(link):
+            Task {
+                do {
+                    try await add(link: link)
+                } catch {
+                    state.showLoadingError = true
+                }
+            }
         }
     }
 
@@ -208,8 +217,8 @@ final class LinkStore: ObservableObject {
         state.listStates[type] = listState
     }
 
-    // TODO: Make private, local add for tags
-    @MainActor func add(link: PostLink) async throws {
+    // TODO: local add for tags, parse response to maybe get ID?
+    @MainActor private func add(link: PostLink) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true
 
@@ -220,7 +229,6 @@ final class LinkStore: ObservableObject {
         try await client.createLink(link: link)
     }
 
-    // TODO: Make private, update existing links
     @MainActor private func update(link: Link) async throws {
         guard state.isLoading == false else { return }
         state.isLoading = true

@@ -49,10 +49,8 @@ final class ShareViewController: UIViewController {
             urlString: urlString ?? "",
             title: title ?? "",
             description: description ?? ""
-        ) {
+        ).onDisappear {
             self.send(self)
-        }.onDisappear {
-            self.cancel(self)
         }.environmentObject(tagStore).environmentObject(Self.settingsStore).environmentObject(linkStore)
 
         let hosting = UIHostingController(rootView: addView)

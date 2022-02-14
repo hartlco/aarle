@@ -18,16 +18,13 @@ struct LinkAddView: View {
     @State var description: String
     @State var tagsString: String
 
-    private var onSaveBlock: (() -> Void)?
+    private var localAddLink: PostLink?
 
     init(
         urlString: String = "",
         title: String = "",
-        description: String = "",
-        onSaveBlock: (() -> Void)? = nil
+        description: String = ""
     ) {
-        self.onSaveBlock = onSaveBlock
-
         self._urlString = State<String>(initialValue: urlString)
         self._title = State(initialValue: title)
         self._description = State(initialValue: description)
@@ -111,11 +108,8 @@ struct LinkAddView: View {
             created: Date().addingTimeInterval(-10.0)
         )
 
-        Task {
-            try await linkStore.add(link: newLink)
-            presentationMode.dismiss()
-            self.onSaveBlock?()
-        }
+        linkStore.reduce(.add(newLink))
+        presentationMode.dismiss()
     }
 }
 
