@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import ViewStore
 
 typealias AppViewStore = ViewStore<AppState, AppAction, AppEnvironment>
 
@@ -30,8 +31,10 @@ enum AppAction {
     case showEditLink(Link)
     case hideEditLink
 
+    case setShowAddView(Bool)
     case showAddView
     case hideAddView
+    case setShowSettings(Bool)
     case showSettings
     case hideSettings
 }
@@ -48,6 +51,8 @@ let appReducer: ReduceFunction<AppState, AppAction, AppEnvironment> = { state, a
         state.showLinkEditorSidebar = false
     case let .setShowLinkEditorSidebar(value):
         state.showLinkEditorSidebar = value
+    case let .setShowAddView(value):
+        state.showsAddView = true
     case .showAddView:
         state.showsAddView = true
 #if os(macOS)
@@ -63,6 +68,8 @@ let appReducer: ReduceFunction<AppState, AppAction, AppEnvironment> = { state, a
         // TODO: Move into side-effect
         WindowRoutes.settings.open()
 #endif
+    case let .setShowSettings(value):
+        state.showsSettings = value
     case .hideSettings:
         state.showsSettings = false
     case let .setEditLink(link):

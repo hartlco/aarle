@@ -10,7 +10,7 @@ import SwiftUIX
 
 struct LinkAddView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagStore: TagViewStore
     @EnvironmentObject var linkStore: LinkStore
 
     @State var urlString: String

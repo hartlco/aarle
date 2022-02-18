@@ -12,7 +12,7 @@ struct ItemDetailView: View {
     let link: Link
 
     @EnvironmentObject private var linkStore: LinkStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var appViewStore: AppViewStore
 
     @State var shareSheetPresented = false
@@ -99,7 +99,7 @@ struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ItemDetailView(
             link: Link.mock
-        ).environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
+        ).environmentObject(TagViewStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

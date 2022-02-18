@@ -10,7 +10,7 @@ import Introspect
 
 struct InitialContentView: View {    
     @EnvironmentObject var linkStore: LinkStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
     
     let webViewData = WebViewData(url: nil)
     
@@ -30,7 +30,9 @@ struct InitialContentView: View {
             .alert(isPresented: linkStore.showLoadingError) {
                 networkingAlert
             }
-            .alert(isPresented: tagStore.showLoadingError) {
+            .alert(isPresented: tagViewStore.binding(
+                get: \.showLoadingError, send: { .setShowLoadingError($0) })
+            ) {
                 networkingAlert
             }
     }

@@ -12,7 +12,15 @@ import Social
 final class ShareViewController: UIViewController {
     static let settingsStore = SettingsStore()
     let linkStore = LinkStore(client: UniversalClient(settingsStore: ShareViewController.settingsStore), tagScope: nil)
-    let tagStore = TagStore(client: UniversalClient(settingsStore: ShareViewController.settingsStore))
+
+    @StateObject var tagViewStore = TagViewStore(
+        state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
+        environment: TagEnvironment(
+            client: UniversalClient(settingsStore: ShareViewController.settingsStore),
+            userDefaults: .suite
+        ),
+        reduceFunction: tagReducer
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +59,7 @@ final class ShareViewController: UIViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagStore).environmentObject(Self.settingsStore).environmentObject(linkStore)
+        }.environmentObject(tagViewStore).environmentObject(Self.settingsStore).environmentObject(linkStore)
 
         let hosting = UIHostingController(rootView: addView)
         self.addChild(hosting)

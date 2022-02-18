@@ -16,7 +16,7 @@ struct SidebarView: View {
     }
 
     @EnvironmentObject var linkStore: LinkStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var appViewStore: AppViewStore
 
@@ -40,7 +40,7 @@ struct SidebarView: View {
                 .tag(ListType.tags)
             }
             Section(header: "Favorites") {
-                ForEach(tagStore.favoriteTags) { tag in
+                ForEach(tagViewStore.favoriteTags) { tag in
                     NavigationLink(
                         destination: ContentView(
                             title: tag.name,
@@ -53,7 +53,7 @@ struct SidebarView: View {
                     .contextMenu {
                         Button(role: .destructive) {
                             Task {
-                                tagStore.reduce(.removeFavorite(tag))
+                                tagViewStore.send(.removeFavorite(tag))
                             }
                         } label: {
                             Label("Remove Favorite", systemImage: "trash")
@@ -67,12 +67,12 @@ struct SidebarView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    appStore.reduce(.showSettings)
+                    appViewStore.send(.showSettings)
                 } label: {
                     Label("Settings", systemImage: "gear")
                 }
                 .sheet(
-                    isPresented: appStore.showsSettings,
+                    isPresented: appViewStore.binding(get: \.showsSettings, send: { .setShowSettings($0) }),
                     content: {
                         SettingsView()
                     }
@@ -90,7 +90,7 @@ struct SidebarView: View {
 
     private var equation: SidebarEquatable {
         SidebarEquatable(
-            favoriteTags: tagStore.favoriteTags,
+            favoriteTags: tagViewStore.favoriteTags,
             showsSettings: appViewStore.showsSettings,
             listSelection: appViewStore.selectedListType
         )
@@ -100,7 +100,7 @@ struct SidebarView: View {
 #if DEBUG
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView().environmentObject(TagStore.mock).environmentObject(LinkStore.mock)
+        SidebarView().environmentObject(TagViewStore.mock).environmentObject(LinkStore.mock)
     }
 }
 #endif

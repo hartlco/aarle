@@ -11,7 +11,7 @@ import SwiftUI
 struct TagListView: View {
     let webViewData = WebViewData(url: nil)
 
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var appViewStore: AppViewStore
     @EnvironmentObject var settingsStore: SettingsStore
 
@@ -24,7 +24,7 @@ struct TagListView: View {
     }
 
     var body: some View {
-        if tagStore.isLoading {
+        if tagViewStore.isLoading {
             ProgressView()
                 .padding()
         }
@@ -32,7 +32,7 @@ struct TagListView: View {
     }
 
     var listView: some View {
-        List(tagStore.tags) { tag in
+        List(tagViewStore.tags) { tag in
             NavigationLink {
                 #if os(macOS)
                 NavigationView {
@@ -51,12 +51,12 @@ struct TagListView: View {
             } label: {
                 TagView(
                     tag: tag,
-                    isFavorite: tagStore.favoriteTags.contains(tag)
+                    isFavorite: tagViewStore.favoriteTags.contains(tag)
                 ) {
-                    if tagStore.favoriteTags.contains(tag) {
-                        tagStore.reduce(.removeFavorite(tag))
+                    if tagViewStore.favoriteTags.contains(tag) {
+                        tagViewStore.send(.removeFavorite(tag))
                     } else {
-                        tagStore.reduce(.addFavorite(tag))
+                        tagViewStore.send(.addFavorite(tag))
                     }
                 }
             }
@@ -72,7 +72,7 @@ struct TagListView: View {
                 }
 #if os(iOS)
                 .sheet(
-                    isPresented: appStore.showsAddView,
+                    isPresented: appViewStore.binding(get: \.showsAddView, send: { .setShowAddView($0) }),
                     onDismiss: nil,
                     content: {
                         LinkAddView()
@@ -82,8 +82,8 @@ struct TagListView: View {
             }
         }
         .task {
-            if !tagStore.didLoad {
-                tagStore.reduce(.load)
+            if !tagViewStore.didLoad {
+                tagViewStore.send(.load)
             }
         }
     }
@@ -92,7 +92,7 @@ struct TagListView: View {
 #if DEBUG
 struct TagListView_Previews: PreviewProvider {
     static var previews: some View {
-        TagListView().environmentObject(TagStore.mock)
+        TagListView().environmentObject(TagViewStore.mock)
     }
 }
 #endif

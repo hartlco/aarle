@@ -14,8 +14,9 @@ struct LinkEditView: View {
     @Environment(\.dismiss) var dismiss
 
     @EnvironmentObject var linkStore: LinkStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
 
+    // TODO: Move into EditStore
     @State var urlString: String
     @State var title: String
     @State var description: String
@@ -68,20 +69,20 @@ struct LinkEditView: View {
             Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            if !tagStore.favoriteTags.isEmpty {
+            if !tagViewStore.favoriteTags.isEmpty {
                 Section(header: "Favorites") {
-                    ForEach(tagStore.favoriteTags) { tag in
+                    ForEach(tagViewStore.favoriteTags) { tag in
                         Toggle(
                             tag.name,
                             isOn: Binding(
                                 get: {
-                                    return tagStore.tagsString(tagsString, contains: tag)
+                                    return tagViewStore.tagsString(tagsString, contains: tag)
                                 },
                                 set: { newValue in
                                     if newValue {
-                                        tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
+                                        tagsString = tagViewStore.addingTag(tag, toTagsString: tagsString)
                                     } else {
-                                        tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+                                        tagsString = tagViewStore.removingTag(tag, fromTagsString: tagsString)
                                     }
                                 }
                             )
@@ -138,7 +139,7 @@ struct LinkEditView_Previews: PreviewProvider {
             link: link,
             showCancelButton: true
         )
-            .environmentObject(TagStore.mock)
+            .environmentObject(TagViewStore.mock)
             .environmentObject(LinkStore.mock)
     }
 }

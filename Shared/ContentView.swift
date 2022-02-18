@@ -12,7 +12,7 @@ import WebKit
 
 struct ContentView: View {
     @EnvironmentObject var appViewStore: AppViewStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var linkStore: LinkStore
 
     private let pasteboard: Pasteboard
@@ -61,7 +61,7 @@ struct ContentView: View {
                 }
 #if os(iOS)
                 .sheet(
-                    isPresented: appStore.showsAddView,
+                    isPresented: appViewStore.binding(get: \.showsAddView, send: { .setShowAddView($0 )}),
                     onDismiss: nil,
                     content: {
                         LinkAddView()

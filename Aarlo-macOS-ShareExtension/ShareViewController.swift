@@ -13,7 +13,7 @@ class ShareViewController: NSViewController {
     let linkStore = LinkStore(client: UniversalClient(settingsStore: SettingsStore()), tagScope: nil)
 
     @EnvironmentObject var settingsStore: SettingsStore
-    @EnvironmentObject var tagStore: TagStore
+    @EnvironmentObject var tagViewStore: TagViewStore
 
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
@@ -52,7 +52,7 @@ class ShareViewController: NSViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagStore).environmentObject(linkStore)
+        }.environmentObject(tagViewStore).environmentObject(linkStore)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

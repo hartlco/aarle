@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftUIX
+import ViewStore
 
 // TODO: Fix crash: Have 2 lists (Main, and tag). Modify link in tag view, go back to main. Crash
 // Can be prevented if list has .id(UUID()) but this break pagination
@@ -17,7 +18,15 @@ struct AarleApp: App {
     let pasteboard = DefaultPasteboard()
 
     @StateObject var linkStore = LinkStore(client: UniversalClient(settingsStore: Self.settingsStore))
-    @StateObject var tagStore = TagStore(client: UniversalClient(settingsStore: Self.settingsStore))
+
+    @StateObject var tagViewStore = TagViewStore(
+        state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
+        environment: TagEnvironment(
+            client: UniversalClient(settingsStore: Self.settingsStore),
+            userDefaults: .suite
+        ),
+        reduceFunction: tagReducer
+    )
     @StateObject var appViewStore = AppViewStore(
         state: AppState(selectedListType: .all),
         environment: AppEnvironment(),
@@ -37,7 +46,7 @@ struct AarleApp: App {
 #endif
             .environmentObject(Self.settingsStore)
             .environmentObject(appViewStore)
-            .environmentObject(tagStore)
+            .environmentObject(tagViewStore)
             .environmentObject(linkStore)
         }
         //TODO: Refactor out creation of commands
@@ -65,7 +74,7 @@ struct AarleApp: App {
                     if let linkType = appViewStore.selectedListType  {
                         linkStore.reduce(.load(linkType))
                     }
-                    tagStore.reduce(.load)
+                    tagViewStore.send(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])
                 .disabled(appViewStore.selectedListType == nil)
@@ -107,7 +116,7 @@ struct AarleApp: App {
         }
         LinkAddScene(
             linkStore: linkStore,
-            tagStore: tagStore,
+            tagViewStore: tagViewStore,
             appViewStore: appViewStore
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
 #if os(macOS)
@@ -132,7 +141,7 @@ struct AarleApp: App {
 
 struct LinkAddScene: Scene {
     @ObservedObject var linkStore: LinkStore
-    @ObservedObject var tagStore: TagStore
+    @ObservedObject var tagViewStore: TagViewStore
     @ObservedObject var appViewStore: AppViewStore
 
     var body: some Scene {
@@ -141,7 +150,7 @@ struct LinkAddScene: Scene {
                 appViewStore.send(.hideAddView)
             }
             .environmentObject(linkStore)
-            .environmentObject(tagStore)
+            .environmentObject(tagViewStore)
         }
     }
 }
