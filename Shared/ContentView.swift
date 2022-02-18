@@ -11,7 +11,7 @@ import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    @EnvironmentObject var appStore: AppStore
+    @EnvironmentObject var appViewStore: AppViewStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var linkStore: LinkStore
 
@@ -43,7 +43,7 @@ struct ContentView: View {
                 }
             }
         }
-        .sheet(item: appStore.presentedEditLink) { link in
+        .sheet(item: appViewStore.binding(get: \.presentedEditLink, send: { .setEditLink($0) })) { link in
 #if os(macOS)
             LinkEditView(link: link, showCancelButton: true)
 #elseif os(iOS)
@@ -55,7 +55,7 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    appStore.reduce(.showAddView)
+                    appViewStore.send(.showAddView)
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
@@ -87,10 +87,10 @@ struct ContentView: View {
                         link: link
                     ),
                     tag: link.id,
-                    selection: appStore.selectedLinkID,
+                    selection: appViewStore.binding(get: \.selectedLinkID, send: { .setSelectedLinkID($0) }),
                     label: { LinkItemView(link: link) }
                 ).contextMenu {
-                    Button("Edit", action: { appStore.reduce(.showEditLink(link)) })
+                    Button("Edit", action: { appViewStore.send(.showEditLink(link)) })
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
                         linkStore.reduce(.delete(link))

@@ -12,7 +12,7 @@ struct TagListView: View {
     let webViewData = WebViewData(url: nil)
 
     @EnvironmentObject var tagStore: TagStore
-    @EnvironmentObject var appStore: AppStore
+    @EnvironmentObject var appViewStore: AppViewStore
     @EnvironmentObject var settingsStore: SettingsStore
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
@@ -66,7 +66,7 @@ struct TagListView: View {
             // TODO: Dont show double plus
             ToolbarItem {
                 Button {
-                    appStore.reduce(.showAddView)
+                    appViewStore.send(.showAddView)
                 } label: {
                     Label("Add", systemImage: "plus")
                 }

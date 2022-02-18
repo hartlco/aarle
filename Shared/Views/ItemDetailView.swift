@@ -13,7 +13,7 @@ struct ItemDetailView: View {
 
     @EnvironmentObject private var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
-    @EnvironmentObject var appStore: AppStore
+    @EnvironmentObject var appViewStore: AppViewStore
 
     @State var shareSheetPresented = false
 
@@ -47,17 +47,17 @@ struct ItemDetailView: View {
                     }
                     ToolbarItem {
                         Button {
-                            if appStore.showLinkEditorSidebar {
-                                appStore.reduce(.hideLinkEditorSidebar)
+                            if appViewStore.showLinkEditorSidebar {
+                                appViewStore.send(.hideLinkEditorSidebar)
                             } else {
-                                appStore.reduce(.showLinkEditorSidebar)
+                                appViewStore.send(.showLinkEditorSidebar)
                             }
                         } label: {
                             Label("Show Edit Link", systemImage: "sidebar.right")
                         }
                     }
                 }
-            if appStore.showLinkEditorSidebar {
+            if appViewStore.showLinkEditorSidebar {
                 LinkEditView(link: link, showCancelButton: false)
                     .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }

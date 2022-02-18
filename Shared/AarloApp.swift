@@ -15,9 +15,14 @@ struct AarleApp: App {
     static let settingsStore = SettingsStore()
 
     let pasteboard = DefaultPasteboard()
-    @StateObject var appStore = AppStore()
+
     @StateObject var linkStore = LinkStore(client: UniversalClient(settingsStore: Self.settingsStore))
     @StateObject var tagStore = TagStore(client: UniversalClient(settingsStore: Self.settingsStore))
+    @StateObject var appViewStore = AppViewStore(
+        state: AppState(selectedListType: .all),
+        environment: AppEnvironment(),
+        reduceFunction: appReducer
+    )
 
     var body: some Scene {
         WindowGroup {
@@ -31,7 +36,7 @@ struct AarleApp: App {
             }
 #endif
             .environmentObject(Self.settingsStore)
-            .environmentObject(appStore)
+            .environmentObject(appViewStore)
             .environmentObject(tagStore)
             .environmentObject(linkStore)
         }
@@ -39,46 +44,46 @@ struct AarleApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New Link") {
-                    appStore.reduce(.showAddView)
+                    appViewStore.send(.showAddView)
                 }
                 .keyboardShortcut("n", modifiers: [.command])
             }
             CommandGroup(after: .sidebar) {
                 // TODO: Make title dynamic
                 Button("Show Link Editor") {
-                    if appStore.showLinkEditorSidebar {
-                        appStore.reduce(.hideLinkEditorSidebar)
+                    if appViewStore.showLinkEditorSidebar {
+                        appViewStore.send(.hideLinkEditorSidebar)
                     } else {
-                        appStore.reduce(.showLinkEditorSidebar)
+                        appViewStore.send(.showLinkEditorSidebar)
                     }
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
-                .disabled(appStore.selectedLinkID.wrappedValue == nil)
+                .disabled(appViewStore.selectedLinkID == nil)
             }
             CommandMenu("List") {
                 Button("Refresh") {
-                    if let linkType = appStore.selectedListType.wrappedValue  {
+                    if let linkType = appViewStore.selectedListType  {
                         linkStore.reduce(.load(linkType))
                     }
                     tagStore.reduce(.load)
                 }
                 .keyboardShortcut("R", modifiers: [.command])
-                .disabled(appStore.selectedListType.wrappedValue == nil)
+                .disabled(appViewStore.selectedListType == nil)
             }
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {
-                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                    guard let selectedLinkID = appViewStore.selectedLinkID,
                           let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
 
-                    appStore.reduce(.showEditLink(selectedLink))
+                    appViewStore.send(.showEditLink(selectedLink))
                 }
                 .keyboardShortcut("e", modifiers: [.command])
-                .disabled(appStore.selectedLinkID.wrappedValue == nil)
+                .disabled(appViewStore.selectedLinkID == nil)
                 Button("Copy link to clipboard") {
-                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                    guard let selectedLinkID = appViewStore.selectedLinkID,
                           let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
@@ -86,9 +91,9 @@ struct AarleApp: App {
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(appStore.selectedLinkID.wrappedValue == nil)
+                .disabled(appViewStore.selectedLinkID == nil)
                 Button("Delete") {
-                    guard let selectedLinkID = appStore.selectedLinkID.wrappedValue,
+                    guard let selectedLinkID = appViewStore.selectedLinkID,
                           let selectedLink = linkStore.link(for: selectedLinkID) else {
                         return
                     }
@@ -97,19 +102,19 @@ struct AarleApp: App {
                     linkStore.reduce(.delete(selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
-                .disabled(appStore.selectedLinkID.wrappedValue == nil)
+                .disabled(appViewStore.selectedLinkID == nil)
             }
         }
         LinkAddScene(
             linkStore: linkStore,
             tagStore: tagStore,
-            appStore: appStore
+            appViewStore: appViewStore
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
 #if os(macOS)
         WindowGroup {
             SettingsView()
                 .onDisappear {
-                    appStore.reduce(.hideSettings)
+                    appViewStore.send(.hideSettings)
                 }
                 .frame(width: 500, height: 300)
                 .environmentObject(Self.settingsStore)
@@ -128,12 +133,12 @@ struct AarleApp: App {
 struct LinkAddScene: Scene {
     @ObservedObject var linkStore: LinkStore
     @ObservedObject var tagStore: TagStore
-    @ObservedObject var appStore: AppStore
+    @ObservedObject var appViewStore: AppViewStore
 
     var body: some Scene {
         WindowGroup {
             LinkAddView().onDisappear {
-                appStore.reduce(.hideAddView)
+                appViewStore.send(.hideAddView)
             }
             .environmentObject(linkStore)
             .environmentObject(tagStore)

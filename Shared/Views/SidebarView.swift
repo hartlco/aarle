@@ -18,28 +18,26 @@ struct SidebarView: View {
     @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagStore: TagStore
     @EnvironmentObject var settingsStore: SettingsStore
-    @EnvironmentObject var appStore: AppStore
+    @EnvironmentObject var appViewStore: AppViewStore
 
     var body: some View {
-        List(selection: appStore.selectedListType) {
+        List(selection: appViewStore.binding(get: \.selectedListType, send: { .setSelectedListType($0) })) {
             Section(header: "Links") {
                 NavigationLink(
                     destination: ContentView(
                         title: "Links",
                         listType: .all
-                    ),
-                    tag: ListType.all,
-                    selection: appStore.selectedListType
+                    )
                 ) {
                     Label("All", systemImage: "tray.2")
                 }
+                .tag(ListType.all)
                 NavigationLink(
-                    destination: TagListView(),
-                    tag: ListType.tags,
-                    selection: appStore.selectedListType
+                    destination: TagListView()
                 ) {
                     Label("Tags", systemImage: "tag")
                 }
+                .tag(ListType.tags)
             }
             Section(header: "Favorites") {
                 ForEach(tagStore.favoriteTags) { tag in
@@ -47,12 +45,12 @@ struct SidebarView: View {
                         destination: ContentView(
                             title: tag.name,
                             listType: .tagScoped(tag)
-                        ),
-                        tag: ListType.tagScoped(tag),
-                        selection: appStore.selectedListType
+                        )
                     ) {
                         Label(tag.name, systemImage: "tag")
-                    }.contextMenu {
+                    }
+                    .tag(ListType.tagScoped(tag))
+                    .contextMenu {
                         Button(role: .destructive) {
                             Task {
                                 tagStore.reduce(.removeFavorite(tag))
@@ -84,7 +82,7 @@ struct SidebarView: View {
 #endif
         .onAppear {
             if settingsStore.isLoggedOut {
-                appStore.reduce(.showSettings)
+                appViewStore.send(.showSettings)
             }
         }
         .equatable(by: equation)
@@ -93,8 +91,8 @@ struct SidebarView: View {
     private var equation: SidebarEquatable {
         SidebarEquatable(
             favoriteTags: tagStore.favoriteTags,
-            showsSettings: appStore.showsSettings.wrappedValue,
-            listSelection: appStore.selectedListType.wrappedValue
+            showsSettings: appViewStore.showsSettings,
+            listSelection: appViewStore.selectedListType
         )
     }
 }

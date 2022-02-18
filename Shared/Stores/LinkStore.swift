@@ -15,6 +15,7 @@ enum ListType: Hashable, Equatable, Sendable {
     case tagScoped(Tag)
 }
 
+// TODO: Implement generic Store (See DETimeLog)
 @MainActor
 final class LinkStore: ObservableObject {
     enum Action {

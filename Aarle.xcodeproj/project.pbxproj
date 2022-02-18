@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5069CB427BFE68D008EA761 /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5069CB327BFE68D008EA761 /* Architecture.swift */; };
+		C5069CB527BFE68D008EA761 /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5069CB327BFE68D008EA761 /* Architecture.swift */; };
+		C5069CB627BFE68D008EA761 /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5069CB327BFE68D008EA761 /* Architecture.swift */; };
+		C5069CB727BFE68D008EA761 /* Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5069CB327BFE68D008EA761 /* Architecture.swift */; };
 		C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
@@ -61,8 +65,8 @@
 		C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
 		C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
 		C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
-		C588DEA527A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
-		C588DEA627A3E0640034C1F2 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppStore.swift */; };
+		C588DEA527A3E0640034C1F2 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppViewStore.swift */; };
+		C588DEA627A3E0640034C1F2 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppViewStore.swift */; };
 		C59995062781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995072781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995082781B96700FE1EBA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F72781B96500FE1EBA /* ContentView.swift */; };
@@ -161,6 +165,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C5069CB327BFE68D008EA761 /* Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Architecture.swift; sourceTree = "<group>"; };
 		C5165652278EB849006A55A7 /* InitialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialContentView.swift; sourceTree = "<group>"; };
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkStore.swift; sourceTree = "<group>"; };
@@ -178,7 +183,7 @@
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
 		C585F1FA27A5239500AB0A6F /* PinboardLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardLink.swift; sourceTree = "<group>"; };
 		C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarle--iOS--Info.plist"; sourceTree = "<group>"; };
-		C588DEA427A3E0640034C1F2 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		C588DEA427A3E0640034C1F2 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C59994F82781B96700FE1EBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -261,7 +266,7 @@
 		C53ED62527856CD900397910 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				C588DEA427A3E0640034C1F2 /* AppStore.swift */,
+				C588DEA427A3E0640034C1F2 /* AppViewStore.swift */,
 				C53ED62627856CE900397910 /* LinkStore.swift */,
 				C547D6652793F16400DEC857 /* TagStore.swift */,
 				C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */,
@@ -314,6 +319,7 @@
 				C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */,
 				C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */,
 				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
+				C5069CB327BFE68D008EA761 /* Architecture.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -597,6 +603,7 @@
 				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
+				C5069CB427BFE68D008EA761 /* Architecture.swift in Sources */,
 				C547D6662793F16400DEC857 /* TagStore.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
@@ -605,7 +612,7 @@
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
-				C588DEA527A3E0640034C1F2 /* AppStore.swift in Sources */,
+				C588DEA527A3E0640034C1F2 /* AppViewStore.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
@@ -630,6 +637,7 @@
 				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
+				C5069CB527BFE68D008EA761 /* Architecture.swift in Sources */,
 				C547D6672793F16400DEC857 /* TagStore.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
@@ -638,7 +646,7 @@
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
-				C588DEA627A3E0640034C1F2 /* AppStore.swift in Sources */,
+				C588DEA627A3E0640034C1F2 /* AppViewStore.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
@@ -657,6 +665,7 @@
 				C54210B92796A6AB000F07DC /* Tag.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */,
+				C5069CB627BFE68D008EA761 /* Architecture.swift in Sources */,
 				C54210BE2796A6D1000F07DC /* Link.swift in Sources */,
 				C54210BA2796A6AE000F07DC /* LinkStore.swift in Sources */,
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
@@ -680,6 +689,7 @@
 				C5FAE124279BE30F007E763B /* TagStore.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,
+				C5069CB727BFE68D008EA761 /* Architecture.swift in Sources */,
 				C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */,
 				C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */,
 				C5FAE125279BE30F007E763B /* LinkStore.swift in Sources */,
