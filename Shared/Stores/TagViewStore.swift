@@ -36,7 +36,7 @@ let tagReducer: ReduceFunction<TagState, TagAction, TagEnvironment> = { state, a
     case .load:
         state.didLoad = true
         do {
-            guard state.isLoading == false else { return }
+            guard state.isLoading == false else { return ActionResult.none }
             state.isLoading = true
 
             state.tags = try await env.client.loadTags().sorted(by: { tag1, tag2 in
@@ -58,6 +58,8 @@ let tagReducer: ReduceFunction<TagState, TagAction, TagEnvironment> = { state, a
     case let .setShowLoadingError(show):
         state.showLoadingError = show
     }
+
+    return ActionResult.none
 }
 
 extension TagViewStore {

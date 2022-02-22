@@ -9,6 +9,55 @@ import Foundation
 import Combine
 import SwiftUI
 import KeychainAccess
+import ViewStore
+
+typealias SettingsViewStore = ViewStore<SettingsState, SettingsAction, SettingsEnvironment>
+
+// WIP: Finish store
+struct SettingsState {
+    var accountType: AccountType
+    var secret: String
+    var endpoint: String
+}
+
+enum SettingsAction {
+    case setSecret(String?)
+    case setEndpoint(String?)
+    case setAccountType(AccountType)
+}
+
+struct SettingsEnvironment {
+    let keychain: Keychain = Keychain(service: "co.hartl.Aarle")
+}
+
+let keychainKey = "secret"
+let endpointKey = "endpoint"
+let servieKey = "servicekey"
+let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvironment> = { state, action, env in
+    switch action {
+    case let .setSecret(secret):
+        state.secret = secret ?? ""
+
+        if state.secret.isEmpty {
+            try? env.keychain.remove(keychainKey)
+        } else {
+            env.keychain[keychainKey] = state.secret
+        }
+    case let .setEndpoint(endpoint):
+        state.endpoint = endpoint ?? ""
+
+        if state.endpoint.isEmpty {
+            try? env.keychain.remove(endpointKey)
+        } else {
+            env.keychain[endpointKey] = state.endpoint
+        }
+    case let .setAccountType(type):
+        state.accountType = type
+        env.keychain[servieKey] = state.accountType.rawValue
+    }
+
+    return ActionResult.none
+}
 
 enum AccountType: String, CaseIterable {
     case shaarli

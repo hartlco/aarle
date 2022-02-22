@@ -79,6 +79,8 @@ let appReducer: ReduceFunction<AppState, AppAction, AppEnvironment> = { state, a
     case .hideEditLink:
         state.presentedEditLink = nil
     }
+
+    return ActionResult.none
 }
 
 struct AppEnvironment {
