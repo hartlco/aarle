@@ -5,6 +5,7 @@
 //  Created by martinhartl on 29.01.22.
 //
 
+import KeychainAccess
 import Foundation
 
 final class PinboardClient: BookmarkClient {
@@ -14,10 +15,10 @@ final class PinboardClient: BookmarkClient {
         return "https://api.pinboard.in/v1"
     }
 
-    let settingsStore: SettingsStore
+    let keychain: Keychain
 
-    init(settingsStore: SettingsStore) {
-        self.settingsStore = settingsStore
+    init(keychain: Keychain) {
+        self.keychain = keychain
     }
 
     func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
@@ -35,7 +36,7 @@ final class PinboardClient: BookmarkClient {
             queryParams["tag"] = tags.joined(separator: "+")
         }
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
         queryParams["results"] = "\(pageSize)"
 
@@ -64,7 +65,7 @@ final class PinboardClient: BookmarkClient {
             queryParams["tag"] = tags.joined(separator: "+")
         }
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
         queryParams["results"] = "\(1000)"
 
@@ -107,7 +108,7 @@ final class PinboardClient: BookmarkClient {
             queryParams["tag"] = tags.joined(separator: "+")
         }
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
         queryParams["results"] = "\(pageSize)"
         queryParams["start"] = "\(offset)"
@@ -133,7 +134,7 @@ final class PinboardClient: BookmarkClient {
 
         var queryParams: [String: String] = [:]
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
         queryParams["url"] = link.url.absoluteString
         queryParams["description"] = link.title ?? ""
@@ -160,7 +161,7 @@ final class PinboardClient: BookmarkClient {
 
         var queryParams: [String: String] = [:]
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
         queryParams["url"] = link.url.absoluteString
 
@@ -181,7 +182,7 @@ final class PinboardClient: BookmarkClient {
         var queryParams: [String: String] = [:]
 
 
-        queryParams["auth_token"] = settingsStore.secret.wrappedValue ?? ""
+        queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
 
         URL = URL.appendingQueryParameters(queryParams)

@@ -7,10 +7,12 @@
 
 @_predatesConcurrency import Cocoa
 import SwiftUI
+import KeychainAccess
 
 @MainActor
 class ShareViewController: NSViewController {
-    let linkStore = LinkStore(client: UniversalClient(settingsStore: SettingsStore()), tagScope: nil)
+    static let keyChain = Keychain(service: "co.hartl.Aarle")
+    let linkStore = LinkStore(client: UniversalClient(keychain: keyChain), tagScope: nil)
 
     @EnvironmentObject var settingsStore: SettingsStore
     @EnvironmentObject var tagViewStore: TagViewStore

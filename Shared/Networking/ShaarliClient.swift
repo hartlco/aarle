@@ -5,16 +5,17 @@
 //  Created by martinhartl on 05.01.22.
 //
 
+import KeychainAccess
 import Foundation
 import SwiftJWT
 
 final class ShaarliClient: BookmarkClient {
     let pageSize = 20
 
-    let settingsStore: SettingsStore
+    let keychain: Keychain
 
-    init(settingsStore: SettingsStore) {
-        self.settingsStore = settingsStore
+    init(keychain: Keychain) {
+        self.keychain = keychain
     }
 
     func load(filteredByTags tags: [String] = [], searchTerm: String?) async throws -> [Link] {
@@ -163,14 +164,14 @@ final class ShaarliClient: BookmarkClient {
 
         var jwt = SwiftJWT.JWT(header: header, claims: claims)
 
-        let secret = settingsStore.secret.wrappedValue ?? ""
+        let secret = keychain.secret
         let jwtSigner = JWTSigner.hs512(key: Data(secret.utf8))
         let signedJWT = try jwt.sign(using: jwtSigner)
         return signedJWT
     }
 
     private var apiEndpoint: String {
-        return settingsStore.endpoint.wrappedValue ?? ""
+        return keychain.endpoint
     }
 }
 

@@ -5,6 +5,7 @@
 //  Created by martinhartl on 02.01.22.
 //
 
+import KeychainAccess
 import SwiftUI
 import SwiftUIX
 import ViewStore
@@ -14,15 +15,16 @@ import ViewStore
 @main
 struct AarleApp: App {
     static let settingsStore = SettingsStore()
+    static let keyChain = Keychain(service: "co.hartl.Aarle")
 
     let pasteboard = DefaultPasteboard()
 
-    @StateObject var linkStore = LinkStore(client: UniversalClient(settingsStore: Self.settingsStore))
+    @StateObject var linkStore = LinkStore(client: UniversalClient(keychain: keyChain))
 
     @StateObject var tagViewStore = TagViewStore(
         state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
         environment: TagEnvironment(
-            client: UniversalClient(settingsStore: Self.settingsStore),
+            client: UniversalClient(keychain: keyChain),
             userDefaults: .suite
         ),
         reduceFunction: tagReducer

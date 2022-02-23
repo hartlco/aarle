@@ -5,6 +5,7 @@
 //  Created by martinhartl on 29.01.22.
 //
 
+import KeychainAccess
 import Foundation
 
 enum ClientError: Error {
@@ -53,10 +54,10 @@ final class UniversalClient: BookmarkClient {
     private let shaarliClient: ShaarliClient
     private let pinboardClient: PinboardClient
 
-    init(settingsStore: SettingsStore) {
-        self.settingsStore = settingsStore
-        self.shaarliClient = ShaarliClient(settingsStore: settingsStore)
-        self.pinboardClient = PinboardClient(settingsStore: settingsStore)
+    init(keychain: Keychain) {
+        self.keychain = keychain
+        self.shaarliClient = ShaarliClient(keychain: keychain)
+        self.pinboardClient = PinboardClient(keychain: keychain)
     }
 
     var pageSize: Int {
@@ -87,9 +88,9 @@ final class UniversalClient: BookmarkClient {
         try await client.loadTags()
     }
 
-    private let settingsStore: SettingsStore
+    private let keychain: Keychain
     private var client: BookmarkClient {
-        switch settingsStore.accountType.wrappedValue {
+        switch keychain.accountType {
         case .shaarli:
             return shaarliClient
         case .pinboard:

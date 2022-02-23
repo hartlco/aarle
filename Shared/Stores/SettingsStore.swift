@@ -11,13 +11,35 @@ import SwiftUI
 import KeychainAccess
 import ViewStore
 
+extension Keychain {
+    var accountType: AccountType {
+        let serviceString = self[servieKey]
+        return AccountType(rawValue: serviceString ?? "") ?? .shaarli
+    }
+
+    var secret: String {
+        self[keychainKey] ?? ""
+    }
+
+    var endpoint: String {
+        self[endpointKey] ?? ""
+    }
+}
+
 typealias SettingsViewStore = ViewStore<SettingsState, SettingsAction, SettingsEnvironment>
 
-// WIP: Finish store
 struct SettingsState {
     var accountType: AccountType
     var secret: String
     var endpoint: String
+}
+
+extension SettingsState {
+    init(keychain: Keychain) {
+        self.accountType = keychain.accountType
+        self.secret = keychain.secret
+        self.endpoint = keychain.endpoint
+    }
 }
 
 enum SettingsAction {
@@ -27,12 +49,13 @@ enum SettingsAction {
 }
 
 struct SettingsEnvironment {
-    let keychain: Keychain = Keychain(service: "co.hartl.Aarle")
+    let keychain: Keychain
 }
 
 let keychainKey = "secret"
 let endpointKey = "endpoint"
 let servieKey = "servicekey"
+
 let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvironment> = { state, action, env in
     switch action {
     case let .setSecret(secret):
