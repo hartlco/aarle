@@ -5,18 +5,24 @@
 //  Created by martinhartl on 22.01.22.
 //
 
+import KeychainAccess
 import UIKit
 import SwiftUI
 import Social
 
 final class ShareViewController: UIViewController {
-    static let settingsStore = SettingsStore()
-    let linkStore = LinkStore(client: UniversalClient(settingsStore: ShareViewController.settingsStore), tagScope: nil)
+    static let keyChain = Keychain(service: "co.hartl.Aarle")
+    @StateObject var settingsViewStore = SettingsViewStore(
+        state: .init(keychain: keyChain),
+        environment: .init(keychain: keyChain),
+        reduceFunction: settingsReducer
+    )
+    let linkStore = LinkStore(client: UniversalClient(keychain: keyChain), tagScope: nil)
 
     @StateObject var tagViewStore = TagViewStore(
         state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
         environment: TagEnvironment(
-            client: UniversalClient(settingsStore: ShareViewController.settingsStore),
+            client: UniversalClient(keychain: keyChain),
             userDefaults: .suite
         ),
         reduceFunction: tagReducer
@@ -59,7 +65,7 @@ final class ShareViewController: UIViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagViewStore).environmentObject(Self.settingsStore).environmentObject(linkStore)
+        }.environmentObject(tagViewStore).environmentObject(settingsViewStore).environmentObject(linkStore)
 
         let hosting = UIHostingController(rootView: addView)
         self.addChild(hosting)

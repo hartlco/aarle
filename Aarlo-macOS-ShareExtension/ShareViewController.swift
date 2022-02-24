@@ -14,7 +14,11 @@ class ShareViewController: NSViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
     let linkStore = LinkStore(client: UniversalClient(keychain: keyChain), tagScope: nil)
 
-    @EnvironmentObject var settingsStore: SettingsStore
+    @StateObject var settingsViewStore = SettingsViewStore(
+        state: .init(keychain: keyChain),
+        environment: .init(keychain: keyChain),
+        reduceFunction: settingsReducer
+    )
     @EnvironmentObject var tagViewStore: TagViewStore
 
     override func loadView() {

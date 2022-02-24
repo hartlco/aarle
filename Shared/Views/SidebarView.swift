@@ -17,7 +17,7 @@ struct SidebarView: View {
 
     @EnvironmentObject var linkStore: LinkStore
     @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var settingsViewStore: SettingsViewStore
     @EnvironmentObject var appViewStore: AppViewStore
 
     var body: some View {
@@ -81,7 +81,7 @@ struct SidebarView: View {
         }
 #endif
         .onAppear {
-            if settingsStore.isLoggedOut {
+            if settingsViewStore.isLoggedOut {
                 appViewStore.send(.showSettings)
             }
         }

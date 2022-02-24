@@ -49,10 +49,10 @@
 		C5782B352782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
 		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
-		C585F1EC27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
-		C585F1ED27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
-		C585F1EE27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
-		C585F1EF27A5137A00AB0A6F /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */; };
+		C585F1EC27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
+		C585F1ED27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
+		C585F1EE27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
+		C585F1EF27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
 		C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
@@ -177,7 +177,7 @@
 		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewStore.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
 		C585F1FA27A5239500AB0A6F /* PinboardLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardLink.swift; sourceTree = "<group>"; };
@@ -272,7 +272,7 @@
 				C588DEA427A3E0640034C1F2 /* AppViewStore.swift */,
 				C53ED62627856CE900397910 /* LinkStore.swift */,
 				C547D6652793F16400DEC857 /* TagViewStore.swift */,
-				C585F1EB27A5137A00AB0A6F /* SettingsStore.swift */,
+				C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -601,7 +601,7 @@
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
-				C585F1EC27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
+				C585F1EC27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
@@ -634,7 +634,7 @@
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
-				C585F1ED27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
+				C585F1ED27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
@@ -666,7 +666,7 @@
 				C54210BB2796A6B0000F07DC /* TagViewStore.swift in Sources */,
 				C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
-				C585F1EE27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
+				C585F1EE27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C54210B92796A6AB000F07DC /* Tag.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */,
@@ -689,7 +689,7 @@
 				C5FAE121279BE303007E763B /* Tag.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C5FAE122279BE303007E763B /* Link.swift in Sources */,
-				C585F1EF27A5137A00AB0A6F /* SettingsStore.swift in Sources */,
+				C585F1EF27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C5FAE124279BE30F007E763B /* TagViewStore.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,

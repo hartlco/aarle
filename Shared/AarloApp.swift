@@ -14,13 +14,16 @@ import ViewStore
 // Can be prevented if list has .id(UUID()) but this break pagination
 @main
 struct AarleApp: App {
-    static let settingsStore = SettingsStore()
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
     let pasteboard = DefaultPasteboard()
 
+    @StateObject var settingsViewStore = SettingsViewStore(
+        state: .init(keychain: keyChain),
+        environment: .init(keychain: keyChain),
+        reduceFunction: settingsReducer
+    )
     @StateObject var linkStore = LinkStore(client: UniversalClient(keychain: keyChain))
-
     @StateObject var tagViewStore = TagViewStore(
         state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
         environment: TagEnvironment(
@@ -46,7 +49,7 @@ struct AarleApp: App {
                 splitViewController.preferredDisplayMode = .oneBesideSecondary
             }
 #endif
-            .environmentObject(Self.settingsStore)
+            .environmentObject(settingsViewStore)
             .environmentObject(appViewStore)
             .environmentObject(tagViewStore)
             .environmentObject(linkStore)
@@ -128,13 +131,13 @@ struct AarleApp: App {
                     appViewStore.send(.hideSettings)
                 }
                 .frame(width: 500, height: 300)
-                .environmentObject(Self.settingsStore)
+                .environmentObject(settingsViewStore)
         }
         .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
         Settings {
             SettingsView()
                 .frame(width: 500, height: 300)
-                .environmentObject(Self.settingsStore)
+                .environmentObject(settingsViewStore)
 
         }
 #endif

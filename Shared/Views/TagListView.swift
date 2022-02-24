@@ -13,7 +13,7 @@ struct TagListView: View {
 
     @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var appViewStore: AppViewStore
-    @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var settingsViewStore: SettingsViewStore
 
     private var navigationBarItemPlacement: ToolbarItemPlacement {
         #if os(macOS)

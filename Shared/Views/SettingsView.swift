@@ -10,7 +10,7 @@ import KeychainAccess
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var settingsStore: SettingsStore
+    @EnvironmentObject var settingsViewStore: SettingsViewStore
 
     var body: some View {
         #if os(macOS)
@@ -27,17 +27,26 @@ struct SettingsView: View {
         // TODO: Add API endpoint info
         TabView {
             Form {
-                Picker("Service", selection: settingsStore.accountType) {
+                Picker(
+                    "Service",
+                    selection: settingsViewStore.binding(get: \.accountType, send: { .setAccountType($0) })
+                ) {
                     ForEach(AccountType.allCases, id: \.self) {
                         Text($0.rawValue)
                     }
                 }
                 .pickerStyle(.segmented)
-                TextField("Key", text: settingsStore.secret)
+                TextField(
+                    "Key",
+                    text: settingsViewStore.binding(get: \.secret, send: { .setSecret($0) })
+                )
+                .disableAutocorrection(true)
+                if settingsViewStore.accountType == .shaarli {
+                    TextField(
+                        "API Endpoint",
+                        text: settingsViewStore.binding(get: \.endpoint, send: { .setEndpoint($0) })
+                    )
                     .disableAutocorrection(true)
-                if settingsStore.accountType.wrappedValue == .shaarli {
-                    TextField("API Endpoint", text: settingsStore.endpoint)
-                        .disableAutocorrection(true)
                     Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
                         .font(.caption)
                 }
@@ -69,7 +78,8 @@ struct SettingsView: View {
 #if DEBUG
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView().environmentObject(SettingsStore())
+        // TODO: Set mock env object
+        SettingsView()
     }
 }
 #endif
