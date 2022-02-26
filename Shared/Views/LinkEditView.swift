@@ -13,7 +13,7 @@ struct LinkEditView: View {
 
     @Environment(\.dismiss) var dismiss
 
-    @EnvironmentObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
 
     // TODO: Move into EditStore
@@ -127,7 +127,7 @@ struct LinkEditView: View {
             created: link.created
         )
 
-        linkStore.reduce(.update(newLink))
+        linkStore.send(.update(newLink))
     }
 }
 
@@ -140,7 +140,7 @@ struct LinkEditView_Previews: PreviewProvider {
             showCancelButton: true
         )
             .environmentObject(TagViewStore.mock)
-            .environmentObject(LinkStore.mock)
+            .environmentObject(LinkViewStore.mock)
     }
 }
 #endif

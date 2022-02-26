@@ -12,7 +12,11 @@ import KeychainAccess
 @MainActor
 class ShareViewController: NSViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
-    let linkStore = LinkStore(client: UniversalClient(keychain: keyChain), tagScope: nil)
+    let linkViewStore = LinkViewStore(
+        state: .init(),
+        environment: .init(client: UniversalClient(keychain: keyChain)),
+        reduceFunction: linkReducer
+    )
 
     @StateObject var settingsViewStore = SettingsViewStore(
         state: .init(keychain: keyChain),
@@ -58,7 +62,7 @@ class ShareViewController: NSViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagViewStore).environmentObject(linkStore)
+        }.environmentObject(tagViewStore).environmentObject(linkViewStore)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

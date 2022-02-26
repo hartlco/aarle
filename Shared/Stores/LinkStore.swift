@@ -8,159 +8,15 @@
 import Foundation
 import Combine
 import SwiftUI
+import ViewStore
 
 enum ListType: Hashable, Equatable, Sendable {
     case all
     case tags
     case tagScoped(Tag)
-}
 
-// TODO: Implement generic Store (See DETimeLog)
-@MainActor
-final class LinkStore: ObservableObject {
-    enum Action {
-        case load(ListType)
-        case loadMoreIfNeeded(ListType, Link)
-        case changeSearchText(String, listType: ListType)
-        case search(ListType)
-        case setShowLoadingError(Bool)
-        case add(PostLink)
-        case delete(Link)
-        case update(Link)
-    }
-
-    struct State {
-        // TODO: Move into subStore
-        struct ListState {
-            var links: [Link] = []
-            var tagScope: String?
-            var canLoadMore = false
-            var searchText = ""
-            var didLoad = false
-        }
-
-        var isLoading = false
-        var listStates: [ListType: ListState] = [:]
-        var showLoadingError = false
-    }
-
-    private let client: BookmarkClient
-
-    @Published private var state: State
-
-    init(
-        client: BookmarkClient,
-        tagScope: String? = nil
-    ) {
-        self._state = Published(initialValue: State())
-        self.client = client
-    }
-
-    var showLoadingError: Binding<Bool> {
-        Binding { [weak self] in
-            return self?.state.showLoadingError ?? false
-        } set: { [weak self] value in
-            guard let self = self else { return }
-            self.reduce(.setShowLoadingError(value))
-        }
-    }
-
-    func searchText(for type: ListType) -> String {
-        let listState = state.listStates[type]
-        return listState?.searchText ?? ""
-    }
-
-    @MainActor func reduce(_ action: Action) {
-        switch action {
-        case let .search(type):
-            Task {
-                do {
-                    try await load(type: type)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        case let .load(type):
-            Task {
-                do {
-                    try await load(type: type)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        case let .loadMoreIfNeeded(type, link):
-            Task {
-                do {
-                    try await loadMoreIfNeeded(type: type, link: link)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        case let .changeSearchText(string, type):
-            var listState = state.listStates[type] ?? State.ListState()
-            listState.searchText = string
-            state.listStates[type] = listState
-
-            if string.isEmpty {
-                reduce(.load(type))
-            }
-        case let .setShowLoadingError(show):
-            state.showLoadingError = show
-        case let .delete(link):
-            Task {
-                do {
-                    try await delete(link: link)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        case let .update(link):
-            Task {
-                do {
-                    try await update(link: link)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        case let .add(link):
-            Task {
-                do {
-                    try await add(link: link)
-                } catch {
-                    state.showLoadingError = true
-                }
-            }
-        }
-    }
-
-    var isLoading: Bool {
-        state.isLoading
-    }
-
-    func didLoad(listType: ListType) -> Bool {
-        state.listStates[listType]?.didLoad ?? false
-    }
-
-    func links(for listType: ListType) -> [Link] {
-        state.listStates[listType]?.links ?? []
-    }
-
-    func link(for ID: String) -> Link? {
-        for listStates in state.listStates {
-            for link in listStates.value.links where link.id == ID {
-                return link
-            }
-        }
-
-        return nil
-    }
-
-    func canLoadMore(for listType: ListType) -> Bool {
-        state.listStates[listType]?.canLoadMore ?? false
-    }
-
-    private func scopedTages(for type: ListType) -> [String] {
-        switch type {
+    var scopedTags:  [String] {
+        switch self {
         case .all:
             return []
         case .tagScoped(let tag):
@@ -169,98 +25,225 @@ final class LinkStore: ObservableObject {
             return []
         }
     }
+}
 
+struct LinkState {
+    // TODO: Move into subStore
+    struct ListState {
+        var links: [Link] = []
+        var tagScope: String?
+        var canLoadMore = false
+        var searchText = ""
+        var didLoad = false
+    }
+
+    var isLoading = false
+    var listStates: [ListType: ListState] = [:]
+    var showLoadingError = false
+
+    func searchText(for type: ListType) -> String {
+        let listState = listStates[type]
+        return listState?.searchText ?? ""
+    }
+}
+
+enum LinkAction {
+    case load(ListType)
+    case loadMoreIfNeeded(ListType, Link)
+    case changeSearchText(String, listType: ListType)
+    case search(ListType)
+    case setShowLoadingError(Bool)
+    case add(PostLink)
+    case delete(Link)
+    case update(Link)
+}
+
+struct LinkEnvironment {
+    let client: BookmarkClient
+}
+
+typealias LinkViewStore = ViewStore<LinkState, LinkAction, LinkEnvironment>
+
+extension LinkViewStore {
 #if DEBUG
-    static let mock = LinkStore(client: MockClient())
+    static let mock = LinkViewStore(
+        state: .init(),
+        environment: .init(client: MockClient()),
+        reduceFunction: linkReducer
+    )
 #endif
 
-    @MainActor private func load(type: ListType) async throws {
-        guard state.isLoading == false else { return }
+    func searchText(for type: ListType) -> String {
+        let listState = self.listStates[type]
+        return listState?.searchText ?? ""
+    }
 
-        defer {
-            state.isLoading = false
+    func canLoadMore(for listType: ListType) -> Bool {
+        self.listStates[listType]?.canLoadMore ?? false
+    }
+
+    func didLoad(listType: ListType) -> Bool {
+        self.listStates[listType]?.didLoad ?? false
+    }
+
+    func link(for ID: String) -> Link? {
+        for listStates in self.listStates {
+            for link in listStates.value.links where link.id == ID {
+                return link
+            }
         }
 
-        var listState = state.listStates[type] ?? State.ListState()
-        listState.didLoad = true
+        return nil
+    }
 
-        state.isLoading = true
+    func links(for listType: ListType) -> [Link] {
+        self.listStates[listType]?.links ?? []
+    }
+}
 
-        listState.links = try await client.load(
-            filteredByTags: scopedTages(for: type),
-            searchTerm: searchText(for: type)
-        )
-
-        listState.canLoadMore = listState.links.count == client.pageSize
+let linkReducer: ReduceFunction<LinkState, LinkAction, LinkEnvironment> = { state, action, env in
+    switch action {
+    case let .search(type):
+        do {
+            try await load(type: type, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
+        }
+    case let .load(type):
+        do {
+            try await load(type: type, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
+        }
+    case let .loadMoreIfNeeded(type, link):
+        do {
+            try await loadMoreIfNeeded(type: type, link: link, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
+        }
+    case let .changeSearchText(string, type):
+        var listState = state.listStates[type] ?? LinkState.ListState()
+        listState.searchText = string
         state.listStates[type] = listState
-    }
 
-    @MainActor private func loadMoreIfNeeded(type: ListType, link: Link) async throws {
-        guard state.isLoading == false else { return }
-
-        var listState = state.listStates[type] ?? State.ListState()
-
-        guard link.id == listState.links.last?.id else { return }
-
-        defer {
-            state.isLoading = false
+        if string.isEmpty {
+            return .perform(.load(type))
         }
-
-        state.isLoading = true
-
-        let links = try await client.loadMore(
-            offset: listState.links.count,
-            filteredByTags: scopedTages(for: type), searchTerm: searchText(for: type)
-        )
-        listState.links.append(contentsOf: links)
-
-        listState.canLoadMore = links.count == client.pageSize
-        state.listStates[type] = listState
-    }
-
-    // TODO: local add for tags, parse response to maybe get ID?
-    @MainActor private func add(link: PostLink) async throws {
-        guard state.isLoading == false else { return }
-        state.isLoading = true
-
-        defer {
-            state.isLoading = false
+    case let .setShowLoadingError(show):
+        state.showLoadingError = show
+    case let .delete(link):
+        do {
+            try await delete(link: link, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
         }
-
-        try await client.createLink(link: link)
-    }
-
-    @MainActor private func update(link: Link) async throws {
-        guard state.isLoading == false else { return }
-        state.isLoading = true
-
-        defer {
-            state.isLoading = false
+    case let .update(link):
+        do {
+            try await update(link: link, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
         }
-
-        try await client.updateLink(link: link)
-
-        for (key, value) in state.listStates {
-            state.listStates[key] = updated(link: link, from: value)
+    case let .add(link):
+        do {
+            try await add(link: link, state: &state, client: env.client)
+        } catch {
+            state.showLoadingError = true
         }
     }
 
-    @MainActor private func delete(link: Link) async throws {
-        guard state.isLoading == false else { return }
-        state.isLoading = true
+    return .none
+}
 
-        defer {
-            state.isLoading = false
-        }
+@MainActor private func load(
+    type: ListType,
+    state: inout LinkState,
+    client: BookmarkClient
+) async throws {
+    guard state.isLoading == false else { return }
 
-        try await client.deleteLink(link: link)
-
-        for (key, value) in state.listStates {
-            state.listStates[key] = deleted(link: link, from: value)
-        }
+    defer {
+        state.isLoading = false
     }
 
-    private func updated(link: Link, from listState: State.ListState) -> State.ListState {
+    var listState = state.listStates[type] ?? LinkState.ListState()
+    listState.didLoad = true
+
+    state.isLoading = true
+
+    listState.links = try await client.load(
+        filteredByTags: type.scopedTags,
+        searchTerm: state.searchText(for: type)
+    )
+
+    listState.canLoadMore = listState.links.count == client.pageSize
+    state.listStates[type] = listState
+}
+
+@MainActor private func loadMoreIfNeeded(
+    type: ListType,
+    link: Link,
+    state: inout LinkState,
+    client: BookmarkClient
+) async throws {
+    guard state.isLoading == false else { return }
+
+    var listState = state.listStates[type] ?? LinkState.ListState()
+
+    guard link.id == listState.links.last?.id else { return }
+
+    defer {
+        state.isLoading = false
+    }
+
+    state.isLoading = true
+
+    let links = try await client.loadMore(
+        offset: listState.links.count,
+        filteredByTags: type.scopedTags, searchTerm: state.searchText(for: type)
+    )
+    listState.links.append(contentsOf: links)
+
+    listState.canLoadMore = links.count == client.pageSize
+    state.listStates[type] = listState
+}
+
+@MainActor private func delete(link: Link, state: inout LinkState, client: BookmarkClient) async throws {
+    func deleted(link: Link, from listState: LinkState.ListState) -> LinkState.ListState {
+        var listState = listState
+        listState.links.removeAll {
+            link == $0
+        }
+
+        return listState
+    }
+
+    guard state.isLoading == false else { return }
+    state.isLoading = true
+
+    defer {
+        state.isLoading = false
+    }
+
+    try await client.deleteLink(link: link)
+
+    for (key, value) in state.listStates {
+        state.listStates[key] = deleted(link: link, from: value)
+    }
+}
+
+@MainActor private func add(link: PostLink, state: inout LinkState, client: BookmarkClient) async throws {
+    guard state.isLoading == false else { return }
+    state.isLoading = true
+
+    defer {
+        state.isLoading = false
+    }
+
+    try await client.createLink(link: link)
+}
+
+@MainActor private func update(link: Link, state: inout LinkState, client: BookmarkClient) async throws {
+    func updated(link: Link, from listState: LinkState.ListState) -> LinkState.ListState {
         var listState = listState
         if let index = listState.links.firstIndex(where: { $0.id == link.id }) {
             listState.links[index] = link
@@ -269,12 +252,16 @@ final class LinkStore: ObservableObject {
         return listState
     }
 
-    private func deleted(link: Link, from listState: State.ListState) -> State.ListState {
-        var listState = listState
-        listState.links.removeAll {
-            link == $0
-        }
+    guard state.isLoading == false else { return }
+    state.isLoading = true
 
-        return listState
+    defer {
+        state.isLoading = false
+    }
+
+    try await client.updateLink(link: link)
+
+    for (key, value) in state.listStates {
+        state.listStates[key] = updated(link: link, from: value)
     }
 }

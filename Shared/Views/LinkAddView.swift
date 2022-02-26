@@ -11,7 +11,7 @@ import SwiftUIX
 struct LinkAddView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var tagStore: TagViewStore
-    @EnvironmentObject var linkStore: LinkStore
+    @EnvironmentObject var linkViewStore: LinkViewStore
 
     @State var urlString: String
     @State var title: String
@@ -108,7 +108,7 @@ struct LinkAddView: View {
             created: Date().addingTimeInterval(-10.0)
         )
 
-        linkStore.reduce(.add(newLink))
+        linkViewStore.send(.add(newLink))
         presentationMode.dismiss()
     }
 }
@@ -116,7 +116,7 @@ struct LinkAddView: View {
 #if DEBUG
 struct LinkAddView_Previews: PreviewProvider {
     static var previews: some View {
-        LinkAddView().environmentObject(LinkStore.mock).environmentObject(LinkStore.mock)
+        LinkAddView().environmentObject(LinkViewStore.mock)
     }
 }
 #endif

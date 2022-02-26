@@ -11,7 +11,7 @@ import SwiftUIX
 struct ItemDetailView: View {
     let link: Link
 
-    @EnvironmentObject private var linkStore: LinkStore
+    @EnvironmentObject private var linkStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var appViewStore: AppViewStore
 
@@ -99,7 +99,7 @@ struct ItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ItemDetailView(
             link: Link.mock
-        ).environmentObject(TagViewStore.mock).environmentObject(LinkStore.mock)
+        ).environmentObject(TagViewStore.mock).environmentObject(LinkViewStore.mock)
     }
 }
 #endif

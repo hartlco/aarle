@@ -13,7 +13,7 @@ import WebKit
 struct ContentView: View {
     @EnvironmentObject var appViewStore: AppViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkViewStore
 
     private let pasteboard: Pasteboard
     private let title: String
@@ -75,7 +75,7 @@ struct ContentView: View {
             if linkStore.didLoad(listType: listType) {
                 return
             }
-            linkStore.reduce(.load(listType))
+            linkStore.send(.load(listType))
         }
     }
 
@@ -93,7 +93,7 @@ struct ContentView: View {
                     Button("Edit", action: { appViewStore.send(.showEditLink(link)) })
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
-                        linkStore.reduce(.delete(link))
+                        linkStore.send(.delete(link))
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
@@ -104,7 +104,7 @@ struct ContentView: View {
                     Spacer()
                     Button {
                         guard let lastLink = linkStore.links(for: listType).last else { return }
-                        linkStore.reduce(.loadMoreIfNeeded(listType, lastLink))
+                        linkStore.send(.loadMoreIfNeeded(listType, lastLink))
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
                     }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -115,14 +115,14 @@ struct ContentView: View {
         .searchable(
             text: Binding(
                 get: { linkStore.searchText(for: listType) },
-                set: { linkStore.reduce(.changeSearchText($0, listType: listType)) }
+                set: { linkStore.send(.changeSearchText($0, listType: listType)) }
             )
         )
         .onSubmit(of: .search) {
-            linkStore.reduce(.search(listType))
+            linkStore.send(.search(listType))
         }
         .refreshable {
-            linkStore.reduce(.load(listType))
+            linkStore.send(.load(listType))
         }
         .listStyle(PlainListStyle())
     }

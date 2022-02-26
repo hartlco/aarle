@@ -17,7 +17,11 @@ final class ShareViewController: UIViewController {
         environment: .init(keychain: keyChain),
         reduceFunction: settingsReducer
     )
-    let linkStore = LinkStore(client: UniversalClient(keychain: keyChain), tagScope: nil)
+    let linkViewStore = LinkViewStore(
+        state: .init(),
+        environment: .init(client: UniversalClient(keychain: keyChain)),
+        reduceFunction: linkReducer
+    )
 
     @StateObject var tagViewStore = TagViewStore(
         state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
@@ -65,7 +69,7 @@ final class ShareViewController: UIViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagViewStore).environmentObject(settingsViewStore).environmentObject(linkStore)
+        }.environmentObject(tagViewStore).environmentObject(settingsViewStore).environmentObject(linkViewStore)
 
         let hosting = UIHostingController(rootView: addView)
         self.addChild(hosting)

@@ -23,7 +23,11 @@ struct AarleApp: App {
         environment: .init(keychain: keyChain),
         reduceFunction: settingsReducer
     )
-    @StateObject var linkStore = LinkStore(client: UniversalClient(keychain: keyChain))
+    @StateObject var linkStore = LinkViewStore(
+        state: .init(),
+        environment: .init(client: UniversalClient(keychain: keyChain)),
+        reduceFunction: linkReducer
+    )
     @StateObject var tagViewStore = TagViewStore(
         state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
         environment: TagEnvironment(
@@ -77,7 +81,7 @@ struct AarleApp: App {
             CommandMenu("List") {
                 Button("Refresh") {
                     if let linkType = appViewStore.selectedListType  {
-                        linkStore.reduce(.load(linkType))
+                        linkStore.send(.load(linkType))
                     }
                     tagViewStore.send(.load)
                 }
@@ -113,7 +117,7 @@ struct AarleApp: App {
                     }
 
                     // TODO: Clear selection after delete
-                    linkStore.reduce(.delete(selectedLink))
+                    linkStore.send(.delete(selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
                 .disabled(appViewStore.selectedLinkID == nil)
@@ -145,7 +149,7 @@ struct AarleApp: App {
 }
 
 struct LinkAddScene: Scene {
-    @ObservedObject var linkStore: LinkStore
+    @ObservedObject var linkStore: LinkViewStore
     @ObservedObject var tagViewStore: TagViewStore
     @ObservedObject var appViewStore: AppViewStore
 

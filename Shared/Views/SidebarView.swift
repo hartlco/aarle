@@ -15,7 +15,7 @@ struct SidebarView: View {
         var listSelection: ListType?
     }
 
-    @EnvironmentObject var linkStore: LinkStore
+    @EnvironmentObject var linkStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var settingsViewStore: SettingsViewStore
     @EnvironmentObject var appViewStore: AppViewStore
@@ -100,7 +100,7 @@ struct SidebarView: View {
 #if DEBUG
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
-        SidebarView().environmentObject(TagViewStore.mock).environmentObject(LinkStore.mock)
+        SidebarView().environmentObject(TagViewStore.mock).environmentObject(LinkViewStore.mock)
     }
 }
 #endif
