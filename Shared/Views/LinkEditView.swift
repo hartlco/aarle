@@ -38,8 +38,7 @@ struct LinkEditView: View {
 
     var body: some View {
 #if os(macOS)
-        form
-        .padding()
+        macOSForm
 #elseif os(iOS)
         form.toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -62,7 +61,7 @@ struct LinkEditView: View {
     private var form: some View {
         Form {
             Section(header: "Main Information") {
-                TextField("URL", text: $urlString)
+                TextField("Link", text: $urlString)
                     .disableAutocorrection(true)
                 TextField("Title", text: $title)
             }
@@ -92,25 +91,63 @@ struct LinkEditView: View {
             }
             TextField("Tags", text: $tagsString)
                 .disableAutocorrection(true)
-#if os(macOS)
-            HStack {
+        }
+    }
+
+    private var macOSForm: some View {
+        HStack{
+            Spacer()
+            VStack {
                 Spacer()
-                if showCancelButton {
-                    Button("Cancel", role: .cancel) {
-                        dismiss()
+                Form {
+                    TextField("Link:", text: $urlString)
+                        .disableAutocorrection(true)
+                    TextField("Title:", text: $title)
+                    TextEditor(text: $description)
+                        .formLabel(Text("Notes:"))
+                        .frame(maxHeight: 400)
+                    TextField("Tags:", text: $tagsString)
+                        .disableAutocorrection(true)
+                    if !tagViewStore.favoriteTags.isEmpty {
+                        ForEach(tagViewStore.favoriteTags) { tag in
+                            Toggle(
+                                tag.name,
+                                isOn: Binding(
+                                    get: {
+                                        return tagViewStore.tagsString(tagsString, contains: tag)
+                                    },
+                                    set: { newValue in
+                                        if newValue {
+                                            tagsString = tagViewStore.addingTag(tag, toTagsString: tagsString)
+                                        } else {
+                                            tagsString = tagViewStore.removingTag(tag, fromTagsString: tagsString)
+                                        }
+                                    }
+                                )
+                            )
+                        }
                     }
-                    .keyboardShortcut(.cancelAction)
-                }
-                Button("Save") {
-                    save()
-                    if showCancelButton {
-                        dismiss()
+                    HStack {
+                        Spacer()
+                        if showCancelButton {
+                            Button("Cancel", role: .cancel) {
+                                dismiss()
+                            }
+                            .keyboardShortcut(.cancelAction)
+                        }
+                        Button("Save") {
+                            save()
+                            if showCancelButton {
+                                dismiss()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .keyboardShortcut("s", modifiers: [.command])
                     }
                 }
-                .buttonStyle(.borderedProminent)
-                .keyboardShortcut("s", modifiers: [.command])
+                Spacer()
             }
-#endif
+            Spacer()
         }
     }
 
@@ -144,3 +181,31 @@ struct LinkEditView_Previews: PreviewProvider {
     }
 }
 #endif
+
+/// https://gist.github.com/marcprux/afd2f80baa5b6d60865182a828e83586
+/// Alignment guide for aligning a text field in a `Form`.
+/// Thanks for Jim Dovey  https://developer.apple.com/forums/thread/126268
+extension HorizontalAlignment {
+    private enum ControlAlignment: AlignmentID {
+        static func defaultValue(in context: ViewDimensions) -> CGFloat {
+            return context[HorizontalAlignment.center]
+        }
+    }
+
+    static let controlAlignment = HorizontalAlignment(ControlAlignment.self)
+}
+
+public extension View {
+    /// Attaches a label to this view for laying out in a `Form`
+    /// - Parameter view: the label view to use
+    /// - Returns: an `HStack` with an alignment guide for placing in a form
+    func formLabel<V: View>(_ view: V) -> some View {
+        HStack {
+            view
+            self
+                .alignmentGuide(.controlAlignment) { $0[.leading] }
+        }
+        .alignmentGuide(.leading) { $0[.controlAlignment] }
+
+    }
+}
