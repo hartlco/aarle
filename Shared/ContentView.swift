@@ -31,7 +31,6 @@ struct ContentView: View {
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
-        // TODO: allow opening HTTPS links
         ZStack {
             list
             if linkViewStore.isLoading {

@@ -10,8 +10,6 @@ import SwiftUI
 import SwiftUIX
 import ViewStore
 
-// TODO: Fix crash: Have 2 lists (Main, and tag). Modify link in tag view, go back to main. Crash
-// Can be prevented if list has .id(UUID()) but this break pagination
 @main
 struct AarleApp: App {
     static let keyChain = Keychain(service: "co.hartl.Aarle")

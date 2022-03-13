@@ -240,6 +240,34 @@ let linkReducer: ReduceFunction<LinkState, LinkAction, LinkEnvironment> = { stat
     }
 
     try await client.createLink(link: link)
+    let tempLink = Link(
+        id: UUID().uuidString,
+        url: link.url,
+        title: link.title,
+        description: link.description,
+        tags: link.tags,
+        private: link.private,
+        created: link.created
+    )
+
+    for (key, value) in state.listStates {
+        switch key {
+        case .all:
+            var value = value
+            value.links.insert(tempLink, at: 0)
+            state.listStates[key] = value
+        case let .tagScoped(tag):
+            guard tempLink.tags.contains(tag.name) else {
+                continue
+            }
+
+            var value = value
+            value.links.insert(tempLink, at: 0)
+            state.listStates[key] = value
+        case .tags:
+            continue
+        }
+    }
 }
 
 @MainActor private func update(link: Link, state: inout LinkState, client: BookmarkClient) async throws {
