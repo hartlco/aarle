@@ -15,7 +15,7 @@ struct SidebarView: View {
         var listSelection: ListType?
     }
 
-    @EnvironmentObject var linkStore: LinkViewStore
+    @EnvironmentObject var linkViewStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var settingsViewStore: SettingsViewStore
     @EnvironmentObject var appViewStore: AppViewStore

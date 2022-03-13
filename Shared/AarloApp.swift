@@ -23,7 +23,7 @@ struct AarleApp: App {
         environment: .init(keychain: keyChain),
         reduceFunction: settingsReducer
     )
-    @StateObject var linkStore = LinkViewStore(
+    @StateObject var linkViewStore = LinkViewStore(
         state: .init(),
         environment: .init(client: UniversalClient(keychain: keyChain)),
         reduceFunction: linkReducer
@@ -56,7 +56,7 @@ struct AarleApp: App {
             .environmentObject(settingsViewStore)
             .environmentObject(appViewStore)
             .environmentObject(tagViewStore)
-            .environmentObject(linkStore)
+            .environmentObject(linkViewStore)
         }
         //TODO: Refactor out creation of commands
         .commands {
@@ -81,7 +81,7 @@ struct AarleApp: App {
             CommandMenu("List") {
                 Button("Refresh") {
                     if let linkType = appViewStore.selectedListType  {
-                        linkStore.send(.load(linkType))
+                        linkViewStore.send(.load(linkType))
                     }
                     tagViewStore.send(.load)
                 }
@@ -92,7 +92,7 @@ struct AarleApp: App {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {
                     guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkStore.link(for: selectedLinkID) else {
+                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
                         return
                     }
 
@@ -102,7 +102,7 @@ struct AarleApp: App {
                 .disabled(appViewStore.selectedLinkID == nil)
                 Button("Copy link to clipboard") {
                     guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkStore.link(for: selectedLinkID) else {
+                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
                         return
                     }
 
@@ -112,19 +112,19 @@ struct AarleApp: App {
                 .disabled(appViewStore.selectedLinkID == nil)
                 Button("Delete") {
                     guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkStore.link(for: selectedLinkID) else {
+                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
                         return
                     }
 
                     // TODO: Clear selection after delete
-                    linkStore.send(.delete(selectedLink))
+                    linkViewStore.send(.delete(selectedLink))
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
                 .disabled(appViewStore.selectedLinkID == nil)
             }
         }
         LinkAddScene(
-            linkStore: linkStore,
+            linkViewStore: linkViewStore,
             tagViewStore: tagViewStore,
             appViewStore: appViewStore
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
@@ -149,7 +149,7 @@ struct AarleApp: App {
 }
 
 struct LinkAddScene: Scene {
-    @ObservedObject var linkStore: LinkViewStore
+    @ObservedObject var linkViewStore: LinkViewStore
     @ObservedObject var tagViewStore: TagViewStore
     @ObservedObject var appViewStore: AppViewStore
 
@@ -158,7 +158,7 @@ struct LinkAddScene: Scene {
             LinkAddView().onDisappear {
                 appViewStore.send(.hideAddView)
             }
-            .environmentObject(linkStore)
+            .environmentObject(linkViewStore)
             .environmentObject(tagViewStore)
         }
     }

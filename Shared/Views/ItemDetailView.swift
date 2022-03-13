@@ -11,7 +11,7 @@ import SwiftUIX
 struct ItemDetailView: View {
     let link: Link
 
-    @EnvironmentObject private var linkStore: LinkViewStore
+    @EnvironmentObject private var linkViewStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
     @EnvironmentObject var appViewStore: AppViewStore
 

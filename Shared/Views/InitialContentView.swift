@@ -9,7 +9,7 @@ import SwiftUI
 import Introspect
 
 struct InitialContentView: View {    
-    @EnvironmentObject var linkStore: LinkViewStore
+    @EnvironmentObject var linkViewStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
     
     let webViewData = WebViewData(url: nil)
@@ -27,7 +27,7 @@ struct InitialContentView: View {
     private var sidebar: some View {
         SidebarView()
             .navigationTitle("aarle")
-            .alert(isPresented: linkStore.binding(get: \.showLoadingError, send: { .setShowLoadingError($0 )})) {
+            .alert(isPresented: linkViewStore.binding(get: \.showLoadingError, send: { .setShowLoadingError($0 )})) {
                 networkingAlert
             }
             .alert(isPresented: tagViewStore.binding(

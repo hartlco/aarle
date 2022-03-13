@@ -13,7 +13,7 @@ import WebKit
 struct ContentView: View {
     @EnvironmentObject var appViewStore: AppViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var linkStore: LinkViewStore
+    @EnvironmentObject var linkViewStore: LinkViewStore
 
     private let pasteboard: Pasteboard
     private let title: String
@@ -34,7 +34,7 @@ struct ContentView: View {
         // TODO: allow opening HTTPS links
         ZStack {
             list
-            if linkStore.isLoading {
+            if linkViewStore.isLoading {
                 VStack {
                     ProgressView()
                         .padding()
@@ -72,16 +72,16 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if linkStore.didLoad(listType: listType) {
+            if linkViewStore.didLoad(listType: listType) {
                 return
             }
-            linkStore.send(.load(listType))
+            linkViewStore.send(.load(listType))
         }
     }
 
     private var list: some View {
         List {
-            ForEach(linkStore.links(for: listType)) { link in
+            ForEach(linkViewStore.links(for: listType)) { link in
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link
@@ -93,18 +93,18 @@ struct ContentView: View {
                     Button("Edit", action: { appViewStore.send(.showEditLink(link)) })
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
-                        linkStore.send(.delete(link))
+                        linkViewStore.send(.delete(link))
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
                 }
             }
-            if linkStore.canLoadMore(for: listType) {
+            if linkViewStore.canLoadMore(for: listType) {
                 HStack {
                     Spacer()
                     Button {
-                        guard let lastLink = linkStore.links(for: listType).last else { return }
-                        linkStore.send(.loadMoreIfNeeded(listType, lastLink))
+                        guard let lastLink = linkViewStore.links(for: listType).last else { return }
+                        linkViewStore.send(.loadMoreIfNeeded(listType, lastLink))
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
                     }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -114,15 +114,15 @@ struct ContentView: View {
         }
         .searchable(
             text: Binding(
-                get: { linkStore.searchText(for: listType) },
-                set: { linkStore.send(.changeSearchText($0, listType: listType)) }
+                get: { linkViewStore.searchText(for: listType) },
+                set: { linkViewStore.send(.changeSearchText($0, listType: listType)) }
             )
         )
         .onSubmit(of: .search) {
-            linkStore.send(.search(listType))
+            linkViewStore.send(.search(listType))
         }
         .refreshable {
-            linkStore.send(.load(listType))
+            linkViewStore.send(.load(listType))
         }
         .listStyle(PlainListStyle())
     }
