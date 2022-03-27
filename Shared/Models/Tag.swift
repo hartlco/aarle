@@ -9,7 +9,7 @@ import Swift
 
 struct Tag: Codable, Identifiable, Equatable, Hashable {
     let name: String
-    let occurrences: Int
+    let occurrences: Int?
 
     var id: String {
         return name

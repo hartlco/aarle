@@ -53,11 +53,13 @@ final class MockClient: BookmarkClient {
 final class UniversalClient: BookmarkClient {
     private let shaarliClient: ShaarliClient
     private let pinboardClient: PinboardClient
+    private let linkdingClient: LinkdingClient
 
     init(keychain: Keychain) {
         self.keychain = keychain
         self.shaarliClient = ShaarliClient(keychain: keychain)
         self.pinboardClient = PinboardClient(keychain: keychain)
+        self.linkdingClient = LinkdingClient(keychain: keychain)
     }
 
     var pageSize: Int {
@@ -95,6 +97,8 @@ final class UniversalClient: BookmarkClient {
             return shaarliClient
         case .pinboard:
             return pinboardClient
+        case .linkding:
+            return linkdingClient
         }
     }
 }

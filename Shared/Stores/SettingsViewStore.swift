@@ -31,7 +31,7 @@ typealias SettingsViewStore = ViewStore<SettingsState, SettingsAction, SettingsE
 extension SettingsViewStore {
     var isLoggedOut: Bool {
         switch self.accountType {
-        case .shaarli:
+        case .shaarli, .linkding:
             return self.secret.isEmpty || self.endpoint.isEmpty
         case .pinboard:
             return self.secret.isEmpty
@@ -94,6 +94,7 @@ let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvir
 }
 
 enum AccountType: String, CaseIterable {
+    case linkding
     case shaarli
     case pinboard
 }

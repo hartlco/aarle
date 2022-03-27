@@ -11,6 +11,14 @@
 		C5069CBC27C0014F008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBB27C0014F008EA761 /* ViewStore */; };
 		C5069CBE27C00155008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBD27C00155008EA761 /* ViewStore */; };
 		C5069CC027C00159008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBF27C00159008EA761 /* ViewStore */; };
+		C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
+		C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
+		C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
+		C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
+		C513722227EEF44E00E80F3D /* LinkdingLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513722127EEF44E00E80F3D /* LinkdingLink.swift */; };
+		C513722327EEF44E00E80F3D /* LinkdingLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513722127EEF44E00E80F3D /* LinkdingLink.swift */; };
+		C513722427EEF44E00E80F3D /* LinkdingLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513722127EEF44E00E80F3D /* LinkdingLink.swift */; };
+		C513722527EEF44E00E80F3D /* LinkdingLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513722127EEF44E00E80F3D /* LinkdingLink.swift */; };
 		C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
@@ -165,6 +173,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C513721C27EEF22C00E80F3D /* LinkdingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingClient.swift; sourceTree = "<group>"; };
+		C513722127EEF44E00E80F3D /* LinkdingLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingLink.swift; sourceTree = "<group>"; };
 		C5165652278EB849006A55A7 /* InitialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialContentView.swift; sourceTree = "<group>"; };
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
 		C53ED62627856CE900397910 /* LinkViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkViewStore.swift; sourceTree = "<group>"; };
@@ -352,6 +362,7 @@
 				C5B37B28279167150080B988 /* Tag.swift */,
 				C5C11F82279A9485006981CE /* WebsiteInformation.swift */,
 				C585F1FA27A5239500AB0A6F /* PinboardLink.swift */,
+				C513722127EEF44E00E80F3D /* LinkdingLink.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -370,6 +381,7 @@
 				C53ED62227856B5000397910 /* ShaarliClient.swift */,
 				C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */,
 				C585F1F527A5231E00AB0A6F /* PinboardClient.swift */,
+				C513721C27EEF22C00E80F3D /* LinkdingClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -616,9 +628,11 @@
 				C53ED62727856CE900397910 /* LinkViewStore.swift in Sources */,
 				C5B37B26279166E50080B988 /* TagListView.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
+				C513722227EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C588DEA527A3E0640034C1F2 /* AppViewStore.swift in Sources */,
+				C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
@@ -649,9 +663,11 @@
 				C53ED62827856CE900397910 /* LinkViewStore.swift in Sources */,
 				C5B37B27279166E50080B988 /* TagListView.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
+				C513722327EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C588DEA627A3E0640034C1F2 /* AppViewStore.swift in Sources */,
+				C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
@@ -666,7 +682,9 @@
 				C54210BB2796A6B0000F07DC /* TagViewStore.swift in Sources */,
 				C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
+				C513722427EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
 				C585F1EE27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
+				C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C54210B92796A6AB000F07DC /* Tag.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */,
@@ -689,7 +707,9 @@
 				C5FAE121279BE303007E763B /* Tag.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C5FAE122279BE303007E763B /* Link.swift in Sources */,
+				C513722527EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
 				C585F1EF27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
+				C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5FAE124279BE30F007E763B /* TagViewStore.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,

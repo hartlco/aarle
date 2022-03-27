@@ -50,6 +50,16 @@ struct SettingsView: View {
                     Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
                         .font(.caption)
                 }
+                if settingsViewStore.accountType == .linkding {
+                    TextField(
+                        "API Endpoint",
+                        text: settingsViewStore.binding(get: \.endpoint, send: { .setEndpoint($0) })
+                    )
+                    .disableAutocorrection(true)
+                    // TODO: Update link
+                    Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
+                        .font(.caption)
+                }
             }
             .tabItem {
                 Label("Account", systemImage: "person.crop.circle")
