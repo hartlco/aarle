@@ -103,10 +103,7 @@ extension LinkViewStore {
 
 let linkReducer: ReduceFunction<LinkState, LinkAction, LinkEnvironment> = { state, action, env, handler in
     switch action {
-    case let .search(type):
-        //                fix search
-        break
-    case let .load(type):
+    case let .load(type), let .search(type):
         do {
             guard state.isLoading == false else { return }
             
