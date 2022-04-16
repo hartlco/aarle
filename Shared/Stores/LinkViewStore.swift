@@ -123,7 +123,10 @@ let linkReducer: ReduceFunction<LinkState, LinkAction, LinkEnvironment> = { stat
                 state.isLoading = false
             })
         } catch {
-            handler.handle(.change { state in state.showLoadingError = true})
+            handler.handle(.change { state in
+                state.showLoadingError = true
+                state.isLoading = false
+            })
         }
     case let .loadMoreIfNeeded(type, link):
         do {

@@ -87,7 +87,7 @@ let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvir
         }
     case let .setAccountType(type):
         handler.handle(.change( { $0.accountType = type }))
-        env.keychain[servieKey] = state.accountType.rawValue
+        env.keychain[servieKey] = type.rawValue
     }
 }
 
