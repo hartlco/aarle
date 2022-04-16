@@ -42,14 +42,14 @@ struct LinkEditView: View {
         form.toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Cancel", role: .cancel) {
-                    dismiss()
+                    appViewStore.send(.hideEditLink)
                 }.hidden(!showCancelButton)
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     save()
                     if showCancelButton {
-                        dismiss()
+                        appViewStore.send(.hideEditLink)
                     }
                 }
             }
