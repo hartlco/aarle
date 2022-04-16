@@ -1172,7 +1172,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hartlco/ViewStore";
 			requirement = {
-				branch = main;
+				branch = "async-stream";
 				kind = branch;
 			};
 		};

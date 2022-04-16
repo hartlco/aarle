@@ -87,7 +87,7 @@
       "location" : "https://github.com/SwiftUIX/SwiftUIX",
       "state" : {
         "branch" : "master",
-        "revision" : "b7f9848c5b4b7f0f59539003f99daa4541355976"
+        "revision" : "a87616cff25142515ea41bad7e644ae6d8f86d31"
       }
     },
     {
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hartlco/ViewStore",
       "state" : {
-        "branch" : "main",
-        "revision" : "e72abf6ff04ed852beee7d4a730226ab16e16222"
+        "branch" : "async-stream",
+        "revision" : "20f6e03fed5b63437bf2f8c46c7a3df2222540c3"
       }
     }
   ],

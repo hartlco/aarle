@@ -11,10 +11,9 @@ import SwiftUIX
 struct LinkEditView: View {
     let link: Link
 
-    @Environment(\.dismiss) var dismiss
-
     @EnvironmentObject var linkStore: LinkViewStore
     @EnvironmentObject var tagViewStore: TagViewStore
+    @EnvironmentObject var appViewStore: AppViewStore
 
     // TODO: Move into EditStore
     @State var urlString: String
@@ -131,14 +130,14 @@ struct LinkEditView: View {
                         Spacer()
                         if showCancelButton {
                             Button("Cancel", role: .cancel) {
-                                dismiss()
+                                appViewStore.send(.hideEditLink)
                             }
                             .keyboardShortcut(.cancelAction)
                         }
                         Button("Save") {
                             save()
                             if showCancelButton {
-                                dismiss()
+                                appViewStore.send(.hideEditLink)
                             }
                         }
                         .buttonStyle(.borderedProminent)

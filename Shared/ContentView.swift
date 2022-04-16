@@ -79,14 +79,12 @@ struct ContentView: View {
     }
 
     private var list: some View {
-        List {
+        List(selection: appViewStore.binding(get: \.selectedLinkID, send: { .setSelectedLinkID($0) })) {
             ForEach(linkViewStore.links(for: listType)) { link in
                 NavigationLink(
                     destination: ItemDetailView(
                         link: link
                     ),
-                    tag: link.id,
-                    selection: appViewStore.binding(get: \.selectedLinkID, send: { .setSelectedLinkID($0) }),
                     label: { LinkItemView(link: link) }
                 ).contextMenu {
                     Button("Edit", action: { appViewStore.send(.showEditLink(link)) })

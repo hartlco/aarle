@@ -31,35 +31,34 @@ struct TagEnvironment {
     let userDefaults: UserDefaults
 }
 
-let tagReducer: ReduceFunction<TagState, TagAction, TagEnvironment> = { state, action, env in
+let tagReducer: ReduceFunction<TagState, TagAction, TagEnvironment> = { state, action, env, handler in
     switch action {
     case .load:
-        state.didLoad = true
+        handler.handle(.change { state in state.didLoad = true })
         do {
-            guard state.isLoading == false else { return ActionResult.none }
-            state.isLoading = true
+            guard state.isLoading == false else { return }
+            handler.handle(.change { state in state.isLoading = true })
 
-            state.tags = try await env.client.loadTags().sorted(by: { tag1, tag2 in
+            let newTags = try await env.client.loadTags().sorted(by: { tag1, tag2 in
                 tag1.name < tag2.name
             })
-
-            state.isLoading = false
+            
+            handler.handle(.change { state in state.tags = newTags })
+            handler.handle(.change { state in state.isLoading = false })
         } catch {
-            state.showLoadingError = true
+            handler.handle(.change { state in state.isLoading = false })
         }
     case let .addFavorite(tag):
         env.userDefaults.favoriteTags.append(tag)
-        state.favoriteTags = env.userDefaults.favoriteTags
+        handler.handle(.change { state in state.favoriteTags = env.userDefaults.favoriteTags })
     case let .removeFavorite(favoriteTag):
         env.userDefaults.favoriteTags.removeAll { tag in
             tag == favoriteTag
         }
-        state.favoriteTags = env.userDefaults.favoriteTags
+        handler.handle(.change { state in state.favoriteTags = env.userDefaults.favoriteTags })
     case let .setShowLoadingError(show):
-        state.showLoadingError = show
+        handler.handle(.change { state in state.showLoadingError = show })
     }
-
-    return ActionResult.none
 }
 
 extension TagViewStore {

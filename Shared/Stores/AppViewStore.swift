@@ -39,48 +39,46 @@ enum AppAction {
     case hideSettings
 }
 
-let appReducer: ReduceFunction<AppState, AppAction, AppEnvironment> = { state, action, environment in
+let appReducer: ReduceFunction<AppState, AppAction, AppEnvironment> = { state, action, environment, handler in
     switch action {
     case let .setSelectedLinkID(id):
-        state.selectedLinkID = id
+        handler.handle(.change { $0.selectedLinkID = id })
     case let .setSelectedListType(type):
-        state.selectedListType = type
+        handler.handle(.change { $0.selectedListType = type })
     case .showLinkEditorSidebar:
-        state.showLinkEditorSidebar = true
+        handler.handle(.change { $0.showLinkEditorSidebar = true })
     case .hideLinkEditorSidebar:
-        state.showLinkEditorSidebar = false
+        handler.handle(.change { $0.showLinkEditorSidebar = false })
     case let .setShowLinkEditorSidebar(value):
-        state.showLinkEditorSidebar = value
+        handler.handle(.change { $0.showLinkEditorSidebar = value })
     case let .setShowAddView(value):
-        state.showsAddView = true
+        handler.handle(.change { $0.showsAddView = value })
     case .showAddView:
-        state.showsAddView = true
+        handler.handle(.change { $0.showsAddView = true })
 #if os(macOS)
         // TODO: Move into side-effect
         WindowRoutes.addLink.open()
 #endif
     case .hideAddView:
-        state.showsAddView = false
+        handler.handle(.change { $0.showsAddView = false })
     case .showSettings:
-        state.showsSettings = true
+        handler.handle(.change { $0.showsSettings = true })
 
 #if os(macOS)
         // TODO: Move into side-effect
         WindowRoutes.settings.open()
 #endif
     case let .setShowSettings(value):
-        state.showsSettings = value
+        handler.handle(.change { $0.showsSettings = value })
     case .hideSettings:
-        state.showsSettings = false
+        handler.handle(.change { $0.showsSettings = false })
     case let .setEditLink(link):
-        state.presentedEditLink = link
+        handler.handle(.change { $0.showsSettings = false })
     case let .showEditLink(link):
-        state.presentedEditLink = link
+        handler.handle(.change { $0.presentedEditLink = link })
     case .hideEditLink:
-        state.presentedEditLink = nil
+        handler.handle(.change { $0.presentedEditLink = nil })
     }
-
-    return ActionResult.none
 }
 
 struct AppEnvironment {

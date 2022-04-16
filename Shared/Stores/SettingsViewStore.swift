@@ -16,11 +16,11 @@ extension Keychain {
         let serviceString = self[servieKey]
         return AccountType(rawValue: serviceString ?? "") ?? .shaarli
     }
-
+    
     var secret: String {
         self[keychainKey] ?? ""
     }
-
+    
     var endpoint: String {
         self[endpointKey] ?? ""
     }
@@ -67,30 +67,28 @@ let keychainKey = "secret"
 let endpointKey = "endpoint"
 let servieKey = "servicekey"
 
-let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvironment> = { state, action, env in
+let settingsReducer: ReduceFunction<SettingsState, SettingsAction, SettingsEnvironment> = { state, action, env, handler in
     switch action {
     case let .setSecret(secret):
-        state.secret = secret ?? ""
-
+        handler.handle(.change( { $0.secret = secret ?? "" }))
+        
         if state.secret.isEmpty {
             try? env.keychain.remove(keychainKey)
         } else {
             env.keychain[keychainKey] = state.secret
         }
     case let .setEndpoint(endpoint):
-        state.endpoint = endpoint ?? ""
-
+        handler.handle(.change( { $0.endpoint = endpoint ?? "" }))
+        
         if state.endpoint.isEmpty {
             try? env.keychain.remove(endpointKey)
         } else {
             env.keychain[endpointKey] = state.endpoint
         }
     case let .setAccountType(type):
-        state.accountType = type
+        handler.handle(.change( { $0.accountType = type }))
         env.keychain[servieKey] = state.accountType.rawValue
     }
-
-    return ActionResult.none
 }
 
 enum AccountType: String, CaseIterable {
