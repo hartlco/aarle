@@ -1,25 +1,22 @@
-//
-//  SettingsView.swift
-//  Aarlo
-//
-//  Created by martinhartl on 03.01.22.
-//
-
 import SwiftUI
-import KeychainAccess
+import Types
 
-struct SettingsView: View {
+public struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var settingsViewStore: SettingsViewStore
+    @ObservedObject var settingsState: SettingsState
+    
+    public init(settingsState: SettingsState) {
+        self.settingsState = settingsState
+    }
 
-    var body: some View {
+    public var body: some View {
         #if os(macOS)
-        form
-            .padding()
-        #else
-        NavigationView {
             form
-        }
+                .padding()
+        #else
+            NavigationView {
+                form
+            }
         #endif
     }
 
@@ -29,7 +26,7 @@ struct SettingsView: View {
             Form {
                 Picker(
                     "Service",
-                    selection: settingsViewStore.binding(get: \.accountType, send: { .setAccountType($0) })
+                    selection: $settingsState.accountType
                 ) {
                     ForEach(AccountType.allCases, id: \.self) {
                         Text($0.rawValue)
@@ -38,22 +35,22 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
                 TextField(
                     "Key",
-                    text: settingsViewStore.binding(get: \.secret, send: { .setSecret($0) })
+                    text: $settingsState.secret
                 )
                 .disableAutocorrection(true)
-                if settingsViewStore.accountType == .shaarli {
+                if settingsState.accountType == .shaarli {
                     TextField(
                         "API Endpoint",
-                        text: settingsViewStore.binding(get: \.endpoint, send: { .setEndpoint($0) })
+                        text: $settingsState.endpoint
                     )
                     .disableAutocorrection(true)
                     Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
                         .font(.caption)
                 }
-                if settingsViewStore.accountType == .linkding {
+                if settingsState.accountType == .linkding {
                     TextField(
                         "API Endpoint",
-                        text: settingsViewStore.binding(get: \.endpoint, send: { .setEndpoint($0) })
+                        text: $settingsState.endpoint
                     )
                     .disableAutocorrection(true)
                     // TODO: Update link
@@ -84,12 +81,3 @@ struct SettingsView: View {
         .navigationTitle("Settings")
     }
 }
-
-#if DEBUG
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        // TODO: Set mock env object
-        SettingsView()
-    }
-}
-#endif

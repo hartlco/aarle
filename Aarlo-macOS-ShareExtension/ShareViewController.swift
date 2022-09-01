@@ -6,29 +6,19 @@
 //
 
 @_predatesConcurrency import Cocoa
-import SwiftUI
 import KeychainAccess
+import SwiftUI
 
 @MainActor
 class ShareViewController: NSViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
-    let linkViewStore = LinkViewStore(
-        state: .init(),
-        environment: .init(client: UniversalClient(keychain: keyChain)),
-        reduceFunction: linkReducer
-    )
 
-    @StateObject var settingsViewStore = SettingsViewStore(
-        state: .init(keychain: keyChain),
-        environment: .init(keychain: keyChain),
-        reduceFunction: settingsReducer
-    )
-    @EnvironmentObject var tagViewStore: TagViewStore
+    @EnvironmentObject var tagState: TagState
 
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
 
-        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] else {
+        guard let inputItems = extensionContext?.inputItems as? [NSExtensionItem] else {
             // TODO: Show error
             return
         }
@@ -39,7 +29,7 @@ class ShareViewController: NSViewController {
             var url: URL?
 
             for item in inputItems {
-                for attachment in (item.attachments ?? []) {
+                for attachment in item.attachments ?? [] {
                     let websiteInformation = try? await attachment.loadWebsiteInformation()
                     title = websiteInformation?.title ?? title
                     description = websiteInformation?.description ?? description
@@ -62,7 +52,7 @@ class ShareViewController: NSViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagViewStore).environmentObject(linkViewStore)
+        }.environmentObject(tagState)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)
@@ -74,16 +64,16 @@ class ShareViewController: NSViewController {
         ])
     }
 
-    @IBAction func send(_ sender: AnyObject?) {
+    @IBAction func send(_: AnyObject?) {
         let outputItem = NSExtensionItem()
         // Complete implementation by setting the appropriate value on the output item
-    
+
         let outputItems = [outputItem]
-        self.extensionContext!.completeRequest(returningItems: outputItems, completionHandler: nil)
+        extensionContext!.completeRequest(returningItems: outputItems, completionHandler: nil)
     }
 
-    @IBAction func cancel(_ sender: AnyObject?) {
+    @IBAction func cancel(_: AnyObject?) {
         let cancelError = NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil)
-        self.extensionContext!.cancelRequest(withError: cancelError)
+        extensionContext!.cancelRequest(withError: cancelError)
     }
 }

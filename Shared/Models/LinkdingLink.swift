@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Types
 
 struct LinkdingResult: Codable {
     let results: [LinkdingLink]
@@ -16,7 +17,7 @@ struct LinkdingLink: Codable, Hashable {
     let url: URL
     let title: String?
     let description: String?
-    
+
     let websiteTitle: String?
     let websiteDescription: String?
 
@@ -32,14 +33,14 @@ extension Link {
         } else {
             titleFallback = link.websiteTitle
         }
-        
+
         let descriptionFallback: String?
         if let description = link.description, !description.isEmpty {
             descriptionFallback = description
         } else {
             descriptionFallback = link.websiteDescription
         }
-        
+
         return Link(
             id: String(link.id),
             url: link.url,

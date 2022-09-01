@@ -18,7 +18,7 @@ public struct IntRepresentedString: Codable, Equatable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let intValue = try container.decode(Int.self)
-        self.wrappedValue = String(intValue)
+        wrappedValue = String(intValue)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -41,15 +41,15 @@ struct Link: Codable, Identifiable, Hashable, Sendable {
 //    let updated: Date
 
     #if DEBUG
-    static let mock = Link(
-        id: "1",
-        url: .init(string: "https://hartl.co")!,
-        title: "Title",
-        description: "Description with a few more words than just the title",
-        tags: ["swift", "macos"],
-        private: false,
-        created: Date.now
-    )
+        static let mock = Link(
+            id: "1",
+            url: .init(string: "https://hartl.co")!,
+            title: "Title",
+            description: "Description with a few more words than just the title",
+            tags: ["swift", "macos"],
+            private: false,
+            created: Date.now
+        )
     #endif
 }
 
@@ -65,15 +65,15 @@ struct PostLink: Codable {
 
 extension PostLink {
     init(link: Link) {
-        self.url = link.url
-        self.title = link.title
-        self.description = link.description
-        self.tags = link.tags
+        url = link.url
+        title = link.title
+        description = link.description
+        tags = link.tags
         self.private = link.private
-        self.created = link.created
+        created = link.created
 //        self.updated = link.updated
     }
 }
 
-extension URL: Sendable { }
-extension Date: Sendable { }
+extension URL: Sendable {}
+extension Date: Sendable {}

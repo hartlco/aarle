@@ -5,38 +5,70 @@
 //  Created by martinhartl on 12.01.22.
 //
 
-import SwiftUI
 import Introspect
+import SwiftUI
 
-struct InitialContentView: View {    
-    @EnvironmentObject var linkViewStore: LinkViewStore
-    @EnvironmentObject var tagViewStore: TagViewStore
-    
-    let webViewData = WebViewData(url: nil)
-    
+struct InitialContentView: View {
+    @State private var columnVisibility = NavigationSplitViewVisibility.all
+
+    @EnvironmentObject var overallAppState: OverallAppState
+
+    @ObservedObject var navigationState: NavigationState
+    @ObservedObject var tagState: TagState
+
     var body: some View {
-#if os(iOS)
-        sidebar
-#else
-        sidebar
-        Text("No Sidebar Selection") // You won't see this in practice (default selection)
-        WebView(data: webViewData)
-#endif
+        NavigationSplitView(
+            columnVisibility: $columnVisibility
+        ) {
+            sidebar
+        } content: {
+            switch navigationState.selectedListType {
+            case .all:
+                ContentView(title: "Links", listType: .all, navigationState: navigationState)
+            case let .tagScoped(tag):
+                ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState)
+            case .downloaded:
+                DownloadedListView()
+            #if os(iOS)
+                case .none:
+                    Text("Select")
+            #endif
+            }
+        } detail: {
+            switch navigationState.selectedListType {
+            case .downloaded:
+                if let archiveLink = overallAppState.selectedArchiveLink {
+                    DataWebView(archiveLink: archiveLink)
+                } else {
+                    Text("Select a archive")
+                }
+            default:
+                if let link = navigationState.selectedLink {
+                    ItemDetailView(link: link)
+                } else {
+                    Text("Select a link")
+                }
+            }
+        }
     }
-    
+
     private var sidebar: some View {
-        SidebarView()
+        SidebarView(
+            navigationState: navigationState,
+            tagState: tagState,
+            settingsState: overallAppState.settingsState
+        )
             .navigationTitle("aarle")
-            .alert(isPresented: linkViewStore.binding(get: \.showLoadingError, send: { .setShowLoadingError($0 )})) {
+            .alert(isPresented: $overallAppState.showLoadingError) {
                 networkingAlert
             }
-            .alert(isPresented: tagViewStore.binding(
-                get: \.showLoadingError, send: { .setShowLoadingError($0) })
+            .alert(
+                isPresented: $overallAppState.tagState.showLoadingError
             ) {
                 networkingAlert
             }
     }
-    
+
     private var networkingAlert: Alert {
         Alert(
             title: Text("Networking Error"),

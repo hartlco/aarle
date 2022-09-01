@@ -9,6 +9,7 @@ import KeychainAccess
 import SwiftUI
 import SwiftUIX
 import ViewStore
+import Settings
 
 @main
 struct AarleApp: App {
@@ -16,161 +17,147 @@ struct AarleApp: App {
 
     let pasteboard = DefaultPasteboard()
 
-    @StateObject var settingsViewStore = SettingsViewStore(
-        state: .init(keychain: keyChain),
-        environment: .init(keychain: keyChain),
-        reduceFunction: settingsReducer
+    @StateObject var archiveViewStore = ArchiveViewStore(
+        state: ArchiveState(archiveLinks: UserDefaults.suite.archiveLinks),
+        environment: ArchiveEnvironment(archiveService: .init(userDefaults: .suite)),
+        reduceFunction: archiveReducer
     )
-    @StateObject var linkViewStore = LinkViewStore(
-        state: .init(),
-        environment: .init(client: UniversalClient(keychain: keyChain)),
-        reduceFunction: linkReducer
-    )
-    @StateObject var tagViewStore = TagViewStore(
-        state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
-        environment: TagEnvironment(
-            client: UniversalClient(keychain: keyChain),
-            userDefaults: .suite
-        ),
-        reduceFunction: tagReducer
-    )
-    @StateObject var appViewStore = AppViewStore(
-        state: AppState(selectedListType: .all),
-        environment: AppEnvironment(),
-        reduceFunction: appReducer
+
+    @StateObject var overallAppState = OverallAppState(
+        client: UniversalClient(keychain: keyChain),
+        keychain: keyChain
     )
 
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                InitialContentView()
-            }
-            // TODO: add iOS only modifier
-#if os(iOS)
-            .introspectSplitViewController { splitViewController in
-                splitViewController.preferredDisplayMode = .oneBesideSecondary
-            }
-#endif
-            .environmentObject(settingsViewStore)
-            .environmentObject(appViewStore)
-            .environmentObject(tagViewStore)
-            .environmentObject(linkViewStore)
+            InitialContentView(
+                navigationState: overallAppState.navigationState,
+                tagState: overallAppState.tagState
+            )
+            .environmentObject(archiveViewStore)
+            .environmentObject(overallAppState)
         }
-        //TODO: Refactor out creation of commands
+        // TODO: Refactor out creation of commands
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New Link") {
-                    appViewStore.send(.showAddView)
+                    overallAppState.showsAddView = true
                 }
                 .keyboardShortcut("n", modifiers: [.command])
             }
             CommandGroup(after: .sidebar) {
                 // TODO: Make title dynamic
                 Button("Show Link Editor") {
-                    if appViewStore.showLinkEditorSidebar {
-                        appViewStore.send(.hideLinkEditorSidebar)
-                    } else {
-                        appViewStore.send(.showLinkEditorSidebar)
-                    }
+                    overallAppState.showLinkEditorSidebar.toggle()
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
-                .disabled(appViewStore.selectedLinkID == nil)
+                .disabled(overallAppState.navigationState.selectedLink == nil)
             }
             CommandMenu("List") {
                 Button("Refresh") {
-                    if let linkType = appViewStore.selectedListType  {
-                        linkViewStore.send(.load(linkType))
+                    Task {
+                        if let selectedListType = overallAppState.navigationState.selectedListType {
+                            await overallAppState.loadSearch(for: selectedListType)
+                        }
                     }
-                    tagViewStore.send(.load)
+                    Task {
+                        await overallAppState.tagState.load()
+                    }
                 }
                 .keyboardShortcut("R", modifiers: [.command])
-                .disabled(appViewStore.selectedListType == nil)
             }
             CommandMenu("Link") {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {
-                    guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
+                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
+                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                    else {
                         return
                     }
 
-                    appViewStore.send(.showEditLink(selectedLink))
+                    overallAppState.presentedEditLink = selectedLink
                 }
                 .keyboardShortcut("e", modifiers: [.command])
-                .disabled(appViewStore.selectedLinkID == nil)
+                .disabled(overallAppState.navigationState.selectedLink == nil)
                 Button("Copy link to clipboard") {
-                    guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
+                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
+                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                    else {
                         return
                     }
 
                     pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
                 }
                 .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(appViewStore.selectedLinkID == nil)
+                .disabled(overallAppState.navigationState.selectedLink == nil)
                 Button("Delete") {
-                    guard let selectedLinkID = appViewStore.selectedLinkID,
-                          let selectedLink = linkViewStore.link(for: selectedLinkID) else {
+                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
+                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                    else {
                         return
                     }
 
                     // TODO: Clear selection after delete
-                    linkViewStore.send(.delete(selectedLink))
+                    Task {
+                        await overallAppState.delete(link: selectedLink)
+                    }
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])
-                .disabled(appViewStore.selectedLinkID == nil)
+                .disabled(overallAppState.navigationState.selectedLink == nil)
             }
         }
         LinkAddScene(
-            linkViewStore: linkViewStore,
-            tagViewStore: tagViewStore,
-            appViewStore: appViewStore
+            overallAppState: overallAppState
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
-#if os(macOS)
-        WindowGroup {
-            SettingsView()
-                .onDisappear {
-                    appViewStore.send(.hideSettings)
-                }
-                .frame(width: 500, height: 300)
-                .environmentObject(settingsViewStore)
-        }
-        .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
-        Settings {
-            SettingsView()
-                .frame(width: 500, height: 300)
-                .environmentObject(settingsViewStore)
-
-        }
-#endif
+        LinkEditScene(
+            overallAppState: overallAppState
+        ).handlesExternalEvents(matching: Set([WindowRoutes.editLink.rawValue]))
+        #if os(macOS)
+            WindowGroup {
+                SettingsView(settingsState: overallAppState.settingsState)
+                    .onDisappear {
+                        overallAppState.navigationState.showsSettings = false
+                    }
+                    .frame(width: 500, height: 300)
+            }
+            .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
+            Settings {
+                SettingsView(settingsState: overallAppState.settingsState)
+                    .frame(width: 500, height: 300)
+            }
+        #endif
     }
 }
 
 struct LinkAddScene: Scene {
-    @ObservedObject var linkViewStore: LinkViewStore
-    @ObservedObject var tagViewStore: TagViewStore
-    @ObservedObject var appViewStore: AppViewStore
+    @ObservedObject var overallAppState: OverallAppState
 
     var body: some Scene {
         WindowGroup {
             LinkAddView().onDisappear {
-                appViewStore.send(.hideAddView)
+                overallAppState.showsAddView = false
             }
-            .environmentObject(linkViewStore)
-            .environmentObject(tagViewStore)
+            .environmentObject(overallAppState)
         }
     }
 }
 
-enum WindowRoutes: String {
-    case addLink
-    case settings
+struct LinkEditScene: Scene {
+    @ObservedObject var overallAppState: OverallAppState
 
-#if os(macOS)
-    func open() {
-        if let url = URL(string: "aarle://\(self.rawValue)") {
-            NSWorkspace.shared.open(url)
+    var body: some Scene {
+        WindowGroup {
+            if let presentedEditLink = overallAppState.presentedEditLink {
+                LinkEditView(
+                    link: presentedEditLink,
+                    showCancelButton: false
+                ).onDisappear {
+                    overallAppState.showsAddView = false
+                }
+                .environmentObject(overallAppState)
+            } else {
+                Text("Edit Link")
+            }
         }
     }
-#endif
 }

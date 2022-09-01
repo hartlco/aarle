@@ -5,103 +5,101 @@
 //  Created by martinhartl on 02.01.22.
 //
 
-import SwiftUI
 import SwiftJWT
+import SwiftUI
 import SwiftUIX
 import WebKit
 
 struct ContentView: View {
-    @EnvironmentObject var appViewStore: AppViewStore
-    @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var linkViewStore: LinkViewStore
+    @EnvironmentObject var archiveViewStore: ArchiveViewStore
+    @EnvironmentObject var overallAppState: OverallAppState
 
-    private let pasteboard: Pasteboard
-    private let title: String
-    private let listType: ListType
+    @State var searchText = ""
+    private let pasteboard = DefaultPasteboard()
 
-    init(
-        title: String,
-        pasteboard: Pasteboard = DefaultPasteboard(),
-        listType: ListType
-    ) {
-        self.title = title
-        self.pasteboard = pasteboard
-        self.listType = listType
-    }
+    let title: String
+    let listType: ListType
+    @ObservedObject var navigationState: NavigationState
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
         ZStack {
             list
-            if linkViewStore.isLoading {
+            if overallAppState.isLoading {
                 VStack {
                     ProgressView()
                         .padding()
                     Spacer()
-
                 }
             }
         }
-        .sheet(item: appViewStore.binding(get: \.presentedEditLink, send: { .setEditLink($0) })) { link in
-#if os(macOS)
-            LinkEditView(link: link, showCancelButton: true)
-#elseif os(iOS)
+        #if os(iOS)
+        .sheet(item: $overallAppState.presentedEditLink) { link in
             NavigationView {
                 LinkEditView(link: link, showCancelButton: true)
             }
-#endif
         }
+        #endif
         .toolbar {
             ToolbarItem {
                 Button {
-                    appViewStore.send(.showAddView)
+                    overallAppState.showsAddView = true
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
-#if os(iOS)
+                #if os(iOS)
                 .sheet(
-                    isPresented: appViewStore.binding(get: \.showsAddView, send: { .setShowAddView($0 )}),
+                    isPresented: $overallAppState.showsAddView,
                     onDismiss: nil,
                     content: {
                         LinkAddView()
                     }
                 )
-#endif
+                #endif
             }
         }
         .navigationTitle(title)
         .onAppear {
-            if linkViewStore.didLoad(listType: listType) {
+            if overallAppState.didLoad(listType: listType) {
                 return
             }
-            linkViewStore.send(.load(listType))
+            Task {
+                await overallAppState.loadSearch(for: listType)
+            }
         }
+        .id(listType)
     }
 
     private var list: some View {
-        List(selection: appViewStore.binding(get: \.selectedLinkID, send: { .setSelectedLinkID($0) })) {
-            ForEach(linkViewStore.links(for: listType)) { link in
-                NavigationLink(
-                    destination: ItemDetailView(
-                        link: link
-                    ),
-                    label: { LinkItemView(link: link) }
-                ).contextMenu {
-                    Button("Edit", action: { appViewStore.send(.showEditLink(link)) })
+        List(selection: $navigationState.selectedLink) {
+            ForEach(overallAppState.links(for: listType)) { link in
+                NavigationLink(value: link) {
+                    LinkItemView(link: link)
+                }.contextMenu {
+                    Button("Edit") {
+                        editAction(link: link)
+                    }
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
-                        linkViewStore.send(.delete(link))
+                        Task {
+                            await overallAppState.delete(link: link)
+                        }
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
+                    Button("Download") {
+                        archiveViewStore.send(.archiveLink(link: link))
+                    }
                 }
             }
-            if linkViewStore.canLoadMore(for: listType) {
+            if overallAppState.canLoadMore(for: listType) {
                 HStack {
                     Spacer()
                     Button {
-                        guard let lastLink = linkViewStore.links(for: listType).last else { return }
-                        linkViewStore.send(.loadMoreIfNeeded(listType, lastLink))
+                        guard let lastLink = overallAppState.links(for: listType).last else { return }
+                        Task {
+                            await overallAppState.loadMoreIfNeeded(type: listType, link: lastLink)
+                        }
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
                     }.buttonStyle(BorderlessButtonStyle()).padding()
@@ -109,18 +107,28 @@ struct ContentView: View {
                 }
             }
         }
-        .searchable(
-            text: Binding(
-                get: { linkViewStore.searchText(for: listType) },
-                set: { linkViewStore.send(.changeSearchText($0, listType: listType)) }
-            )
-        )
+        .navigationDestination(for: Link.self) { link in
+            Text(link.url.absoluteString)
+        }
+        .searchable(text: $searchText)
         .onSubmit(of: .search) {
-            linkViewStore.send(.search(listType))
+            overallAppState.setSearchText(text: searchText, for: listType)
+            Task {
+                await overallAppState.loadSearch(for: listType)
+            }
         }
         .refreshable {
-            linkViewStore.send(.load(listType))
+            Task {
+                await overallAppState.loadSearch(for: listType)
+            }
         }
         .listStyle(PlainListStyle())
+    }
+
+    private func editAction(link: Link) {
+        overallAppState.presentedEditLink = link
+        #if os(macOS)
+            WindowRoutes.editLink.open()
+        #endif
     }
 }

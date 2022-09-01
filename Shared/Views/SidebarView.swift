@@ -7,53 +7,34 @@
 
 import SwiftUI
 import SwiftUIX
+import Types
 
-struct SidebarView: View {
-    struct SidebarEquatable: Equatable {
-        var favoriteTags: [Tag]
-        var showsSettings: Bool
-        var listSelection: ListType?
-    }
-
-    @EnvironmentObject var linkViewStore: LinkViewStore
-    @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var settingsViewStore: SettingsViewStore
-    @EnvironmentObject var appViewStore: AppViewStore
+struct SidebarView<SettingsState>: View where SettingsState: SettingsStateProtocol {
+    @ObservedObject var navigationState: NavigationState
+    @ObservedObject var tagState: TagState
+    @ObservedObject var settingsState: SettingsState
 
     var body: some View {
-        List(selection: appViewStore.binding(get: \.selectedListType, send: { .setSelectedListType($0) })) {
+        List(
+            selection: $navigationState.selectedListType
+        ) {
             Section(header: "Links") {
-                NavigationLink(
-                    destination: ContentView(
-                        title: "Links",
-                        listType: .all
-                    )
-                ) {
+                NavigationLink(value: ListType.all) {
                     Label("All", systemImage: "tray.2")
                 }
-                .tag(ListType.all)
-                NavigationLink(
-                    destination: TagListView()
-                ) {
-                    Label("Tags", systemImage: "tag")
+                NavigationLink(value: ListType.downloaded) {
+                    Label("Offline", systemImage: "archivebox")
                 }
-                .tag(ListType.tags)
             }
             Section(header: "Favorites") {
-                ForEach(tagViewStore.favoriteTags) { tag in
-                    NavigationLink(
-                        destination: ContentView(
-                            title: tag.name,
-                            listType: .tagScoped(tag)
-                        )
-                    ) {
+                ForEach(tagState.favoriteTags) { tag in
+                    NavigationLink(value: ListType.tagScoped(tag)) {
                         Label(tag.name, systemImage: "tag")
                     }
-                    .tag(ListType.tagScoped(tag))
                     .contextMenu {
                         Button(role: .destructive) {
                             Task {
-                                tagViewStore.send(.removeFavorite(tag))
+                                tagState.removeFavorite(tag: tag)
                             }
                         } label: {
                             Label("Remove Favorite", systemImage: "trash")
@@ -61,46 +42,50 @@ struct SidebarView: View {
                     }
                 }
             }
+            Section(header: "All Tags") {
+                ForEach(tagState.tags) { tag in
+                    NavigationLink(value: ListType.tagScoped(tag)) {
+                        TagView(
+                            tag: tag,
+                            isFavorite: tagState.favoriteTags.contains(tag)
+                        ) {
+                            if tagState.favoriteTags.contains(tag) {
+                                tagState.removeFavorite(tag: tag)
+                            } else {
+                                tagState.addFavorite(tag: tag)
+                            }
+                        }
+                    }
+                }
+            }
         }
         .listStyle(SidebarListStyle())
-#if os(iOS)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    appViewStore.send(.showSettings)
-                } label: {
-                    Label("Settings", systemImage: "gear")
-                }
-                .sheet(
-                    isPresented: appViewStore.binding(get: \.showsSettings, send: { .setShowSettings($0) }),
-                    content: {
-                        SettingsView()
+        #if os(iOS)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        navigationState.showsSettings = true
+                    } label: {
+                        Label("Settings", systemImage: "gear")
                     }
-                )
+                    .sheet(
+                        isPresented: $navigationState.showsSettings,
+                        content: {
+                            SettingsView()
+                        }
+                    )
+                }
             }
-        }
-#endif
-        .onAppear {
-            if settingsViewStore.isLoggedOut {
-                appViewStore.send(.showSettings)
+        #endif
+            .onAppear {
+                if settingsState.isLoggedOut {
+                    navigationState.showsSettings = true
+                }
+                if !tagState.didLoad {
+                    Task {
+                        await tagState.load()
+                    }
+                }
             }
-        }
-        .equatable(by: equation)
-    }
-
-    private var equation: SidebarEquatable {
-        SidebarEquatable(
-            favoriteTags: tagViewStore.favoriteTags,
-            showsSettings: appViewStore.showsSettings,
-            listSelection: appViewStore.selectedListType
-        )
     }
 }
-
-#if DEBUG
-struct SidebarView_Previews: PreviewProvider {
-    static var previews: some View {
-        SidebarView().environmentObject(TagViewStore.mock).environmentObject(LinkViewStore.mock)
-    }
-}
-#endif

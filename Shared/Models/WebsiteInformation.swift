@@ -17,8 +17,8 @@ extension WebsiteInformation {
     init?(fromJavaScriptPreprocessing dictionary: NSDictionary?) {
         guard let dictionary = dictionary?["NSExtensionJavaScriptPreprocessingResultsKey"] as? [String: String] else { return nil }
 
-        self.title = dictionary["title"]
-        self.description = dictionary["description"]
-        self.baseURI = dictionary["baseURI"]
+        title = dictionary["title"]
+        description = dictionary["description"]
+        baseURI = dictionary["baseURI"]
     }
 }

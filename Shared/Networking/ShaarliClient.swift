@@ -5,16 +5,16 @@
 //  Created by martinhartl on 05.01.22.
 //
 
-import KeychainAccess
 import Foundation
 import SwiftJWT
+import Types
 
 final class ShaarliClient: BookmarkClient {
     let pageSize = 20
 
-    let keychain: Keychain
+    let keychain: AarleKeychain
 
-    init(keychain: Keychain) {
+    init(keychain: AarleKeychain) {
         self.keychain = keychain
     }
 
@@ -29,10 +29,9 @@ final class ShaarliClient: BookmarkClient {
             queryParameters["searchtags"] = tags.joined(separator: "+")
         }
 
-        if let searchTerm = searchTerm, !searchTerm.isEmpty {
+        if let searchTerm, !searchTerm.isEmpty {
             queryParameters["searchterm"] = searchTerm
         }
-
 
         URL = URL.appendingQueryParameters(queryParameters)
 
@@ -177,26 +176,27 @@ final class ShaarliClient: BookmarkClient {
 
 // PAW Helpers
 protocol URLQueryParameterStringConvertible {
-    var queryParameters: String {get}
+    var queryParameters: String { get }
 }
 
-extension Dictionary : URLQueryParameterStringConvertible {
+extension Dictionary: URLQueryParameterStringConvertible {
     var queryParameters: String {
         var parts: [String] = []
         for (key, value) in self {
-            let part = String(format: "%@=%@",
+            let part = String(
+                format: "%@=%@",
                 String(describing: key).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
-                String(describing: value).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+                String(describing: value).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            )
             parts.append(part as String)
         }
         return parts.joined(separator: "&")
     }
-
 }
 
 extension URL {
-    func appendingQueryParameters(_ parametersDictionary : Dictionary<String, String>) -> URL {
-        let URLString : String = String(format: "%@?%@", self.absoluteString, parametersDictionary.queryParameters)
+    func appendingQueryParameters(_ parametersDictionary: [String: String]) -> URL {
+        let URLString = String(format: "%@?%@", absoluteString, parametersDictionary.queryParameters)
         return URL(string: URLString)!
     }
 }

@@ -11,6 +11,16 @@
 		C5069CBC27C0014F008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBB27C0014F008EA761 /* ViewStore */; };
 		C5069CBE27C00155008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBD27C00155008EA761 /* ViewStore */; };
 		C5069CC027C00159008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBF27C00159008EA761 /* ViewStore */; };
+		C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
+		C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
+		C50D957528C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
+		C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
+		C51266FE280D996A009714FA /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51266FD280D996A009714FA /* ArchiveService.swift */; };
+		C51266FF280D996A009714FA /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51266FD280D996A009714FA /* ArchiveService.swift */; };
+		C5126704280DA9D5009714FA /* ArchiveViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126703280DA9D5009714FA /* ArchiveViewStore.swift */; };
+		C5126705280DA9D5009714FA /* ArchiveViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126703280DA9D5009714FA /* ArchiveViewStore.swift */; };
+		C5126707280DAC73009714FA /* DownloadedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126706280DAC73009714FA /* DownloadedListView.swift */; };
+		C5126708280DAC73009714FA /* DownloadedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126706280DAC73009714FA /* DownloadedListView.swift */; };
 		C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
 		C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
 		C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
@@ -23,28 +33,20 @@
 		C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5165652278EB849006A55A7 /* InitialContentView.swift */; };
 		C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
-		C53ED62727856CE900397910 /* LinkViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkViewStore.swift */; };
-		C53ED62827856CE900397910 /* LinkViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkViewStore.swift */; };
 		C540CEF627AF9B3200432E18 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = C540CEF527AF9B3200432E18 /* Introspect */; };
 		C540CEF827AF9B3A00432E18 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = C540CEF727AF9B3A00432E18 /* Introspect */; };
 		C540CEFA27AF9B3F00432E18 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = C540CEF927AF9B3F00432E18 /* Introspect */; };
 		C540CEFC27AF9B4400432E18 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = C540CEFB27AF9B4400432E18 /* Introspect */; };
 		C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
-		C54210B92796A6AB000F07DC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
-		C54210BA2796A6AE000F07DC /* LinkViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkViewStore.swift */; };
-		C54210BB2796A6B0000F07DC /* TagViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagViewStore.swift */; };
 		C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C54210BE2796A6D1000F07DC /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
-		C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
 		C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C02796A6F9000F07DC /* SwiftUIX */; };
 		C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C22796A6FF000F07DC /* KeychainAccess */; };
 		C54210C52796A704000F07DC /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C42796A704000F07DC /* SwiftJWT */; };
 		C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
 		C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
 		C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
-		C547D6662793F16400DEC857 /* TagViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagViewStore.swift */; };
-		C547D6672793F16400DEC857 /* TagViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagViewStore.swift */; };
 		C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
@@ -53,14 +55,8 @@
 		C5760E4B2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
-		C5782B342782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
-		C5782B352782E4A000321138 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
 		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
-		C585F1EC27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
-		C585F1ED27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
-		C585F1EE27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
-		C585F1EF27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */; };
 		C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
@@ -73,8 +69,6 @@
 		C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
 		C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
 		C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1FA27A5239500AB0A6F /* PinboardLink.swift */; };
-		C588DEA527A3E0640034C1F2 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppViewStore.swift */; };
-		C588DEA627A3E0640034C1F2 /* AppViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C588DEA427A3E0640034C1F2 /* AppViewStore.swift */; };
 		C59995062781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995072781B96700FE1EBA /* AarloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F62781B96500FE1EBA /* AarloApp.swift */; };
 		C59995082781B96700FE1EBA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F72781B96500FE1EBA /* ContentView.swift */; };
@@ -91,10 +85,10 @@
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
 		C5AE15892788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
-		C5B37B26279166E50080B988 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B25279166E50080B988 /* TagListView.swift */; };
-		C5B37B27279166E50080B988 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B25279166E50080B988 /* TagListView.swift */; };
-		C5B37B29279167150080B988 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
-		C5B37B2A279167150080B988 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
+		C5B9947428C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
+		C5B9947528C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
+		C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
+		C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
 		C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
 		C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
 		C5C11F85279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
@@ -106,6 +100,18 @@
 		C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
 		C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
+		C5EB795128D6E49200D99716 /* Types in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795028D6E49200D99716 /* Types */; };
+		C5EB795328D6E49600D99716 /* Types in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795228D6E49600D99716 /* Types */; };
+		C5EB795528D6E49B00D99716 /* Types in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795428D6E49B00D99716 /* Types */; };
+		C5EB795728D6E49E00D99716 /* Types in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795628D6E49E00D99716 /* Types */; };
+		C5EB795A28D6E86700D99716 /* AarleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795928D6E86700D99716 /* AarleKeychain */; };
+		C5EB795C28D6E86D00D99716 /* AarleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795B28D6E86D00D99716 /* AarleKeychain */; };
+		C5EB795E28D6E87300D99716 /* AarleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795D28D6E87300D99716 /* AarleKeychain */; };
+		C5EB796028D6E87700D99716 /* AarleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB795F28D6E87700D99716 /* AarleKeychain */; };
+		C5EB796328D6EAC300D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796228D6EAC300D99716 /* Settings */; };
+		C5EB796528D6EAC900D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796428D6EAC900D99716 /* Settings */; };
+		C5EB796728D6EB8800D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796628D6EB8800D99716 /* Settings */; };
+		C5EB796928D6EB8E00D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796828D6EB8E00D99716 /* Settings */; };
 		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
 		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 		C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE10F279BE0ED007E763B /* ShareViewController.swift */; };
@@ -115,15 +121,11 @@
 		C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
-		C5FAE121279BE303007E763B /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B37B28279167150080B988 /* Tag.swift */; };
 		C5FAE122279BE303007E763B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
 		C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
-		C5FAE124279BE30F007E763B /* TagViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C547D6652793F16400DEC857 /* TagViewStore.swift */; };
-		C5FAE125279BE30F007E763B /* LinkViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62627856CE900397910 /* LinkViewStore.swift */; };
 		C5FAE127279BE31F007E763B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE126279BE31F007E763B /* KeychainAccess */; };
 		C5FAE129279BE324007E763B /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE128279BE324007E763B /* SwiftJWT */; };
 		C5FAE12B279BE324007E763B /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE12A279BE324007E763B /* SwiftUIX */; };
-		C5FAE12D279BE360007E763B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B332782E4A000321138 /* SettingsView.swift */; };
 		C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */; };
 		C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */; };
 		C5FAE135279BE68A007E763B /* ExtensionClass.js in Resources */ = {isa = PBXBuildFile; fileRef = C5FAE134279BE68A007E763B /* ExtensionClass.js */; };
@@ -173,26 +175,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C50D957228C0A02600512FF7 /* OverallAppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallAppState.swift; sourceTree = "<group>"; };
+		C51266FD280D996A009714FA /* ArchiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveService.swift; sourceTree = "<group>"; };
+		C5126703280DA9D5009714FA /* ArchiveViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewStore.swift; sourceTree = "<group>"; };
+		C5126706280DAC73009714FA /* DownloadedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedListView.swift; sourceTree = "<group>"; };
 		C513721C27EEF22C00E80F3D /* LinkdingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingClient.swift; sourceTree = "<group>"; };
 		C513722127EEF44E00E80F3D /* LinkdingLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingLink.swift; sourceTree = "<group>"; };
 		C5165652278EB849006A55A7 /* InitialContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialContentView.swift; sourceTree = "<group>"; };
 		C53ED62227856B5000397910 /* ShaarliClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClient.swift; sourceTree = "<group>"; };
-		C53ED62627856CE900397910 /* LinkViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkViewStore.swift; sourceTree = "<group>"; };
 		C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Suite.swift"; sourceTree = "<group>"; };
-		C547D6652793F16400DEC857 /* TagViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewStore.swift; sourceTree = "<group>"; };
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
 		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
 		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
-		C5782B332782E4A000321138 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewStore.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
 		C585F1FA27A5239500AB0A6F /* PinboardLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardLink.swift; sourceTree = "<group>"; };
 		C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarle--iOS--Info.plist"; sourceTree = "<group>"; };
-		C588DEA427A3E0640034C1F2 /* AppViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewStore.swift; sourceTree = "<group>"; };
 		C59994F62781B96500FE1EBA /* AarloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AarloApp.swift; sourceTree = "<group>"; };
 		C59994F72781B96500FE1EBA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C59994F82781B96700FE1EBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,8 +204,7 @@
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		C5B37B25279166E50080B988 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
-		C5B37B28279167150080B988 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		C5B9947328C1D11400DD59CE /* WindowRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutes.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
 		C5C11F82279A9485006981CE /* WebsiteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteInformation.swift; sourceTree = "<group>"; };
 		C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +215,9 @@
 		C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aarlo_macOS_ShareExtension.entitlements; sourceTree = "<group>"; };
 		C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
+		C5EB794F28D6E48200D99716 /* Types */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Types; sourceTree = "<group>"; };
+		C5EB795828D6E7A400D99716 /* AarleKeychain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AarleKeychain; sourceTree = "<group>"; };
+		C5EB796128D6EA7D00D99716 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
 		C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-iOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FAE10F279BE0ED007E763B /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C5FAE112279BE0ED007E763B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -229,9 +232,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EB795128D6E49200D99716 /* Types in Frameworks */,
+				C5EB796328D6EAC300D99716 /* Settings in Frameworks */,
 				C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */,
 				C540CEF627AF9B3200432E18 /* Introspect in Frameworks */,
 				C5069CBA27C0013F008EA761 /* ViewStore in Frameworks */,
+				C5EB795A28D6E86700D99716 /* AarleKeychain in Frameworks */,
 				C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */,
 				C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */,
 			);
@@ -241,9 +247,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EB795328D6E49600D99716 /* Types in Frameworks */,
+				C5EB796528D6EAC900D99716 /* Settings in Frameworks */,
 				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
 				C540CEF827AF9B3A00432E18 /* Introspect in Frameworks */,
 				C5069CBC27C0014F008EA761 /* ViewStore in Frameworks */,
+				C5EB795C28D6E86D00D99716 /* AarleKeychain in Frameworks */,
 				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
 				C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */,
 			);
@@ -253,9 +262,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EB795528D6E49B00D99716 /* Types in Frameworks */,
+				C5EB796728D6EB8800D99716 /* Settings in Frameworks */,
 				C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */,
 				C540CEFA27AF9B3F00432E18 /* Introspect in Frameworks */,
 				C5069CBE27C00155008EA761 /* ViewStore in Frameworks */,
+				C5EB795E28D6E87300D99716 /* AarleKeychain in Frameworks */,
 				C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */,
 				C54210C52796A704000F07DC /* SwiftJWT in Frameworks */,
 			);
@@ -265,9 +277,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EB795728D6E49E00D99716 /* Types in Frameworks */,
+				C5EB796928D6EB8E00D99716 /* Settings in Frameworks */,
 				C5FAE12B279BE324007E763B /* SwiftUIX in Frameworks */,
 				C540CEFC27AF9B4400432E18 /* Introspect in Frameworks */,
 				C5069CC027C00159008EA761 /* ViewStore in Frameworks */,
+				C5EB796028D6E87700D99716 /* AarleKeychain in Frameworks */,
 				C5FAE129279BE324007E763B /* SwiftJWT in Frameworks */,
 				C5FAE127279BE31F007E763B /* KeychainAccess in Frameworks */,
 			);
@@ -279,10 +294,8 @@
 		C53ED62527856CD900397910 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				C588DEA427A3E0640034C1F2 /* AppViewStore.swift */,
-				C53ED62627856CE900397910 /* LinkViewStore.swift */,
-				C547D6652793F16400DEC857 /* TagViewStore.swift */,
-				C585F1EB27A5137A00AB0A6F /* SettingsViewStore.swift */,
+				C5126703280DA9D5009714FA /* ArchiveViewStore.swift */,
+				C50D957228C0A02600512FF7 /* OverallAppState.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -292,14 +305,13 @@
 			children = (
 				C5AE1584278813B400480C83 /* WebView.swift */,
 				C5782B302781E97900321138 /* LinkItemView.swift */,
-				C5782B332782E4A000321138 /* SettingsView.swift */,
 				C5E4E3632786C833000E79F0 /* LinkEditView.swift */,
 				C5AE15872788196C00480C83 /* SidebarView.swift */,
 				C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */,
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
-				C5B37B25279166E50080B988 /* TagListView.swift */,
 				C5760E492792A42000688EB3 /* TagView.swift */,
+				C5126706280DAC73009714FA /* DownloadedListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +319,9 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C5EB796128D6EA7D00D99716 /* Settings */,
+				C5EB795828D6E7A400D99716 /* AarleKeychain */,
+				C5EB794F28D6E48200D99716 /* Types */,
 				C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */,
 				C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */,
 				C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */,
@@ -332,6 +347,7 @@
 				C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */,
 				C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */,
 				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
+				C51266FD280D996A009714FA /* ArchiveService.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -359,10 +375,10 @@
 			isa = PBXGroup;
 			children = (
 				C59995152781B9E200FE1EBA /* Link.swift */,
-				C5B37B28279167150080B988 /* Tag.swift */,
 				C5C11F82279A9485006981CE /* WebsiteInformation.swift */,
 				C585F1FA27A5239500AB0A6F /* PinboardLink.swift */,
 				C513722127EEF44E00E80F3D /* LinkdingLink.swift */,
+				C5B9947328C1D11400DD59CE /* WindowRoutes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -435,6 +451,9 @@
 				C5F71F822784CA7A009CF84C /* SwiftUIX */,
 				C540CEF527AF9B3200432E18 /* Introspect */,
 				C5069CB927C0013F008EA761 /* ViewStore */,
+				C5EB795028D6E49200D99716 /* Types */,
+				C5EB795928D6E86700D99716 /* AarleKeychain */,
+				C5EB796228D6EAC300D99716 /* Settings */,
 			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* aarle.app */;
@@ -461,6 +480,9 @@
 				C5F71F842784CA96009CF84C /* SwiftUIX */,
 				C540CEF727AF9B3A00432E18 /* Introspect */,
 				C5069CBB27C0014F008EA761 /* ViewStore */,
+				C5EB795228D6E49600D99716 /* Types */,
+				C5EB795B28D6E86D00D99716 /* AarleKeychain */,
+				C5EB796428D6EAC900D99716 /* Settings */,
 			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* aarle.app */;
@@ -485,6 +507,9 @@
 				C54210C42796A704000F07DC /* SwiftJWT */,
 				C540CEF927AF9B3F00432E18 /* Introspect */,
 				C5069CBD27C00155008EA761 /* ViewStore */,
+				C5EB795428D6E49B00D99716 /* Types */,
+				C5EB795D28D6E87300D99716 /* AarleKeychain */,
+				C5EB796628D6EB8800D99716 /* Settings */,
 			);
 			productName = "Aarlo-macOS-ShareExtension";
 			productReference = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */;
@@ -509,6 +534,9 @@
 				C5FAE12A279BE324007E763B /* SwiftUIX */,
 				C540CEFB27AF9B4400432E18 /* Introspect */,
 				C5069CBF27C00159008EA761 /* ViewStore */,
+				C5EB795628D6E49E00D99716 /* Types */,
+				C5EB795F28D6E87700D99716 /* AarleKeychain */,
+				C5EB796828D6EB8E00D99716 /* Settings */,
 			);
 			productName = "Aarlo-iOS-ShareExtension";
 			productReference = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */;
@@ -613,27 +641,25 @@
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
-				C585F1EC27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
-				C5B37B29279167150080B988 /* Tag.swift in Sources */,
+				C51266FE280D996A009714FA /* ArchiveService.swift in Sources */,
 				C585F1FB27A5239500AB0A6F /* PinboardLink.swift in Sources */,
+				C5126707280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
-				C5782B342782E4A000321138 /* SettingsView.swift in Sources */,
-				C547D6662793F16400DEC857 /* TagViewStore.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
-				C53ED62727856CE900397910 /* LinkViewStore.swift in Sources */,
-				C5B37B26279166E50080B988 /* TagListView.swift in Sources */,
+				C5B9947428C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C513722227EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
+				C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
-				C588DEA527A3E0640034C1F2 /* AppViewStore.swift in Sources */,
 				C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
+				C5126704280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
 				C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
@@ -648,27 +674,25 @@
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
-				C585F1ED27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
 				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
-				C5B37B2A279167150080B988 /* Tag.swift in Sources */,
+				C51266FF280D996A009714FA /* ArchiveService.swift in Sources */,
 				C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */,
+				C5126708280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
-				C5782B352782E4A000321138 /* SettingsView.swift in Sources */,
-				C547D6672793F16400DEC857 /* TagViewStore.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
-				C53ED62827856CE900397910 /* LinkViewStore.swift in Sources */,
-				C5B37B27279166E50080B988 /* TagListView.swift in Sources */,
+				C5B9947528C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C513722327EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
+				C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
-				C588DEA627A3E0640034C1F2 /* AppViewStore.swift in Sources */,
 				C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
+				C5126705280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
 				C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
@@ -679,17 +703,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C54210BB2796A6B0000F07DC /* TagViewStore.swift in Sources */,
+				C50D957528C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
 				C513722427EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
-				C585F1EE27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
-				C54210B92796A6AB000F07DC /* Tag.swift in Sources */,
+				C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
-				C54210BF2796A6DF000F07DC /* SettingsView.swift in Sources */,
 				C54210BE2796A6D1000F07DC /* Link.swift in Sources */,
-				C54210BA2796A6AE000F07DC /* LinkViewStore.swift in Sources */,
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
 				C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
@@ -704,22 +725,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5FAE121279BE303007E763B /* Tag.swift in Sources */,
+				C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C5FAE122279BE303007E763B /* Link.swift in Sources */,
 				C513722527EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
-				C585F1EF27A5137A00AB0A6F /* SettingsViewStore.swift in Sources */,
 				C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
-				C5FAE124279BE30F007E763B /* TagViewStore.swift in Sources */,
+				C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,
 				C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */,
 				C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */,
-				C5FAE125279BE30F007E763B /* LinkViewStore.swift in Sources */,
 				C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */,
 				C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */,
-				C5FAE12D279BE360007E763B /* SettingsView.swift in Sources */,
 				C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				C585F1F927A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 			);
@@ -888,7 +906,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -920,7 +938,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -958,7 +976,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
 				PRODUCT_NAME = aarle;
@@ -990,7 +1008,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.hartl.Aarle;
 				PRODUCT_NAME = aarle;
@@ -1019,7 +1037,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-macOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1049,7 +1067,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "co.hartl.Aarle.Aarle-macOS-ShareExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1285,6 +1303,54 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
+		};
+		C5EB795028D6E49200D99716 /* Types */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Types;
+		};
+		C5EB795228D6E49600D99716 /* Types */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Types;
+		};
+		C5EB795428D6E49B00D99716 /* Types */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Types;
+		};
+		C5EB795628D6E49E00D99716 /* Types */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Types;
+		};
+		C5EB795928D6E86700D99716 /* AarleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AarleKeychain;
+		};
+		C5EB795B28D6E86D00D99716 /* AarleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AarleKeychain;
+		};
+		C5EB795D28D6E87300D99716 /* AarleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AarleKeychain;
+		};
+		C5EB795F28D6E87700D99716 /* AarleKeychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AarleKeychain;
+		};
+		C5EB796228D6EAC300D99716 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		C5EB796428D6EAC900D99716 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		C5EB796628D6EB8800D99716 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		C5EB796828D6EB8E00D99716 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
 		};
 		C5F71F822784CA7A009CF84C /* SwiftUIX */ = {
 			isa = XCSwiftPackageProductDependency;

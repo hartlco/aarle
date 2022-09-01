@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kitura/BlueCryptor.git",
       "state" : {
-        "revision" : "88fc6e132f41ece53e49acc0e4f67b0331c15b90",
-        "version" : "2.0.1"
+        "revision" : "cec97c24b111351e70e448972a7d3fe68a756d6d",
+        "version" : "2.0.2"
       }
     },
     {
@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "5d66f7ba25daf4f94100e7022febf3c75e37a6c7",
-        "version" : "1.4.2"
+        "revision" : "6fe203dc33195667ce1759bf0182975e4653ba1c",
+        "version" : "1.4.4"
       }
     },
     {
@@ -78,7 +78,7 @@
       "location" : "https://github.com/siteline/SwiftUI-Introspect",
       "state" : {
         "branch" : "master",
-        "revision" : "72a509c93166540c0adf8323fd2652daade7f9f6"
+        "revision" : "d3cbf32788250741d397cfb5bcd532c37aa1096d"
       }
     },
     {
@@ -87,7 +87,7 @@
       "location" : "https://github.com/SwiftUIX/SwiftUIX",
       "state" : {
         "branch" : "master",
-        "revision" : "a87616cff25142515ea41bad7e644ae6d8f86d31"
+        "revision" : "b67a468a22661e8a5cf6d18f1319ee11f37dc491"
       }
     },
     {

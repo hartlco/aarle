@@ -10,8 +10,8 @@ import SwiftUIX
 
 struct LinkAddView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var tagStore: TagViewStore
-    @EnvironmentObject var linkViewStore: LinkViewStore
+
+    @EnvironmentObject var overallAppState: OverallAppState
 
     @State var urlString: String
     @State var title: String
@@ -25,21 +25,21 @@ struct LinkAddView: View {
         title: String = "",
         description: String = ""
     ) {
-        self._urlString = State<String>(initialValue: urlString)
-        self._title = State(initialValue: title)
-        self._description = State(initialValue: description)
-        self._tagsString = State(initialValue: "")
+        _urlString = State<String>(initialValue: urlString)
+        _title = State(initialValue: title)
+        _description = State(initialValue: description)
+        _tagsString = State(initialValue: "")
     }
 
     var body: some View {
         #if os(macOS)
-        form
-            .padding()
-        #else
-        NavigationView {
             form
-                .navigationTitle("Add Link")
-        }
+                .padding()
+        #else
+            NavigationView {
+                form
+                    .navigationTitle("Add Link")
+            }
         #endif
     }
 
@@ -54,18 +54,18 @@ struct LinkAddView: View {
                 TextEditor(text: $description)
             }
             Section(header: "Favorites") {
-                ForEach(tagStore.favoriteTags) { tag in
+                ForEach(overallAppState.tagState.favoriteTags) { tag in
                     Toggle(
                         tag.name,
                         isOn: Binding(
                             get: {
-                                return tagStore.tagsString(tagsString, contains: tag)
+                                overallAppState.tagState.tagsString(tagsString, contains: tag)
                             },
                             set: { newValue in
                                 if newValue {
-                                    tagsString = tagStore.addingTag(tag, toTagsString: tagsString)
+                                    tagsString = overallAppState.tagState.addingTag(tag, toTagsString: tagsString)
                                 } else {
-                                    tagsString = tagStore.removingTag(tag, fromTagsString: tagsString)
+                                    tagsString = overallAppState.tagState.removingTag(tag, fromTagsString: tagsString)
                                 }
                             }
                         )
@@ -108,15 +108,17 @@ struct LinkAddView: View {
             created: Date().addingTimeInterval(-10.0)
         )
 
-        linkViewStore.send(.add(newLink))
-        presentationMode.dismiss()
+        Task {
+            await overallAppState.add(link: newLink)
+            presentationMode.dismiss()
+        }
     }
 }
 
 #if DEBUG
-struct LinkAddView_Previews: PreviewProvider {
-    static var previews: some View {
-        LinkAddView().environmentObject(LinkViewStore.mock)
+    struct LinkAddView_Previews: PreviewProvider {
+        static var previews: some View {
+            LinkAddView()
+        }
     }
-}
 #endif

@@ -8,9 +8,9 @@
 import Foundation
 
 #if os(iOS)
-import MobileCoreServices
+    import MobileCoreServices
 #elseif os(macOS)
-import Cocoa
+    import Cocoa
 #endif
 
 extension NSItemProvider {
@@ -22,19 +22,21 @@ extension NSItemProvider {
         try await withCheckedThrowingContinuation { continuation in
             loadItem(
                 forTypeIdentifier: String(kUTTypePropertyList),
-                options: nil) { coding, error in
-                    if let error = error {
-                        return continuation.resume(throwing: error)
-                    }
-
-                    if let coding = coding as? NSDictionary,
-                       let model = WebsiteInformation(fromJavaScriptPreprocessing: coding) {
-                        print(coding)
-                        return continuation.resume(returning: model)
-                    }
-
-                    return continuation.resume(throwing: ProviderError.dataNotConvertible)
+                options: nil
+            ) { coding, error in
+                if let error = error {
+                    return continuation.resume(throwing: error)
                 }
+
+                if let coding = coding as? NSDictionary,
+                   let model = WebsiteInformation(fromJavaScriptPreprocessing: coding)
+                {
+                    print(coding)
+                    return continuation.resume(returning: model)
+                }
+
+                return continuation.resume(throwing: ProviderError.dataNotConvertible)
+            }
         }
     }
 

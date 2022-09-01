@@ -5,8 +5,8 @@
 //  Created by martinhartl on 29.01.22.
 //
 
-import KeychainAccess
 import Foundation
+import Types
 
 enum ClientError: Error {
     case unknownURL
@@ -24,30 +24,27 @@ protocol BookmarkClient {
 }
 
 #if DEBUG
-final class MockClient: BookmarkClient {
-    let pageSize = 20
+    final class MockClient: BookmarkClient {
+        let pageSize = 20
 
-    func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
-        return []
-    }
+        func load(filteredByTags _: [String], searchTerm _: String?) async throws -> [Link] {
+            return []
+        }
 
-    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
-        []
-    }
+        func loadMore(offset _: Int, filteredByTags _: [String], searchTerm _: String?) async throws -> [Link] {
+            []
+        }
 
-    func createLink(link: PostLink) async throws {
-    }
+        func createLink(link _: PostLink) async throws {}
 
-    func updateLink(link: Link) async throws {
-    }
+        func updateLink(link _: Link) async throws {}
 
-    func deleteLink(link: Link) async throws {
-    }
+        func deleteLink(link _: Link) async throws {}
 
-    func loadTags() async throws -> [Tag] {
-        []
+        func loadTags() async throws -> [Tag] {
+            []
+        }
     }
-}
 #endif
 
 final class UniversalClient: BookmarkClient {
@@ -55,11 +52,11 @@ final class UniversalClient: BookmarkClient {
     private let pinboardClient: PinboardClient
     private let linkdingClient: LinkdingClient
 
-    init(keychain: Keychain) {
+    init(keychain: AarleKeychain) {
         self.keychain = keychain
-        self.shaarliClient = ShaarliClient(keychain: keychain)
-        self.pinboardClient = PinboardClient(keychain: keychain)
-        self.linkdingClient = LinkdingClient(keychain: keychain)
+        shaarliClient = ShaarliClient(keychain: keychain)
+        pinboardClient = PinboardClient(keychain: keychain)
+        linkdingClient = LinkdingClient(keychain: keychain)
     }
 
     var pageSize: Int {
@@ -90,7 +87,7 @@ final class UniversalClient: BookmarkClient {
         try await client.loadTags()
     }
 
-    private let keychain: Keychain
+    private let keychain: AarleKeychain
     private var client: BookmarkClient {
         switch keychain.accountType {
         case .shaarli:

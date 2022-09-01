@@ -5,8 +5,8 @@
 //  Created by martinhartl on 29.01.22.
 //
 
-import KeychainAccess
 import Foundation
+import Types
 
 final class PinboardClient: BookmarkClient {
     let pageSize = 20
@@ -15,9 +15,9 @@ final class PinboardClient: BookmarkClient {
         return "https://api.pinboard.in/v1"
     }
 
-    let keychain: Keychain
+    let keychain: AarleKeychain
 
-    init(keychain: Keychain) {
+    init(keychain: AarleKeychain) {
         self.keychain = keychain
     }
 
@@ -97,7 +97,7 @@ final class PinboardClient: BookmarkClient {
         }.map(Link.fromPinboardLink(link:))
     }
 
-    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
+    func loadMore(offset: Int, filteredByTags tags: [String], searchTerm _: String?) async throws -> [Link] {
         guard var URL = URL(string: apiEndpoint + "/posts/all") else {
             throw ClientError.unknownURL
         }
@@ -181,7 +181,6 @@ final class PinboardClient: BookmarkClient {
 
         var queryParams: [String: String] = [:]
 
-
         queryParams["auth_token"] = keychain.secret
         queryParams["format"] = "json"
 
@@ -198,6 +197,4 @@ final class PinboardClient: BookmarkClient {
 
         return Tag.from(dictionary: links)
     }
-
-
 }

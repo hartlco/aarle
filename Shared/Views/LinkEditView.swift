@@ -11,9 +11,7 @@ import SwiftUIX
 struct LinkEditView: View {
     let link: Link
 
-    @EnvironmentObject var linkStore: LinkViewStore
-    @EnvironmentObject var tagViewStore: TagViewStore
-    @EnvironmentObject var appViewStore: AppViewStore
+    @EnvironmentObject var overallAppState: OverallAppState
 
     // TODO: Move into EditStore
     @State var urlString: String
@@ -29,32 +27,32 @@ struct LinkEditView: View {
     ) {
         self.link = link
         self.showCancelButton = showCancelButton
-        self._urlString = State<String>(initialValue: link.url.absoluteString)
-        self._title = State(initialValue: link.title ?? "")
-        self._description = State(initialValue: link.description ?? "")
-        self._tagsString = State(initialValue: link.tags.joined(separator: " "))
+        _urlString = State<String>(initialValue: link.url.absoluteString)
+        _title = State(initialValue: link.title ?? "")
+        _description = State(initialValue: link.description ?? "")
+        _tagsString = State(initialValue: link.tags.joined(separator: " "))
     }
 
     var body: some View {
-#if os(macOS)
-        macOSForm
-#elseif os(iOS)
-        form.toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel", role: .cancel) {
-                    appViewStore.send(.hideEditLink)
-                }.hidden(!showCancelButton)
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Save") {
-                    save()
-                    if showCancelButton {
-                        appViewStore.send(.hideEditLink)
+        #if os(macOS)
+            macOSForm
+        #elseif os(iOS)
+            form.toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel", role: .cancel) {
+                        overallAppState.presentedEditLink = nil
+                    }.hidden(!showCancelButton)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Save") {
+                        save()
+                        if showCancelButton {
+                            overallAppState.presentedEditLink = nil
+                        }
                     }
                 }
-            }
-        }.navigationTitle("Edit link")
-#endif
+            }.navigationTitle("Edit link")
+        #endif
     }
 
     private var form: some View {
@@ -67,20 +65,20 @@ struct LinkEditView: View {
             Section(header: "Description") {
                 TextEditor(text: $description)
             }
-            if !tagViewStore.favoriteTags.isEmpty {
+            if !overallAppState.tagState.favoriteTags.isEmpty {
                 Section(header: "Favorites") {
-                    ForEach(tagViewStore.favoriteTags) { tag in
+                    ForEach(overallAppState.tagState.favoriteTags) { tag in
                         Toggle(
                             tag.name,
                             isOn: Binding(
                                 get: {
-                                    return tagViewStore.tagsString(tagsString, contains: tag)
+                                    overallAppState.tagState.tagsString(tagsString, contains: tag)
                                 },
                                 set: { newValue in
                                     if newValue {
-                                        tagsString = tagViewStore.addingTag(tag, toTagsString: tagsString)
+                                        tagsString = overallAppState.tagState.addingTag(tag, toTagsString: tagsString)
                                     } else {
-                                        tagsString = tagViewStore.removingTag(tag, fromTagsString: tagsString)
+                                        tagsString = overallAppState.tagState.removingTag(tag, fromTagsString: tagsString)
                                     }
                                 }
                             )
@@ -94,7 +92,7 @@ struct LinkEditView: View {
     }
 
     private var macOSForm: some View {
-        HStack{
+        HStack {
             Spacer()
             VStack {
                 Spacer()
@@ -107,19 +105,19 @@ struct LinkEditView: View {
                         .frame(maxHeight: 400)
                     TextField("Tags:", text: $tagsString)
                         .disableAutocorrection(true)
-                    if !tagViewStore.favoriteTags.isEmpty {
-                        ForEach(tagViewStore.favoriteTags) { tag in
+                    if !overallAppState.tagState.favoriteTags.isEmpty {
+                        ForEach(overallAppState.tagState.favoriteTags) { tag in
                             Toggle(
                                 tag.name,
                                 isOn: Binding(
                                     get: {
-                                        return tagViewStore.tagsString(tagsString, contains: tag)
+                                        overallAppState.tagState.tagsString(tagsString, contains: tag)
                                     },
                                     set: { newValue in
                                         if newValue {
-                                            tagsString = tagViewStore.addingTag(tag, toTagsString: tagsString)
+                                            tagsString = overallAppState.tagState.addingTag(tag, toTagsString: tagsString)
                                         } else {
-                                            tagsString = tagViewStore.removingTag(tag, fromTagsString: tagsString)
+                                            tagsString = overallAppState.tagState.removingTag(tag, fromTagsString: tagsString)
                                         }
                                     }
                                 )
@@ -130,14 +128,14 @@ struct LinkEditView: View {
                         Spacer()
                         if showCancelButton {
                             Button("Cancel", role: .cancel) {
-                                appViewStore.send(.hideEditLink)
+                                overallAppState.presentedEditLink = nil
                             }
                             .keyboardShortcut(.cancelAction)
                         }
                         Button("Save") {
                             save()
                             if showCancelButton {
-                                appViewStore.send(.hideEditLink)
+                                overallAppState.presentedEditLink = nil
                             }
                         }
                         .buttonStyle(.borderedProminent)
@@ -163,23 +161,11 @@ struct LinkEditView: View {
             created: link.created
         )
 
-        linkStore.send(.update(newLink))
+        Task {
+            await overallAppState.update(link: newLink)
+        }
     }
 }
-
-#if DEBUG
-struct LinkEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        let link = Link.mock
-        LinkEditView(
-            link: link,
-            showCancelButton: true
-        )
-            .environmentObject(TagViewStore.mock)
-            .environmentObject(LinkViewStore.mock)
-    }
-}
-#endif
 
 /// https://gist.github.com/marcprux/afd2f80baa5b6d60865182a828e83586
 /// Alignment guide for aligning a text field in a `Form`.
@@ -205,6 +191,5 @@ public extension View {
                 .alignmentGuide(.controlAlignment) { $0[.leading] }
         }
         .alignmentGuide(.leading) { $0[.controlAlignment] }
-
     }
 }

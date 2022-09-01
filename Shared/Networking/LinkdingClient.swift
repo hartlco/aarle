@@ -5,9 +5,9 @@
 //  Created by Martin Hartl on 26.03.22.
 //
 
-import KeychainAccess
 import Foundation
 import SwiftJWT
+import Types
 
 enum DateError: String, Error {
     case invalidDate
@@ -16,8 +16,8 @@ enum DateError: String, Error {
 final class LinkdingClient: BookmarkClient {
     let pageSize = 100
 
-    let keychain: Keychain
-    
+    let keychain: AarleKeychain
+
     private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .iso8601)
@@ -26,7 +26,7 @@ final class LinkdingClient: BookmarkClient {
         return formatter
     }()
 
-    init(keychain: Keychain) {
+    init(keychain: AarleKeychain) {
         self.keychain = keychain
     }
 
@@ -95,7 +95,7 @@ final class LinkdingClient: BookmarkClient {
             description: link.description,
             tagNames: link.tags
         )
-        
+
         let encoder = JSONEncoder()
         let linkData = try encoder.encode(linkdingLink)
         request.httpBody = linkData
@@ -159,11 +159,11 @@ final class LinkdingClient: BookmarkClient {
     private var apiEndpoint: String {
         return keychain.endpoint
     }
-    
+
     private func date(from decoder: Decoder) throws -> Date {
         let container = try decoder.singleValueContainer()
         let dateStr = try container.decode(String.self)
-        
+
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         if let date = formatter.date(from: dateStr) {
             return date
@@ -174,14 +174,14 @@ final class LinkdingClient: BookmarkClient {
         }
         throw DateError.invalidDate
     }
-    
+
     private func searchStrings(from tags: [String], searchTerm: String?) -> [String] {
-        let mappedTags = tags.map { return "#\($0)" }
-        
+        let mappedTags = tags.map { "#\($0)" }
+
         if let searchTerm = searchTerm {
             return mappedTags + [searchTerm]
         }
-        
+
         return mappedTags
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Types
 
 struct TagView: View {
     let tag: Tag
@@ -16,9 +17,11 @@ struct TagView: View {
         HStack {
             Text(tag.name)
                 .font(.headline)
-            Text(String("• \(tag.occurrences)"))
-                .font(.footnote)
-                .foregroundColor(.secondaryLabel)
+            if let occurrences = tag.occurrences {
+                Text(String("• \(occurrences)"))
+                    .font(.footnote)
+                    .foregroundColor(.secondaryLabel)
+            }
             Spacer()
             Button {
                 favorite()
@@ -28,22 +31,17 @@ struct TagView: View {
                     systemImage: isFavorite ? "star.fill" : "star"
                 ).labelStyle(.iconOnly)
             }
-            .buttonStyle(PlainButtonStyle()) 
-
+            .buttonStyle(PlainButtonStyle())
         }
         .padding(2.0)
     }
 }
 
 #if DEBUG
-struct TagView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagView(tag: Tag(name: "Test", occurrences: 12), isFavorite: true) {
-
-        }
-        TagView(tag: Tag(name: "Test", occurrences: 12), isFavorite: false) {
-
+    struct TagView_Previews: PreviewProvider {
+        static var previews: some View {
+            TagView(tag: Tag(name: "Test", occurrences: 12), isFavorite: true) {}
+            TagView(tag: Tag(name: "Test", occurrences: 12), isFavorite: false) {}
         }
     }
-}
 #endif

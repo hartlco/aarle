@@ -7,9 +7,9 @@
 
 import Foundation
 #if os(macOS)
-import AppKit
+    import AppKit
 #elseif os(iOS)
-import UIKit
+    import UIKit
 #endif
 
 protocol Pasteboard {
@@ -17,26 +17,27 @@ protocol Pasteboard {
 }
 
 final class DefaultPasteboard: Pasteboard {
-#if os(macOS)
-    let pasteboard: NSPasteboard
+    #if os(macOS)
+        let pasteboard: NSPasteboard
 
-    init(pasteboard: NSPasteboard = .general) {
-        self.pasteboard = pasteboard
-    }
-#elseif os(iOS)
-    let pasteboard: UIPasteboard
+        init(pasteboard: NSPasteboard = .general) {
+            self.pasteboard = pasteboard
+        }
 
-    init(pasteboard: UIPasteboard = .general) {
-        self.pasteboard = pasteboard
-    }
-#endif
+    #elseif os(iOS)
+        let pasteboard: UIPasteboard
+
+        init(pasteboard: UIPasteboard = .general) {
+            self.pasteboard = pasteboard
+        }
+    #endif
 
     func copyToPasteboard(string: String) {
-#if os(macOS)
-        pasteboard.clearContents()
-        pasteboard.setData(string.data(using: .utf8), forType: NSPasteboard.PasteboardType.string)
-#elseif os(iOS)
-        pasteboard.string = string
-#endif
+        #if os(macOS)
+            pasteboard.clearContents()
+            pasteboard.setData(string.data(using: .utf8), forType: NSPasteboard.PasteboardType.string)
+        #elseif os(iOS)
+            pasteboard.string = string
+        #endif
     }
 }

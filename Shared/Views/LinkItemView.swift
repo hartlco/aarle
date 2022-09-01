@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import Types
+
+protocol LinkItemViewRepresentation {
+    var title: String? { get }
+    var url: URL { get }
+    var description: String? { get }
+    var tags: [String] { get }
+}
+
+extension Link: LinkItemViewRepresentation {}
+extension ArchiveLink: LinkItemViewRepresentation {}
 
 struct LinkItemView: View {
-    let link: Link
+    let link: LinkItemViewRepresentation
 
     let columns = [
-        GridItem(.adaptive(minimum: 20, maximum: 200))
+        GridItem(.adaptive(minimum: 20, maximum: 200)),
     ]
 
     var body: some View {
@@ -25,6 +36,7 @@ struct LinkItemView: View {
                 .foregroundColor(.accentColor)
             if let description = link.description, !description.isEmpty {
                 Text(description)
+                    .lineLimit(0 ... 5)
                     .font(.body)
             }
             if !tagsString.isEmpty {
@@ -43,9 +55,9 @@ struct LinkItemView: View {
 }
 
 #if DEBUG
-struct LinkItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        LinkItemView(link: Link.mock)
+    struct LinkItemView_Previews: PreviewProvider {
+        static var previews: some View {
+            LinkItemView(link: Link.mock)
+        }
     }
-}
 #endif
