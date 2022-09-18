@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftUIX
+import Types
 
 struct LinkAddView: View {
     @Environment(\.presentationMode) var presentationMode

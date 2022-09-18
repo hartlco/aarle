@@ -8,20 +8,14 @@
 import KeychainAccess
 import SwiftUI
 import SwiftUIX
-import ViewStore
 import Settings
+import Types
 
 @main
 struct AarleApp: App {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
     let pasteboard = DefaultPasteboard()
-
-    @StateObject var archiveViewStore = ArchiveViewStore(
-        state: ArchiveState(archiveLinks: UserDefaults.suite.archiveLinks),
-        environment: ArchiveEnvironment(archiveService: .init(userDefaults: .suite)),
-        reduceFunction: archiveReducer
-    )
 
     @StateObject var overallAppState = OverallAppState(
         client: UniversalClient(keychain: keyChain),
@@ -34,7 +28,6 @@ struct AarleApp: App {
                 navigationState: overallAppState.navigationState,
                 tagState: overallAppState.tagState
             )
-            .environmentObject(archiveViewStore)
             .environmentObject(overallAppState)
         }
         // TODO: Refactor out creation of commands

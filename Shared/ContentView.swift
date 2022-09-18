@@ -9,9 +9,9 @@ import SwiftJWT
 import SwiftUI
 import SwiftUIX
 import WebKit
+import Types
 
 struct ContentView: View {
-    @EnvironmentObject var archiveViewStore: ArchiveViewStore
     @EnvironmentObject var overallAppState: OverallAppState
 
     @State var searchText = ""
@@ -88,7 +88,9 @@ struct ContentView: View {
                         Label("Delete", systemImage: "trash")
                     }
                     Button("Download") {
-                        archiveViewStore.send(.archiveLink(link: link))
+                        Task {
+                            await overallAppState.archiveState.archiveLink(link: link)
+                        }
                     }
                 }
             }
@@ -125,7 +127,7 @@ struct ContentView: View {
         .listStyle(PlainListStyle())
     }
 
-    private func editAction(link: Link) {
+    private func editAction(link: Types.Link) {
         overallAppState.presentedEditLink = link
         #if os(macOS)
             WindowRoutes.editLink.open()

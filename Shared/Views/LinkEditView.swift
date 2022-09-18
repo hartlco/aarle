@@ -7,9 +7,10 @@
 
 import SwiftUI
 import SwiftUIX
+import Types
 
 struct LinkEditView: View {
-    let link: Link
+    let link: Types.Link
 
     @EnvironmentObject var overallAppState: OverallAppState
 
@@ -22,7 +23,7 @@ struct LinkEditView: View {
     private let showCancelButton: Bool
 
     init(
-        link: Link,
+        link: Types.Link,
         showCancelButton: Bool
     ) {
         self.link = link

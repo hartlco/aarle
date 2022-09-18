@@ -7,6 +7,7 @@
 
 import Introspect
 import SwiftUI
+import Types
 
 struct InitialContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all
@@ -28,7 +29,7 @@ struct InitialContentView: View {
             case let .tagScoped(tag):
                 ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState)
             case .downloaded:
-                DownloadedListView()
+                DownloadedListView(overallAppState: overallAppState)
             #if os(iOS)
                 case .none:
                     Text("Select")

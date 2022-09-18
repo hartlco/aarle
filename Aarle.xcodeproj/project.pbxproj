@@ -7,18 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5069CBA27C0013F008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CB927C0013F008EA761 /* ViewStore */; };
-		C5069CBC27C0014F008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBB27C0014F008EA761 /* ViewStore */; };
-		C5069CBE27C00155008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBD27C00155008EA761 /* ViewStore */; };
-		C5069CC027C00159008EA761 /* ViewStore in Frameworks */ = {isa = PBXBuildFile; productRef = C5069CBF27C00159008EA761 /* ViewStore */; };
 		C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
 		C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
 		C50D957528C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
 		C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
-		C51266FE280D996A009714FA /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51266FD280D996A009714FA /* ArchiveService.swift */; };
-		C51266FF280D996A009714FA /* ArchiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51266FD280D996A009714FA /* ArchiveService.swift */; };
-		C5126704280DA9D5009714FA /* ArchiveViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126703280DA9D5009714FA /* ArchiveViewStore.swift */; };
-		C5126705280DA9D5009714FA /* ArchiveViewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126703280DA9D5009714FA /* ArchiveViewStore.swift */; };
 		C5126707280DAC73009714FA /* DownloadedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126706280DAC73009714FA /* DownloadedListView.swift */; };
 		C5126708280DAC73009714FA /* DownloadedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5126706280DAC73009714FA /* DownloadedListView.swift */; };
 		C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513721C27EEF22C00E80F3D /* LinkdingClient.swift */; };
@@ -40,7 +32,6 @@
 		C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
 		C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
-		C54210BE2796A6D1000F07DC /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
 		C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C02796A6F9000F07DC /* SwiftUIX */; };
 		C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C22796A6FF000F07DC /* KeychainAccess */; };
 		C54210C52796A704000F07DC /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C54210C42796A704000F07DC /* SwiftJWT */; };
@@ -75,8 +66,6 @@
 		C59995092781B96700FE1EBA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59994F72781B96500FE1EBA /* ContentView.swift */; };
 		C599950A2781B96700FE1EBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C59994F82781B96700FE1EBA /* Assets.xcassets */; };
 		C599950B2781B96700FE1EBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C59994F82781B96700FE1EBA /* Assets.xcassets */; };
-		C59995162781B9E200FE1EBA /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
-		C59995172781B9E200FE1EBA /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
 		C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951C2781C93000FE1EBA /* SwiftJWT */; };
 		C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951F2781C93900FE1EBA /* SwiftJWT */; };
 		C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
@@ -109,6 +98,10 @@
 		C5EB796528D6EAC900D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796428D6EAC900D99716 /* Settings */; };
 		C5EB796728D6EB8800D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796628D6EB8800D99716 /* Settings */; };
 		C5EB796928D6EB8E00D99716 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796828D6EB8E00D99716 /* Settings */; };
+		C5EB796C28D6F46100D99716 /* Archive in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796B28D6F46100D99716 /* Archive */; };
+		C5EB796E28D6F46500D99716 /* Archive in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796D28D6F46500D99716 /* Archive */; };
+		C5EB797028D6FE1700D99716 /* Archive in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB796F28D6FE1700D99716 /* Archive */; };
+		C5EB797228D6FE1C00D99716 /* Archive in Frameworks */ = {isa = PBXBuildFile; productRef = C5EB797128D6FE1C00D99716 /* Archive */; };
 		C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F822784CA7A009CF84C /* SwiftUIX */; };
 		C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = C5F71F842784CA96009CF84C /* SwiftUIX */; };
 		C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAE10F279BE0ED007E763B /* ShareViewController.swift */; };
@@ -117,7 +110,6 @@
 		C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
-		C5FAE122279BE303007E763B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
 		C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
 		C5FAE127279BE31F007E763B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE126279BE31F007E763B /* KeychainAccess */; };
 		C5FAE129279BE324007E763B /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE128279BE324007E763B /* SwiftJWT */; };
@@ -172,8 +164,6 @@
 
 /* Begin PBXFileReference section */
 		C50D957228C0A02600512FF7 /* OverallAppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallAppState.swift; sourceTree = "<group>"; };
-		C51266FD280D996A009714FA /* ArchiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveService.swift; sourceTree = "<group>"; };
-		C5126703280DA9D5009714FA /* ArchiveViewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveViewStore.swift; sourceTree = "<group>"; };
 		C5126706280DAC73009714FA /* DownloadedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedListView.swift; sourceTree = "<group>"; };
 		C513721C27EEF22C00E80F3D /* LinkdingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingClient.swift; sourceTree = "<group>"; };
 		C513722127EEF44E00E80F3D /* LinkdingLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingLink.swift; sourceTree = "<group>"; };
@@ -196,7 +186,6 @@
 		C59994FD2781B96700FE1EBA /* aarle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995032781B96700FE1EBA /* aarle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995052781B96700FE1EBA /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
-		C59995152781B9E200FE1EBA /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
@@ -213,6 +202,7 @@
 		C5EB794F28D6E48200D99716 /* Types */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Types; sourceTree = "<group>"; };
 		C5EB795828D6E7A400D99716 /* AarleKeychain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AarleKeychain; sourceTree = "<group>"; };
 		C5EB796128D6EA7D00D99716 /* Settings */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Settings; sourceTree = "<group>"; };
+		C5EB796A28D6F44300D99716 /* Archive */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Archive; sourceTree = "<group>"; };
 		C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-iOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FAE10F279BE0ED007E763B /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		C5FAE112279BE0ED007E763B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -230,8 +220,8 @@
 				C5EB795128D6E49200D99716 /* Types in Frameworks */,
 				C5EB796328D6EAC300D99716 /* Settings in Frameworks */,
 				C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */,
+				C5EB796C28D6F46100D99716 /* Archive in Frameworks */,
 				C540CEF627AF9B3200432E18 /* Introspect in Frameworks */,
-				C5069CBA27C0013F008EA761 /* ViewStore in Frameworks */,
 				C5EB795A28D6E86700D99716 /* AarleKeychain in Frameworks */,
 				C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */,
 				C599951D2781C93000FE1EBA /* SwiftJWT in Frameworks */,
@@ -245,8 +235,8 @@
 				C5EB795328D6E49600D99716 /* Types in Frameworks */,
 				C5EB796528D6EAC900D99716 /* Settings in Frameworks */,
 				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
+				C5EB796E28D6F46500D99716 /* Archive in Frameworks */,
 				C540CEF827AF9B3A00432E18 /* Introspect in Frameworks */,
-				C5069CBC27C0014F008EA761 /* ViewStore in Frameworks */,
 				C5EB795C28D6E86D00D99716 /* AarleKeychain in Frameworks */,
 				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
 				C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */,
@@ -260,8 +250,8 @@
 				C5EB795528D6E49B00D99716 /* Types in Frameworks */,
 				C5EB796728D6EB8800D99716 /* Settings in Frameworks */,
 				C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */,
+				C5EB797028D6FE1700D99716 /* Archive in Frameworks */,
 				C540CEFA27AF9B3F00432E18 /* Introspect in Frameworks */,
-				C5069CBE27C00155008EA761 /* ViewStore in Frameworks */,
 				C5EB795E28D6E87300D99716 /* AarleKeychain in Frameworks */,
 				C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */,
 				C54210C52796A704000F07DC /* SwiftJWT in Frameworks */,
@@ -275,8 +265,8 @@
 				C5EB795728D6E49E00D99716 /* Types in Frameworks */,
 				C5EB796928D6EB8E00D99716 /* Settings in Frameworks */,
 				C5FAE12B279BE324007E763B /* SwiftUIX in Frameworks */,
+				C5EB797228D6FE1C00D99716 /* Archive in Frameworks */,
 				C540CEFC27AF9B4400432E18 /* Introspect in Frameworks */,
-				C5069CC027C00159008EA761 /* ViewStore in Frameworks */,
 				C5EB796028D6E87700D99716 /* AarleKeychain in Frameworks */,
 				C5FAE129279BE324007E763B /* SwiftJWT in Frameworks */,
 				C5FAE127279BE31F007E763B /* KeychainAccess in Frameworks */,
@@ -289,7 +279,6 @@
 		C53ED62527856CD900397910 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				C5126703280DA9D5009714FA /* ArchiveViewStore.swift */,
 				C50D957228C0A02600512FF7 /* OverallAppState.swift */,
 			);
 			path = Stores;
@@ -314,6 +303,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C5EB796A28D6F44300D99716 /* Archive */,
 				C5EB796128D6EA7D00D99716 /* Settings */,
 				C5EB795828D6E7A400D99716 /* AarleKeychain */,
 				C5EB794F28D6E48200D99716 /* Types */,
@@ -342,7 +332,6 @@
 				C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */,
 				C5FAE12E279BE384007E763B /* NSItemProvider+Async.swift */,
 				C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */,
-				C51266FD280D996A009714FA /* ArchiveService.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -369,7 +358,6 @@
 		C59995142781B9CF00FE1EBA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C59995152781B9E200FE1EBA /* Link.swift */,
 				C585F1FA27A5239500AB0A6F /* PinboardLink.swift */,
 				C513722127EEF44E00E80F3D /* LinkdingLink.swift */,
 				C5B9947328C1D11400DD59CE /* WindowRoutes.swift */,
@@ -444,10 +432,10 @@
 				C5782B392782E82800321138 /* KeychainAccess */,
 				C5F71F822784CA7A009CF84C /* SwiftUIX */,
 				C540CEF527AF9B3200432E18 /* Introspect */,
-				C5069CB927C0013F008EA761 /* ViewStore */,
 				C5EB795028D6E49200D99716 /* Types */,
 				C5EB795928D6E86700D99716 /* AarleKeychain */,
 				C5EB796228D6EAC300D99716 /* Settings */,
+				C5EB796B28D6F46100D99716 /* Archive */,
 			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* aarle.app */;
@@ -473,10 +461,10 @@
 				C5782B372782E53800321138 /* KeychainAccess */,
 				C5F71F842784CA96009CF84C /* SwiftUIX */,
 				C540CEF727AF9B3A00432E18 /* Introspect */,
-				C5069CBB27C0014F008EA761 /* ViewStore */,
 				C5EB795228D6E49600D99716 /* Types */,
 				C5EB795B28D6E86D00D99716 /* AarleKeychain */,
 				C5EB796428D6EAC900D99716 /* Settings */,
+				C5EB796D28D6F46500D99716 /* Archive */,
 			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* aarle.app */;
@@ -500,10 +488,10 @@
 				C54210C22796A6FF000F07DC /* KeychainAccess */,
 				C54210C42796A704000F07DC /* SwiftJWT */,
 				C540CEF927AF9B3F00432E18 /* Introspect */,
-				C5069CBD27C00155008EA761 /* ViewStore */,
 				C5EB795428D6E49B00D99716 /* Types */,
 				C5EB795D28D6E87300D99716 /* AarleKeychain */,
 				C5EB796628D6EB8800D99716 /* Settings */,
+				C5EB796F28D6FE1700D99716 /* Archive */,
 			);
 			productName = "Aarlo-macOS-ShareExtension";
 			productReference = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */;
@@ -527,10 +515,10 @@
 				C5FAE128279BE324007E763B /* SwiftJWT */,
 				C5FAE12A279BE324007E763B /* SwiftUIX */,
 				C540CEFB27AF9B4400432E18 /* Introspect */,
-				C5069CBF27C00159008EA761 /* ViewStore */,
 				C5EB795628D6E49E00D99716 /* Types */,
 				C5EB795F28D6E87700D99716 /* AarleKeychain */,
 				C5EB796828D6EB8E00D99716 /* Settings */,
+				C5EB797128D6FE1C00D99716 /* Archive */,
 			);
 			productName = "Aarlo-iOS-ShareExtension";
 			productReference = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */;
@@ -574,7 +562,6 @@
 				C5782B362782E53800321138 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				C5F71F812784CA7A009CF84C /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 				C540CEF427AF9B3200432E18 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
-				C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */,
 			);
 			productRefGroup = C59994FE2781B96700FE1EBA /* Products */;
 			projectDirPath = "";
@@ -637,8 +624,6 @@
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
 				C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
-				C59995162781B9E200FE1EBA /* Link.swift in Sources */,
-				C51266FE280D996A009714FA /* ArchiveService.swift in Sources */,
 				C585F1FB27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C5126707280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
@@ -653,7 +638,6 @@
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
-				C5126704280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
@@ -669,8 +653,6 @@
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
 				C5E4E3652786C833000E79F0 /* LinkEditView.swift in Sources */,
 				C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */,
-				C59995172781B9E200FE1EBA /* Link.swift in Sources */,
-				C51266FF280D996A009714FA /* ArchiveService.swift in Sources */,
 				C585F1FC27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C5126708280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
@@ -685,7 +667,6 @@
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
-				C5126705280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
@@ -702,7 +683,6 @@
 				C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
-				C54210BE2796A6D1000F07DC /* Link.swift in Sources */,
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
 				C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
@@ -718,7 +698,6 @@
 			files = (
 				C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
-				C5FAE122279BE303007E763B /* Link.swift in Sources */,
 				C513722527EEF44E00E80F3D /* LinkdingLink.swift in Sources */,
 				C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */,
@@ -1176,14 +1155,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hartlco/ViewStore";
-			requirement = {
-				branch = "async-stream";
-				kind = branch;
-			};
-		};
 		C540CEF427AF9B3200432E18 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
@@ -1219,26 +1190,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C5069CB927C0013F008EA761 /* ViewStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */;
-			productName = ViewStore;
-		};
-		C5069CBB27C0014F008EA761 /* ViewStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */;
-			productName = ViewStore;
-		};
-		C5069CBD27C00155008EA761 /* ViewStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */;
-			productName = ViewStore;
-		};
-		C5069CBF27C00159008EA761 /* ViewStore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5069CB827C0013F008EA761 /* XCRemoteSwiftPackageReference "ViewStore" */;
-			productName = ViewStore;
-		};
 		C540CEF527AF9B3200432E18 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C540CEF427AF9B3200432E18 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
@@ -1341,6 +1292,22 @@
 		C5EB796828D6EB8E00D99716 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
+		};
+		C5EB796B28D6F46100D99716 /* Archive */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Archive;
+		};
+		C5EB796D28D6F46500D99716 /* Archive */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Archive;
+		};
+		C5EB796F28D6FE1700D99716 /* Archive */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Archive;
+		};
+		C5EB797128D6FE1C00D99716 /* Archive */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Archive;
 		};
 		C5F71F822784CA7A009CF84C /* SwiftUIX */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,8 +1,7 @@
-//
-//  File.swift
-//  
-//
-//  Created by Martin Hartl on 18.09.22.
-//
-
 import Foundation
+
+public protocol ArchiveStateProtocol: ObservableObject {
+    var archiveLinks: [ArchiveLink] { get }
+    
+    func archiveLink(link: Link) async
+}

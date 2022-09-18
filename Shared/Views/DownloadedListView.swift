@@ -9,12 +9,11 @@ import SwiftUI
 import Types
 
 struct DownloadedListView: View {
-    @EnvironmentObject var archiveViewStore: ArchiveViewStore
-    @EnvironmentObject var overallAppState: OverallAppState
+    @ObservedObject var overallAppState: OverallAppState
 
     var body: some View {
         List(
-            archiveViewStore.archiveLinks,
+            overallAppState.archiveState.archiveLinks,
             selection: $overallAppState.selectedArchiveLink
         ) { link in
             NavigationLink(value: link) {
@@ -47,11 +46,5 @@ struct DownloadedListView: View {
                 #endif
             }
         }
-    }
-}
-
-struct DownloadedListView_Previews: PreviewProvider {
-    static var previews: some View {
-        DownloadedListView()
     }
 }

@@ -7,16 +7,17 @@
 
 import SwiftUI
 import SwiftUIX
+import Types
 
 struct ItemDetailView: View {
-    let link: Link
+    let link: Types.Link
 
     @ObservedObject var navigationState: NavigationState
 
     @State var shareSheetPresented = false
 
     init(
-        link: Link,
+        link: Types.Link,
         navigationState: NavigationState
     ) {
         self.link = link

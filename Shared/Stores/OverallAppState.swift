@@ -9,6 +9,7 @@ import Foundation
 import Types
 import AarleKeychain
 import Settings
+import Archive
 
 // TODO: check if all setter side effects were migrated
 enum ListType: Hashable, Equatable, Sendable {
@@ -156,11 +157,13 @@ final class OverallAppState: ObservableObject {
             favoriteTags: userDefaults.favoriteTags
         )
         self.settingsState = SettingsState(keychain: keychain)
+        self.archiveState = ArchiveState(userDefaults: userDefaults)
     }
 
     @Published var navigationState: NavigationState = .init()
     @Published var tagState: TagState
     @Published var settingsState: SettingsState
+    @Published var archiveState: ArchiveState
 
     @Published var selectedArchiveLink: ArchiveLink?
     @Published var presentedEditLink: Link?

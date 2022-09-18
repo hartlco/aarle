@@ -15,7 +15,7 @@ protocol LinkItemViewRepresentation {
     var tags: [String] { get }
 }
 
-extension Link: LinkItemViewRepresentation {}
+extension Types.Link: LinkItemViewRepresentation {}
 extension ArchiveLink: LinkItemViewRepresentation {}
 
 struct LinkItemView: View {
@@ -53,11 +53,3 @@ struct LinkItemView: View {
         return link.tags.joined(separator: " • ")
     }
 }
-
-#if DEBUG
-    struct LinkItemView_Previews: PreviewProvider {
-        static var previews: some View {
-            LinkItemView(link: Link.mock)
-        }
-    }
-#endif

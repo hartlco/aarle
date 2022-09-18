@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Types
 
 struct PinboardLink: Codable, Hashable {
     let href: String
