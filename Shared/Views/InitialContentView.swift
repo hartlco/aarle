@@ -62,15 +62,15 @@ struct InitialContentView: View {
             tagState: tagState,
             settingsState: overallAppState.settingsState
         )
-            .navigationTitle("aarle")
-            .alert(isPresented: $overallAppState.showLoadingError) {
-                networkingAlert
-            }
-            .alert(
-                isPresented: $overallAppState.tagState.showLoadingError
-            ) {
-                networkingAlert
-            }
+        .navigationTitle("aarle")
+        .alert(isPresented: $overallAppState.showLoadingError) {
+            networkingAlert
+        }
+        .alert(
+            isPresented: $overallAppState.tagState.showLoadingError
+        ) {
+            networkingAlert
+        }
     }
 
     private var networkingAlert: Alert {
