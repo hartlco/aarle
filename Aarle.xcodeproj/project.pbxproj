@@ -89,9 +89,6 @@
 		C5B9947528C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
 		C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
 		C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
-		C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
-		C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
-		C5C11F85279A9485006981CE /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
 		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
@@ -120,7 +117,6 @@
 		C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53ED62227856B5000397910 /* ShaarliClient.swift */; };
-		C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C11F82279A9485006981CE /* WebsiteInformation.swift */; };
 		C5FAE122279BE303007E763B /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995152781B9E200FE1EBA /* Link.swift */; };
 		C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54210C62796A8A1000F07DC /* UserDefaults+Suite.swift */; };
 		C5FAE127279BE31F007E763B /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5FAE126279BE31F007E763B /* KeychainAccess */; };
@@ -206,7 +202,6 @@
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		C5B9947328C1D11400DD59CE /* WindowRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutes.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
-		C5C11F82279A9485006981CE /* WebsiteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteInformation.swift; sourceTree = "<group>"; };
 		C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		C5C9BB5627895F580005086C /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -375,7 +370,6 @@
 			isa = PBXGroup;
 			children = (
 				C59995152781B9E200FE1EBA /* Link.swift */,
-				C5C11F82279A9485006981CE /* WebsiteInformation.swift */,
 				C585F1FA27A5239500AB0A6F /* PinboardLink.swift */,
 				C513722127EEF44E00E80F3D /* LinkdingLink.swift */,
 				C5B9947328C1D11400DD59CE /* WindowRoutes.swift */,
@@ -660,7 +654,6 @@
 				C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5126704280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
-				C5C11F83279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
@@ -693,7 +686,6 @@
 				C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C5126705280DA9D5009714FA /* ArchiveViewStore.swift in Sources */,
-				C5C11F84279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */,
 				C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 			);
@@ -714,7 +706,6 @@
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
 				C585F1FD27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
-				C5C11F85279A9485006981CE /* WebsiteInformation.swift in Sources */,
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
 				C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				C585F1F827A5231E00AB0A6F /* PinboardClient.swift in Sources */,
@@ -733,7 +724,6 @@
 				C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,
-				C5FAE120279BE303007E763B /* WebsiteInformation.swift in Sources */,
 				C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */,
 				C585F1FE27A5239500AB0A6F /* PinboardLink.swift in Sources */,
 				C5FAE110279BE0ED007E763B /* ShareViewController.swift in Sources */,

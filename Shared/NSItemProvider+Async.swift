@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Types
 
 #if os(iOS)
     import MobileCoreServices
