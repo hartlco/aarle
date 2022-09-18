@@ -44,7 +44,10 @@ struct InitialContentView: View {
                 }
             default:
                 if let link = navigationState.selectedLink {
-                    ItemDetailView(link: link)
+                    ItemDetailView(
+                        link: link,
+                        navigationState: overallAppState.navigationState
+                    )
                 } else {
                     Text("Select a link")
                 }

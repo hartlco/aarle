@@ -136,6 +136,8 @@ final class NavigationState: ObservableObject {
             print("Didset selectedLink: \(selectedLink?.url.absoluteString ?? "No URL")")
         }
     }
+    
+    @Published var showLinkEditorSidebar = false
 }
 
 @MainActor
@@ -162,7 +164,6 @@ final class OverallAppState: ObservableObject {
 
     @Published var selectedArchiveLink: ArchiveLink?
     @Published var presentedEditLink: Link?
-    @Published var showLinkEditorSidebar = false
     @Published var showsAddView = false {
         didSet {
             if showsAddView {

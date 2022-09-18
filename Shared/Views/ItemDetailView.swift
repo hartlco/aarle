@@ -11,14 +11,16 @@ import SwiftUIX
 struct ItemDetailView: View {
     let link: Link
 
-    @EnvironmentObject var overallAppState: OverallAppState
+    @ObservedObject var navigationState: NavigationState
 
     @State var shareSheetPresented = false
 
     init(
-        link: Link
+        link: Link,
+        navigationState: NavigationState
     ) {
         self.link = link
+        self.navigationState = navigationState
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -42,13 +44,13 @@ struct ItemDetailView: View {
                         }
                         ToolbarItem {
                             Button {
-                                overallAppState.showLinkEditorSidebar.toggle()
+                                navigationState.showLinkEditorSidebar.toggle()
                             } label: {
                                 Label("Show Edit Link", systemImage: "sidebar.right")
                             }
                         }
                     }
-                if overallAppState.showLinkEditorSidebar {
+                if navigationState.showLinkEditorSidebar {
                     LinkEditView(link: link, showCancelButton: false)
                         .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
                 }

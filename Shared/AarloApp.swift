@@ -48,7 +48,7 @@ struct AarleApp: App {
             CommandGroup(after: .sidebar) {
                 // TODO: Make title dynamic
                 Button("Show Link Editor") {
-                    overallAppState.showLinkEditorSidebar.toggle()
+                    overallAppState.navigationState.showLinkEditorSidebar.toggle()
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
                 .disabled(overallAppState.navigationState.selectedLink == nil)
