@@ -7,14 +7,24 @@
 
 import SwiftUI
 import Types
+import Archive
 
 struct DownloadedListView: View {
-    @ObservedObject var overallAppState: OverallAppState
+    @ObservedObject var archiveState: ArchiveState
+    @Binding var selectedArchiveLink: ArchiveLink?
+    
+    public init(
+        archiveState: ArchiveState,
+        selectedArchiveLink: Binding<ArchiveLink?>
+    ) {
+        self.archiveState = archiveState
+        self._selectedArchiveLink = selectedArchiveLink
+    }
 
     var body: some View {
         List(
-            overallAppState.archiveState.archiveLinks,
-            selection: $overallAppState.selectedArchiveLink
+            archiveState.archiveLinks,
+            selection: $selectedArchiveLink
         ) { link in
             NavigationLink(value: link) {
                 LinkItemView(link: link)

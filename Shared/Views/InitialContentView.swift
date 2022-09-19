@@ -31,7 +31,9 @@ struct InitialContentView: View {
             case let .tagScoped(tag):
                 ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState)
             case .downloaded:
-                DownloadedListView(overallAppState: overallAppState)
+                DownloadedListView(
+                    archiveState: overallAppState.archiveState,
+                    selectedArchiveLink: $overallAppState.selectedArchiveLink)
             #if os(iOS)
                 case .none:
                     Text("Select")

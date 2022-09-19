@@ -1,10 +1,3 @@
-//
-//  LinkItemView.swift
-//  Aarlo
-//
-//  Created by martinhartl on 02.01.22.
-//
-
 import SwiftUI
 import Types
 
@@ -20,10 +13,6 @@ extension ArchiveLink: LinkItemViewRepresentation {}
 
 struct LinkItemView: View {
     let link: LinkItemViewRepresentation
-
-    let columns = [
-        GridItem(.adaptive(minimum: 20, maximum: 200)),
-    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2.0) {
