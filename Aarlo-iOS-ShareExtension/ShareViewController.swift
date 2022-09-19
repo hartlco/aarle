@@ -12,20 +12,8 @@ import UIKit
 
 final class ShareViewController: UIViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
-    @StateObject var settingsViewStore = SettingsViewStore(
-        state: .init(keychain: keyChain),
-        environment: .init(keychain: keyChain),
-        reduceFunction: settingsReducer
-    )
 
-    @StateObject var tagViewStore = TagViewStore(
-        state: TagState(favoriteTags: UserDefaults.suite.favoriteTags),
-        environment: TagEnvironment(
-            client: UniversalClient(keychain: keyChain),
-            userDefaults: .suite
-        ),
-        reduceFunction: tagReducer
-    )
+    @EnvironmentObject var tagState: TagState
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +52,7 @@ final class ShareViewController: UIViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagViewStore).environmentObject(settingsViewStore)
+        }
 
         let hosting = UIHostingController(rootView: addView)
         addChild(hosting)

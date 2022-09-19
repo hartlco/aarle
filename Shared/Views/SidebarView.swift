@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftUIX
 import Types
+import Settings
 
 struct SidebarView<SettingsState>: View where SettingsState: SettingsStateProtocol {
     @ObservedObject var navigationState: NavigationState
@@ -71,7 +72,11 @@ struct SidebarView<SettingsState>: View where SettingsState: SettingsStateProtoc
                     .sheet(
                         isPresented: $navigationState.showsSettings,
                         content: {
-                            SettingsView()
+                            SidebarView<SettingsState>(
+                                navigationState: navigationState,
+                                tagState: tagState,
+                                settingsState: settingsState
+                            )
                         }
                     )
                 }
