@@ -38,6 +38,10 @@
 		C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */; };
 		C54D98D7278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
 		C54D98D8278AD1BE003B1EB9 /* Pasteboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */; };
+		C557ED2228D8272B0037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2128D8272B0037D9A6 /* Navigation */; };
+		C557ED2428D827310037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2328D827310037D9A6 /* Navigation */; };
+		C557ED2628D827360037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2528D827360037D9A6 /* Navigation */; };
+		C557ED2828D8273C0037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2728D8273C0037D9A6 /* Navigation */; };
 		C5760E4A2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
 		C5760E4B2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
@@ -66,10 +70,6 @@
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
 		C5AE15892788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
-		C5B9947428C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
-		C5B9947528C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
-		C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
-		C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B9947328C1D11400DD59CE /* WindowRoutes.swift */; };
 		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
@@ -164,6 +164,7 @@
 		C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAddView.swift; sourceTree = "<group>"; };
 		C54D98D6278AD1BE003B1EB9 /* Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pasteboard.swift; sourceTree = "<group>"; };
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
+		C557ED2028D8270F0037D9A6 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
 		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
@@ -179,7 +180,6 @@
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		C5B9947328C1D11400DD59CE /* WindowRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowRoutes.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
 		C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -210,6 +210,7 @@
 				C5EB795128D6E49200D99716 /* Types in Frameworks */,
 				C5EB796328D6EAC300D99716 /* Settings in Frameworks */,
 				C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */,
+				C557ED2228D8272B0037D9A6 /* Navigation in Frameworks */,
 				C5EB796C28D6F46100D99716 /* Archive in Frameworks */,
 				C540CEF627AF9B3200432E18 /* Introspect in Frameworks */,
 				C5EB795A28D6E86700D99716 /* AarleKeychain in Frameworks */,
@@ -225,6 +226,7 @@
 				C5EB795328D6E49600D99716 /* Types in Frameworks */,
 				C5EB796528D6EAC900D99716 /* Settings in Frameworks */,
 				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
+				C557ED2428D827310037D9A6 /* Navigation in Frameworks */,
 				C5EB796E28D6F46500D99716 /* Archive in Frameworks */,
 				C540CEF827AF9B3A00432E18 /* Introspect in Frameworks */,
 				C5EB795C28D6E86D00D99716 /* AarleKeychain in Frameworks */,
@@ -240,6 +242,7 @@
 				C5EB795528D6E49B00D99716 /* Types in Frameworks */,
 				C5EB796728D6EB8800D99716 /* Settings in Frameworks */,
 				C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */,
+				C557ED2628D827360037D9A6 /* Navigation in Frameworks */,
 				C5EB797028D6FE1700D99716 /* Archive in Frameworks */,
 				C540CEFA27AF9B3F00432E18 /* Introspect in Frameworks */,
 				C5EB795E28D6E87300D99716 /* AarleKeychain in Frameworks */,
@@ -255,6 +258,7 @@
 				C5EB795728D6E49E00D99716 /* Types in Frameworks */,
 				C5EB796928D6EB8E00D99716 /* Settings in Frameworks */,
 				C5FAE12B279BE324007E763B /* SwiftUIX in Frameworks */,
+				C557ED2828D8273C0037D9A6 /* Navigation in Frameworks */,
 				C5EB797228D6FE1C00D99716 /* Archive in Frameworks */,
 				C540CEFC27AF9B4400432E18 /* Introspect in Frameworks */,
 				C5EB796028D6E87700D99716 /* AarleKeychain in Frameworks */,
@@ -293,6 +297,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C557ED2028D8270F0037D9A6 /* Navigation */,
 				C5EB796A28D6F44300D99716 /* Archive */,
 				C5EB796128D6EA7D00D99716 /* Settings */,
 				C5EB795828D6E7A400D99716 /* AarleKeychain */,
@@ -315,7 +320,6 @@
 				C53ED62527856CD900397910 /* Stores */,
 				C5782B2F2781E96900321138 /* Views */,
 				C59995212781C95600FE1EBA /* Networking */,
-				C59995142781B9CF00FE1EBA /* Models */,
 				C59994F62781B96500FE1EBA /* AarloApp.swift */,
 				C59994F72781B96500FE1EBA /* ContentView.swift */,
 				C59994F82781B96700FE1EBA /* Assets.xcassets */,
@@ -343,14 +347,6 @@
 				C59995052781B96700FE1EBA /* macOS.entitlements */,
 			);
 			path = macOS;
-			sourceTree = "<group>";
-		};
-		C59995142781B9CF00FE1EBA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C5B9947328C1D11400DD59CE /* WindowRoutes.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		C599951E2781C93900FE1EBA /* Frameworks */ = {
@@ -424,6 +420,7 @@
 				C5EB795928D6E86700D99716 /* AarleKeychain */,
 				C5EB796228D6EAC300D99716 /* Settings */,
 				C5EB796B28D6F46100D99716 /* Archive */,
+				C557ED2128D8272B0037D9A6 /* Navigation */,
 			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* aarle.app */;
@@ -453,6 +450,7 @@
 				C5EB795B28D6E86D00D99716 /* AarleKeychain */,
 				C5EB796428D6EAC900D99716 /* Settings */,
 				C5EB796D28D6F46500D99716 /* Archive */,
+				C557ED2328D827310037D9A6 /* Navigation */,
 			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* aarle.app */;
@@ -480,6 +478,7 @@
 				C5EB795D28D6E87300D99716 /* AarleKeychain */,
 				C5EB796628D6EB8800D99716 /* Settings */,
 				C5EB796F28D6FE1700D99716 /* Archive */,
+				C557ED2528D827360037D9A6 /* Navigation */,
 			);
 			productName = "Aarlo-macOS-ShareExtension";
 			productReference = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */;
@@ -507,6 +506,7 @@
 				C5EB795F28D6E87700D99716 /* AarleKeychain */,
 				C5EB796828D6EB8E00D99716 /* Settings */,
 				C5EB797128D6FE1C00D99716 /* Archive */,
+				C557ED2728D8273C0037D9A6 /* Navigation */,
 			);
 			productName = "Aarlo-iOS-ShareExtension";
 			productReference = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */;
@@ -617,7 +617,6 @@
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
-				C5B9947428C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
@@ -644,7 +643,6 @@
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
-				C5B9947528C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
@@ -664,7 +662,6 @@
 				C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
 				C513721F27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
-				C5B9947628C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C54210C92796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C54210BD2796A6BD000F07DC /* ShaarliClaims.swift in Sources */,
 				C54210B82796A6A0000F07DC /* LinkAddView.swift in Sources */,
@@ -681,7 +678,6 @@
 				C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
-				C5B9947728C1D11400DD59CE /* WindowRoutes.swift in Sources */,
 				C5FAE11E279BE2FC007E763B /* ShaarliClaims.swift in Sources */,
 				C5FAE11F279BE2FF007E763B /* ShaarliClient.swift in Sources */,
 				C5FAE11D279BE2F4007E763B /* LinkAddView.swift in Sources */,
@@ -1204,6 +1200,22 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C599951B2781C93000FE1EBA /* XCRemoteSwiftPackageReference "Swift-JWT" */;
 			productName = SwiftJWT;
+		};
+		C557ED2128D8272B0037D9A6 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
+		};
+		C557ED2328D827310037D9A6 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
+		};
+		C557ED2528D827360037D9A6 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
+		};
+		C557ED2728D8273C0037D9A6 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
 		};
 		C5782B372782E53800321138 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

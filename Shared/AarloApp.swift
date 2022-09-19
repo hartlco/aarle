@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftUIX
 import Settings
 import Types
+import Navigation
 
 @main
 struct AarleApp: App {

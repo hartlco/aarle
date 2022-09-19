@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftUIX
 import WebKit
 import Types
+import Navigation
 
 struct ContentView: View {
     @EnvironmentObject var overallAppState: OverallAppState

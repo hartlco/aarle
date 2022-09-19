@@ -9,8 +9,9 @@ import SwiftUI
 import SwiftUIX
 import Types
 import Settings
+import Navigation
 
-struct SidebarView<SettingsState>: View where SettingsState: SettingsStateProtocol {
+struct SidebarView: View {
     @ObservedObject var navigationState: NavigationState
     @ObservedObject var tagState: TagState
     @ObservedObject var settingsState: SettingsState

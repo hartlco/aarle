@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftUIX
 import Types
+import Navigation
 
 struct ItemDetailView: View {
     let link: Types.Link

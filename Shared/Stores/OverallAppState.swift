@@ -10,24 +10,7 @@ import Types
 import AarleKeychain
 import Settings
 import Archive
-
-// TODO: check if all setter side effects were migrated
-enum ListType: Hashable, Equatable, Sendable {
-    case all
-    case tagScoped(Tag)
-    case downloaded
-
-    var scopedTags: [String] {
-        switch self {
-        case .all:
-            return []
-        case let .tagScoped(tag):
-            return [tag.name]
-        case .downloaded:
-            return []
-        }
-    }
-}
+import Navigation
 
 @MainActor final class TagState: ObservableObject {
     @Published var isLoading = false
@@ -105,40 +88,6 @@ enum ListType: Hashable, Equatable, Sendable {
         }
         return components.joined(separator: " ")
     }
-}
-
-final class NavigationState: ObservableObject {
-    #if os(macOS)
-        @Published var selectedListType: ListType = .all {
-            didSet {
-                print("Didset selectedListType: \(selectedListType)")
-            }
-        }
-    #else
-        @Published var selectedListType: ListType? {
-            didSet {
-                print("Didset selectedListType: \(selectedListType)")
-            }
-        }
-    #endif
-
-    @Published var showsSettings = false {
-        didSet {
-            if showsSettings {
-                #if os(macOS)
-                    WindowRoutes.settings.open()
-                #endif
-            }
-        }
-    }
-
-    @Published var selectedLink: Link? {
-        didSet {
-            print("Didset selectedLink: \(selectedLink?.url.absoluteString ?? "No URL")")
-        }
-    }
-    
-    @Published var showLinkEditorSidebar = false
 }
 
 @MainActor

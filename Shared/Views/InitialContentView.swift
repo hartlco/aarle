@@ -9,6 +9,7 @@ import Introspect
 import SwiftUI
 import Types
 import Settings
+import Navigation
 
 struct InitialContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all
@@ -58,7 +59,7 @@ struct InitialContentView: View {
     }
 
     private var sidebar: some View {
-        SidebarView<SettingsState>(
+        SidebarView(
             navigationState: navigationState,
             tagState: tagState,
             settingsState: overallAppState.settingsState
