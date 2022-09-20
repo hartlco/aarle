@@ -11,6 +11,7 @@ import SwiftUIX
 import WebKit
 import Types
 import Navigation
+import List
 
 struct ContentView: View {
     @EnvironmentObject var overallAppState: OverallAppState
@@ -21,12 +22,13 @@ struct ContentView: View {
     let title: String
     let listType: ListType
     @ObservedObject var navigationState: NavigationState
+    @ObservedObject var listState: ListState
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
         ZStack {
             list
-            if overallAppState.isLoading {
+            if listState.isLoading {
                 VStack {
                     ProgressView()
                         .padding()
@@ -44,7 +46,7 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    overallAppState.showsAddView = true
+                    overallAppState.navigationState.showsAddView = true
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
@@ -129,7 +131,7 @@ struct ContentView: View {
     }
 
     private func editAction(link: Types.Link) {
-        overallAppState.presentedEditLink = link
+        overallAppState.navigationState.presentedEditLink = link
         #if os(macOS)
             WindowRoutes.editLink.open()
         #endif

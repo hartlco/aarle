@@ -27,13 +27,13 @@ struct InitialContentView: View {
         } content: {
             switch navigationState.selectedListType {
             case .all:
-                ContentView(title: "Links", listType: .all, navigationState: navigationState)
+                ContentView(title: "Links", listType: .all, navigationState: navigationState, listState: overallAppState.listState)
             case let .tagScoped(tag):
-                ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState)
+                ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState, listState: overallAppState.listState)
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
-                    selectedArchiveLink: $overallAppState.selectedArchiveLink)
+                    selectedArchiveLink: $overallAppState.navigationState.selectedArchiveLink)
             #if os(iOS)
                 case .none:
                     Text("Select")
@@ -42,7 +42,7 @@ struct InitialContentView: View {
         } detail: {
             switch navigationState.selectedListType {
             case .downloaded:
-                if let archiveLink = overallAppState.selectedArchiveLink {
+                if let archiveLink = overallAppState.navigationState.selectedArchiveLink {
                     DataWebView(archiveLink: archiveLink)
                 } else {
                     Text("Select a archive")

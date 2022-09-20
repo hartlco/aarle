@@ -34,5 +34,22 @@ public final class NavigationState: ObservableObject {
     
     @Published public var showLinkEditorSidebar = false
     
+    @Published public var selectedArchiveLink: ArchiveLink?
+    
+    @Published public var presentedEditLink: Link? {
+        didSet {
+            print(presentedEditLink)
+        }
+    }
+    @Published public var showsAddView = false {
+        didSet {
+            if showsAddView {
+                #if os(macOS)
+                    WindowRoutes.addLink.open()
+                #endif
+            }
+        }
+    }
+    
     public init() { }
 }

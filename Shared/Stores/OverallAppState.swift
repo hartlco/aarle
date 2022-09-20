@@ -11,6 +11,7 @@ import AarleKeychain
 import Settings
 import Archive
 import Navigation
+import List
 
 @MainActor final class TagState: ObservableObject {
     @Published var isLoading = false
@@ -113,18 +114,7 @@ final class OverallAppState: ObservableObject {
     @Published var tagState: TagState
     @Published var settingsState: SettingsState
     @Published var archiveState: ArchiveState
-
-    @Published var selectedArchiveLink: ArchiveLink?
-    @Published var presentedEditLink: Link?
-    @Published var showsAddView = false {
-        didSet {
-            if showsAddView {
-                #if os(macOS)
-                    WindowRoutes.addLink.open()
-                #endif
-            }
-        }
-    }
+    @Published var listState: List.ListState = List.ListState()
 
     struct ListState {
         var links: [Link] = []
@@ -134,7 +124,6 @@ final class OverallAppState: ObservableObject {
         var didLoad = false
     }
 
-    @Published var isLoading = false
     @Published var listStates: [ListType: ListState] = [:]
     @Published var showLoadingError = false
 
@@ -171,12 +160,12 @@ final class OverallAppState: ObservableObject {
 
     func loadSearch(for type: ListType) async {
         do {
-            guard isLoading == false else { return }
+            guard listState.isLoading == false else { return }
 
             var listState = listStates[type] ?? ListState()
             listState.didLoad = true
 
-            isLoading = true
+            self.listState.isLoading = true
 
             listState.links = try await client.load(
                 filteredByTags: type.scopedTags,
@@ -185,22 +174,22 @@ final class OverallAppState: ObservableObject {
 
             listState.canLoadMore = listState.links.count == client.pageSize
             listStates[type] = listState
-            isLoading = false
+            self.listState.isLoading = false
         } catch {
             showLoadingError = true
-            isLoading = false
+            listState.isLoading = false
         }
     }
 
     func loadMoreIfNeeded(type: ListType, link: Link) async {
         do {
-            guard isLoading == false else { return }
+            guard listState.isLoading == false else { return }
 
             var listState = listStates[type] ?? ListState()
 
             guard link.id == listState.links.last?.id else { return }
 
-            isLoading = true
+            self.listState.isLoading = true
 
             let links = try await client.loadMore(
                 offset: listState.links.count,
@@ -210,7 +199,7 @@ final class OverallAppState: ObservableObject {
 
             listState.canLoadMore = links.count == client.pageSize
             listStates[type] = listState
-            isLoading = false
+            self.listState.isLoading = false
         } catch {
             showLoadingError = true
         }
@@ -237,8 +226,8 @@ final class OverallAppState: ObservableObject {
             return listState
         }
 
-        guard isLoading == false else { return }
-        isLoading = true
+        guard listState.isLoading == false else { return }
+        listState.isLoading = true
 
         do {
             try await client.deleteLink(link: link)
@@ -247,9 +236,9 @@ final class OverallAppState: ObservableObject {
                 listStates[key] = deleted(link: link, from: value)
             }
 
-            isLoading = false
+            listState.isLoading = false
         } catch {
-            isLoading = false
+            listState.isLoading = false
             showLoadingError = true
         }
     }
@@ -264,25 +253,25 @@ final class OverallAppState: ObservableObject {
             return listState
         }
 
-        guard isLoading == false else { return }
-        isLoading = true
+        guard listState.isLoading == false else { return }
+        listState.isLoading = true
 
         do {
             try await client.updateLink(link: link)
             for (key, value) in listStates {
                 listStates[key] = updated(link: link, from: value)
             }
-            isLoading = false
+            self.listState.isLoading = false
         } catch {
-            isLoading = false
+            self.listState.isLoading = false
             showLoadingError = true
         }
     }
 
     func add(link: PostLink) async {
         do {
-            guard isLoading == false else { return }
-            isLoading = true
+            guard listState.isLoading == false else { return }
+            listState.isLoading = true
 
             try await client.createLink(link: link)
             let tempLink = Link(
@@ -314,9 +303,9 @@ final class OverallAppState: ObservableObject {
                 }
             }
 
-            isLoading = false
+            listState.isLoading = false
         } catch {
-            isLoading = false
+            listState.isLoading = false
             showLoadingError = true
         }
     }

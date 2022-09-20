@@ -11,7 +11,7 @@ import SwiftUIX
 import Settings
 import Types
 import Navigation
-
+// TODO: Split up all states
 @main
 struct AarleApp: App {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
@@ -35,7 +35,7 @@ struct AarleApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {
                 Button("New Link") {
-                    overallAppState.showsAddView = true
+                    overallAppState.navigationState.showsAddView = true
                 }
                 .keyboardShortcut("n", modifiers: [.command])
             }
@@ -69,7 +69,7 @@ struct AarleApp: App {
                         return
                     }
 
-                    overallAppState.presentedEditLink = selectedLink
+                    overallAppState.navigationState.presentedEditLink = selectedLink
                 }
                 .keyboardShortcut("e", modifiers: [.command])
                 .disabled(overallAppState.navigationState.selectedLink == nil)
@@ -104,6 +104,7 @@ struct AarleApp: App {
             overallAppState: overallAppState
         ).handlesExternalEvents(matching: Set([WindowRoutes.addLink.rawValue]))
         LinkEditScene(
+            navigationState: overallAppState.navigationState,
             overallAppState: overallAppState
         ).handlesExternalEvents(matching: Set([WindowRoutes.editLink.rawValue]))
         #if os(macOS)
@@ -129,7 +130,7 @@ struct LinkAddScene: Scene {
     var body: some Scene {
         WindowGroup {
             LinkAddView().onDisappear {
-                overallAppState.showsAddView = false
+                overallAppState.navigationState.showsAddView = false
             }
             .environmentObject(overallAppState)
         }
@@ -137,20 +138,21 @@ struct LinkAddScene: Scene {
 }
 
 struct LinkEditScene: Scene {
+    @ObservedObject var navigationState: NavigationState
     @ObservedObject var overallAppState: OverallAppState
 
     var body: some Scene {
         WindowGroup {
-            if let presentedEditLink = overallAppState.presentedEditLink {
+            if let presentedEditLink = navigationState.presentedEditLink {
                 LinkEditView(
                     link: presentedEditLink,
                     showCancelButton: false
                 ).onDisappear {
-                    overallAppState.showsAddView = false
+                    navigationState.showsAddView = false
                 }
                 .environmentObject(overallAppState)
             } else {
-                Text("Edit Link")
+                Text("Edit Link 2")
             }
         }
     }

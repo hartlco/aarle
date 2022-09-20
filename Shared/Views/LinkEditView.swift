@@ -41,14 +41,14 @@ struct LinkEditView: View {
             form.toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel", role: .cancel) {
-                        overallAppState.presentedEditLink = nil
+                        overallAppState.navigationState.presentedEditLink = nil
                     }.hidden(!showCancelButton)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         save()
                         if showCancelButton {
-                            overallAppState.presentedEditLink = nil
+                            overallAppState.navigationState.presentedEditLink = nil
                         }
                     }
                 }
@@ -129,14 +129,14 @@ struct LinkEditView: View {
                         Spacer()
                         if showCancelButton {
                             Button("Cancel", role: .cancel) {
-                                overallAppState.presentedEditLink = nil
+                                overallAppState.navigationState.presentedEditLink = nil
                             }
                             .keyboardShortcut(.cancelAction)
                         }
                         Button("Save") {
                             save()
                             if showCancelButton {
-                                overallAppState.presentedEditLink = nil
+                                overallAppState.navigationState.presentedEditLink = nil
                             }
                         }
                         .buttonStyle(.borderedProminent)
