@@ -51,7 +51,7 @@ struct AarleApp: App {
                 Button("Refresh") {
                     Task {
                         if let selectedListType = overallAppState.navigationState.selectedListType {
-                            await overallAppState.loadSearch(for: selectedListType)
+                            await overallAppState.listState.loadSearch(for: selectedListType)
                         }
                     }
                     Task {
@@ -64,7 +64,7 @@ struct AarleApp: App {
                 // TODO: Use same implementation as right click menu
                 Button("Edit link") {
                     guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
                     else {
                         return
                     }
@@ -75,7 +75,7 @@ struct AarleApp: App {
                 .disabled(overallAppState.navigationState.selectedLink == nil)
                 Button("Copy link to clipboard") {
                     guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
                     else {
                         return
                     }
@@ -86,14 +86,14 @@ struct AarleApp: App {
                 .disabled(overallAppState.navigationState.selectedLink == nil)
                 Button("Delete") {
                     guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.link(for: selectedLinkID)
+                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
                     else {
                         return
                     }
 
                     // TODO: Clear selection after delete
                     Task {
-                        await overallAppState.delete(link: selectedLink)
+                        await overallAppState.listState.delete(link: selectedLink)
                     }
                 }
                 .keyboardShortcut(.delete, modifiers: [.command])

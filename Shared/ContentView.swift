@@ -12,10 +12,9 @@ import WebKit
 import Types
 import Navigation
 import List
+import Archive
 
 struct ContentView: View {
-    @EnvironmentObject var overallAppState: OverallAppState
-
     @State var searchText = ""
     private let pasteboard = DefaultPasteboard()
 
@@ -23,6 +22,7 @@ struct ContentView: View {
     let listType: ListType
     @ObservedObject var navigationState: NavigationState
     @ObservedObject var listState: ListState
+    @ObservedObject var archiveState: ArchiveState
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
@@ -37,7 +37,7 @@ struct ContentView: View {
             }
         }
         #if os(iOS)
-        .sheet(item: $overallAppState.presentedEditLink) { link in
+        .sheet(item: $navigationState.presentedEditLink) { link in
             NavigationView {
                 LinkEditView(link: link, showCancelButton: true)
             }
@@ -46,13 +46,13 @@ struct ContentView: View {
         .toolbar {
             ToolbarItem {
                 Button {
-                    overallAppState.navigationState.showsAddView = true
+                    navigationState.showsAddView = true
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
                 #if os(iOS)
                 .sheet(
-                    isPresented: $overallAppState.showsAddView,
+                    isPresented: $navigationState.showsAddView,
                     onDismiss: nil,
                     content: {
                         LinkAddView()
@@ -63,11 +63,11 @@ struct ContentView: View {
         }
         .navigationTitle(title)
         .onAppear {
-            if overallAppState.didLoad(listType: listType) {
+            if listState.didLoad(listType: listType) {
                 return
             }
             Task {
-                await overallAppState.loadSearch(for: listType)
+                await listState.loadSearch(for: listType)
             }
         }
         .id(listType)
@@ -75,7 +75,7 @@ struct ContentView: View {
 
     private var list: some View {
         List(selection: $navigationState.selectedLink) {
-            ForEach(overallAppState.links(for: listType)) { link in
+            ForEach(listState.links(for: listType)) { link in
                 NavigationLink(value: link) {
                     LinkItemView(link: link)
                 }.contextMenu {
@@ -85,25 +85,25 @@ struct ContentView: View {
                     Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
                     Button(role: .destructive) {
                         Task {
-                            await overallAppState.delete(link: link)
+                            await listState.delete(link: link)
                         }
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
                     Button("Download") {
                         Task {
-                            await overallAppState.archiveState.archiveLink(link: link)
+                            await archiveState.archiveLink(link: link)
                         }
                     }
                 }
             }
-            if overallAppState.canLoadMore(for: listType) {
+            if listState.canLoadMore(for: listType) {
                 HStack {
                     Spacer()
                     Button {
-                        guard let lastLink = overallAppState.links(for: listType).last else { return }
+                        guard let lastLink = listState.links(for: listType).last else { return }
                         Task {
-                            await overallAppState.loadMoreIfNeeded(type: listType, link: lastLink)
+                            await listState.loadMoreIfNeeded(type: listType, link: lastLink)
                         }
                     } label: {
                         Label("Load More", systemImage: "ellipsis")
@@ -117,21 +117,21 @@ struct ContentView: View {
         }
         .searchable(text: $searchText)
         .onSubmit(of: .search) {
-            overallAppState.setSearchText(text: searchText, for: listType)
+            listState.setSearchText(text: searchText, for: listType)
             Task {
-                await overallAppState.loadSearch(for: listType)
+                await listState.loadSearch(for: listType)
             }
         }
         .refreshable {
             Task {
-                await overallAppState.loadSearch(for: listType)
+                await listState.loadSearch(for: listType)
             }
         }
         .listStyle(PlainListStyle())
     }
 
     private func editAction(link: Types.Link) {
-        overallAppState.navigationState.presentedEditLink = link
+        navigationState.presentedEditLink = link
         #if os(macOS)
             WindowRoutes.editLink.open()
         #endif

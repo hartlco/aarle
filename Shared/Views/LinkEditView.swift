@@ -163,7 +163,7 @@ struct LinkEditView: View {
         )
 
         Task {
-            await overallAppState.update(link: newLink)
+            await overallAppState.listState.update(link: newLink)
         }
     }
 }

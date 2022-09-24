@@ -27,9 +27,21 @@ struct InitialContentView: View {
         } content: {
             switch navigationState.selectedListType {
             case .all:
-                ContentView(title: "Links", listType: .all, navigationState: navigationState, listState: overallAppState.listState)
+                ContentView(
+                    title: "Links",
+                    listType: .all,
+                    navigationState: navigationState,
+                    listState: overallAppState.listState,
+                    archiveState: overallAppState.archiveState
+                )
             case let .tagScoped(tag):
-                ContentView(title: tag.name, listType: .tagScoped(tag), navigationState: navigationState, listState: overallAppState.listState)
+                ContentView(
+                    title: tag.name,
+                    listType: .tagScoped(tag),
+                    navigationState: navigationState,
+                    listState: overallAppState.listState,
+                    archiveState: overallAppState.archiveState
+                )
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
@@ -67,7 +79,7 @@ struct InitialContentView: View {
             settingsState: overallAppState.settingsState
         )
         .navigationTitle("aarle")
-        .alert(isPresented: $overallAppState.showLoadingError) {
+        .alert(isPresented: $overallAppState.listState.showLoadingError) {
             networkingAlert
         }
         .alert(

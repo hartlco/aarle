@@ -110,7 +110,7 @@ struct LinkAddView: View {
         )
 
         Task {
-            await overallAppState.add(link: newLink)
+            await overallAppState.listState.add(link: newLink)
             presentationMode.dismiss()
         }
     }
