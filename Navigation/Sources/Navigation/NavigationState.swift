@@ -31,25 +31,29 @@ public final class NavigationState: ObservableObject {
             print("Didset selectedLink: \(selectedLink?.url.absoluteString ?? "No URL")")
         }
     }
-    
+
     @Published public var showLinkEditorSidebar = false
-    
+
     @Published public var selectedArchiveLink: ArchiveLink?
-    
+
     @Published public var presentedEditLink: Link? {
         didSet {
-            print(presentedEditLink)
+            if presentedEditLink != nil {
+#if os(macOS)
+                WindowRoutes.editLink.open()
+#endif
+            }
         }
     }
     @Published public var showsAddView = false {
         didSet {
             if showsAddView {
-                #if os(macOS)
-                    WindowRoutes.addLink.open()
-                #endif
+#if os(macOS)
+                WindowRoutes.addLink.open()
+#endif
             }
         }
     }
-    
+
     public init() { }
 }

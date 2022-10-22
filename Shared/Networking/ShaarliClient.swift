@@ -132,13 +132,13 @@ final class ShaarliClient: BookmarkClient {
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
         let dataString = String(data: data, encoding: .utf8)
         print(dataString)
     }
 
     func loadTags() async throws -> [Tag] {
-        guard var URL = URL(string: "\(apiEndpoint)/tags") else {
+        guard let URL = URL(string: "\(apiEndpoint)/tags") else {
             throw ClientError.unknownURL
         }
 

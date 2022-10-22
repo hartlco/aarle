@@ -28,7 +28,15 @@ public struct IntRepresentedString: Codable, Equatable, Hashable, Sendable {
 }
 
 public struct Link: Codable, Identifiable, Hashable, Sendable {
-    public init(id: String, url: URL, title: String? = nil, description: String? = nil, tags: [String], `private`: Bool, created: Date) {
+    public init(
+        id: String,
+        url: URL,
+        title: String? = nil,
+        description: String? = nil,
+        tags: [String],
+        `private`: Bool,
+        created: Date
+    ) {
         self.id = id
         self.url = url
         self.title = title
@@ -37,7 +45,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         self.`private` = `private`
         self.created = created
     }
-    
+
     @IntRepresentedString public var id: String
     public let url: URL
     public let title: String?
@@ -49,7 +57,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
 
     public let created: Date
 //    let updated: Date
-    
+
 #if DEBUG
     public static let mock = Link(
         id: "1",
@@ -64,7 +72,14 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
 }
 
 public struct PostLink: Codable {
-    public init(url: URL, title: String? = nil, description: String? = nil, tags: [String], `private`: Bool, created: Date) {
+    public init(
+        url: URL,
+        title: String? = nil,
+        description: String? = nil,
+        tags: [String],
+        `private`: Bool,
+        created: Date
+    ) {
         self.url = url
         self.title = title
         self.description = description
@@ -72,7 +87,7 @@ public struct PostLink: Codable {
         self.`private` = `private`
         self.created = created
     }
-    
+
     public let url: URL
     public let title: String?
     public let description: String?

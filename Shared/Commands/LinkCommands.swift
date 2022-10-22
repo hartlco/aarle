@@ -9,11 +9,9 @@ struct LinkCommands: Commands {
     @ObservedObject var navigationState: NavigationState
     @ObservedObject var listState: ListState
     let pasteboard: Pasteboard
-    
+
     var body: some Commands {
         CommandMenu("Link") {
-            // TODO: Use same implementation as right click menu
-            // TODO: Ediot not working
             Button("Edit link") {
                 guard let selectedLinkID = navigationState.selectedLink?.id,
                       let selectedLink = listState.link(for: selectedLinkID)

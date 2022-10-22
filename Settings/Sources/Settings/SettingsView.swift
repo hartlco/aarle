@@ -4,7 +4,7 @@ import Types
 public struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var settingsState: SettingsState
-    
+
     public init(settingsState: SettingsState) {
         self.settingsState = settingsState
     }

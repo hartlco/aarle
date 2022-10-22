@@ -6,7 +6,7 @@ public struct WebsiteInformation: Codable {
         self.description = description
         self.baseURI = baseURI
     }
-    
+
     public var title: String?
     public var description: String?
     public var baseURI: String?
@@ -14,7 +14,8 @@ public struct WebsiteInformation: Codable {
 
 public extension WebsiteInformation {
     init?(fromJavaScriptPreprocessing dictionary: NSDictionary?) {
-        guard let dictionary = dictionary?["NSExtensionJavaScriptPreprocessingResultsKey"] as? [String: String] else { return nil }
+        guard let dictionary = dictionary?["NSExtensionJavaScriptPreprocessingResultsKey"] as? [String: String]
+        else { return nil }
 
         title = dictionary["title"]
         description = dictionary["description"]

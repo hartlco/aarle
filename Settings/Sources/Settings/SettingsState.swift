@@ -17,16 +17,16 @@ public final class SettingsState: ObservableObject, SettingsStateProtocol {
             keychain.setEndpoint(endpoint: endpoint)
         }
     }
-    
+
     private let keychain: AarleKeychain
-    
+
     public init(keychain: AarleKeychain) {
         self.keychain = keychain
         self.accountType = keychain.accountType
         self.secret = keychain.secret
         self.endpoint = keychain.endpoint
     }
-    
+
     public var isLoggedOut: Bool {
         switch self.accountType {
         case .shaarli, .linkding:

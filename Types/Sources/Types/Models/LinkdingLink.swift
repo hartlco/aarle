@@ -6,14 +6,22 @@
 //
 
 import Foundation
-import Types
 
 public struct LinkdingResult: Codable {
     public let results: [LinkdingLink]
 }
 
 public struct LinkdingLink: Codable, Hashable {
-    public init(id: Int, url: URL, title: String? = nil, description: String? = nil, websiteTitle: String? = nil, websiteDescription: String? = nil, tagNames: [String]? = nil, dateAdded: Date) {
+    public init(
+        id: Int,
+        url: URL,
+        title: String? = nil,
+        description: String? = nil,
+        websiteTitle: String? = nil,
+        websiteDescription: String? = nil,
+        tagNames: [String]? = nil,
+        dateAdded: Date
+    ) {
         self.id = id
         self.url = url
         self.title = title
@@ -23,7 +31,7 @@ public struct LinkdingLink: Codable, Hashable {
         self.tagNames = tagNames
         self.dateAdded = dateAdded
     }
-    
+
     public let id: Int
     public let url: URL
     public let title: String?
@@ -69,7 +77,7 @@ public struct LinkdingPostLink: Codable {
         self.description = description
         self.tagNames = tagNames
     }
-    
+
     public let url: URL
     public let title: String?
     public let description: String?
@@ -80,6 +88,6 @@ public struct LinkdingTagResult: Codable {
     public init(results: [Tag]) {
         self.results = results
     }
-    
+
     public let results: [Tag]
 }

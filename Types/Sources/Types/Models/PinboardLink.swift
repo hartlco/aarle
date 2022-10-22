@@ -1,7 +1,14 @@
 import Foundation
 
 public struct PinboardLink: Codable, Hashable {
-    public init(href: String, description: String? = nil, extended: String? = nil, tags: String? = nil, time: Date, shared: String) {
+    public init(
+        href: String,
+        description: String? = nil,
+        extended: String? = nil,
+        tags: String? = nil,
+        time: Date,
+        shared: String
+    ) {
         self.href = href
         self.description = description
         self.extended = extended
@@ -9,7 +16,7 @@ public struct PinboardLink: Codable, Hashable {
         self.time = time
         self.shared = shared
     }
-    
+
     public let href: String
     public let description: String?
     public let extended: String?

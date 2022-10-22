@@ -132,8 +132,5 @@ struct ContentView: View {
 
     private func editAction(link: Types.Link) {
         navigationState.presentedEditLink = link
-        #if os(macOS)
-            WindowRoutes.editLink.open()
-        #endif
     }
 }

@@ -13,7 +13,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Archive",
-            targets: ["Archive"]),
+            targets: ["Archive"])
     ],
     dependencies: [
         .package(path: "../Types")
@@ -26,6 +26,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "ArchiveTests",
-            dependencies: ["Archive"]),
+            dependencies: ["Archive"])
     ]
 )
