@@ -70,6 +70,8 @@
 		C59995202781C93900FE1EBA /* SwiftJWT in Frameworks */ = {isa = PBXBuildFile; productRef = C599951F2781C93900FE1EBA /* SwiftJWT */; };
 		C59995232781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
 		C59995242781C97C00FE1EBA /* ShaarliClaims.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59995222781C97C00FE1EBA /* ShaarliClaims.swift */; };
+		C5AE05052903B8D400F4C0E5 /* LinkCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE05042903B8D400F4C0E5 /* LinkCommands.swift */; };
+		C5AE05062903B99A00F4C0E5 /* LinkCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE05042903B8D400F4C0E5 /* LinkCommands.swift */; };
 		C5AE1585278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
@@ -183,6 +185,7 @@
 		C59995032781B96700FE1EBA /* aarle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aarle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C59995052781B96700FE1EBA /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		C59995222781C97C00FE1EBA /* ShaarliClaims.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaarliClaims.swift; sourceTree = "<group>"; };
+		C5AE05042903B8D400F4C0E5 /* LinkCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCommands.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
@@ -327,6 +330,7 @@
 		C59994F52781B96500FE1EBA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C5AE05032903B8C700F4C0E5 /* Commands */,
 				C53ED62527856CD900397910 /* Stores */,
 				C5782B2F2781E96900321138 /* Views */,
 				C59995212781C95600FE1EBA /* Networking */,
@@ -376,6 +380,14 @@
 				C513721C27EEF22C00E80F3D /* LinkdingClient.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		C5AE05032903B8C700F4C0E5 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				C5AE05042903B8D400F4C0E5 /* LinkCommands.swift */,
+			);
+			path = Commands;
 			sourceTree = "<group>";
 		};
 		C5C9BB5327895F580005086C /* Aarlo-macOS-ShareExtension */ = {
@@ -629,6 +641,7 @@
 				C5126707280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C72796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995082781B96700FE1EBA /* ContentView.swift in Sources */,
+				C5AE05052903B8D400F4C0E5 /* LinkCommands.swift in Sources */,
 				C59995062781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
@@ -655,6 +668,7 @@
 				C5126708280DAC73009714FA /* DownloadedListView.swift in Sources */,
 				C54210C82796A8A1000F07DC /* UserDefaults+Suite.swift in Sources */,
 				C59995092781B96700FE1EBA /* ContentView.swift in Sources */,
+				C5AE05062903B99A00F4C0E5 /* LinkCommands.swift in Sources */,
 				C59995072781B96700FE1EBA /* AarloApp.swift in Sources */,
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,

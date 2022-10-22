@@ -10,7 +10,9 @@ import SwiftUI
 import SwiftUIX
 import Settings
 import Types
+import List
 import Navigation
+
 // TODO: Split up all states
 @main
 struct AarleApp: App {
@@ -50,9 +52,7 @@ struct AarleApp: App {
             CommandMenu("List") {
                 Button("Refresh") {
                     Task {
-                        if let selectedListType = overallAppState.navigationState.selectedListType {
-                            await overallAppState.listState.loadSearch(for: selectedListType)
-                        }
+                        await overallAppState.listState.loadSearch(for: overallAppState.navigationState.selectedListType)
                     }
                     Task {
                         await overallAppState.tagState.load()
@@ -60,45 +60,11 @@ struct AarleApp: App {
                 }
                 .keyboardShortcut("R", modifiers: [.command])
             }
-            CommandMenu("Link") {
-                // TODO: Use same implementation as right click menu
-                Button("Edit link") {
-                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
-                    else {
-                        return
-                    }
-
-                    overallAppState.navigationState.presentedEditLink = selectedLink
-                }
-                .keyboardShortcut("e", modifiers: [.command])
-                .disabled(overallAppState.navigationState.selectedLink == nil)
-                Button("Copy link to clipboard") {
-                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
-                    else {
-                        return
-                    }
-
-                    pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
-                }
-                .keyboardShortcut("C", modifiers: [.command, .shift])
-                .disabled(overallAppState.navigationState.selectedLink == nil)
-                Button("Delete") {
-                    guard let selectedLinkID = overallAppState.navigationState.selectedLink?.id,
-                          let selectedLink = overallAppState.listState.link(for: selectedLinkID)
-                    else {
-                        return
-                    }
-
-                    // TODO: Clear selection after delete
-                    Task {
-                        await overallAppState.listState.delete(link: selectedLink)
-                    }
-                }
-                .keyboardShortcut(.delete, modifiers: [.command])
-                .disabled(overallAppState.navigationState.selectedLink == nil)
-            }
+            LinkCommands(
+                navigationState: overallAppState.navigationState,
+                listState: overallAppState.listState,
+                pasteboard: pasteboard
+            )
         }
         LinkAddScene(
             overallAppState: overallAppState
