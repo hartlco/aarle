@@ -29,6 +29,18 @@ struct DownloadedListView: View {
             NavigationLink(value: link) {
                 LinkItemView(link: link)
             }
+            .contextMenu {
+                Button(role: .destructive) {
+                    do {
+                        try archiveState.deleteLink(link: link)
+                        selectedArchiveLink = nil
+                    } catch {
+                        // TODO: Error Handling
+                    }
+                } label: {
+                    Label("Delete Download", systemImage: "trash")
+                }
+            }
         }
         .navigationDestination(for: ArchiveLink.self) { link in
             DataWebView(archiveLink: link)

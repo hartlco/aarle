@@ -219,7 +219,7 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
 
         func updateNSView(_ nsView: WKWebView, context _: Context) {
             DispatchQueue.main.async {
-                let data = try! Data(contentsOf: archiveLink.dataURL)
+                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { return }
                 let baseURL = URL(string: "about:blank")!
                 let mimeType = UTType.webArchive.preferredMIMEType!
                 nsView.load(

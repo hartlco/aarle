@@ -11,9 +11,14 @@ import Types
 
 final class ArchiveService: NSObject {
     private let userDefaults: UserDefaults
+    private let fileManager: FileManager
 
-    init(userDefaults: UserDefaults) {
+    init(
+        userDefaults: UserDefaults,
+        fileManager: FileManager = FileManager.default
+    ) {
         self.userDefaults = userDefaults
+        self.fileManager = fileManager
 
         super.init()
     }
@@ -43,6 +48,13 @@ final class ArchiveService: NSObject {
 
         var links = userDefaults.archiveLinks
         links.append(archiveLink)
+        userDefaults.archiveLinks = links
+    }
+
+    func delete(link: ArchiveLink) throws {
+        try fileManager.removeItem(at: link.dataURL)
+        var links = userDefaults.archiveLinks
+        links.removeAll(where: { $0.id == link.id })
         userDefaults.archiveLinks = links
     }
 
