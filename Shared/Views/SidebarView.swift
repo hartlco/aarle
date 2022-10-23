@@ -73,9 +73,7 @@ struct SidebarView: View {
                     .sheet(
                         isPresented: $navigationState.showsSettings,
                         content: {
-                            SidebarView<SettingsState>(
-                                navigationState: navigationState,
-                                tagState: tagState,
+                            SettingsView(
                                 settingsState: settingsState
                             )
                         }

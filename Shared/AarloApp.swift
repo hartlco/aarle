@@ -52,7 +52,12 @@ struct AarleApp: App {
             CommandMenu("List") {
                 Button("Refresh") {
                     Task {
+#if os(macOS)
                         await overallAppState.listState.loadSearch(for: overallAppState.navigationState.selectedListType)
+#else
+                        guard let selectedListType = overallAppState.navigationState.selectedListType else { return }
+                        await overallAppState.listState.loadSearch(for: selectedListType)
+#endif
                     }
                     Task {
                         await overallAppState.tagState.load()
