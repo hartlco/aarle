@@ -68,6 +68,7 @@ struct AarleApp: App {
             LinkCommands(
                 navigationState: overallAppState.navigationState,
                 listState: overallAppState.listState,
+                archiveState: overallAppState.archiveState,
                 pasteboard: pasteboard
             )
         }
