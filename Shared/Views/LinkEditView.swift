@@ -94,9 +94,7 @@ struct LinkEditView: View {
 
     private var macOSForm: some View {
         HStack {
-            Spacer()
             VStack {
-                Spacer()
                 Form {
                     TextField("Link:", text: $urlString)
                         .disableAutocorrection(true)
@@ -125,6 +123,7 @@ struct LinkEditView: View {
                             )
                         }
                     }
+                    Spacer()
                     HStack {
                         Spacer()
                         if showCancelButton {
@@ -143,10 +142,10 @@ struct LinkEditView: View {
                         .keyboardShortcut("s", modifiers: [.command])
                     }
                 }
-                Spacer()
             }
             Spacer()
         }
+        .padding()
     }
 
     private func save() {

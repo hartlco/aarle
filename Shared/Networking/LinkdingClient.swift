@@ -113,8 +113,16 @@ final class LinkdingClient: BookmarkClient {
         request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let postLink = PostLink(link: link)
-        let linkData = try JSONEncoder().encode(postLink)
+        let postLink = LinkdingPostLink(
+            url: link.url,
+            title: link.title,
+            description: link.description,
+            tagNames: link.tags
+        )
+
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let linkData = try encoder.encode(postLink)
         request.httpBody = linkData
 
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)

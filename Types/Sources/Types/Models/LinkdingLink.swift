@@ -75,7 +75,20 @@ public struct LinkdingPostLink: Codable {
         self.url = url
         self.title = title
         self.description = description
-        self.tagNames = tagNames
+
+        if let tagNames {
+            let tagNames: [String] = tagNames.compactMap { string in
+                if string.isEmpty {
+                    return nil
+                }
+
+                return string
+            }
+
+            self.tagNames = tagNames
+        } else {
+            self.tagNames = nil
+        }
     }
 
     public let url: URL
