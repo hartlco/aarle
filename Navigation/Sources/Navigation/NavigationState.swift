@@ -11,7 +11,7 @@ public final class NavigationState: ObservableObject {
     #else
         @Published public var selectedListType: ListType? {
             didSet {
-                print("Didset selectedListType: \(selectedListType)")
+                print("Didset selectedListType: \(String(description: selectedListType))")
             }
         }
     #endif

@@ -10,6 +10,7 @@ import SwiftUIX
 import Types
 import Settings
 import Navigation
+import Tag
 
 struct SidebarView: View {
     @ObservedObject var navigationState: NavigationState

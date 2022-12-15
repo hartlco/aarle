@@ -13,7 +13,6 @@ import Types
 import List
 import Navigation
 
-// TODO: Split up all states
 @main
 struct AarleApp: App {
     static let keyChain = Keychain(service: "co.hartl.Aarle")

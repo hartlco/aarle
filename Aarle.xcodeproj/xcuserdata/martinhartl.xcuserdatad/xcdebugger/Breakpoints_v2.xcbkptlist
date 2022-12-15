@@ -119,16 +119,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "050EBA91-E6B3-49D9-ABC4-7A43C33F7CB8"
+            uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Shared/Networking/LinkdingClient.swift"
+            filePath = "Types/Sources/Types/Models/Link.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "createLink(link:)"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "init(url:title:description:tags:`private`:created:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

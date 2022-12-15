@@ -101,7 +101,6 @@ final class LinkdingClient: BookmarkClient {
         request.httpBody = linkData
 
         let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
     }
 
     func updateLink(link: Link) async throws {
@@ -126,8 +125,6 @@ final class LinkdingClient: BookmarkClient {
         request.httpBody = linkData
 
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
-        print(dataString)
     }
 
     func deleteLink(link: Link) async throws {
@@ -140,8 +137,6 @@ final class LinkdingClient: BookmarkClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
-        print(dataString)
     }
 
     func loadTags() async throws -> [Tag] {
@@ -156,7 +151,6 @@ final class LinkdingClient: BookmarkClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let tagResult = try decoder.decode(LinkdingTagResult.self, from: data)

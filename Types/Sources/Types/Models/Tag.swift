@@ -1,6 +1,6 @@
 import Swift
 
-public struct Tag: Codable, Identifiable, Equatable, Hashable {
+public struct Tag: Codable, Identifiable, Equatable, Hashable, Sendable {
     public let name: String
     public let occurrences: Int?
 

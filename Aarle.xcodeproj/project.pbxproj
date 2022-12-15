@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C50342A7294AF02800CF5980 /* Tag in Frameworks */ = {isa = PBXBuildFile; productRef = C50342A6294AF02800CF5980 /* Tag */; };
+		C50342A9294AF03100CF5980 /* Tag in Frameworks */ = {isa = PBXBuildFile; productRef = C50342A8294AF03100CF5980 /* Tag */; };
+		C50342AB294AF03600CF5980 /* Tag in Frameworks */ = {isa = PBXBuildFile; productRef = C50342AA294AF03600CF5980 /* Tag */; };
+		C50342AD294AF03B00CF5980 /* Tag in Frameworks */ = {isa = PBXBuildFile; productRef = C50342AC294AF03B00CF5980 /* Tag */; };
 		C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
 		C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
 		C50D957528C0A02600512FF7 /* OverallAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50D957228C0A02600512FF7 /* OverallAppState.swift */; };
@@ -161,6 +165,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C50342A5294AEFE300CF5980 /* Tag */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Tag; sourceTree = "<group>"; };
 		C50D957228C0A02600512FF7 /* OverallAppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallAppState.swift; sourceTree = "<group>"; };
 		C5126706280DAC73009714FA /* DownloadedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedListView.swift; sourceTree = "<group>"; };
 		C513721C27EEF22C00E80F3D /* LinkdingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkdingClient.swift; sourceTree = "<group>"; };
@@ -220,6 +225,7 @@
 				C5F71F832784CA7A009CF84C /* SwiftUIX in Frameworks */,
 				C557ED2228D8272B0037D9A6 /* Navigation in Frameworks */,
 				C5EB796C28D6F46100D99716 /* Archive in Frameworks */,
+				C50342A9294AF03100CF5980 /* Tag in Frameworks */,
 				C540CEF627AF9B3200432E18 /* Introspect in Frameworks */,
 				C5EB795A28D6E86700D99716 /* AarleKeychain in Frameworks */,
 				C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */,
@@ -237,6 +243,7 @@
 				C5F71F852784CA96009CF84C /* SwiftUIX in Frameworks */,
 				C557ED2428D827310037D9A6 /* Navigation in Frameworks */,
 				C5EB796E28D6F46500D99716 /* Archive in Frameworks */,
+				C50342A7294AF02800CF5980 /* Tag in Frameworks */,
 				C540CEF827AF9B3A00432E18 /* Introspect in Frameworks */,
 				C5EB795C28D6E86D00D99716 /* AarleKeychain in Frameworks */,
 				C5782B382782E53800321138 /* KeychainAccess in Frameworks */,
@@ -254,6 +261,7 @@
 				C54210C32796A6FF000F07DC /* KeychainAccess in Frameworks */,
 				C557ED2628D827360037D9A6 /* Navigation in Frameworks */,
 				C5EB797028D6FE1700D99716 /* Archive in Frameworks */,
+				C50342AB294AF03600CF5980 /* Tag in Frameworks */,
 				C540CEFA27AF9B3F00432E18 /* Introspect in Frameworks */,
 				C5EB795E28D6E87300D99716 /* AarleKeychain in Frameworks */,
 				C54210C12796A6F9000F07DC /* SwiftUIX in Frameworks */,
@@ -271,6 +279,7 @@
 				C5FAE12B279BE324007E763B /* SwiftUIX in Frameworks */,
 				C557ED2828D8273C0037D9A6 /* Navigation in Frameworks */,
 				C5EB797228D6FE1C00D99716 /* Archive in Frameworks */,
+				C50342AD294AF03B00CF5980 /* Tag in Frameworks */,
 				C540CEFC27AF9B4400432E18 /* Introspect in Frameworks */,
 				C5EB796028D6E87700D99716 /* AarleKeychain in Frameworks */,
 				C5FAE129279BE324007E763B /* SwiftJWT in Frameworks */,
@@ -309,6 +318,7 @@
 		C59994F02781B96500FE1EBA = {
 			isa = PBXGroup;
 			children = (
+				C50342A5294AEFE300CF5980 /* Tag */,
 				C52C60B828D9832D000637E1 /* List */,
 				C557ED2028D8270F0037D9A6 /* Navigation */,
 				C5EB796A28D6F44300D99716 /* Archive */,
@@ -444,6 +454,7 @@
 				C5EB796B28D6F46100D99716 /* Archive */,
 				C557ED2128D8272B0037D9A6 /* Navigation */,
 				C52C60BF28D98353000637E1 /* List */,
+				C50342A8294AF03100CF5980 /* Tag */,
 			);
 			productName = "Aarlo (iOS)";
 			productReference = C59994FD2781B96700FE1EBA /* aarle.app */;
@@ -475,6 +486,7 @@
 				C5EB796D28D6F46500D99716 /* Archive */,
 				C557ED2328D827310037D9A6 /* Navigation */,
 				C52C60BD28D9834D000637E1 /* List */,
+				C50342A6294AF02800CF5980 /* Tag */,
 			);
 			productName = "Aarlo (macOS)";
 			productReference = C59995032781B96700FE1EBA /* aarle.app */;
@@ -504,6 +516,7 @@
 				C5EB796F28D6FE1700D99716 /* Archive */,
 				C557ED2528D827360037D9A6 /* Navigation */,
 				C52C60BB28D98348000637E1 /* List */,
+				C50342AA294AF03600CF5980 /* Tag */,
 			);
 			productName = "Aarlo-macOS-ShareExtension";
 			productReference = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */;
@@ -533,6 +546,7 @@
 				C5EB797128D6FE1C00D99716 /* Archive */,
 				C557ED2728D8273C0037D9A6 /* Navigation */,
 				C52C60B928D98345000637E1 /* List */,
+				C50342AC294AF03B00CF5980 /* Tag */,
 			);
 			productName = "Aarlo-iOS-ShareExtension";
 			productReference = C5FAE10D279BE0ED007E763B /* Aarle-iOS-ShareExtension.appex */;
@@ -1194,6 +1208,22 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C50342A6294AF02800CF5980 /* Tag */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tag;
+		};
+		C50342A8294AF03100CF5980 /* Tag */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tag;
+		};
+		C50342AA294AF03600CF5980 /* Tag */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tag;
+		};
+		C50342AC294AF03B00CF5980 /* Tag */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Tag;
+		};
 		C52C60B928D98345000637E1 /* List */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = List;

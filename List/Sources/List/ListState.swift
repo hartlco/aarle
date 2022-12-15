@@ -52,6 +52,7 @@ public final class ListState: ObservableObject {
         return nil
     }
 
+    @MainActor
     public func loadSearch(for type: ListType) async {
         do {
             guard isLoading == false else { return }

@@ -10,6 +10,7 @@ import SwiftUI
 import Types
 import Settings
 import Navigation
+import Tag
 
 struct InitialContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all

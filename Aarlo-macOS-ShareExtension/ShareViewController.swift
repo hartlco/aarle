@@ -8,6 +8,7 @@
 @_predatesConcurrency import Cocoa
 import KeychainAccess
 import SwiftUI
+import Tag
 
 @MainActor
 class ShareViewController: NSViewController {
