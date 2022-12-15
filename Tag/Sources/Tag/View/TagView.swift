@@ -8,19 +8,25 @@
 import SwiftUI
 import Types
 
-struct TagView: View {
+public struct TagView: View {
     let tag: Tag
     let isFavorite: Bool
     let favorite: () -> Void
 
-    var body: some View {
+    public init(tag: Tag, isFavorite: Bool, favorite: @escaping () -> Void) {
+        self.tag = tag
+        self.isFavorite = isFavorite
+        self.favorite = favorite
+    }
+
+    public var body: some View {
         HStack {
             Text(tag.name)
                 .font(.headline)
             if let occurrences = tag.occurrences {
                 Text(String("• \(occurrences)"))
                     .font(.footnote)
-                    .foregroundColor(.secondaryLabel)
+                    .foregroundColor(.secondary)
             }
             Spacer()
             Button {

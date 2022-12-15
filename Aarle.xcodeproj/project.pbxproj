@@ -50,8 +50,6 @@
 		C557ED2428D827310037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2328D827310037D9A6 /* Navigation */; };
 		C557ED2628D827360037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2528D827360037D9A6 /* Navigation */; };
 		C557ED2828D8273C0037D9A6 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = C557ED2728D8273C0037D9A6 /* Navigation */; };
-		C5760E4A2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
-		C5760E4B2792A42000688EB3 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5760E492792A42000688EB3 /* TagView.swift */; };
 		C5782B312781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
@@ -178,7 +176,6 @@
 		C553EA2327860F1E0060F45B /* Aarlo (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Aarlo (iOS).entitlements"; sourceTree = "<group>"; };
 		C557ED2028D8270F0037D9A6 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
-		C5760E492792A42000688EB3 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
@@ -309,7 +306,6 @@
 				C54D98D0278AB9F2003B1EB9 /* LinkAddView.swift */,
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
-				C5760E492792A42000688EB3 /* TagView.swift */,
 				C5126706280DAC73009714FA /* DownloadedListView.swift */,
 			);
 			path = Views;
@@ -646,7 +642,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5760E4A2792A42000688EB3 /* TagView.swift in Sources */,
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
@@ -673,7 +668,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5760E4B2792A42000688EB3 /* TagView.swift in Sources */,
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
