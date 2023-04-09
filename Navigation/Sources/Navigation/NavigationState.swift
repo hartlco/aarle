@@ -3,17 +3,13 @@ import Types
 
 public final class NavigationState: ObservableObject {
     #if os(macOS)
-        @Published public var selectedListType: ListType = .all {
+        @Published public var selectedListType: ListType? = .all {
             didSet {
                 print("Didset selectedListType: \(selectedListType)")
             }
         }
     #else
-        @Published public var selectedListType: ListType? {
-            didSet {
-                print("Didset selectedListType: \(String(description: selectedListType))")
-            }
-        }
+        @Published public var selectedListType: ListType?
     #endif
 
     @Published public var showsSettings = false {
@@ -29,8 +25,15 @@ public final class NavigationState: ObservableObject {
     @Published public var selectedLink: Link? {
         didSet {
             print("Didset selectedLink: \(selectedLink?.url.absoluteString ?? "No URL")")
+
+            if let selectedLink {
+                selectedLinkStack = [selectedLink]
+            } else {
+                selectedLinkStack = []
+            }
         }
     }
+    @Published public var selectedLinkStack: [Link] = []
 
     @Published public var showLinkEditorSidebar = false
 

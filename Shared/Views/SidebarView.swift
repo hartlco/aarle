@@ -25,6 +25,9 @@ struct SidebarView: View {
                 NavigationLink(value: ListType.all) {
                     Label("All", systemImage: "tray.2")
                 }
+                NavigationLink(value: ListType.tags(selectedTag: nil)) {
+                    Label("Tags", systemImage: "tray.2")
+                }
                 NavigationLink(value: ListType.downloaded) {
                     Label("Offline", systemImage: "archivebox")
                 }
@@ -45,22 +48,22 @@ struct SidebarView: View {
                     }
                 }
             }
-            Section(header: "All Tags") {
-                ForEach(tagState.tags) { tag in
-                    NavigationLink(value: ListType.tagScoped(tag)) {
-                        TagView(
-                            tag: tag,
-                            isFavorite: tagState.favoriteTags.contains(tag)
-                        ) {
-                            if tagState.favoriteTags.contains(tag) {
-                                tagState.removeFavorite(tag: tag)
-                            } else {
-                                tagState.addFavorite(tag: tag)
-                            }
-                        }
-                    }
-                }
-            }
+//            Section(header: "All Tags") {
+//                ForEach(tagState.tags) { tag in
+//                    NavigationLink(value: ListType.tagScoped(tag)) {
+//                        TagView(
+//                            tag: tag,
+//                            isFavorite: tagState.favoriteTags.contains(tag)
+//                        ) {
+//                            if tagState.favoriteTags.contains(tag) {
+//                                tagState.removeFavorite(tag: tag)
+//                            } else {
+//                                tagState.addFavorite(tag: tag)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
         .listStyle(SidebarListStyle())
         #if os(iOS)

@@ -141,7 +141,7 @@ final class LinkdingClient: BookmarkClient {
 
     func loadTags() async throws -> [Tag] {
         // TODO: Increase tag limit
-        guard var URL = URL(string: "\(apiEndpoint)/api/tags/") else {
+        guard let URL = URL(string: "\(apiEndpoint)/api/tags/") else {
             throw ClientError.unknownURL
         }
 
@@ -150,7 +150,7 @@ final class LinkdingClient: BookmarkClient {
         request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let tagResult = try decoder.decode(LinkdingTagResult.self, from: data)

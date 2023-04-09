@@ -112,9 +112,6 @@ struct ContentView: View {
                 }
             }
         }
-        .navigationDestination(for: Link.self) { link in
-            Text(link.url.absoluteString)
-        }
         .searchable(text: $searchText)
         .onSubmit(of: .search) {
             listState.setSearchText(text: searchText, for: listType)

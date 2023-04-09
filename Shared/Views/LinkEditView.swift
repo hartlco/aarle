@@ -57,7 +57,7 @@ struct LinkEditView: View {
     }
 
     private var form: some View {
-        Form {
+        VStack(alignment: .leading, spacing: 10) {
             Section(header: "Main Information") {
                 TextField("Link", text: $urlString)
                     .disableAutocorrection(true)
@@ -97,12 +97,15 @@ struct LinkEditView: View {
             VStack {
                 Form {
                     TextField("Link:", text: $urlString)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
                     TextField("Title:", text: $title)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     TextEditor(text: $description)
                         .formLabel(Text("Notes:"))
                         .frame(maxHeight: 400)
                     TextField("Tags:", text: $tagsString)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
                     if !overallAppState.tagState.favoriteTags.isEmpty {
                         ForEach(overallAppState.tagState.favoriteTags) { tag in

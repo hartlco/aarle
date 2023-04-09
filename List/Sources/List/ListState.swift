@@ -195,6 +195,15 @@ public final class ListState: ObservableObject {
                     listStates[key] = value
                 case .downloaded:
                     continue
+                case .tags(selectedTag: let selectedTag):
+                    guard let selectedTag,
+                        tempLink.tags.contains(selectedTag.name) else {
+                        continue
+                    }
+
+                    var value = value
+                    value.links.insert(tempLink, at: 0)
+                    listStates[key] = value
                 }
             }
 

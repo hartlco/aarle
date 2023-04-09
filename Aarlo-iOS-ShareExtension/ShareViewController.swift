@@ -9,11 +9,17 @@ import KeychainAccess
 import Social
 import SwiftUI
 import UIKit
+import Tag
 
 final class ShareViewController: UIViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
     @EnvironmentObject var tagState: TagState
+
+    let overallAppState = OverallAppState(
+        client: UniversalClient(keychain: keyChain),
+        keychain: keyChain
+    )
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +58,7 @@ final class ShareViewController: UIViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }
+        }.environmentObject(overallAppState)
 
         let hosting = UIHostingController(rootView: addView)
         addChild(hosting)

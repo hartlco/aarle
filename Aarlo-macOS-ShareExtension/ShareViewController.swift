@@ -5,7 +5,7 @@
 //  Created by martinhartl on 08.01.22.
 //
 
-@_predatesConcurrency import Cocoa
+@preconcurrency import Cocoa
 import KeychainAccess
 import SwiftUI
 import Tag
@@ -15,6 +15,11 @@ class ShareViewController: NSViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
     @EnvironmentObject var tagState: TagState
+
+    let overallAppState = OverallAppState(
+        client: UniversalClient(keychain: keyChain),
+        keychain: keyChain
+    )
 
     override func loadView() {
         view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
@@ -53,7 +58,7 @@ class ShareViewController: NSViewController {
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(tagState)
+        }.environmentObject(overallAppState)
         let hosting = NSHostingView(rootView: addView)
         hosting.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hosting)

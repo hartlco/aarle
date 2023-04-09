@@ -46,11 +46,12 @@ struct InitialContentView: View {
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
-                    selectedArchiveLink: $overallAppState.navigationState.selectedArchiveLink)
-            #if os(iOS)
-                case .none:
-                    Text("Select")
-            #endif
+                    selectedArchiveLink: $overallAppState.navigationState.selectedArchiveLink
+                )
+            case .tags:
+                TagListView(tagState: tagState, selectionState: $navigationState.selectedListType)
+            case .none:
+                Text("Select")
             }
         } detail: {
             switch navigationState.selectedListType {
@@ -59,6 +60,26 @@ struct InitialContentView: View {
                     DataWebView(archiveLink: archiveLink)
                 } else {
                     Text("Select a archive")
+                }
+            case .tags(let selectedTag):
+                if let selectedTag {
+                    NavigationStack(path: $navigationState.selectedLinkStack) {
+                        ContentView(
+                            title: selectedTag.name,
+                            listType: .tagScoped(selectedTag),
+                            navigationState: navigationState,
+                            listState: overallAppState.listState,
+                            archiveState: overallAppState.archiveState
+                        )
+                        .navigationDestination(for: Link.self) { link in
+                            ItemDetailView(
+                                link: link,
+                                navigationState: overallAppState.navigationState
+                            )
+                        }
+                    }
+                } else {
+                    Text("Test")
                 }
             default:
                 if let link = navigationState.selectedLink {
