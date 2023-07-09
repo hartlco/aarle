@@ -14,7 +14,7 @@ import Tag
 class ShareViewController: NSViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
-    @EnvironmentObject var tagState: TagState
+    @Environment(TagState.self) var tagState: TagState
 
     let overallAppState = OverallAppState(
         client: UniversalClient(keychain: keyChain),

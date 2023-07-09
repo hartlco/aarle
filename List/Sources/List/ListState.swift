@@ -1,9 +1,11 @@
 import Foundation
 import Types
+import Observation
 
-public final class ListState: ObservableObject {
-    @Published public var isLoading = false
-    @Published public var showLoadingError = false
+@Observable
+public final class ListState {
+    public var isLoading = false
+    public var showLoadingError = false
     
     private let client: BookmarkClient
     
@@ -19,7 +21,7 @@ public final class ListState: ObservableObject {
         var didLoad = false
     }
 
-    @Published private var listStates: [ListType: InternalListState] = [:]
+    private var listStates: [ListType: InternalListState] = [:]
 
     public func searchText(for type: ListType) -> String {
         let listState = listStates[type]

@@ -27,7 +27,7 @@ struct AarleApp: App {
     var body: some Scene {
         WindowGroup {
             InitialContentView(
-                navigationState: overallAppState.navigationState,
+                navigationState: $overallAppState.navigationState,
                 tagState: overallAppState.tagState
             )
             .environmentObject(overallAppState)
@@ -105,7 +105,7 @@ struct LinkAddScene: Scene {
 }
 
 struct LinkEditScene: Scene {
-    @ObservedObject var navigationState: NavigationState
+    var navigationState: NavigationState
     @ObservedObject var overallAppState: OverallAppState
 
     var body: some Scene {

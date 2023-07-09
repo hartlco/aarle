@@ -1,13 +1,14 @@
 import Foundation
 import Types
+import Observation
 
-@MainActor
-public final class TagState: ObservableObject {
-    @Published public var isLoading = false
-    @Published public var didLoad = false
-    @Published public var tags: [Tag] = []
-    @Published public var favoriteTags: [Tag]
-    @Published public var showLoadingError = false
+@Observable
+public final class TagState {
+    public var isLoading = false
+    public var didLoad = false
+    public var tags: [Tag] = []
+    public var favoriteTags: [Tag] = []
+    public var showLoadingError = false
 
     let client: BookmarkClient
     let userDefaults: UserDefaults
@@ -19,7 +20,7 @@ public final class TagState: ObservableObject {
     ) {
         self.client = client
         self.userDefaults = userDefaults
-        self._favoriteTags = Published(initialValue: favoriteTags)
+        self.favoriteTags = favoriteTags
     }
 
     @MainActor

@@ -13,7 +13,9 @@ import Archive
 import Navigation
 import List
 import Tag
+import Observation
 
+// TODO: Adopt @Observable
 @MainActor
 final class OverallAppState: ObservableObject {
     let client: BookmarkClient

@@ -18,38 +18,38 @@
             endingLineNumber = "49"
             landmarkName = "loadURL()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D362627F-F671-4D36-8699-E3F4D9076CE0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/NSItemProvider+Async.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "loadWebsiteInformation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D88920DF-C18D-43DA-AC05-723943D574BE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/NSItemProvider+Async.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "loadWebsiteInformation()"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 3a9ca7fb74122ca8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
+                  moduleName = "Aarle-iOS-ShareExtension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 1d17e50f571f262b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.URL&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
+                  moduleName = "Aarle-iOS-ShareExtension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51"
+                  offsetFromSymbolStart = "208">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -65,22 +65,6 @@
             startingLineNumber = "53"
             endingLineNumber = "53"
             landmarkName = "loadURL()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8C38BD7C-1A43-460B-A345-985DD8F6892F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/NSItemProvider+Async.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
-            landmarkName = "loadWebsiteInformation()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -103,22 +87,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0CDC15C2-2405-40F3-8A54-D1989DC93E26"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/NSItemProvider+Async.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "loadWebsiteInformation()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -130,6 +98,38 @@
             endingLineNumber = "88"
             landmarkName = "init(url:title:description:tags:`private`:created:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2 - 2b55a4a81b8f8724"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Types.PostLink.init(url: Foundation.URL, title: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, tags: Swift.Array&lt;Swift.String&gt;, private: Swift.Bool, created: Foundation.Date) -&gt; Types.PostLink"
+                  moduleName = "aarle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Types/Sources/Types/Models/Link.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "88"
+                  endingLineNumber = "88"
+                  offsetFromSymbolStart = "2912">
+               </Location>
+               <Location
+                  uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2 - 2b55a4a81b8f8724"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Types.PostLink.init(url: Foundation.URL, title: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, tags: Swift.Array&lt;Swift.String&gt;, private: Swift.Bool, created: Foundation.Date) -&gt; Types.PostLink"
+                  moduleName = "aarle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Types/Sources/Types/Models/Link.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "88"
+                  endingLineNumber = "88"
+                  offsetFromSymbolStart = "528">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -1,18 +1,17 @@
 import Foundation
 import Types
+import Observation
 
-public final class NavigationState: ObservableObject {
-    #if os(macOS)
-        @Published public var selectedListType: ListType? = .all {
-            didSet {
-                print("Didset selectedListType: \(selectedListType)")
-            }
-        }
-    #else
-        @Published public var selectedListType: ListType?
-    #endif
+public enum DetailNavigationDestination: Hashable {
+    case link
+    case empty
+}
 
-    @Published public var showsSettings = false {
+@Observable
+public final class NavigationState {
+    public var selectedListType: ListType? = .all
+
+    public var showsSettings = false {
         didSet {
             if showsSettings {
                 #if os(macOS)
@@ -22,24 +21,21 @@ public final class NavigationState: ObservableObject {
         }
     }
 
-    @Published public var selectedLink: Link? {
-        didSet {
-            print("Didset selectedLink: \(selectedLink?.url.absoluteString ?? "No URL")")
+    public var selectedLink: Link? = nil
 
-            if let selectedLink {
-                selectedLinkStack = [selectedLink]
-            } else {
-                selectedLinkStack = []
-            }
+    public var detailNavigationStack: [Link] = []
+
+    public var showLinkEditorSidebar = false
+
+    public var selectedArchiveLink: ArchiveLink? = nil {
+        didSet {
+            print("Selected Archive Link")
         }
     }
-    @Published public var selectedLinkStack: [Link] = []
 
-    @Published public var showLinkEditorSidebar = false
+    public var selectedTag: Tag? = nil
 
-    @Published public var selectedArchiveLink: ArchiveLink?
-
-    @Published public var presentedEditLink: Link? {
+    public var presentedEditLink: Link? = nil {
         didSet {
             if presentedEditLink != nil {
 #if os(macOS)
@@ -48,7 +44,7 @@ public final class NavigationState: ObservableObject {
             }
         }
     }
-    @Published public var showsAddView = false {
+    public var showsAddView = false {
         didSet {
             if showsAddView {
 #if os(macOS)

@@ -13,9 +13,9 @@ import Navigation
 import Tag
 
 struct SidebarView: View {
-    @ObservedObject var navigationState: NavigationState
-    @ObservedObject var tagState: TagState
-    @ObservedObject var settingsState: SettingsState
+    @Binding var navigationState: NavigationState
+    var tagState: TagState
+    var settingsState: SettingsState
 
     var body: some View {
         List(
@@ -48,22 +48,6 @@ struct SidebarView: View {
                     }
                 }
             }
-//            Section(header: "All Tags") {
-//                ForEach(tagState.tags) { tag in
-//                    NavigationLink(value: ListType.tagScoped(tag)) {
-//                        TagView(
-//                            tag: tag,
-//                            isFavorite: tagState.favoriteTags.contains(tag)
-//                        ) {
-//                            if tagState.favoriteTags.contains(tag) {
-//                                tagState.removeFavorite(tag: tag)
-//                            } else {
-//                                tagState.addFavorite(tag: tag)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
         }
         .listStyle(SidebarListStyle())
         #if os(iOS)

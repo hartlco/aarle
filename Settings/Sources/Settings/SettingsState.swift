@@ -1,18 +1,20 @@
 import Foundation
 import Types
+import Observation
 
-public final class SettingsState: ObservableObject, SettingsStateProtocol {
-    @Published public var accountType: AccountType {
+@Observable
+public final class SettingsState: SettingsStateProtocol {
+    public var accountType: AccountType = .linkding {
         didSet {
             keychain.setAccountType(accountType: accountType)
         }
     }
-    @Published public var secret: String {
+    public var secret: String = "" {
         didSet {
             keychain.setSecret(secret: secret)
         }
     }
-    @Published public var endpoint: String {
+    public var endpoint: String = "" {
         didSet {
             keychain.setEndpoint(endpoint: endpoint)
         }

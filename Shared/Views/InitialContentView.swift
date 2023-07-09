@@ -17,8 +17,8 @@ struct InitialContentView: View {
 
     @EnvironmentObject var overallAppState: OverallAppState
 
-    @ObservedObject var navigationState: NavigationState
-    @ObservedObject var tagState: TagState
+    @Binding var navigationState: NavigationState
+    var tagState: TagState
 
     var body: some View {
         NavigationSplitView(
@@ -31,7 +31,8 @@ struct InitialContentView: View {
                 ContentView(
                     title: "Links",
                     listType: .all,
-                    navigationState: navigationState,
+                    presentationMode: .list,
+                    navigationState: $navigationState,
                     listState: overallAppState.listState,
                     archiveState: overallAppState.archiveState
                 )
@@ -39,64 +40,47 @@ struct InitialContentView: View {
                 ContentView(
                     title: tag.name,
                     listType: .tagScoped(tag),
-                    navigationState: navigationState,
+                    presentationMode: .list,
+                    navigationState: $navigationState,
                     listState: overallAppState.listState,
                     archiveState: overallAppState.archiveState
                 )
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
-                    selectedArchiveLink: $overallAppState.navigationState.selectedArchiveLink
+                    selectedArchiveLink: $navigationState.selectedArchiveLink
                 )
             case .tags:
-                TagListView(tagState: tagState, selectionState: $navigationState.selectedListType)
+                List(tagState.tags, selection: $navigationState.selectedTag) { tag in
+                    NavigationLink(value: tag) {
+                        TagView(
+                            tag: tag,
+                            isFavorite: tagState.isTagFavorite(tag: tag),
+                            favorite: {
+                                tagState.toggleFavorite(tag: tag)
+                            }
+                        )
+                    }
+                }
             case .none:
                 Text("Select")
             }
         } detail: {
-            switch navigationState.selectedListType {
-            case .downloaded:
-                if let archiveLink = overallAppState.navigationState.selectedArchiveLink {
-                    DataWebView(archiveLink: archiveLink)
-                } else {
-                    Text("Select a archive")
-                }
-            case .tags(let selectedTag):
-                if let selectedTag {
-                    NavigationStack(path: $navigationState.selectedLinkStack) {
-                        ContentView(
-                            title: selectedTag.name,
-                            listType: .tagScoped(selectedTag),
-                            navigationState: navigationState,
-                            listState: overallAppState.listState,
-                            archiveState: overallAppState.archiveState
+            NavigationStack(path: $navigationState.detailNavigationStack) {
+                detailView
+                    .navigationDestination(for: Link.self) { navigationLink in
+                        ItemDetailView(
+                            link: navigationLink,
+                            navigationState: overallAppState.navigationState
                         )
-                        .navigationDestination(for: Link.self) { link in
-                            ItemDetailView(
-                                link: link,
-                                navigationState: overallAppState.navigationState
-                            )
-                        }
                     }
-                } else {
-                    Text("Test")
-                }
-            default:
-                if let link = navigationState.selectedLink {
-                    ItemDetailView(
-                        link: link,
-                        navigationState: overallAppState.navigationState
-                    )
-                } else {
-                    Text("Select a link")
-                }
             }
         }
     }
 
     private var sidebar: some View {
         SidebarView(
-            navigationState: navigationState,
+            navigationState: $navigationState,
             tagState: tagState,
             settingsState: overallAppState.settingsState
         )
@@ -109,6 +93,30 @@ struct InitialContentView: View {
         ) {
             networkingAlert
         }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let selectedTag = navigationState.selectedTag {
+            tagListContentView(selectedTag: selectedTag)
+        } else if let selectedLink = navigationState.selectedLink {
+            ItemDetailView(
+                link: selectedLink,
+                navigationState: overallAppState.navigationState
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func tagListContentView(selectedTag: Tag) -> some View {
+        ContentView(
+            title: selectedTag.name,
+            listType: .tagScoped(selectedTag),
+            presentationMode: .detail,
+            navigationState: $navigationState,
+            listState: overallAppState.listState,
+            archiveState: overallAppState.archiveState
+        )
     }
 
     private var networkingAlert: Alert {

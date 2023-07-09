@@ -10,7 +10,7 @@ import Types
 import Archive
 
 struct DownloadedListView: View {
-    @ObservedObject var archiveState: ArchiveState
+    var archiveState: ArchiveState
     @Binding var selectedArchiveLink: ArchiveLink?
     
     public init(

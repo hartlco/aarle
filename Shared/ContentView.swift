@@ -15,14 +15,21 @@ import List
 import Archive
 
 struct ContentView: View {
+    enum PresentationMode {
+        case list
+        case detail
+    }
+
     @State var searchText = ""
     private let pasteboard = DefaultPasteboard()
 
     let title: String
     let listType: ListType
-    @ObservedObject var navigationState: NavigationState
-    @ObservedObject var listState: ListState
-    @ObservedObject var archiveState: ArchiveState
+    let presentationMode: PresentationMode
+
+    @Binding var navigationState: NavigationState
+    var listState: ListState
+    var archiveState: ArchiveState
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
@@ -74,7 +81,7 @@ struct ContentView: View {
     }
 
     private var list: some View {
-        List(selection: $navigationState.selectedLink) {
+        presentationAwareList {
             ForEach(listState.links(for: listType)) { link in
                 NavigationLink(value: link) {
                     LinkItemView(link: link)
@@ -125,6 +132,16 @@ struct ContentView: View {
             }
         }
         .listStyle(PlainListStyle())
+    }
+
+    @ViewBuilder
+    private func presentationAwareList(@ViewBuilder content: () -> some View) -> some View {
+        switch presentationMode {
+        case .detail:
+            List(content: content)
+        case .list:
+            List(selection: $navigationState.selectedLink, content: content)
+        }
     }
 
     private func editAction(link: Types.Link) {

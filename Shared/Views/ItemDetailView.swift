@@ -13,7 +13,7 @@ import Navigation
 struct ItemDetailView: View {
     let link: Types.Link
 
-    @ObservedObject var navigationState: NavigationState
+    var navigationState: NavigationState
 
     @State var shareSheetPresented = false
 

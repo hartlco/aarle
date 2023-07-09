@@ -7,9 +7,9 @@ import Navigation
 import Archive
 
 struct LinkCommands: Commands {
-    @ObservedObject var navigationState: NavigationState
-    @ObservedObject var listState: ListState
-    @ObservedObject var archiveState: ArchiveState
+    var navigationState: NavigationState
+    var listState: ListState
+    var archiveState: ArchiveState
     let pasteboard: Pasteboard
 
     var body: some Commands {

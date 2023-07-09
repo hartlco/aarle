@@ -1,20 +1,23 @@
 import Foundation
 import Types
+import Observation
 
-public final class ArchiveState: ObservableObject, ArchiveStateProtocol {
+@Observable
+public final class ArchiveState: ArchiveStateProtocol {
     public enum ArchiveStateError: Error {
         case unableToDelete
     }
 
-    @Published public var archiveLinks: [ArchiveLink]
+    public var archiveLinks: [ArchiveLink] = []
 
     private let archiveService: ArchiveService
 
     public init(
         userDefaults: UserDefaults
     ) {
-        self.archiveLinks = userDefaults.archiveLinks
         self.archiveService = ArchiveService(userDefaults: userDefaults)
+
+        archiveLinks = userDefaults.archiveLinks
     }
 
     public func archiveLink(link: Link) async {
