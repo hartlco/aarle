@@ -16,8 +16,8 @@ import Tag
 import Observation
 
 // TODO: Adopt @Observable
-@MainActor
-final class OverallAppState: ObservableObject {
+@Observable
+final class OverallAppState {
     let client: BookmarkClient
 
     init(
@@ -36,9 +36,9 @@ final class OverallAppState: ObservableObject {
         self.listState = List.ListState(client: client)
     }
 
-    @Published var navigationState: NavigationState = .init()
-    @Published var tagState: TagState
-    @Published var settingsState: SettingsState
-    @Published var archiveState: ArchiveState
-    @Published var listState: List.ListState
+    var navigationState: NavigationState = .init()
+    var tagState: TagState
+    var settingsState: SettingsState
+    var archiveState: ArchiveState
+    var listState: List.ListState
 }

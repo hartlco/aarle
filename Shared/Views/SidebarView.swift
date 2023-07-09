@@ -13,7 +13,7 @@ import Navigation
 import Tag
 
 struct SidebarView: View {
-    @Binding var navigationState: NavigationState
+    @Bindable var navigationState: NavigationState
     var tagState: TagState
     var settingsState: SettingsState
 

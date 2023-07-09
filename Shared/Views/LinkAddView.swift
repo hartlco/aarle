@@ -12,7 +12,7 @@ import Types
 struct LinkAddView: View {
     @Environment(\.presentationMode) var presentationMode
 
-    @EnvironmentObject var overallAppState: OverallAppState
+    var overallAppState: OverallAppState
 
     @State var urlString: String
     @State var title: String
@@ -22,10 +22,12 @@ struct LinkAddView: View {
     private var localAddLink: PostLink?
 
     init(
+        overallAppState: OverallAppState,
         urlString: String = "",
         title: String = "",
         description: String = ""
     ) {
+        self.overallAppState = overallAppState
         _urlString = State<String>(initialValue: urlString)
         _title = State(initialValue: title)
         _description = State(initialValue: description)
@@ -115,11 +117,3 @@ struct LinkAddView: View {
         }
     }
 }
-
-#if DEBUG
-    struct LinkAddView_Previews: PreviewProvider {
-        static var previews: some View {
-            LinkAddView()
-        }
-    }
-#endif

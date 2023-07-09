@@ -15,9 +15,10 @@ import Tag
 struct InitialContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all
 
-    @EnvironmentObject var overallAppState: OverallAppState
 
-    @Binding var navigationState: NavigationState
+    @Bindable var overallAppState: OverallAppState
+    @Bindable var navigationState: NavigationState
+    
     var tagState: TagState
 
     var body: some View {
@@ -32,7 +33,7 @@ struct InitialContentView: View {
                     title: "Links",
                     listType: .all,
                     presentationMode: .list,
-                    navigationState: $navigationState,
+                    navigationState: navigationState,
                     listState: overallAppState.listState,
                     archiveState: overallAppState.archiveState
                 )
@@ -41,7 +42,7 @@ struct InitialContentView: View {
                     title: tag.name,
                     listType: .tagScoped(tag),
                     presentationMode: .list,
-                    navigationState: $navigationState,
+                    navigationState: navigationState,
                     listState: overallAppState.listState,
                     archiveState: overallAppState.archiveState
                 )
@@ -71,7 +72,7 @@ struct InitialContentView: View {
                     .navigationDestination(for: Link.self) { navigationLink in
                         ItemDetailView(
                             link: navigationLink,
-                            navigationState: overallAppState.navigationState
+                            overallAppState: overallAppState
                         )
                     }
             }
@@ -80,7 +81,7 @@ struct InitialContentView: View {
 
     private var sidebar: some View {
         SidebarView(
-            navigationState: $navigationState,
+            navigationState: navigationState,
             tagState: tagState,
             settingsState: overallAppState.settingsState
         )
@@ -102,7 +103,7 @@ struct InitialContentView: View {
         } else if let selectedLink = navigationState.selectedLink {
             ItemDetailView(
                 link: selectedLink,
-                navigationState: overallAppState.navigationState
+                overallAppState: overallAppState
             )
         }
     }
@@ -113,7 +114,7 @@ struct InitialContentView: View {
             title: selectedTag.name,
             listType: .tagScoped(selectedTag),
             presentationMode: .detail,
-            navigationState: $navigationState,
+            navigationState: navigationState,
             listState: overallAppState.listState,
             archiveState: overallAppState.archiveState
         )

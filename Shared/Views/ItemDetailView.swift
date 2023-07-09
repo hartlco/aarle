@@ -13,16 +13,16 @@ import Navigation
 struct ItemDetailView: View {
     let link: Types.Link
 
-    var navigationState: NavigationState
+    var overallAppState: OverallAppState
 
     @State var shareSheetPresented = false
 
     init(
         link: Types.Link,
-        navigationState: NavigationState
+        overallAppState: OverallAppState
     ) {
         self.link = link
-        self.navigationState = navigationState
+        self.overallAppState = overallAppState
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -46,15 +46,19 @@ struct ItemDetailView: View {
                         }
                         ToolbarItem {
                             Button {
-                                navigationState.showLinkEditorSidebar.toggle()
+                                overallAppState.navigationState.showLinkEditorSidebar.toggle()
                             } label: {
                                 Label("Show Edit Link", systemImage: "sidebar.right")
                             }
                         }
                     }
-                if navigationState.showLinkEditorSidebar {
-                    LinkEditView(link: link, showCancelButton: false)
-                        .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
+                if overallAppState.navigationState.showLinkEditorSidebar {
+                    LinkEditView(
+                        overallAppState: overallAppState,
+                        link: link,
+                        showCancelButton: false
+                    )
+                    .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
                 }
             }
         #else

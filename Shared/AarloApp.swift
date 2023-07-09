@@ -19,7 +19,7 @@ struct AarleApp: App {
 
     let pasteboard = DefaultPasteboard()
 
-    @StateObject var overallAppState = OverallAppState(
+    var overallAppState = OverallAppState(
         client: UniversalClient(keychain: keyChain),
         keychain: keyChain
     )
@@ -27,10 +27,10 @@ struct AarleApp: App {
     var body: some Scene {
         WindowGroup {
             InitialContentView(
-                navigationState: $overallAppState.navigationState,
+                overallAppState: overallAppState,
+                navigationState: overallAppState.navigationState,
                 tagState: overallAppState.tagState
             )
-            .environmentObject(overallAppState)
         }
         // TODO: Refactor out creation of commands
         .commands {
@@ -92,32 +92,33 @@ struct AarleApp: App {
 }
 
 struct LinkAddScene: Scene {
-    @ObservedObject var overallAppState: OverallAppState
+    var overallAppState: OverallAppState
 
     var body: some Scene {
         WindowGroup {
-            LinkAddView().onDisappear {
+            LinkAddView(
+                overallAppState: overallAppState
+            ).onDisappear {
                 overallAppState.navigationState.showsAddView = false
             }
-            .environmentObject(overallAppState)
         }
     }
 }
 
 struct LinkEditScene: Scene {
     var navigationState: NavigationState
-    @ObservedObject var overallAppState: OverallAppState
+    var overallAppState: OverallAppState
 
     var body: some Scene {
         WindowGroup {
             if let presentedEditLink = navigationState.presentedEditLink {
                 LinkEditView(
+                    overallAppState: overallAppState,
                     link: presentedEditLink,
                     showCancelButton: false
                 ).onDisappear {
                     navigationState.showsAddView = false
                 }
-                .environmentObject(overallAppState)
             } else {
                 Text("Edit Link 2")
             }

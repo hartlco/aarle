@@ -27,7 +27,7 @@ struct ContentView: View {
     let listType: ListType
     let presentationMode: PresentationMode
 
-    @Binding var navigationState: NavigationState
+    @Bindable var navigationState: NavigationState
     var listState: ListState
     var archiveState: ArchiveState
 

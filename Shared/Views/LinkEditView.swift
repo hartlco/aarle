@@ -12,7 +12,7 @@ import Types
 struct LinkEditView: View {
     let link: Types.Link
 
-    @EnvironmentObject var overallAppState: OverallAppState
+    var overallAppState: OverallAppState
 
     // TODO: Move into EditStore
     @State var urlString: String
@@ -23,9 +23,11 @@ struct LinkEditView: View {
     private let showCancelButton: Bool
 
     init(
+        overallAppState: OverallAppState,
         link: Types.Link,
         showCancelButton: Bool
     ) {
+        self.overallAppState = overallAppState
         self.link = link
         self.showCancelButton = showCancelButton
         _urlString = State<String>(initialValue: link.url.absoluteString)
