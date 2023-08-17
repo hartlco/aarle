@@ -15,7 +15,6 @@ import List
 import Tag
 import Observation
 
-// TODO: Adopt @Observable
 @Observable
 final class OverallAppState {
     let client: BookmarkClient

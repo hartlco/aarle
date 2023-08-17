@@ -83,7 +83,7 @@ struct ContentView: View {
     private var list: some View {
         presentationAwareList {
             ForEach(listState.links(for: listType)) { link in
-                NavigationLink(value: link) {
+                NavigationLink(value: DetailNavigationDestination.link(link)) {
                     LinkItemView(link: link)
                 }.contextMenu {
                     Button("Edit") {
@@ -138,9 +138,9 @@ struct ContentView: View {
     private func presentationAwareList(@ViewBuilder content: () -> some View) -> some View {
         switch presentationMode {
         case .detail:
-            List(content: content)
+            List(selection: $navigationState.detailNavigationStack, content: content)
         case .list:
-            List(selection: $navigationState.selectedLink, content: content)
+            List(selection: $navigationState.selectedDetailDestination, content: content)
         }
     }
 

@@ -3,13 +3,16 @@ import Types
 import Observation
 
 public enum DetailNavigationDestination: Hashable {
-    case link
+    case link(Link)
+    case archiveLink(ArchiveLink)
+    case tag(Tag)
     case empty
 }
 
 @Observable
 public final class NavigationState {
     public var selectedListType: ListType? = .all
+    public var selectedDetailDestination: DetailNavigationDestination = .empty
 
     public var showsSettings = false {
         didSet {
@@ -23,7 +26,7 @@ public final class NavigationState {
 
     public var selectedLink: Link? = nil
 
-    public var detailNavigationStack: [Link] = []
+    public var detailNavigationStack: [DetailNavigationDestination] = []
 
     public var showLinkEditorSidebar = false
 

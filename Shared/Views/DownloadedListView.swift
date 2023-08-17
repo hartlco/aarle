@@ -8,32 +8,33 @@
 import SwiftUI
 import Types
 import Archive
+import Navigation
 
 struct DownloadedListView: View {
-    var archiveState: ArchiveState
-    @Binding var selectedArchiveLink: ArchiveLink?
-    
+    @Bindable var archiveState: ArchiveState
+    @Bindable var navigationState: NavigationState
+
     public init(
         archiveState: ArchiveState,
-        selectedArchiveLink: Binding<ArchiveLink?>
+        navigationState: NavigationState
     ) {
         self.archiveState = archiveState
-        self._selectedArchiveLink = selectedArchiveLink
+        self.navigationState = navigationState
     }
 
     var body: some View {
         List(
             archiveState.archiveLinks,
-            selection: $selectedArchiveLink
+            selection: $navigationState.selectedDetailDestination
         ) { link in
-            NavigationLink(value: link) {
+            NavigationLink(value: DetailNavigationDestination.archiveLink(link)) {
                 LinkItemView(link: link)
             }
             .contextMenu {
                 Button(role: .destructive) {
                     do {
                         try archiveState.deleteLink(link: link)
-                        selectedArchiveLink = nil
+                        navigationState.selectedDetailDestination = .empty
                     } catch {
                         // TODO: Error Handling
                     }
@@ -41,9 +42,6 @@ struct DownloadedListView: View {
                     Label("Delete Download", systemImage: "trash")
                 }
             }
-        }
-        .navigationDestination(for: ArchiveLink.self) { link in
-            DataWebView(archiveLink: link)
         }
         .listStyle(PlainListStyle())
         .navigationTitle("Download")

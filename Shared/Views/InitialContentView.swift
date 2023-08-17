@@ -49,11 +49,11 @@ struct InitialContentView: View {
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
-                    selectedArchiveLink: $navigationState.selectedArchiveLink
+                    navigationState: navigationState
                 )
             case .tags:
-                List(tagState.tags, selection: $navigationState.selectedTag) { tag in
-                    NavigationLink(value: tag) {
+                List(tagState.tags, selection: $navigationState.selectedDetailDestination) { tag in
+                    NavigationLink(value: DetailNavigationDestination.tag(tag)) {
                         TagView(
                             tag: tag,
                             isFavorite: tagState.isTagFavorite(tag: tag),
@@ -69,11 +69,16 @@ struct InitialContentView: View {
         } detail: {
             NavigationStack(path: $navigationState.detailNavigationStack) {
                 detailView
-                    .navigationDestination(for: Link.self) { navigationLink in
-                        ItemDetailView(
-                            link: navigationLink,
-                            overallAppState: overallAppState
-                        )
+                    .navigationDestination(for: DetailNavigationDestination.self) { navigationLink in
+                        switch navigationLink {
+                        case .link(let link):
+                            ItemDetailView(
+                                link: link,
+                                overallAppState: overallAppState
+                            )
+                        default:
+                            Text("Empty")
+                        }
                     }
             }
         }
@@ -98,13 +103,18 @@ struct InitialContentView: View {
 
     @ViewBuilder
     private var detailView: some View {
-        if let selectedTag = navigationState.selectedTag {
-            tagListContentView(selectedTag: selectedTag)
-        } else if let selectedLink = navigationState.selectedLink {
+        switch navigationState.selectedDetailDestination {
+        case .link(let link):
             ItemDetailView(
-                link: selectedLink,
+                link: link,
                 overallAppState: overallAppState
             )
+        case .archiveLink(let archiveLink):
+            DataWebView(archiveLink: archiveLink)
+        case .tag(let tag):
+            tagListContentView(selectedTag: tag)
+        case .empty:
+            Text("Empty State")
         }
     }
 
