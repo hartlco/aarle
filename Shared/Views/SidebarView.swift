@@ -13,13 +13,12 @@ import Navigation
 import Tag
 
 struct SidebarView: View {
-    @Bindable var navigationState: NavigationState
-    var tagState: TagState
-    var settingsState: SettingsState
+    @Environment(OverallAppState.self) private var overallAppState
 
     var body: some View {
+        @Bindable var overallAppState = overallAppState
         List(
-            selection: $navigationState.selectedListType
+            selection: $overallAppState.navigationState.selectedListType
         ) {
             Section(header: "Links") {
                 NavigationLink(value: ListType.all) {
@@ -33,14 +32,14 @@ struct SidebarView: View {
                 }
             }
             Section(header: "Favorites") {
-                ForEach(tagState.favoriteTags) { tag in
+                ForEach(overallAppState.tagState.favoriteTags) { tag in
                     NavigationLink(value: ListType.tagScoped(tag)) {
                         Label(tag.name, systemImage: "tag")
                     }
                     .contextMenu {
                         Button(role: .destructive) {
                             Task {
-                                tagState.removeFavorite(tag: tag)
+                                overallAppState.tagState.removeFavorite(tag: tag)
                             }
                         } label: {
                             Label("Remove Favorite", systemImage: "trash")
@@ -54,15 +53,15 @@ struct SidebarView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        navigationState.showsSettings = true
+                        overallAppState.navigationState.showsSettings = true
                     } label: {
                         Label("Settings", systemImage: "gear")
                     }
                     .sheet(
-                        isPresented: $navigationState.showsSettings,
+                        isPresented: $overallAppState.navigationState.showsSettings,
                         content: {
                             SettingsView(
-                                settingsState: settingsState
+                                settingsState: overallAppState.settingsState
                             )
                         }
                     )
@@ -70,12 +69,12 @@ struct SidebarView: View {
             }
         #endif
             .onAppear {
-                if settingsState.isLoggedOut {
-                    navigationState.showsSettings = true
+                if overallAppState.settingsState.isLoggedOut {
+                    overallAppState.navigationState.showsSettings = true
                 }
-                if !tagState.didLoad {
+                if !overallAppState.tagState.didLoad {
                     Task {
-                        await tagState.load()
+                        await overallAppState.tagState.load()
                     }
                 }
             }

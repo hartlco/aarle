@@ -19,18 +19,15 @@ struct AarleApp: App {
 
     let pasteboard = DefaultPasteboard()
 
-    var overallAppState = OverallAppState(
+    @State var overallAppState = OverallAppState(
         client: UniversalClient(keychain: keyChain),
         keychain: keyChain
     )
 
     var body: some Scene {
         WindowGroup {
-            InitialContentView(
-                overallAppState: overallAppState,
-                navigationState: overallAppState.navigationState,
-                tagState: overallAppState.tagState
-            )
+            InitialContentView()
+            .environment(overallAppState)
         }
         // TODO: Refactor out creation of commands
         .commands {
@@ -46,7 +43,7 @@ struct AarleApp: App {
                     overallAppState.navigationState.showLinkEditorSidebar.toggle()
                 }
                 .keyboardShortcut("0", modifiers: [.command, .option])
-                .disabled(overallAppState.navigationState.selectedLink == nil)
+                .disabled(overallAppState.navigationState.selectedDetailDestination?.isLinkSelected != true)
             }
             CommandMenu("List") {
                 Button("Refresh") {

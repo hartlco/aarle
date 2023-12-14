@@ -6,11 +6,14 @@ import UniformTypeIdentifiers
 import WebKit
 import Types
 
-class WebViewData: ObservableObject {
+final class WebViewData: ObservableObject {
     @Published var loading: Bool = false
     @Published var scrollPercent: Float = 0
     @Published var url: URL? = nil
     @Published var urlBar: String = "https://nasa.gov"
+    @Published var progress: CGFloat = 0
+
+    var observation: NSKeyValueObservation?
 
     init(url: URL?) {
         _url = Published(initialValue: url)
@@ -28,6 +31,12 @@ class WebViewData: ObservableObject {
         }
 
         func updateNSView(_ nsView: WKWebView, context: Context) {
+            guard context.coordinator.loadedUrl != data.url else { return }
+            nsView.evaluateJavaScript("document.body.remove()")
+            data.observation = nsView.observe(\.estimatedProgress) { view, _ in
+                data.progress = view.estimatedProgress
+            }
+
             guard context.coordinator.loadedUrl != data.url else { return }
             context.coordinator.loadedUrl = data.url
 
@@ -55,6 +64,7 @@ class WebViewData: ObservableObject {
 
         func updateUIView(_ uiView: WKWebView, context: Context) {
             guard context.coordinator.loadedUrl != data.url else { return }
+            uiView.evaluateJavaScript("document.body.remove()")
             context.coordinator.loadedUrl = data.url
 
             if let url = data.url {
@@ -74,7 +84,7 @@ class WebViewData: ObservableObject {
 
 #endif
 
-class WebViewCoordinator: NSObject, WKNavigationDelegate {
+final class WebViewCoordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
     @ObservedObject var data: WebViewData
 
     var webView: WKWebView = .init()
@@ -87,6 +97,7 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
 
         setupScripts()
         webView.navigationDelegate = self
+        webView.uiDelegate = self
     }
 
     func webView(_ webView: WKWebView, didFinish _: WKNavigation!) {
@@ -125,28 +136,28 @@ class WebViewCoordinator: NSObject, WKNavigationDelegate {
     }
 
     func setupScripts() {
-        let monitor = WKUserScript(
-            source: ScrollMonitorScript.monitorScript,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true
-        )
-
-        let scrollTo = WKUserScript(
-            source: ScrollMonitorScript.scrollTo,
-            injectionTime: .atDocumentEnd,
-            forMainFrameOnly: true
-        )
-
-        webView.configuration.userContentController.addUserScript(monitor)
-        webView.configuration.userContentController.addUserScript(scrollTo)
-
-        let msgHandler = ScrollMonitorScript { percent in
-            DispatchQueue.main.async {
-                self.data.scrollPercent = percent
-            }
-        }
-
-        webView.configuration.userContentController.add(msgHandler, contentWorld: .page, name: "notifyScroll")
+//        let monitor = WKUserScript(
+//            source: ScrollMonitorScript.monitorScript,
+//            injectionTime: .atDocumentEnd,
+//            forMainFrameOnly: true
+//        )
+//
+//        let scrollTo = WKUserScript(
+//            source: ScrollMonitorScript.scrollTo,
+//            injectionTime: .atDocumentEnd,
+//            forMainFrameOnly: true
+//        )
+//
+//        webView.configuration.userContentController.addUserScript(monitor)
+//        webView.configuration.userContentController.addUserScript(scrollTo)
+//
+//        let msgHandler = ScrollMonitorScript { percent in
+//            DispatchQueue.main.async {
+//                self.data.scrollPercent = percent
+//            }
+//        }
+//
+//        webView.configuration.userContentController.add(msgHandler, contentWorld: .page, name: "notifyScroll")
     }
 
     func showError(title: String, message: String) {

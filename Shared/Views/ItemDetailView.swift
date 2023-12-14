@@ -14,6 +14,7 @@ struct ItemDetailView: View {
     let link: Types.Link
 
     var overallAppState: OverallAppState
+    @ObservedObject var webViewData: WebViewData
 
     @State var shareSheetPresented = false
 
@@ -23,14 +24,18 @@ struct ItemDetailView: View {
     ) {
         self.link = link
         self.overallAppState = overallAppState
+        self.webViewData = WebViewData(url: link.url)
     }
 
     private let pasteboard = DefaultPasteboard()
 
     var body: some View {
         #if os(macOS)
-            HSplitView {
-                WebView(data: WebViewData(url: link.url))
+            VStack {
+                if webViewData.progress > 0, webViewData.progress < 1 {
+                    ProgressView(value: webViewData.progress)
+                }
+                WebView(data: webViewData)
                     .toolbar {
                         ToolbarItem {
                             Menu {
@@ -63,32 +68,32 @@ struct ItemDetailView: View {
             }
         #else
             WebView(data: WebViewData(url: link.url))
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            LinkEditView(link: link, showCancelButton: false)
-                        } label: {
-                            Label("Edit", systemImage: "pencil.circle")
-                        }
-                    }
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            shareSheetPresented = true
-                        } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }.sheet(isPresented: $shareSheetPresented) {
-                            AppActivityView(activityItems: [link.url], applicationActivities: nil)
-                        }
-
-                        NavigationLink {
-                            LinkEditView(link: link, showCancelButton: false)
-                        } label: {
-                            Label("Edit", systemImage: "pencil.circle")
-                        }
-                    }
-                }
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(link.title ?? "")
+//                .toolbar {
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        NavigationLink {
+//                            LinkEditView(overallAppState: overallAppState, link: link, showCancelButton: false)
+//                        } label: {
+//                            Label("Edit", systemImage: "pencil.circle")
+//                        }
+//                    }
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button {
+//                            shareSheetPresented = true
+//                        } label: {
+//                            Label("Share", systemImage: "square.and.arrow.up")
+//                        }.sheet(isPresented: $shareSheetPresented) {
+//                            AppActivityView(activityItems: [link.url], applicationActivities: nil)
+//                        }
+//
+//                        NavigationLink {
+//                            LinkEditView(link: link, showCancelButton: false)
+//                        } label: {
+//                            Label("Edit", systemImage: "pencil.circle")
+//                        }
+//                    }
+//                }
+//                .navigationBarTitleDisplayMode(.inline)
+//                .navigationTitle(link.title ?? "")
         #endif
     }
 }

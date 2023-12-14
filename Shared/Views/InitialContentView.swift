@@ -15,50 +15,58 @@ import Tag
 struct InitialContentView: View {
     @State private var columnVisibility = NavigationSplitViewVisibility.all
 
-
-    @Bindable var overallAppState: OverallAppState
-    @Bindable var navigationState: NavigationState
-    
-    var tagState: TagState
+    @Environment(OverallAppState.self) private var overallAppState
 
     var body: some View {
+        @Bindable var overallAppState = overallAppState
         NavigationSplitView(
             columnVisibility: $columnVisibility
         ) {
-            sidebar
+            SidebarView()
+            .navigationTitle("aarle")
+            .alert(isPresented: $overallAppState.listState.showLoadingError) {
+                networkingAlert
+            }
+            .alert(
+                isPresented: $overallAppState.tagState.showLoadingError
+            ) {
+                networkingAlert
+            }
         } content: {
-            switch navigationState.selectedListType {
+            switch overallAppState.navigationState.selectedListType {
             case .all:
                 ContentView(
                     title: "Links",
                     listType: .all,
                     presentationMode: .list,
-                    navigationState: navigationState,
+                    navigationState: overallAppState.navigationState,
                     listState: overallAppState.listState,
-                    archiveState: overallAppState.archiveState
+                    archiveState: overallAppState.archiveState, 
+                    overallAppState: overallAppState
                 )
             case let .tagScoped(tag):
                 ContentView(
                     title: tag.name,
                     listType: .tagScoped(tag),
                     presentationMode: .list,
-                    navigationState: navigationState,
+                    navigationState: overallAppState.navigationState,
                     listState: overallAppState.listState,
-                    archiveState: overallAppState.archiveState
+                    archiveState: overallAppState.archiveState, 
+                    overallAppState: overallAppState
                 )
             case .downloaded:
                 DownloadedListView(
                     archiveState: overallAppState.archiveState,
-                    navigationState: navigationState
+                    navigationState: overallAppState.navigationState
                 )
             case .tags:
-                List(tagState.tags, selection: $navigationState.selectedDetailDestination) { tag in
+                List(overallAppState.tagState.tags, selection: $overallAppState.navigationState.selectedDetailDestination) { tag in
                     NavigationLink(value: DetailNavigationDestination.tag(tag)) {
                         TagView(
                             tag: tag,
-                            isFavorite: tagState.isTagFavorite(tag: tag),
+                            isFavorite: overallAppState.tagState.isTagFavorite(tag: tag),
                             favorite: {
-                                tagState.toggleFavorite(tag: tag)
+                                overallAppState.tagState.toggleFavorite(tag: tag)
                             }
                         )
                     }
@@ -67,7 +75,7 @@ struct InitialContentView: View {
                 Text("Select")
             }
         } detail: {
-            NavigationStack(path: $navigationState.detailNavigationStack) {
+            NavigationStack(path: $overallAppState.navigationState.detailNavigationStack) {
                 detailView
                     .navigationDestination(for: DetailNavigationDestination.self) { navigationLink in
                         switch navigationLink {
@@ -84,26 +92,9 @@ struct InitialContentView: View {
         }
     }
 
-    private var sidebar: some View {
-        SidebarView(
-            navigationState: navigationState,
-            tagState: tagState,
-            settingsState: overallAppState.settingsState
-        )
-        .navigationTitle("aarle")
-        .alert(isPresented: $overallAppState.listState.showLoadingError) {
-            networkingAlert
-        }
-        .alert(
-            isPresented: $overallAppState.tagState.showLoadingError
-        ) {
-            networkingAlert
-        }
-    }
-
     @ViewBuilder
     private var detailView: some View {
-        switch navigationState.selectedDetailDestination {
+        switch overallAppState.navigationState.selectedDetailDestination {
         case .link(let link):
             ItemDetailView(
                 link: link,
@@ -113,7 +104,7 @@ struct InitialContentView: View {
             DataWebView(archiveLink: archiveLink)
         case .tag(let tag):
             tagListContentView(selectedTag: tag)
-        case .empty:
+        case .empty, .none:
             Text("Empty State")
         }
     }
@@ -124,9 +115,10 @@ struct InitialContentView: View {
             title: selectedTag.name,
             listType: .tagScoped(selectedTag),
             presentationMode: .detail,
-            navigationState: navigationState,
+            navigationState: overallAppState.navigationState,
             listState: overallAppState.listState,
-            archiveState: overallAppState.archiveState
+            archiveState: overallAppState.archiveState, 
+            overallAppState: overallAppState
         )
     }
 

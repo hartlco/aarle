@@ -15,45 +15,40 @@ struct LinkCommands: Commands {
     var body: some Commands {
         CommandMenu("Link") {
             Button("Edit link") {
-                guard let selectedLinkID = navigationState.selectedLink?.id,
-                      let selectedLink = listState.link(for: selectedLinkID)
-                else {
-                    return
-                }
-
-                navigationState.presentedEditLink = selectedLink
+                navigationState.editSelectedLink()
             }
             .keyboardShortcut("e", modifiers: [.command])
-            .disabled(navigationState.selectedLink == nil)
+            .disabled(navigationState.selectedDetailDestination?.isLinkSelected != true)
             Button("Copy link to clipboard") {
-                guard let selectedLinkID = navigationState.selectedLink?.id,
-                      let selectedLink = listState.link(for: selectedLinkID)
-                else {
-                    return
-                }
-
-                pasteboard.copyToPasteboard(string: selectedLink.url.absoluteString)
+                guard let url = navigationState.selectedDetailDestination?.url else { return }
+                pasteboard.copyToPasteboard(string: url.absoluteString)
             }
             .keyboardShortcut("C", modifiers: [.command, .shift])
-            .disabled(navigationState.selectedLink == nil)
+            .disabled(navigationState.selectedDetailDestination?.isLinkSelected != true)
             Button("Delete") {
-                if let selectedLinkID = navigationState.selectedLink?.id,
-                   let selectedLink = listState.link(for: selectedLinkID) {
+                switch navigationState.selectedDetailDestination {
+                case .link(let link):
                     Task {
-                        await listState.delete(link: selectedLink)
-                        navigationState.selectedLink = nil
+                        await listState.delete(link: link)
+                        navigationState.selectedDetailDestination = .empty
                     }
-                } else if let selectedArchiveLinkID = navigationState.selectedArchiveLink {
+                case .archiveLink(let archiveLink):
                     do {
-                        try archiveState.deleteLink(link: selectedArchiveLinkID)
-                        navigationState.selectedArchiveLink = nil
+                        try archiveState.deleteLink(link: archiveLink)
+                        navigationState.selectedDetailDestination = .empty
                     } catch {
                         // TODO: Error handling
                     }
+                case .tag:
+                    return
+                case .empty:
+                    return
+                case .none:
+                    return
                 }
             }
             .keyboardShortcut(.delete, modifiers: [.command])
-            .disabled(navigationState.selectedLink == nil && navigationState.selectedArchiveLink == nil)
+            .disabled(navigationState.selectedDetailDestination?.isLinkSelected != true)
         }
     }
 }

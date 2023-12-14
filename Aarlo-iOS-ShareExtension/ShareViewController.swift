@@ -14,8 +14,17 @@ import Tag
 final class ShareViewController: UIViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
 
-    @EnvironmentObject var tagState: TagState
+    var appState: OverallAppState
 
+    init(appState: OverallAppState) {
+        self.appState = appState
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let overallAppState = OverallAppState(
         client: UniversalClient(keychain: keyChain),
         keychain: keyChain
@@ -53,12 +62,12 @@ final class ShareViewController: UIViewController {
     @MainActor
     private func showView(for urlString: String?, title: String?, description: String?) {
         let addView = LinkAddView(
-            urlString: urlString ?? "",
+            overallAppState: overallAppState, urlString: urlString ?? "",
             title: title ?? "",
             description: description ?? ""
         ).onDisappear {
             self.send(self)
-        }.environmentObject(overallAppState)
+        }
 
         let hosting = UIHostingController(rootView: addView)
         addChild(hosting)

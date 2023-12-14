@@ -30,6 +30,7 @@ struct ContentView: View {
     @Bindable var navigationState: NavigationState
     var listState: ListState
     var archiveState: ArchiveState
+    var overallAppState: OverallAppState
 
     var body: some View {
         // TODO: Add empty state if no data available, reload button
@@ -46,7 +47,7 @@ struct ContentView: View {
         #if os(iOS)
         .sheet(item: $navigationState.presentedEditLink) { link in
             NavigationView {
-                LinkEditView(link: link, showCancelButton: true)
+                LinkEditView(overallAppState: overallAppState, link: link, showCancelButton: true)
             }
         }
         #endif
@@ -62,7 +63,7 @@ struct ContentView: View {
                     isPresented: $navigationState.showsAddView,
                     onDismiss: nil,
                     content: {
-                        LinkAddView()
+                        LinkAddView(overallAppState: overallAppState)
                     }
                 )
                 #endif
@@ -138,7 +139,7 @@ struct ContentView: View {
     private func presentationAwareList(@ViewBuilder content: () -> some View) -> some View {
         switch presentationMode {
         case .detail:
-            List(selection: $navigationState.detailNavigationStack, content: content)
+            List(content: content)
         case .list:
             List(selection: $navigationState.selectedDetailDestination, content: content)
         }
