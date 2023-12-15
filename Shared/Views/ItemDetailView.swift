@@ -30,10 +30,20 @@ struct ItemDetailView: View {
     private let pasteboard = DefaultPasteboard()
 
     var body: some View {
-        #if os(macOS)
-            VStack {
+#if os(macOS)
+        HSplitView {
+            if overallAppState.navigationState.showLinkEditorSidebar {
+                LinkEditView(
+                    overallAppState: overallAppState,
+                    link: link,
+                    showCancelButton: false
+                )
+                .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
+            }
+            VStack(spacing: 0) {
                 if webViewData.progress > 0, webViewData.progress < 1 {
                     ProgressView(value: webViewData.progress)
+                        .progressViewStyle(MinimalProgressViewStyle())
                 }
                 WebView(data: webViewData)
                     .toolbar {
@@ -57,43 +67,36 @@ struct ItemDetailView: View {
                             }
                         }
                     }
-                if overallAppState.navigationState.showLinkEditorSidebar {
-                    LinkEditView(
-                        overallAppState: overallAppState,
-                        link: link,
-                        showCancelButton: false
-                    )
-                    .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
-                }
             }
-        #else
-            WebView(data: WebViewData(url: link.url))
-//                .toolbar {
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        NavigationLink {
-//                            LinkEditView(overallAppState: overallAppState, link: link, showCancelButton: false)
-//                        } label: {
-//                            Label("Edit", systemImage: "pencil.circle")
-//                        }
-//                    }
-//                    ToolbarItem(placement: .navigationBarTrailing) {
-//                        Button {
-//                            shareSheetPresented = true
-//                        } label: {
-//                            Label("Share", systemImage: "square.and.arrow.up")
-//                        }.sheet(isPresented: $shareSheetPresented) {
-//                            AppActivityView(activityItems: [link.url], applicationActivities: nil)
-//                        }
-//
-//                        NavigationLink {
-//                            LinkEditView(link: link, showCancelButton: false)
-//                        } label: {
-//                            Label("Edit", systemImage: "pencil.circle")
-//                        }
-//                    }
-//                }
-//                .navigationBarTitleDisplayMode(.inline)
-//                .navigationTitle(link.title ?? "")
-        #endif
+        }
+#else
+        WebView(data: WebViewData(url: link.url))
+        //                .toolbar {
+        //                    ToolbarItem(placement: .navigationBarTrailing) {
+        //                        NavigationLink {
+        //                            LinkEditView(overallAppState: overallAppState, link: link, showCancelButton: false)
+        //                        } label: {
+        //                            Label("Edit", systemImage: "pencil.circle")
+        //                        }
+        //                    }
+        //                    ToolbarItem(placement: .navigationBarTrailing) {
+        //                        Button {
+        //                            shareSheetPresented = true
+        //                        } label: {
+        //                            Label("Share", systemImage: "square.and.arrow.up")
+        //                        }.sheet(isPresented: $shareSheetPresented) {
+        //                            AppActivityView(activityItems: [link.url], applicationActivities: nil)
+        //                        }
+        //
+        //                        NavigationLink {
+        //                            LinkEditView(link: link, showCancelButton: false)
+        //                        } label: {
+        //                            Label("Edit", systemImage: "pencil.circle")
+        //                        }
+        //                    }
+        //                }
+        //                .navigationBarTitleDisplayMode(.inline)
+        //                .navigationTitle(link.title ?? "")
+#endif
     }
 }

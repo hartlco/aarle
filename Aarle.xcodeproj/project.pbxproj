@@ -54,6 +54,8 @@
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
 		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
+		C57A5E562B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */; };
+		C57A5E572B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */; };
 		C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
 		C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */; };
@@ -177,6 +179,7 @@
 		C557ED2028D8270F0037D9A6 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
+		C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalProgressViewStyle.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1F527A5231E00AB0A6F /* PinboardClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinboardClient.swift; sourceTree = "<group>"; };
 		C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarle--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -307,6 +310,7 @@
 				C5165652278EB849006A55A7 /* InitialContentView.swift */,
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
 				C5126706280DAC73009714FA /* DownloadedListView.swift */,
+				C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -655,6 +659,7 @@
 				C5AE15882788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62327856B5000397910 /* ShaarliClient.swift in Sources */,
 				C50D957328C0A02600512FF7 /* OverallAppState.swift in Sources */,
+				C57A5E562B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */,
 				C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D1278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C513721D27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
@@ -681,6 +686,7 @@
 				C5AE15892788196C00480C83 /* SidebarView.swift in Sources */,
 				C53ED62427856B5000397910 /* ShaarliClient.swift in Sources */,
 				C50D957428C0A02600512FF7 /* OverallAppState.swift in Sources */,
+				C57A5E572B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */,
 				C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */,
 				C54D98D2278AB9F2003B1EB9 /* LinkAddView.swift in Sources */,
 				C513721E27EEF22C00E80F3D /* LinkdingClient.swift in Sources */,
