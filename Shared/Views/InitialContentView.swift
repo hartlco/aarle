@@ -119,7 +119,7 @@ struct InitialContentView: View {
         case .tag(let tag):
             tagListContentView(selectedTag: tag)
         case .empty, .none:
-            Text("Empty State")
+            EmptyDetailView()
         }
     }
 

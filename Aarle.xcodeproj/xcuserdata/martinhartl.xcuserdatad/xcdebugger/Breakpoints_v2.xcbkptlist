@@ -84,53 +84,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Types/Sources/Types/Models/Link.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "init(url:title:description:tags:`private`:created:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2 - 2b55a4a81b8f8724"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Types.PostLink.init(url: Foundation.URL, title: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, tags: Swift.Array&lt;Swift.String&gt;, private: Swift.Bool, created: Foundation.Date) -&gt; Types.PostLink"
-                  moduleName = "aarle"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/martinhartl/Code/Aarlo/Types/Sources/Types/Models/Link.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "88"
-                  endingLineNumber = "88"
-                  offsetFromSymbolStart = "2912">
-               </Location>
-               <Location
-                  uuid = "8D4A2EBD-9DAC-4C6E-BC90-199DDEA76FF2 - 2b55a4a81b8f8724"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Types.PostLink.init(url: Foundation.URL, title: Swift.Optional&lt;Swift.String&gt;, description: Swift.Optional&lt;Swift.String&gt;, tags: Swift.Array&lt;Swift.String&gt;, private: Swift.Bool, created: Foundation.Date) -&gt; Types.PostLink"
-                  moduleName = "aarle"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/martinhartl/Code/Aarlo/Types/Sources/Types/Models/Link.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "88"
-                  endingLineNumber = "88"
-                  offsetFromSymbolStart = "528">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

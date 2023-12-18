@@ -84,6 +84,8 @@
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
 		C5C9BB5F27895F580005086C /* Aarle-macOS-ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C5D68F702B30235800BE50EC /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D68F6F2B30235800BE50EC /* EmptyDetailView.swift */; };
+		C5D68F712B30235800BE50EC /* EmptyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D68F6F2B30235800BE50EC /* EmptyDetailView.swift */; };
 		C5E2AEC1278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E2AEC2278F4995005F6832 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */; };
 		C5E4E3642786C833000E79F0 /* LinkEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E4E3632786C833000E79F0 /* LinkEditView.swift */; };
@@ -200,6 +202,7 @@
 		C5C9BB5927895F580005086C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
 		C5C9BB5B27895F580005086C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5C9BB5C27895F580005086C /* Aarlo_macOS_ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Aarlo_macOS_ShareExtension.entitlements; sourceTree = "<group>"; };
+		C5D68F6F2B30235800BE50EC /* EmptyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDetailView.swift; sourceTree = "<group>"; };
 		C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		C5E4E3632786C833000E79F0 /* LinkEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEditView.swift; sourceTree = "<group>"; };
 		C5EB794F28D6E48200D99716 /* Types */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Types; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 				C5E2AEC0278F4995005F6832 /* ItemDetailView.swift */,
 				C5126706280DAC73009714FA /* DownloadedListView.swift */,
 				C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */,
+				C5D68F6F2B30235800BE50EC /* EmptyDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -646,6 +650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5D68F702B30235800BE50EC /* EmptyDetailView.swift in Sources */,
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1585278813B400480C83 /* WebView.swift in Sources */,
@@ -673,6 +678,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5D68F712B30235800BE50EC /* EmptyDetailView.swift in Sources */,
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
 				C5AE1586278813B400480C83 /* WebView.swift in Sources */,
