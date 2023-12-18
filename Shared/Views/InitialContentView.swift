@@ -102,6 +102,20 @@ struct InitialContentView: View {
             )
         case .archiveLink(let archiveLink):
             DataWebView(archiveLink: archiveLink)
+                .toolbar {
+                    ToolbarItem {
+                        Menu {
+                            ForEach(NSSharingService.sharingServices(forItems: [archiveLink.url]), id: \.title) { service in
+                                Button(action: { service.perform(withItems: [archiveLink.url]) }) {
+                                    Image(nsImage: service.image)
+                                    Text(service.title)
+                                }
+                            }
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                    }
+                }
         case .tag(let tag):
             tagListContentView(selectedTag: tag)
         case .empty, .none:

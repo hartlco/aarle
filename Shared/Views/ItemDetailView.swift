@@ -32,14 +32,6 @@ struct ItemDetailView: View {
     var body: some View {
 #if os(macOS)
         HSplitView {
-            if overallAppState.navigationState.showLinkEditorSidebar {
-                LinkEditView(
-                    overallAppState: overallAppState,
-                    link: link,
-                    showCancelButton: false
-                )
-                .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
-            }
             VStack(spacing: 0) {
                 if webViewData.progress > 0, webViewData.progress < 1 {
                     ProgressView(value: webViewData.progress)
@@ -67,6 +59,14 @@ struct ItemDetailView: View {
                             }
                         }
                     }
+            }
+            if overallAppState.navigationState.showLinkEditorSidebar {
+                LinkEditView(
+                    overallAppState: overallAppState,
+                    link: link,
+                    showCancelButton: false
+                )
+                .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
             }
         }
 #else

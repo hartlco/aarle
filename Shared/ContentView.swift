@@ -108,15 +108,15 @@ struct ContentView: View {
             if listState.canLoadMore(for: listType) {
                 HStack {
                     Spacer()
-                    Button {
-                        guard let lastLink = listState.links(for: listType).last else { return }
-                        Task {
-                            await listState.loadMoreIfNeeded(type: listType, link: lastLink)
-                        }
-                    } label: {
-                        Label("Load More", systemImage: "ellipsis")
-                    }.buttonStyle(BorderlessButtonStyle()).padding()
+                    Label("Loading More", systemImage: "ellipsis")
+                        .font(.body, weight: .medium)
+                        .foregroundStyle(Color.secondaryLabel)
                     Spacer()
+                }.onAppear {
+                    guard let lastLink = listState.links(for: listType).last else { return }
+                    Task {
+                        await listState.loadMoreIfNeeded(type: listType, link: lastLink)
+                    }
                 }
             }
         }
