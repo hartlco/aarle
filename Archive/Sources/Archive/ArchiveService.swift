@@ -23,8 +23,9 @@ final class ArchiveService: NSObject {
         super.init()
     }
 
+    @MainActor
     func archive(link: Link) async throws {
-        let archiver = await URLArchiver()
+        let archiver = URLArchiver()
         let data = try await archiver.archive(url: link.url)
         print(data)
         let fileUUID = UUID()
@@ -68,7 +69,7 @@ final class ArchiveService: NSObject {
     }
 }
 
-@MainActor final class URLArchiver: NSObject, WKNavigationDelegate {
+final class URLArchiver: NSObject, WKNavigationDelegate {
     private let webView = WKWebView()
 
     private var didArchive: ((URL?, Data?) -> Void)?

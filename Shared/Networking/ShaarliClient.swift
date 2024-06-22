@@ -74,11 +74,10 @@ final class ShaarliClient: BookmarkClient {
 
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let links = try decoder.decode([Link].self, from: data)
-        print(String(data: data, encoding: .utf8))
         return links
     }
 
@@ -96,9 +95,7 @@ final class ShaarliClient: BookmarkClient {
         let linkData = try JSONEncoder().encode(link)
         request.httpBody = linkData
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
-        print(dataString)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func updateLink(link: Link) async throws {
@@ -116,9 +113,7 @@ final class ShaarliClient: BookmarkClient {
         let linkData = try JSONEncoder().encode(postLink)
         request.httpBody = linkData
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
-        print(dataString)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func deleteLink(link: Link) async throws {
@@ -132,9 +127,7 @@ final class ShaarliClient: BookmarkClient {
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
-        print(dataString)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func loadTags() async throws -> [Tag] {
@@ -148,8 +141,7 @@ final class ShaarliClient: BookmarkClient {
 
         request.addValue("Bearer " + signedJWT, forHTTPHeaderField: "Authorization")
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
-        let dataString = String(data: data, encoding: .utf8)
+        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let links = try decoder.decode([Tag].self, from: data)

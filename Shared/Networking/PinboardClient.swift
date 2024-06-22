@@ -147,7 +147,7 @@ final class PinboardClient: BookmarkClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
 
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func updateLink(link: Link) async throws {
@@ -171,7 +171,7 @@ final class PinboardClient: BookmarkClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
 
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func loadTags() async throws -> [Tag] {

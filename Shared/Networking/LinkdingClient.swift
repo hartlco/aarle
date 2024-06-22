@@ -100,7 +100,7 @@ final class LinkdingClient: BookmarkClient {
         let linkData = try encoder.encode(linkdingLink)
         request.httpBody = linkData
 
-        let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func updateLink(link: Link) async throws {
@@ -124,7 +124,7 @@ final class LinkdingClient: BookmarkClient {
         let linkData = try encoder.encode(postLink)
         request.httpBody = linkData
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func deleteLink(link: Link) async throws {
@@ -136,7 +136,7 @@ final class LinkdingClient: BookmarkClient {
         request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let (data, response) = try await URLSession.shared.data(for: request, delegate: nil)
+        let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
     }
 
     func loadTags() async throws -> [Tag] {
