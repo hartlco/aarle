@@ -39,9 +39,7 @@ public final class NavigationState {
     }
 
     public var detailNavigationStack: [DetailNavigationDestination] = []
-
     public var showLinkEditorSidebar = false
-
     public var presentedEditLink: Link? = nil {
         didSet {
             if presentedEditLink != nil {

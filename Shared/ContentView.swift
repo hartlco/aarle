@@ -7,7 +7,6 @@
 
 import SwiftJWT
 import SwiftUI
-import SwiftUIX
 import WebKit
 import Types
 import Navigation

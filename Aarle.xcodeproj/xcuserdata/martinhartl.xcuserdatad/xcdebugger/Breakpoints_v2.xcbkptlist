@@ -18,38 +18,6 @@
             endingLineNumber = "49"
             landmarkName = "loadURL()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 3a9ca7fb74122ca8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
-                  moduleName = "Aarle-iOS-ShareExtension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "50"
-                  endingLineNumber = "50"
-                  offsetFromSymbolStart = "180">
-               </Location>
-               <Location
-                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 1d17e50f571f262b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.URL&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
-                  moduleName = "Aarle-iOS-ShareExtension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "208">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

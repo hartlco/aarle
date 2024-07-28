@@ -17,27 +17,43 @@ import Observation
 
 @Observable
 final class OverallAppState {
-    let client: BookmarkClient
+  let client: BookmarkClient
 
-    init(
-        client: BookmarkClient,
-        userDefaults: UserDefaults = .suite,
-        keychain: AarleKeychain
-    ) {
-        self.client = client
-        self.tagState = TagState(
-            client: client,
-            userDefaults: userDefaults,
-            favoriteTags: userDefaults.favoriteTags
-        )
-        self.settingsState = SettingsState(keychain: keychain)
-        self.archiveState = ArchiveState(userDefaults: userDefaults)
-        self.listState = List.ListState(client: client)
-    }
+  init(
+    client: BookmarkClient,
+    userDefaults: UserDefaults = .suite,
+    keychain: AarleKeychain
+  ) {
+    self.client = client
+    self.tagState = TagState(
+      client: client,
+      userDefaults: userDefaults,
+      favoriteTags: userDefaults.favoriteTags
+    )
+    self.settingsState = SettingsState(keychain: keychain)
+    self.archiveState = ArchiveState(userDefaults: userDefaults)
+    self.listState = List.ListState(client: client)
+    self.addState = AddState()
+  }
 
-    var navigationState: NavigationState = .init()
-    var tagState: TagState
-    var settingsState: SettingsState
-    var archiveState: ArchiveState
-    var listState: List.ListState
+  var navigationState: NavigationState = .init()
+  var tagState: TagState
+  var settingsState: SettingsState
+  var archiveState: ArchiveState
+  var listState: List.ListState
+  var addState: AddState
+}
+
+@Observable class AddState {
+  var urlString: String = ""
+  var title: String = ""
+  var description: String = ""
+  var tagsString: String = ""
+
+  func reset() {
+    urlString = ""
+    title = ""
+    description = ""
+    tagsString = ""
+  }
 }
