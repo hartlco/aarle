@@ -23,9 +23,8 @@ final class ArchiveService: NSObject {
         super.init()
     }
 
-    @MainActor
     func archive(link: Link) async throws {
-        let archiver = URLArchiver()
+        let archiver = await URLArchiver()
         let data = try await archiver.archive(url: link.url)
         print(data)
         let fileUUID = UUID()

@@ -23,7 +23,6 @@ public final class TagState {
         self.favoriteTags = favoriteTags
     }
 
-    @MainActor
     public func load() async {
         didLoad = true
         do {

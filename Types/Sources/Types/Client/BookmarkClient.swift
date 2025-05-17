@@ -8,5 +8,6 @@ public protocol BookmarkClient {
     func createLink(link: PostLink) async throws
     func updateLink(link: Link) async throws
     func deleteLink(link: Link) async throws
+
     func loadTags() async throws -> [Tag]
 }

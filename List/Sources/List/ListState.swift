@@ -54,7 +54,6 @@ public final class ListState {
         return nil
     }
 
-    @MainActor
     public func loadSearch(for type: ListType) async {
         do {
             guard isLoading == false else { return }
