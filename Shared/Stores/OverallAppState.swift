@@ -62,12 +62,14 @@ final class OverallAppState {
   var title: String = ""
   var description: String = ""
   var tagsString: String = ""
+  var isLoadingMetadata: Bool = false
 
   func reset() {
     urlString = ""
     title = ""
     description = ""
     tagsString = ""
+    isLoadingMetadata = false
   }
 }
 

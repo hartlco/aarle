@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftUIX
 import Types
+import LinkPresentation
 
 struct LinkAddView: View {
   @Environment(\.presentationMode) var presentationMode
@@ -42,11 +43,22 @@ struct LinkAddView: View {
     return Form {
       Section(header: "Main Information") {
         TextField("URL", text: $overallAppState.addState.urlString)
+          .onChange(of: overallAppState.addState.urlString) { newValue in
+            handleURLChange(newValue)
+          }
           .disableAutocorrection(true)
+          .disabled(overallAppState.addState.isLoadingMetadata)
         TextField("Title", text: $overallAppState.addState.title)
+          .disabled(overallAppState.addState.isLoadingMetadata)
       }
       Section(header: "Description") {
         TextEditor(text: $overallAppState.addState.description)
+          .disabled(overallAppState.addState.isLoadingMetadata)
+          .overlay(alignment: .topLeading) {
+            if overallAppState.addState.isLoadingMetadata {
+              ProgressView().padding(.top, 4)
+            }
+          }
       }
       Section(header: "Favorites") {
         ForEach(overallAppState.tagState.favoriteTags) { tag in
@@ -74,7 +86,7 @@ struct LinkAddView: View {
         .disableAutocorrection(true)
       Button("Add") {
         save()
-      }.disabled(saveButtonDisabled)
+      }.disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata)
     }
   }
 
@@ -112,6 +124,34 @@ struct LinkAddView: View {
     Task {
       await overallAppState.listState.add(link: newLink)
       presentationMode.dismiss()
+    }
+  }
+
+  private func handleURLChange(_ newValue: String) {
+    guard let url = URL(string: newValue), !newValue.isEmpty else { return }
+    // Trigger only when user pastes or finishes typing a plausible URL
+    let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+    let range = NSRange(location: 0, length: newValue.utf16.count)
+    guard detector.firstMatch(in: newValue, options: [], range: range) != nil else { return }
+
+    // Avoid refetching if same URL
+    if overallAppState.addState.title.isEmpty == false || overallAppState.addState.description.isEmpty == false {
+      return
+    }
+
+    overallAppState.addState.isLoadingMetadata = true
+    let provider = LPMetadataProvider()
+    provider.startFetchingMetadata(for: url) { metadata, error in
+      DispatchQueue.main.async {
+        overallAppState.addState.isLoadingMetadata = false
+        guard error == nil, let metadata else { return }
+        if overallAppState.addState.title.isEmpty, let title = metadata.title {
+          overallAppState.addState.title = title
+        }
+        if overallAppState.addState.description.isEmpty, let summary = metadata.summary {
+          overallAppState.addState.description = summary
+        }
+      }
     }
   }
 }
