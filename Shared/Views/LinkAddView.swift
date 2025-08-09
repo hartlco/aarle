@@ -16,6 +16,7 @@ struct LinkAddView: View {
   var overallAppState: OverallAppState
 
   private var localAddLink: PostLink?
+  @FocusState private var isEditingURL: Bool
 
   init(
     overallAppState: OverallAppState,
@@ -43,11 +44,12 @@ struct LinkAddView: View {
     return Form {
       Section(header: "Main Information") {
         TextField("URL", text: $overallAppState.addState.urlString)
-          .onChange(of: overallAppState.addState.urlString) { newValue in
-            handleURLChange(newValue)
-          }
           .disableAutocorrection(true)
           .disabled(overallAppState.addState.isLoadingMetadata)
+          .focused($isEditingURL)
+          .onSubmit {
+            handleURLChange(overallAppState.addState.urlString)
+          }
         TextField("Title", text: $overallAppState.addState.title)
           .disabled(overallAppState.addState.isLoadingMetadata)
       }
@@ -87,6 +89,11 @@ struct LinkAddView: View {
       Button("Add") {
         save()
       }.disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata)
+    }
+    .onChange(of: isEditingURL) { isEditing in
+      if isEditing == false {
+        handleURLChange(overallAppState.addState.urlString)
+      }
     }
   }
 
@@ -147,9 +154,6 @@ struct LinkAddView: View {
         guard error == nil, let metadata else { return }
         if overallAppState.addState.title.isEmpty, let title = metadata.title {
           overallAppState.addState.title = title
-        }
-        if overallAppState.addState.description.isEmpty, let summary = metadata.summary {
-          overallAppState.addState.description = summary
         }
       }
     }
