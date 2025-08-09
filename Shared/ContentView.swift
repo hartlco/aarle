@@ -46,8 +46,9 @@ struct ContentView: View {
         #if os(iOS)
         .sheet(item: $navigationState.presentedEditLink) { link in
             NavigationView {
-                LinkEditView(overallAppState: overallAppState, link: link, showCancelButton: true)
+                LinkEditView(editState: overallAppState.editState, showCancelButton: true)
             }
+            .onAppear { overallAppState.editState.load(link: link) }
         }
         #endif
         .toolbar {

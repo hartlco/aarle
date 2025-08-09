@@ -59,14 +59,6 @@ struct ItemDetailView: View {
                         }
                     }
             }
-            if overallAppState.navigationState.showLinkEditorSidebar {
-                LinkEditView(
-                    overallAppState: overallAppState,
-                    link: link,
-                    showCancelButton: false
-                )
-                .frame(minWidth: 220, idealWidth: 400, maxWidth: 500)
-            }
         }
 #else
         WebView(data: WebViewData(url: link.url))

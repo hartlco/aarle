@@ -109,10 +109,12 @@ struct LinkEditScene: Scene {
         WindowGroup {
             if let presentedEditLink = navigationState.presentedEditLink {
                 LinkEditView(
-                    overallAppState: overallAppState,
-                    link: presentedEditLink,
+                    editState: overallAppState.editState,
                     showCancelButton: false
-                ).onDisappear {
+                ).onAppear {
+                    overallAppState.editState.load(link: presentedEditLink)
+                }
+                .onDisappear {
                     navigationState.showsAddView = false
                 }
             } else {

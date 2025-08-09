@@ -92,15 +92,35 @@ struct InitialContentView: View {
 
   @ViewBuilder
   private var detailView: some View {
+    @Bindable var overallAppState = overallAppState
     switch overallAppState.navigationState.selectedDetailDestination {
     case .link(let link):
       ItemDetailView(
         link: link,
         overallAppState: overallAppState
       )
+      // TODO: Add inspector for iOS
+      // TODO: Inspector not updating when selecting different link
+      .inspector(isPresented: $overallAppState.navigationState.showLinkEditorSidebar) {
+        LinkEditView(
+          editState: overallAppState.editState,
+          showCancelButton: false
+        )
+        .onAppear { overallAppState.editState.load(link: link) }
+      }
+      .onChange(of: overallAppState.navigationState.selectedDetailDestination) { newValue in
+        switch newValue {
+        case .link(let newLink):
+          overallAppState.editState.load(link: newLink)
+        default:
+          overallAppState.editState.reset()
+        }
+      }
     case .archiveLink(let archiveLink):
       DataWebView(archiveLink: archiveLink)
       // TODO: Enable sharing again
+      // TODO: Add inspector for all other cases
+
 //        .toolbar {
 //          ToolbarItem {
 //            Menu {

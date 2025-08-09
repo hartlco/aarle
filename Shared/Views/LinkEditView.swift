@@ -10,47 +10,33 @@ import SwiftUIX
 import Types
 
 struct LinkEditView: View {
-    let link: Types.Link
-
-    var overallAppState: OverallAppState
-
-    // TODO: Move into EditStore
-    @State var urlString: String
-    @State var title: String
-    @State var description: String
-    @State var tagsString: String
-
+    var editState: EditState
     private let showCancelButton: Bool
 
     init(
-        overallAppState: OverallAppState,
-        link: Types.Link,
+        editState: EditState,
         showCancelButton: Bool
     ) {
-        self.overallAppState = overallAppState
-        self.link = link
+        self.editState = editState
         self.showCancelButton = showCancelButton
-        _urlString = State<String>(initialValue: link.url.absoluteString)
-        _title = State(initialValue: link.title ?? "")
-        _description = State(initialValue: link.description ?? "")
-        _tagsString = State(initialValue: link.tags.joined(separator: " "))
     }
 
     var body: some View {
+        @Bindable var editState = editState
         #if os(macOS)
             macOSForm
         #elseif os(iOS)
             form.toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel", role: .cancel) {
-                        overallAppState.navigationState.presentedEditLink = nil
+                        editState.closeEditUI()
                     }.hidden(!showCancelButton)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        save()
+                        Task { await editState.save() }
                         if showCancelButton {
-                            overallAppState.navigationState.presentedEditLink = nil
+                            editState.closeEditUI()
                         }
                     }
                 }
@@ -59,29 +45,30 @@ struct LinkEditView: View {
     }
 
     private var form: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        @Bindable var editState = editState
+        return VStack(alignment: .leading, spacing: 10) {
             Section(header: "Main Information") {
-                TextField("Link", text: $urlString)
+                TextField("Link", text: $editState.urlString)
                     .disableAutocorrection(true)
-                TextField("Title", text: $title)
+                TextField("Title", text: $editState.title)
             }
             Section(header: "Description") {
-                TextEditor(text: $description)
+                TextEditor(text: $editState.description)
             }
-            if !overallAppState.tagState.favoriteTags.isEmpty {
+            if !editState.favoriteTags.isEmpty {
                 Section(header: "Favorites") {
-                    ForEach(overallAppState.tagState.favoriteTags) { tag in
+                    ForEach(editState.favoriteTags) { tag in
                         Toggle(
                             tag.name,
                             isOn: Binding(
                                 get: {
-                                    overallAppState.tagState.tagsString(tagsString, contains: tag)
+                                    editState.tagsStringContains(tag)
                                 },
                                 set: { newValue in
                                     if newValue {
-                                        tagsString = overallAppState.tagState.addingTag(tag, toTagsString: tagsString)
+                                        editState.appendTag(tag)
                                     } else {
-                                        tagsString = overallAppState.tagState.removingTag(tag, fromTagsString: tagsString)
+                                        editState.removeTag(tag)
                                     }
                                 }
                             )
@@ -89,39 +76,40 @@ struct LinkEditView: View {
                     }
                 }
             }
-            TextField("Tags", text: $tagsString)
+            TextField("Tags", text: $editState.tagsString)
                 .disableAutocorrection(true)
         }
     }
 
     private var macOSForm: some View {
-        HStack {
+        @Bindable var editState = editState
+        return HStack {
             VStack {
                 Form {
-                    TextField("Link:", text: $urlString)
+                    TextField("Link:", text: $editState.urlString)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
-                    TextField("Title:", text: $title)
+                    TextField("Title:", text: $editState.title)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    TextEditor(text: $description)
+                    TextEditor(text: $editState.description)
                         .formLabel(Text("Notes:"))
                         .frame(maxHeight: 400)
-                    TextField("Tags:", text: $tagsString)
+                    TextField("Tags:", text: $editState.tagsString)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .disableAutocorrection(true)
-                    if !overallAppState.tagState.favoriteTags.isEmpty {
-                        ForEach(overallAppState.tagState.favoriteTags) { tag in
+                    if !editState.favoriteTags.isEmpty {
+                        ForEach(editState.favoriteTags) { tag in
                             Toggle(
                                 tag.name,
                                 isOn: Binding(
                                     get: {
-                                        overallAppState.tagState.tagsString(tagsString, contains: tag)
+                                        editState.tagsStringContains(tag)
                                     },
                                     set: { newValue in
                                         if newValue {
-                                            tagsString = overallAppState.tagState.addingTag(tag, toTagsString: tagsString)
+                                            editState.appendTag(tag)
                                         } else {
-                                            tagsString = overallAppState.tagState.removingTag(tag, fromTagsString: tagsString)
+                                            editState.removeTag(tag)
                                         }
                                     }
                                 )
@@ -133,14 +121,14 @@ struct LinkEditView: View {
                         Spacer()
                         if showCancelButton {
                             Button("Cancel", role: .cancel) {
-                                overallAppState.navigationState.presentedEditLink = nil
+                                editState.closeEditUI()
                             }
                             .keyboardShortcut(.cancelAction)
                         }
                         Button("Save") {
-                            save()
+                            Task { await editState.save() }
                             if showCancelButton {
-                                overallAppState.navigationState.presentedEditLink = nil
+                                editState.closeEditUI()
                             }
                         }
                         .buttonStyle(.borderedProminent)
@@ -151,24 +139,6 @@ struct LinkEditView: View {
             Spacer()
         }
         .padding()
-    }
-
-    private func save() {
-        let url = URL(string: urlString) ?? link.url
-        let tags = tagsString.components(separatedBy: " ")
-        let newLink = Link(
-            id: link.id,
-            url: url,
-            title: title,
-            description: description,
-            tags: tags,
-            private: false,
-            created: link.created
-        )
-
-        Task {
-            await overallAppState.listState.update(link: newLink)
-        }
     }
 }
 
