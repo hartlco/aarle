@@ -61,7 +61,13 @@ struct ItemDetailView: View {
             }
         }
 #else
-        WebView(data: WebViewData(url: link.url))
+        VStack(spacing: 0) {
+            if webViewData.progress > 0, webViewData.progress < 1 {
+                ProgressView(value: webViewData.progress)
+                    .progressViewStyle(LinearProgressViewStyle())
+            }
+            WebView(data: webViewData)
+        }
         //                .toolbar {
         //                    ToolbarItem(placement: .navigationBarTrailing) {
         //                        NavigationLink {

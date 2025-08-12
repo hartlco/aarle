@@ -65,6 +65,11 @@ final class WebViewData: ObservableObject {
         func updateUIView(_ uiView: WKWebView, context: Context) {
             guard context.coordinator.loadedUrl != data.url else { return }
             uiView.evaluateJavaScript("document.body.remove()")
+            data.observation = uiView.observe(\.estimatedProgress) { view, _ in
+                data.progress = view.estimatedProgress
+            }
+
+            guard context.coordinator.loadedUrl != data.url else { return }
             context.coordinator.loadedUrl = data.url
 
             if let url = data.url {
