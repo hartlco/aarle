@@ -63,6 +63,25 @@ public struct SettingsView: View {
             }
             Form {
                 Section {
+                    TextField(
+                        "Metadata Endpoint (Optional)",
+                        text: $settingsState.metadataEndpoint
+                    )
+                    .disableAutocorrection(true)
+                    Text("Enter the base URL of your mscrap instance. If set, this will be used instead of native APIs to fetch website metadata including descriptions. Leave empty to use native iOS/macOS metadata fetching.")
+                        .font(.caption)
+                    Text("Requires mscrap service: https://github.com/hartlco/mscrap")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                } header: {
+                    Text("Metadata Fetching").font(.headline)
+                }
+            }
+            .tabItem {
+                Label("Metadata", systemImage: "doc.text")
+            }
+            Form {
+                Section {
                     Text("aarle is made by Martin Hartl, https://hartl.co")
                     Text("Open Source at https://github.com/hartlco/aarle")
                 } header: {

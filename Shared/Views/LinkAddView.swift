@@ -147,13 +147,24 @@ struct LinkAddView: View {
     }
 
     overallAppState.addState.isLoadingMetadata = true
-    let provider = LPMetadataProvider()
-    provider.startFetchingMetadata(for: url) { metadata, error in
-      DispatchQueue.main.async {
-        overallAppState.addState.isLoadingMetadata = false
-        guard error == nil, let metadata else { return }
-        if overallAppState.addState.title.isEmpty, let title = metadata.title {
-          overallAppState.addState.title = title
+    
+    let metadataService = MetadataService(customEndpoint: overallAppState.settingsState.metadataEndpoint)
+    
+    Task {
+      do {
+        let metadata = try await metadataService.fetchMetadata(for: url)
+        await MainActor.run {
+          overallAppState.addState.isLoadingMetadata = false
+          if overallAppState.addState.title.isEmpty, let title = metadata.title {
+            overallAppState.addState.title = title
+          }
+          if overallAppState.addState.description.isEmpty, let description = metadata.description {
+            overallAppState.addState.description = description
+          }
+        }
+      } catch {
+        await MainActor.run {
+          overallAppState.addState.isLoadingMetadata = false
         }
       }
     }

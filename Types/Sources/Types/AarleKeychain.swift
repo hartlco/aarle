@@ -5,9 +5,13 @@ public protocol AarleKeychain {
 
     var endpoint: String { get }
 
+    var metadataEndpoint: String { get }
+
     func setAccountType(accountType: AccountType)
 
     func setSecret(secret: String)
 
     func setEndpoint(endpoint: String)
+
+    func setMetadataEndpoint(endpoint: String)
 }

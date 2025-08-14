@@ -80,6 +80,10 @@
 		C5AE1586278813B400480C83 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE1584278813B400480C83 /* WebView.swift */; };
 		C5AE15882788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
 		C5AE15892788196C00480C83 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5AE15872788196C00480C83 /* SidebarView.swift */; };
+		C5BB16A72E4DC6A100EF5410 /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */; };
+		C5BB16A82E4DC6A100EF5410 /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */; };
+		C5BB16A92E4DC6A100EF5410 /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */; };
+		C5BB16AA2E4DC6A100EF5410 /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */; };
 		C5C9BB5527895F580005086C /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5427895F580005086C /* icon.icns */; };
 		C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C9BB5627895F580005086C /* ShareViewController.swift */; };
 		C5C9BB5A27895F580005086C /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C9BB5827895F580005086C /* ShareViewController.xib */; };
@@ -195,6 +199,7 @@
 		C5AE05042903B8D400F4C0E5 /* LinkCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCommands.swift; sourceTree = "<group>"; };
 		C5AE1584278813B400480C83 /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		C5AE15872788196C00480C83 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataService.swift; sourceTree = "<group>"; };
 		C5C11F80279A8FAC006981CE /* ExtensionClass.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionClass.js; sourceTree = "<group>"; };
 		C5C9BB5227895F580005086C /* Aarle-macOS-ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Aarle-macOS-ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C9BB5427895F580005086C /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -344,6 +349,7 @@
 		C59994F52781B96500FE1EBA /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				C5BB16A62E4DC6A100EF5410 /* MetadataService.swift */,
 				C5AE05032903B8C700F4C0E5 /* Commands */,
 				C53ED62527856CD900397910 /* Stores */,
 				C5782B2F2781E96900321138 /* Views */,
@@ -650,6 +656,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5BB16A82E4DC6A100EF5410 /* MetadataService.swift in Sources */,
 				C5D68F702B30235800BE50EC /* EmptyDetailView.swift in Sources */,
 				C585F1F627A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B312781E97900321138 /* LinkItemView.swift in Sources */,
@@ -678,6 +685,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5BB16A72E4DC6A100EF5410 /* MetadataService.swift in Sources */,
 				C5D68F712B30235800BE50EC /* EmptyDetailView.swift in Sources */,
 				C585F1F727A5231E00AB0A6F /* PinboardClient.swift in Sources */,
 				C5782B322781E97900321138 /* LinkItemView.swift in Sources */,
@@ -706,6 +714,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5BB16AA2E4DC6A100EF5410 /* MetadataService.swift in Sources */,
 				C50D957528C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE131279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C54210BC2796A6BA000F07DC /* ShaarliClient.swift in Sources */,
@@ -723,6 +732,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5BB16A92E4DC6A100EF5410 /* MetadataService.swift in Sources */,
 				C50D957628C0A02600512FF7 /* OverallAppState.swift in Sources */,
 				C5FAE132279BE384007E763B /* NSItemProvider+Async.swift in Sources */,
 				C513722027EEF22C00E80F3D /* LinkdingClient.swift in Sources */,

@@ -15,6 +15,10 @@ extension Keychain: AarleKeychain {
         self[endpointKey] ?? ""
     }
     
+    public var metadataEndpoint: String {
+        self[metadataEndpointKey] ?? ""
+    }
+    
     public func setAccountType(accountType: AccountType) {
         self[servieKey] = accountType.rawValue
     }
@@ -34,8 +38,17 @@ extension Keychain: AarleKeychain {
             self[endpointKey] = endpoint
         }
     }
+    
+    public func setMetadataEndpoint(endpoint: String) {
+        if endpoint.isEmpty {
+            try? remove(metadataEndpointKey)
+        } else {
+            self[metadataEndpointKey] = endpoint
+        }
+    }
 }
 
 let keychainKey = "secret"
 let endpointKey = "endpoint"
+let metadataEndpointKey = "metadataEndpoint"
 let servieKey = "servicekey"

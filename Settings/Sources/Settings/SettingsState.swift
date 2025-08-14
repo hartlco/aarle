@@ -19,6 +19,11 @@ public final class SettingsState: SettingsStateProtocol {
             keychain.setEndpoint(endpoint: endpoint)
         }
     }
+    public var metadataEndpoint: String = "" {
+        didSet {
+            keychain.setMetadataEndpoint(endpoint: metadataEndpoint)
+        }
+    }
 
     private let keychain: AarleKeychain
 
@@ -27,6 +32,7 @@ public final class SettingsState: SettingsStateProtocol {
         self.accountType = keychain.accountType
         self.secret = keychain.secret
         self.endpoint = keychain.endpoint
+        self.metadataEndpoint = keychain.metadataEndpoint
     }
 
     public var isLoggedOut: Bool {
