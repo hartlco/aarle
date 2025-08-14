@@ -58,17 +58,17 @@ struct ContentView: View {
                 } label: {
                     Label("Add", systemImage: "plus")
                 }
-                #if os(iOS)
-                .sheet(
-                    isPresented: $navigationState.showsAddView,
-                    onDismiss: nil,
-                    content: {
-                        LinkAddView(overallAppState: overallAppState)
-                    }
-                )
-                #endif
             }
         }
+        #if os(iOS)
+        .sheet(
+            isPresented: $navigationState.showsAddView,
+            onDismiss: nil,
+            content: {
+                LinkAddView(overallAppState: overallAppState)
+            }
+        )
+        #endif
         .navigationTitle(title)
         .onAppear {
             if listState.didLoad(listType: listType) {

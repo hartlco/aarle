@@ -57,16 +57,16 @@ struct SidebarView: View {
                     } label: {
                         Label("Settings", systemImage: "gear")
                     }
-                    .sheet(
-                        isPresented: $overallAppState.navigationState.showsSettings,
-                        content: {
-                            SettingsView(
-                                settingsState: overallAppState.settingsState
-                            )
-                        }
-                    )
                 }
             }
+            .sheet(
+                isPresented: $overallAppState.navigationState.showsSettings,
+                content: {
+                    SettingsView(
+                        settingsState: overallAppState.settingsState
+                    )
+                }
+            )
         #endif
             .onAppear {
                 if overallAppState.settingsState.isLoggedOut {
