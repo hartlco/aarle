@@ -18,6 +18,36 @@
             endingLineNumber = "49"
             landmarkName = "loadURL()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 2b021baf3631095f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
+                  moduleName = "Aarle-iOS-ShareExtension.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50">
+               </Location>
+               <Location
+                  uuid = "42062F90-09CB-41FE-8B6F-443EBAFAE622 - 9529b93c2144354b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.URL&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in closure #1 (Swift.CheckedContinuation&lt;Foundation.URL, Swift.Error&gt;) -&gt; () in __C.NSItemProvider.loadURL() async throws -&gt; Foundation.URL"
+                  moduleName = "Aarle-iOS-ShareExtension.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/martinhartl/Code/Aarlo/Shared/NSItemProvider+Async.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
