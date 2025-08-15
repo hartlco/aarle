@@ -12,13 +12,13 @@ import Navigation
 import Tag
 
 struct InitialContentView: View {
-  @State private var columnVisibility = NavigationSplitViewVisibility.all
+  @State private var preferredCompactColumn = NavigationSplitViewColumn.sidebar
   @Environment(OverallAppState.self) private var overallAppState
 
   var body: some View {
     @Bindable var overallAppState = overallAppState
     NavigationSplitView(
-      columnVisibility: $columnVisibility
+      preferredCompactColumn: $preferredCompactColumn
     ) {
       SidebarView()
         .navigationTitle("aarle")
@@ -99,8 +99,8 @@ struct InitialContentView: View {
         link: link,
         overallAppState: overallAppState
       )
+      #if os(macOS)
       // TODO: Add inspector for iOS
-      // TODO: Inspector not updating when selecting different link
       .inspector(isPresented: $overallAppState.navigationState.showLinkEditorSidebar) {
         LinkEditView(
           editState: overallAppState.editState,
@@ -116,6 +116,7 @@ struct InitialContentView: View {
           overallAppState.editState.reset()
         }
       }
+      #endif
     case .archiveLink(let archiveLink):
       DataWebView(archiveLink: archiveLink)
       // TODO: Enable sharing again

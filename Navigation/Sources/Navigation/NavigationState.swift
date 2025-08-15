@@ -26,8 +26,8 @@ public enum DetailNavigationDestination: Hashable {
 
 @Observable
 public final class NavigationState {
-    public var selectedListType: ListType? = .all
-    public var selectedDetailDestination: DetailNavigationDestination? = .empty
+    public var selectedListType: ListType? = nil
+    public var selectedDetailDestination: DetailNavigationDestination? = nil
     public var showsSettings = false {
         didSet {
             if showsSettings {
