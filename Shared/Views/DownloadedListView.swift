@@ -44,6 +44,9 @@ struct DownloadedListView: View {
             }
         }
         .listStyle(PlainListStyle())
+        .refreshable {
+            archiveState.refresh()
+        }
         .navigationTitle("Download")
         .toolbar {
             ToolbarItem {

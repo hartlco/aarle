@@ -38,4 +38,8 @@ public final class ArchiveState: ArchiveStateProtocol {
             throw ArchiveStateError.unableToDelete
         }
     }
+    
+    public func refresh() {
+        archiveLinks = archiveService.archiveLinks
+    }
 }

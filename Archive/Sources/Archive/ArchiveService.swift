@@ -63,8 +63,20 @@ final class ArchiveService: NSObject {
     }
 
     private func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
+        guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.hartl.Aarle") else {
+            // Fallback to local documents directory if App Group is not available
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+            return paths[0]
+        }
+        
+        let archiveDirectory = containerURL.appendingPathComponent("Archives")
+        
+        // Create the directory if it doesn't exist
+        if !FileManager.default.fileExists(atPath: archiveDirectory.path) {
+            try? FileManager.default.createDirectory(at: archiveDirectory, withIntermediateDirectories: true)
+        }
+        
+        return archiveDirectory
     }
 }
 

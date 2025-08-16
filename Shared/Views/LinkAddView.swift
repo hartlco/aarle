@@ -14,6 +14,7 @@ struct LinkAddView: View {
   @Environment(\.presentationMode) var presentationMode
 
   var overallAppState: OverallAppState
+  var onCancel: (() -> Void)?
 
   private var localAddLink: PostLink?
   @FocusState private var isEditingURL: Bool
@@ -22,9 +23,11 @@ struct LinkAddView: View {
     overallAppState: OverallAppState,
     urlString: String = "",
     title: String = "",
-    description: String = ""
+    description: String = "",
+    onCancel: (() -> Void)? = nil
   ) {
     self.overallAppState = overallAppState
+    self.onCancel = onCancel
   }
 
   var body: some View {
@@ -86,9 +89,35 @@ struct LinkAddView: View {
       }
       TextField("Tags", text: $overallAppState.addState.tagsString)
         .disableAutocorrection(true)
-      Button("Add") {
-        save()
-      }.disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata)
+      
+      Section(header: "Options") {
+        Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
+      }
+      
+      HStack {
+        if onCancel != nil {
+          Button("Cancel") {
+            onCancel?()
+          }
+          .buttonStyle(.bordered)
+        }
+        
+        Spacer()
+        
+        Button(action: {
+          save()
+        }) {
+          HStack {
+            if overallAppState.addState.isSaving {
+              ProgressView()
+                .scaleEffect(0.8)
+            }
+            Text("Add")
+          }
+        }
+        .buttonStyle(.borderedProminent)
+        .disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata || overallAppState.addState.isSaving)
+      }
     }
     .onChange(of: isEditingURL) { isEditing in
       if isEditing == false {
@@ -128,9 +157,31 @@ struct LinkAddView: View {
       created: Date().addingTimeInterval(-10.0)
     )
 
+    overallAppState.addState.isSaving = true
+
     Task {
       await overallAppState.listState.add(link: newLink)
-      presentationMode.dismiss()
+      
+      // Archive the link if the option is selected
+      if overallAppState.addState.shouldArchive {
+        // Convert PostLink to Link for archiving
+        let linkForArchive = Types.Link(
+          id: UUID().uuidString,
+          url: newLink.url,
+          title: newLink.title,
+          description: newLink.description,
+          tags: newLink.tags,
+          private: newLink.private,
+          created: newLink.created
+        )
+        await overallAppState.archiveState.archiveLink(link: linkForArchive)
+      }
+      
+      await MainActor.run {
+        overallAppState.addState.isSaving = false
+        overallAppState.addState.onSaveComplete?()
+        presentationMode.dismiss()
+      }
     }
   }
 

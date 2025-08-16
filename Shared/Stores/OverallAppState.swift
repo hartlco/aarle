@@ -62,14 +62,20 @@ final class OverallAppState {
   var title: String = ""
   var description: String = ""
   var tagsString: String = ""
+  var shouldArchive: Bool = false
   var isLoadingMetadata: Bool = false
+  var isSaving: Bool = false
+  var onSaveComplete: (() -> Void)?
 
   func reset() {
     urlString = ""
     title = ""
     description = ""
     tagsString = ""
+    shouldArchive = false
     isLoadingMetadata = false
+    isSaving = false
+    onSaveComplete = nil
   }
 }
 
