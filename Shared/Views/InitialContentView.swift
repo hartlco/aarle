@@ -10,6 +10,7 @@ import Types
 import Settings
 import Navigation
 import Tag
+import Archive
 
 struct InitialContentView: View {
   @State private var preferredCompactColumn = NavigationSplitViewColumn.sidebar
@@ -55,7 +56,8 @@ struct InitialContentView: View {
       case .downloaded:
         DownloadedListView(
           archiveState: overallAppState.archiveState,
-          navigationState: overallAppState.navigationState
+          navigationState: overallAppState.navigationState,
+          overallAppState: overallAppState
         )
       case .tags:
         List(overallAppState.tagState.tags, selection: $overallAppState.navigationState.selectedDetailDestination) { tag in
@@ -82,10 +84,46 @@ struct InitialContentView: View {
                 link: link,
                 overallAppState: overallAppState
               )
+            case .archiveLink(let archiveLink):
+              DataWebView(archiveLink: archiveLink)
+                .toolbar {
+                  #if os(iOS)
+                  ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Edit") {
+                      overallAppState.navigationState.presentedEditArchiveLink = archiveLink
+                    }
+                  }
+                  #else
+                  ToolbarItem {
+                    Button("Edit") {
+                      overallAppState.navigationState.presentedEditArchiveLink = archiveLink
+                    }
+                  }
+                  #endif
+                }
+                #if os(iOS)
+                .navigationBarTitleDisplayMode(.inline)
+                #endif
+                .navigationTitle(archiveLink.title ?? "")
             default:
               Text("Empty")
             }
           }
+      }
+      .sheet(item: $overallAppState.navigationState.presentedEditArchiveLink) { archiveLink in
+        NavigationView {
+          LinkEditView(
+            editState: overallAppState.editState,
+            showCancelButton: true
+          )
+          .onAppear {
+            overallAppState.editState.load(archiveLink: archiveLink)
+          }
+          .onDisappear {
+            overallAppState.editState.reset()
+          }
+          .navigationTitle("Edit Archive")
+        }
       }
     }
   }
@@ -108,7 +146,7 @@ struct InitialContentView: View {
         )
         .onAppear { overallAppState.editState.load(link: link) }
       }
-      .onChange(of: overallAppState.navigationState.selectedDetailDestination) { newValue in
+      .onChange(of: overallAppState.navigationState.selectedDetailDestination) { _, newValue in
         switch newValue {
         case .link(let newLink):
           overallAppState.editState.load(link: newLink)
@@ -119,8 +157,33 @@ struct InitialContentView: View {
       #endif
     case .archiveLink(let archiveLink):
       DataWebView(archiveLink: archiveLink)
+      #if os(macOS)
+      .inspector(isPresented: $overallAppState.navigationState.showLinkEditorSidebar) {
+        LinkEditView(
+          editState: overallAppState.editState,
+          showCancelButton: false
+        )
+        .onAppear { overallAppState.editState.load(archiveLink: archiveLink) }
+      }
+      .onChange(of: overallAppState.navigationState.selectedDetailDestination) { _, newValue in
+        switch newValue {
+        case .archiveLink(let newArchiveLink):
+          overallAppState.editState.load(archiveLink: newArchiveLink)
+        default:
+          overallAppState.editState.reset()
+        }
+      }
+      .toolbar {
+        ToolbarItem {
+          Button {
+            overallAppState.navigationState.showLinkEditorSidebar.toggle()
+          } label: {
+            Label("Show Edit Link", systemImage: "sidebar.right")
+          }
+        }
+      }
+      #endif
       // TODO: Enable sharing again
-      // TODO: Add inspector for all other cases
 
 //        .toolbar {
 //          ToolbarItem {

@@ -57,11 +57,15 @@ final class ShareViewController: UIViewController {
       overallAppState.addState.urlString = urlString ?? ""
       overallAppState.addState.title = title ?? ""
       overallAppState.addState.description = description ?? ""
+      overallAppState.addState.onSaveComplete = { [weak self] in
+        self?.send(self)
+      }
         let addView = LinkAddView(
-            overallAppState: overallAppState
-        ).onDisappear {
-            self.send(self)
-        }
+            overallAppState: overallAppState,
+            onCancel: { [weak self] in
+              self?.cancel(self)
+            }
+        )
 
         let hosting = UIHostingController(rootView: addView)
         addChild(hosting)

@@ -13,13 +13,16 @@ import Navigation
 struct DownloadedListView: View {
     @Bindable var archiveState: ArchiveState
     @Bindable var navigationState: NavigationState
+    var overallAppState: OverallAppState
 
     public init(
         archiveState: ArchiveState,
-        navigationState: NavigationState
+        navigationState: NavigationState,
+        overallAppState: OverallAppState
     ) {
         self.archiveState = archiveState
         self.navigationState = navigationState
+        self.overallAppState = overallAppState
     }
 
     var body: some View {
@@ -31,6 +34,12 @@ struct DownloadedListView: View {
                 LinkItemView(link: link)
             }
             .contextMenu {
+                Button {
+                    navigationState.presentedEditArchiveLink = link
+                } label: {
+                    Label("Edit", systemImage: "pencil")
+                }
+                
                 Button(role: .destructive) {
                     do {
                         try archiveState.deleteLink(link: link)
@@ -67,6 +76,21 @@ struct DownloadedListView: View {
 //                    }
 //                )
                 #endif
+            }
+        }
+        .sheet(item: $navigationState.presentedEditArchiveLink) { archiveLink in
+            NavigationView {
+                LinkEditView(
+                    editState: overallAppState.editState,
+                    showCancelButton: true
+                )
+                .onAppear {
+                    overallAppState.editState.load(archiveLink: archiveLink)
+                }
+                .onDisappear {
+                    overallAppState.editState.reset()
+                }
+                .navigationTitle("Edit Archive")
             }
         }
     }

@@ -52,17 +52,20 @@ class ShareViewController: NSViewController {
     }
   }
 
-  // TODO: Fix dismissing of ShareSheet
   @MainActor
   private func showView(for url: URL?, title: String?, description: String?) {
+    overallAppState.addState.urlString = url?.absoluteString ?? ""
+    overallAppState.addState.title = title ?? ""
+    overallAppState.addState.description = description ?? ""
+    overallAppState.addState.onSaveComplete = { [weak self] in
+      self?.send(self)
+    }
     let addView = LinkAddView(
       overallAppState: overallAppState,
-      urlString: url?.absoluteString ?? "",
-      title: title ?? "",
-      description: description ?? ""
-    ).onDisappear {
-      self.send(self)
-    }
+      onCancel: { [weak self] in
+        self?.cancel(self)
+      }
+    )
     let hosting = NSHostingView(rootView: addView)
     hosting.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(hosting)

@@ -32,7 +32,8 @@ final class OverallAppState {
     )
     self.tagState = tagState
     self.settingsState = SettingsState(keychain: keychain)
-    self.archiveState = ArchiveState(userDefaults: userDefaults)
+    let archiveState = ArchiveState(userDefaults: userDefaults)
+    self.archiveState = archiveState
     let listState = List.ListState(client: client)
     self.listState = listState
 
@@ -44,7 +45,8 @@ final class OverallAppState {
     self.editState = EditState(
       tagState: tagState,
       listState: listState,
-      navigationState: navigationState
+      navigationState: navigationState,
+      archiveState: archiveState
     )
   }
 
@@ -83,8 +85,10 @@ final class OverallAppState {
   private let tagState: TagState
   private let listState: List.ListState
   private let navigationState: NavigationState
+  private let archiveState: ArchiveState
 
   private(set) var currentLink: Types.Link?
+  private(set) var currentArchiveLink: ArchiveLink?
 
   var urlString: String = ""
   var title: String = ""
@@ -94,25 +98,38 @@ final class OverallAppState {
   init(
     tagState: TagState,
     listState: List.ListState,
-    navigationState: NavigationState
+    navigationState: NavigationState,
+    archiveState: ArchiveState
   ) {
     self.tagState = tagState
     self.listState = listState
     self.navigationState = navigationState
+    self.archiveState = archiveState
   }
 
   var favoriteTags: [Tag] { tagState.favoriteTags }
 
   func load(link: Types.Link) {
     currentLink = link
+    currentArchiveLink = nil
     urlString = link.url.absoluteString
     title = link.title ?? ""
     description = link.description ?? ""
     tagsString = link.tags.joined(separator: " ")
   }
 
+  func load(archiveLink: ArchiveLink) {
+    currentArchiveLink = archiveLink
+    currentLink = nil
+    urlString = archiveLink.url.absoluteString
+    title = archiveLink.title ?? ""
+    description = archiveLink.description ?? ""
+    tagsString = archiveLink.tags.joined(separator: " ")
+  }
+
   func reset() {
     currentLink = nil
+    currentArchiveLink = nil
     urlString = ""
     title = ""
     description = ""
@@ -132,23 +149,57 @@ final class OverallAppState {
   }
 
   func save() async {
-    guard let currentLink else { return }
-    let url = URL(string: urlString) ?? currentLink.url
-    let tags = tagsString.components(separatedBy: " ")
-    let newLink = Types.Link(
-      id: currentLink.id,
-      url: url,
-      title: title,
-      description: description,
-      tags: tags,
-      private: false,
-      created: currentLink.created
-    )
-    await listState.update(link: newLink)
+    if let currentLink = currentLink {
+      // Save regular link
+      let url = URL(string: urlString) ?? currentLink.url
+      let tags = tagsString.components(separatedBy: " ")
+      let newLink = Types.Link(
+        id: currentLink.id,
+        url: url,
+        title: title,
+        description: description,
+        tags: tags,
+        private: false,
+        created: currentLink.created
+      )
+      await listState.update(link: newLink)
+    } else if let currentArchiveLink = currentArchiveLink {
+      // Save archive link and sync to original if it exists
+      let url = URL(string: urlString) ?? currentArchiveLink.url
+      let tags = tagsString.components(separatedBy: " ")
+      let updatedArchiveLink = ArchiveLink(
+        id: currentArchiveLink.id,
+        originalLinkId: currentArchiveLink.originalLinkId,
+        title: title,
+        description: description,
+        dataURL: currentArchiveLink.dataURL,
+        tags: tags,
+        url: url
+      )
+      
+      // Update the archive link in local storage
+      archiveState.updateLink(link: updatedArchiveLink)
+      
+      // If there's an originalLinkId, sync changes back to the original link
+      if let originalLinkId = currentArchiveLink.originalLinkId,
+         let originalLink = listState.link(for: originalLinkId) {
+        let syncedLink = Types.Link(
+          id: originalLink.id,
+          url: url,
+          title: title,
+          description: description,
+          tags: tags,
+          private: originalLink.private,
+          created: originalLink.created
+        )
+        await listState.update(link: syncedLink)
+      }
+    }
   }
 
   func closeEditUI() {
     navigationState.presentedEditLink = nil
+    navigationState.presentedEditArchiveLink = nil
     navigationState.showLinkEditorSidebar = false
   }
 }

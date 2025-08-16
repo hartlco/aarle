@@ -38,6 +38,13 @@ public final class ArchiveState: ArchiveStateProtocol {
             throw ArchiveStateError.unableToDelete
         }
     }
+
+    public func updateLink(link: ArchiveLink) {
+        archiveService.update(link: link)
+        if let index = archiveLinks.firstIndex(where: { $0.id == link.id }) {
+            archiveLinks[index] = link
+        }
+    }
     
     public func refresh() {
         archiveLinks = archiveService.archiveLinks

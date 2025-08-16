@@ -38,7 +38,8 @@ final class ArchiveService: NSObject {
         }
 
         let archiveLink = ArchiveLink(
-            id: link.id,
+            id: UUID().uuidString,
+            originalLinkId: link.id,
             title: link.title ?? "",
             description: link.description ?? "",
             dataURL: fileURL,
@@ -56,6 +57,14 @@ final class ArchiveService: NSObject {
         var links = userDefaults.archiveLinks
         links.removeAll(where: { $0.id == link.id })
         userDefaults.archiveLinks = links
+    }
+
+    func update(link: ArchiveLink) {
+        var links = userDefaults.archiveLinks
+        if let index = links.firstIndex(where: { $0.id == link.id }) {
+            links[index] = link
+            userDefaults.archiveLinks = links
+        }
     }
 
     var archiveLinks: [ArchiveLink] {

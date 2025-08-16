@@ -160,21 +160,11 @@ struct LinkAddView: View {
     overallAppState.addState.isSaving = true
 
     Task {
-      await overallAppState.listState.add(link: newLink)
+      let createdLink = await overallAppState.listState.add(link: newLink)
       
-      // Archive the link if the option is selected
-      if overallAppState.addState.shouldArchive {
-        // Convert PostLink to Link for archiving
-        let linkForArchive = Types.Link(
-          id: UUID().uuidString,
-          url: newLink.url,
-          title: newLink.title,
-          description: newLink.description,
-          tags: newLink.tags,
-          private: newLink.private,
-          created: newLink.created
-        )
-        await overallAppState.archiveState.archiveLink(link: linkForArchive)
+      // Archive the link if the option is selected and link was created successfully
+      if overallAppState.addState.shouldArchive, let createdLink = createdLink {
+        await overallAppState.archiveState.archiveLink(link: createdLink)
       }
       
       await MainActor.run {

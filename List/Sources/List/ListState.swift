@@ -164,9 +164,9 @@ public final class ListState {
         }
     }
 
-    public func add(link: PostLink) async {
+    public func add(link: PostLink) async -> Link? {
         do {
-            guard isLoading == false else { return }
+            guard isLoading == false else { return nil }
             isLoading = true
 
             try await client.createLink(link: link)
@@ -209,9 +209,11 @@ public final class ListState {
             }
 
             isLoading = false
+            return tempLink
         } catch {
             isLoading = false
             showLoadingError = true
+            return nil
         }
     }
 }

@@ -49,6 +49,7 @@ public final class NavigationState {
             }
         }
     }
+    public var presentedEditArchiveLink: ArchiveLink? = nil
     public var showsAddView = false {
         didSet {
             if showsAddView {
@@ -65,8 +66,8 @@ public final class NavigationState {
         switch selectedDetailDestination {
         case .link(let link):
             self.presentedEditLink = link
-        case .archiveLink:
-            return
+        case .archiveLink(let archiveLink):
+            self.presentedEditArchiveLink = archiveLink
         case .tag:
             return
         case .empty:
