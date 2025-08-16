@@ -92,15 +92,6 @@ struct InitialContentView: View {
                 )
                 .onAppear { overallAppState.editState.load(link: link) }
               }
-              .toolbar {
-                ToolbarItem {
-                  Button {
-                    overallAppState.navigationState.showLinkEditorSidebar.toggle()
-                  } label: {
-                    Label("Show Edit Link", systemImage: "sidebar.right")
-                  }
-                }
-              }
               #endif
             case .archiveLink(let archiveLink):
               DataWebView(archiveLink: archiveLink)
