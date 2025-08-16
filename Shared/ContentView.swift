@@ -87,21 +87,39 @@ struct ContentView: View {
                 NavigationLink(value: DetailNavigationDestination.link(link)) {
                     LinkItemView(link: link)
                 }.contextMenu {
-                    Button("Edit") {
+                    // Primary actions
+                    Button {
                         editAction(link: link)
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
                     }
-                    Button("Copy URL", action: { pasteboard.copyToPasteboard(string: link.url.absoluteString) })
+                    
+                    Button {
+                        Task {
+                            await archiveState.archiveLink(link: link)
+                        }
+                    } label: {
+                        Label("Download", systemImage: "arrow.down.circle")
+                    }
+                    
+                    Divider()
+                    
+                    // Secondary actions
+                    Button {
+                        pasteboard.copyToPasteboard(string: link.url.absoluteString)
+                    } label: {
+                        Label("Copy URL", systemImage: "doc.on.clipboard")
+                    }
+                    
+                    Divider()
+                    
+                    // Destructive actions
                     Button(role: .destructive) {
                         Task {
                             await listState.delete(link: link)
                         }
                     } label: {
                         Label("Delete", systemImage: "trash")
-                    }
-                    Button("Download") {
-                        Task {
-                            await archiveState.archiveLink(link: link)
-                        }
                     }
                 }
             }

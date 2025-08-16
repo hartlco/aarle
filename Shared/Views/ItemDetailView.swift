@@ -39,14 +39,7 @@ struct ItemDetailView: View {
                 WebView(data: webViewData)
                     .toolbar {
                         ToolbarItem {
-                            Menu {
-                                ForEach(NSSharingService.sharingServices(forItems: [link.url]), id: \.title) { service in
-                                    Button(action: { service.perform(withItems: [link.url]) }) {
-                                        Image(nsImage: service.image)
-                                        Text(service.title)
-                                    }
-                                }
-                            } label: {
+                            ShareLink(item: link.url) {
                                 Label("Share", systemImage: "square.and.arrow.up")
                             }
                         }
