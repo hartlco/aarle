@@ -26,7 +26,7 @@ struct LinkEditView: View {
         #if os(macOS)
             macOSForm
         #elseif os(iOS)
-            form.toolbar {
+            iOSForm.toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel", role: .cancel) {
                         editState.closeEditUI()
@@ -39,8 +39,9 @@ struct LinkEditView: View {
                             editState.closeEditUI()
                         }
                     }
+                    .fontWeight(.semibold)
                 }
-            }.navigationTitle("Edit link")
+            }.navigationTitle("Edit Link")
         #endif
     }
 
@@ -139,6 +140,52 @@ struct LinkEditView: View {
             Spacer()
         }
         .padding()
+    }
+    
+    private var iOSForm: some View {
+        @Bindable var editState = editState
+        return Form {
+            Section("Link Information") {
+                TextField("URL", text: $editState.urlString)
+                    .keyboardType(.URL)
+                    .textContentType(.URL)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+                
+                TextField("Title", text: $editState.title)
+                    .textContentType(.name)
+            }
+            
+            Section("Description") {
+                TextField("Add notes about this link...", text: $editState.description, axis: .vertical)
+                    .lineLimit(3...8)
+            }
+            
+            if !editState.favoriteTags.isEmpty {
+                Section("Favorite Tags") {
+                    ForEach(editState.favoriteTags) { tag in
+                        Toggle(tag.name, isOn: Binding(
+                            get: {
+                                editState.tagsStringContains(tag)
+                            },
+                            set: { newValue in
+                                if newValue {
+                                    editState.appendTag(tag)
+                                } else {
+                                    editState.removeTag(tag)
+                                }
+                            }
+                        ))
+                    }
+                }
+            }
+            
+            Section("Tags") {
+                TextField("Comma-separated tags", text: $editState.tagsString)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
+            }
+        }
     }
 }
 
