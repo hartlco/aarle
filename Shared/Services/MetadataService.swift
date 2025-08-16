@@ -19,8 +19,34 @@ final class MetadataService: MetadataServiceProtocol {
     
     func fetchMetadata(for url: URL) async throws -> WebsiteMetadata {
         if let customEndpoint = customEndpoint {
-            return try await fetchCustomMetadata(for: url, endpoint: customEndpoint)
+            return try await fetchMetadataWithFallback(for: url, endpoint: customEndpoint)
         } else {
+            return try await fetchNativeMetadata(for: url)
+        }
+    }
+    
+    private func fetchMetadataWithFallback(for url: URL, endpoint: String) async throws -> WebsiteMetadata {
+        do {
+            // Try custom endpoint with 5 second timeout
+            return try await withThrowingTaskGroup(of: WebsiteMetadata.self) { group in
+                group.addTask {
+                    try await self.fetchCustomMetadata(for: url, endpoint: endpoint)
+                }
+                
+                group.addTask {
+                    try await Task.sleep(nanoseconds: 5_000_000_000) // 5 seconds
+                    throw MetadataError.timeout
+                }
+                
+                guard let result = try await group.next() else {
+                    throw MetadataError.timeout
+                }
+                
+                group.cancelAll()
+                return result
+            }
+        } catch {
+            // Fallback to native metadata fetching
             return try await fetchNativeMetadata(for: url)
         }
     }
@@ -81,6 +107,7 @@ enum MetadataError: Error {
     case invalidURL
     case networkError
     case decodingError
+    case timeout
 }
 
 private struct MscrapResponse: Codable {

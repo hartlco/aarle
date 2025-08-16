@@ -119,7 +119,7 @@ struct LinkAddView: View {
         .disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata || overallAppState.addState.isSaving)
       }
     }
-    .onChange(of: isEditingURL) { isEditing in
+    .onChange(of: isEditingURL) { _, isEditing in
       if isEditing == false {
         handleURLChange(overallAppState.addState.urlString)
       }
@@ -147,7 +147,10 @@ struct LinkAddView: View {
       return
     }
 
-    let tags = overallAppState.addState.tagsString.components(separatedBy: " ")
+    let tagString = overallAppState.addState.tagsString
+    let tags = tagString.components(separatedBy: " ")
+
+    // TODO: Adding tags while adding links doesnt work at all
     let newLink = PostLink(
       url: url,
       title: overallAppState.addState.title,

@@ -108,6 +108,3 @@ public extension PostLink {
 //        self.updated = link.updated
     }
 }
-
-extension URL: Sendable {}
-extension Date: Sendable {}
