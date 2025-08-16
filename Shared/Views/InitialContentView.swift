@@ -84,6 +84,24 @@ struct InitialContentView: View {
                 link: link,
                 overallAppState: overallAppState
               )
+              #if os(macOS)
+              .inspector(isPresented: $overallAppState.navigationState.showLinkEditorSidebar) {
+                LinkEditView(
+                  editState: overallAppState.editState,
+                  showCancelButton: false
+                )
+                .onAppear { overallAppState.editState.load(link: link) }
+              }
+              .toolbar {
+                ToolbarItem {
+                  Button {
+                    overallAppState.navigationState.showLinkEditorSidebar.toggle()
+                  } label: {
+                    Label("Show Edit Link", systemImage: "sidebar.right")
+                  }
+                }
+              }
+              #endif
             case .archiveLink(let archiveLink):
               DataWebView(archiveLink: archiveLink)
                 .toolbar {
