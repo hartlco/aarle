@@ -225,17 +225,45 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
     }
 }
 
-#if os(macOS)
-    struct DataWebView: NSViewRepresentable {
-        var archiveLink: ArchiveLink
+struct DataWebView: View {
+    var archiveLink: ArchiveLink
+    @State private var isLoading = true
+    
+    var body: some View {
+        ZStack {
+            #if os(macOS)
+            DataWebViewRepresentable(archiveLink: archiveLink, isLoading: $isLoading)
+            #else
+            DataWebViewRepresentable(archiveLink: archiveLink, isLoading: $isLoading)
+            #endif
+            
+            if isLoading {
+                ProgressView()
+                    .scaleEffect(1.5)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.primary.colorInvert().opacity(0.8))
+            }
+        }
+    }
+}
 
-        func makeNSView(context _: Context) -> WKWebView {
-            return WKWebView()
+#if os(macOS)
+    struct DataWebViewRepresentable: NSViewRepresentable {
+        var archiveLink: ArchiveLink
+        @Binding var isLoading: Bool
+
+        func makeNSView(context: Context) -> WKWebView {
+            let webView = WKWebView()
+            webView.navigationDelegate = context.coordinator
+            return webView
         }
 
         func updateNSView(_ nsView: WKWebView, context _: Context) {
             DispatchQueue.main.async {
-                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { return }
+                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { 
+                    isLoading = false
+                    return 
+                }
                 let baseURL = URL(string: "about:blank")!
                 let mimeType = UTType.webArchive.preferredMIMEType!
                 nsView.load(
@@ -246,6 +274,10 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
                 )
             }
         }
+        
+        func makeCoordinator() -> DataWebViewCoordinator {
+            DataWebViewCoordinator(isLoading: $isLoading)
+        }
 
         private func getDocumentsDirectory() -> URL {
             let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -253,16 +285,22 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
         }
     }
 #else
-    struct DataWebView: UIViewRepresentable {
+    struct DataWebViewRepresentable: UIViewRepresentable {
         var archiveLink: ArchiveLink
+        @Binding var isLoading: Bool
 
-        func makeUIView(context _: Context) -> WKWebView {
-            return WKWebView()
+        func makeUIView(context: Context) -> WKWebView {
+            let webView = WKWebView()
+            webView.navigationDelegate = context.coordinator
+            return webView
         }
 
         func updateUIView(_ uiView: WKWebView, context _: Context) {
             DispatchQueue.main.async {
-                let data = try! Data(contentsOf: archiveLink.dataURL)
+                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { 
+                    isLoading = false
+                    return 
+                }
                 let baseURL = URL(string: "about:blank")!
                 let mimeType = UTType.webArchive.preferredMIMEType!
                 uiView.load(
@@ -273,6 +311,10 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
                 )
             }
         }
+        
+        func makeCoordinator() -> DataWebViewCoordinator {
+            DataWebViewCoordinator(isLoading: $isLoading)
+        }
 
         private func getDocumentsDirectory() -> URL {
             let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -280,3 +322,29 @@ class ScrollMonitorScript: NSObject, WKScriptMessageHandler {
         }
     }
 #endif
+
+class DataWebViewCoordinator: NSObject, WKNavigationDelegate {
+    @Binding var isLoading: Bool
+    
+    init(isLoading: Binding<Bool>) {
+        self._isLoading = isLoading
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        DispatchQueue.main.async {
+            self.isLoading = false
+        }
+    }
+}
