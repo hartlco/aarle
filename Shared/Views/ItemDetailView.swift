@@ -63,6 +63,11 @@ struct ItemDetailView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
+                ShareLink(item: link.url) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Edit") {
                     overallAppState.navigationState.presentedEditLink = link
                 }
