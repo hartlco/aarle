@@ -13,7 +13,7 @@ struct ItemDetailView: View {
     let link: Types.Link
 
     var overallAppState: OverallAppState
-    @ObservedObject var webViewData: WebViewData
+    @StateObject private var webViewData: WebViewData
 
     @State var shareSheetPresented = false
 
@@ -23,7 +23,7 @@ struct ItemDetailView: View {
     ) {
         self.link = link
         self.overallAppState = overallAppState
-        self.webViewData = WebViewData(url: link.url)
+        self._webViewData = StateObject(wrappedValue: WebViewData(url: nil))
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -37,20 +37,54 @@ struct ItemDetailView: View {
                         .progressViewStyle(MinimalProgressViewStyle())
                 }
                 WebView(data: webViewData)
-                    .toolbar {
-                        ToolbarItem {
-                            ShareLink(item: link.url) {
-                                Label("Share", systemImage: "square.and.arrow.up")
-                            }
-                        }
-                        ToolbarItem {
-                            Button {
-                                overallAppState.navigationState.showLinkEditorSidebar.toggle()
-                            } label: {
-                                Label("Show Edit Link", systemImage: "sidebar.right")
-                            }
-                        }
+                    .id(webViewData.webViewId)
+                    .onAppear {
+                        webViewData.url = link.url
                     }
+                    .onChange(of: link.url) { newURL in
+                        // Clear navigation history when loading a new link
+                        webViewData.clearNavigationHistory()
+                        webViewData.url = newURL
+                    }
+                HStack(spacing: 12) {
+                    Button(action: {
+                        webViewData.goBack()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(webViewData.canGoBack ? .primary : .secondary)
+                    }
+                    .disabled(!webViewData.canGoBack)
+                    .help("Go Back")
+                    
+                    Button(action: {
+                        webViewData.goForward()
+                    }) {
+                        Image(systemName: "chevron.forward")
+                            .foregroundColor(webViewData.canGoForward ? .primary : .secondary)
+                    }
+                    .disabled(!webViewData.canGoForward)
+                    .help("Go Forward")
+                    
+                    Spacer()
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color(NSColor.controlBackgroundColor))
+                .frame(minHeight: 32)
+            }
+        }
+        .toolbar {
+            ToolbarItem {
+                ShareLink(item: link.url) {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            }
+            ToolbarItem {
+                Button {
+                    overallAppState.navigationState.showLinkEditorSidebar.toggle()
+                } label: {
+                    Label("Show Edit Link", systemImage: "sidebar.right")
+                }
             }
         }
 #else
@@ -60,6 +94,38 @@ struct ItemDetailView: View {
                     .progressViewStyle(LinearProgressViewStyle())
             }
             WebView(data: webViewData)
+                .id(webViewData.webViewId)
+                .onAppear {
+                    webViewData.url = link.url
+                }
+                .onChange(of: link.url) { newURL in
+                    // Clear navigation history when loading a new link
+                    webViewData.clearNavigationHistory()
+                    webViewData.url = newURL
+                }
+            HStack(spacing: 12) {
+                Button(action: {
+                    webViewData.goBack()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(webViewData.canGoBack ? .primary : .secondary)
+                }
+                .disabled(!webViewData.canGoBack)
+                
+                Button(action: {
+                    webViewData.goForward()
+                }) {
+                    Image(systemName: "chevron.forward")
+                        .foregroundColor(webViewData.canGoForward ? .primary : .secondary)
+                }
+                .disabled(!webViewData.canGoForward)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(Color(UIColor.systemBackground))
+            .frame(minHeight: 32)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

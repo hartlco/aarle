@@ -12,14 +12,32 @@ final class WebViewData: ObservableObject {
     @Published var url: URL? = nil
     @Published var urlBar: String = "https://nasa.gov"
     @Published var progress: CGFloat = 0
+    @Published var canGoBack: Bool = false
+    @Published var canGoForward: Bool = false
+    @Published var webViewId: UUID = UUID()
 
     var observation: NSKeyValueObservation?
+    weak var coordinator: WebViewCoordinator?
 
     init(url: URL?) {
         _url = Published(initialValue: url)
     }
 
     var scrollOnLoad: Float?
+    
+    func goBack() {
+        coordinator?.goBack()
+    }
+    
+    func goForward() {
+        coordinator?.goForward()
+    }
+    
+    func clearNavigationHistory() {
+        webViewId = UUID()  // This will force SwiftUI to recreate the WebView
+        canGoBack = false
+        canGoForward = false
+    }
 }
 
 #if os(macOS)
@@ -27,10 +45,12 @@ final class WebViewData: ObservableObject {
         @ObservedObject var data: WebViewData
 
         func makeNSView(context: Context) -> WKWebView {
+            data.coordinator = context.coordinator
             return context.coordinator.webView
         }
 
         func updateNSView(_ nsView: WKWebView, context: Context) {
+            data.coordinator = context.coordinator
             guard context.coordinator.loadedUrl != data.url else { return }
             nsView.evaluateJavaScript("document.body.remove()")
             data.observation = nsView.observe(\.estimatedProgress) { view, _ in
@@ -59,10 +79,12 @@ final class WebViewData: ObservableObject {
         @ObservedObject var data: WebViewData
 
         func makeUIView(context: Context) -> WKWebView {
+            data.coordinator = context.coordinator
             return context.coordinator.webView
         }
 
         func updateUIView(_ uiView: WKWebView, context: Context) {
+            data.coordinator = context.coordinator
             guard context.coordinator.loadedUrl != data.url else { return }
             uiView.evaluateJavaScript("document.body.remove()")
             data.observation = uiView.observe(\.estimatedProgress) { view, _ in
@@ -103,6 +125,30 @@ final class WebViewCoordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         setupScripts()
         webView.navigationDelegate = self
         webView.uiDelegate = self
+        
+        // Initial navigation state
+        updateNavigationState()
+    }
+    
+    func goBack() {
+        if webView.canGoBack {
+            webView.goBack()
+        }
+    }
+    
+    func goForward() {
+        if webView.canGoForward {
+            webView.goForward()
+        }
+    }
+    
+    
+    private func updateNavigationState() {
+        DispatchQueue.main.async {
+            self.data.objectWillChange.send()
+            self.data.canGoBack = self.webView.canGoBack
+            self.data.canGoForward = self.webView.canGoForward
+        }
     }
 
     func webView(_ webView: WKWebView, didFinish _: WKNavigation!) {
@@ -117,21 +163,32 @@ final class WebViewCoordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
             if let urlstr = webView.url?.absoluteString {
                 self.data.urlBar = urlstr
             }
+            
+            self.updateNavigationState()
         }
     }
 
-    func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
-        DispatchQueue.main.async { self.data.loading = true }
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
+        DispatchQueue.main.async { 
+            self.data.loading = true
+            self.updateNavigationState()
+        }
     }
 
     func webView(_: WKWebView, didFail _: WKNavigation!, withError error: Error) {
         showError(title: "Navigation Error", message: error.localizedDescription)
-        DispatchQueue.main.async { self.data.loading = false }
+        DispatchQueue.main.async { 
+            self.data.loading = false
+            self.updateNavigationState()
+        }
     }
 
     func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
         showError(title: "Loading Error", message: error.localizedDescription)
-        DispatchQueue.main.async { self.data.loading = false }
+        DispatchQueue.main.async { 
+            self.data.loading = false
+            self.updateNavigationState()
+        }
     }
 
     func scrollTo(_ percent: Float) {
