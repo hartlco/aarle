@@ -66,6 +66,14 @@ struct ItemDetailView: View {
                     .help("Go Forward")
                     
                     Spacer()
+                    
+                    Button(action: {
+                        NSWorkspace.shared.open(link.url)
+                    }) {
+                        Image(systemName: "safari")
+                            .foregroundColor(.primary)
+                    }
+                    .help("Open in Safari")
                 }
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
@@ -121,6 +129,13 @@ struct ItemDetailView: View {
                 .disabled(!webViewData.canGoForward)
                 
                 Spacer()
+                
+                Button(action: {
+                    UIApplication.shared.open(link.url)
+                }) {
+                    Image(systemName: "safari")
+                        .foregroundColor(.primary)
+                }
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
