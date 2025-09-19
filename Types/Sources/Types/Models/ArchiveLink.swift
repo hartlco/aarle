@@ -1,11 +1,21 @@
 import Foundation
 
 public struct ArchiveLink: Codable, Identifiable, Hashable {
-    public init(id: String, originalLinkId: String? = nil, title: String? = nil, description: String? = nil, dataURL: URL, tags: [String], url: URL) {
+    public init(
+        id: String,
+        originalLinkId: String? = nil,
+        title: String? = nil,
+        description: String? = nil,
+        content: String? = nil,
+        dataURL: URL,
+        tags: [String],
+        url: URL
+    ) {
         self.id = id
         self.originalLinkId = originalLinkId
         self.title = title
         self.description = description
+        self.content = content
         self.dataURL = dataURL
         self.tags = tags
         self.url = url
@@ -15,6 +25,7 @@ public struct ArchiveLink: Codable, Identifiable, Hashable {
     public var originalLinkId: String?
     public var title: String?
     public var description: String?
+    public var content: String?
     public var dataURL: URL
     public var tags: [String]
     public var url: URL

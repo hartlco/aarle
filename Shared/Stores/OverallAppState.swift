@@ -15,6 +15,7 @@ import List
 import Tag
 import Observation
 
+@MainActor
 @Observable
 final class OverallAppState {
   let client: BookmarkClient
@@ -31,8 +32,12 @@ final class OverallAppState {
       favoriteTags: userDefaults.favoriteTags
     )
     self.tagState = tagState
-    self.settingsState = SettingsState(keychain: keychain)
-    let archiveState = ArchiveState(userDefaults: userDefaults)
+    let settingsState = SettingsState(keychain: keychain)
+    self.settingsState = settingsState
+    let archiveState = ArchiveState(
+      userDefaults: userDefaults,
+      metadataEndpointProvider: { settingsState.metadataEndpoint }
+    )
     self.archiveState = archiveState
     let listState = List.ListState(client: client)
     self.listState = listState
@@ -59,6 +64,7 @@ final class OverallAppState {
   var editState: EditState
 }
 
+@MainActor
 @Observable class AddState {
   var urlString: String = ""
   var title: String = ""
@@ -81,6 +87,7 @@ final class OverallAppState {
   }
 }
 
+@MainActor
 @Observable final class EditState {
   private let tagState: TagState
   private let listState: List.ListState
@@ -172,13 +179,14 @@ final class OverallAppState {
         originalLinkId: currentArchiveLink.originalLinkId,
         title: title,
         description: description,
+        content: currentArchiveLink.content,
         dataURL: currentArchiveLink.dataURL,
         tags: tags,
         url: url
       )
       
       // Update the archive link in local storage
-      archiveState.updateLink(link: updatedArchiveLink)
+      await archiveState.updateLink(link: updatedArchiveLink)
       
       // If there's an originalLinkId, sync changes back to the original link
       if let originalLinkId = currentArchiveLink.originalLinkId,

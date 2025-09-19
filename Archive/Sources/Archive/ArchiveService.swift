@@ -6,42 +6,60 @@
 //
 
 import Foundation
-import WebKit
 import Types
 
+enum ArchiveServiceError: Error {
+    case invalidEndpoint
+    case networkError
+    case decodingError
+    case missingContent
+}
+
+@MainActor
 final class ArchiveService: NSObject {
     private let userDefaults: UserDefaults
     private let fileManager: FileManager
+    private let session: URLSession
 
     init(
         userDefaults: UserDefaults,
-        fileManager: FileManager = FileManager.default
+        fileManager: FileManager = FileManager.default,
+        session: URLSession = .shared
     ) {
         self.userDefaults = userDefaults
         self.fileManager = fileManager
+        self.session = session
 
         super.init()
     }
 
-    func archive(link: Link) async throws {
-        let archiver = await URLArchiver()
-        let data = try await archiver.archive(url: link.url)
-        print(data)
-        let fileUUID = UUID()
-        let fileURL = getDocumentsDirectory().appendingPathComponent("\(fileUUID.uuidString).data")
-
-        do {
-            try data.write(to: fileURL)
-            print(fileURL)
-        } catch {
-            print(error.localizedDescription)
+    func archive(link: Link, metadataEndpoint: String?) async throws {
+        guard let endpoint = metadataEndpoint?.trimmingCharacters(in: .whitespacesAndNewlines), endpoint.isEmpty == false else {
+            throw ArchiveServiceError.invalidEndpoint
         }
+
+        let readableArticle = try await fetchReadableArticle(for: link.url, endpoint: endpoint)
+
+        let fileUUID = UUID()
+        let fileURL = getDocumentsDirectory().appendingPathComponent("\(fileUUID.uuidString).html")
+        let htmlDocument = makeHTMLDocument(
+            content: readableArticle.content,
+            title: readableArticle.title ?? link.title,
+            originalURL: link.url
+        )
+
+        guard let data = htmlDocument.data(using: .utf8) else {
+            throw ArchiveServiceError.missingContent
+        }
+
+        try data.write(to: fileURL)
 
         let archiveLink = ArchiveLink(
             id: UUID().uuidString,
             originalLinkId: link.id,
-            title: link.title ?? "",
-            description: link.description ?? "",
+            title: readableArticle.title ?? link.title ?? "",
+            description: readableArticle.excerpt ?? link.description ?? "",
+            content: htmlDocument,
             dataURL: fileURL,
             tags: link.tags,
             url: link.url
@@ -89,28 +107,105 @@ final class ArchiveService: NSObject {
     }
 }
 
-final class URLArchiver: NSObject, WKNavigationDelegate {
-    private let webView = WKWebView()
+private struct ReadableArticle: Sendable {
+    let title: String?
+    let excerpt: String?
+    let content: String
+}
 
-    private var didArchive: ((URL?, Data?) -> Void)?
+private struct MscrapReadableResponse: Codable {
+    let title: String?
+    let byline: String?
+    let excerpt: String?
+    let length: Int?
+    let siteName: String?
+    let content: String?
+    let textContent: String?
+    let html: String?
+    let readable: String?
 
-    @MainActor func archive(url: URL) async throws -> Data {
-        webView.navigationDelegate = self
-        webView.load(.init(url: url))
-        return try await withCheckedThrowingContinuation { continuation in
-            didArchive = { _, data in
-                // TODO: Error handling
-                if let data = data {
-                    continuation.resume(returning: data)
-                }
-            }
-        }
+    var resolvedContent: String? {
+        content ?? html ?? readable
+    }
+}
+
+extension ArchiveService {
+    private func makeHTMLDocument(content: String, title: String?, originalURL: URL) -> String {
+        let cleanTitle = title ?? originalURL.absoluteString
+
+        return """
+        <!doctype html>
+        <html lang=\"en\">
+        <head>
+            <meta charset=\"utf-8\">
+            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
+            <title>\(cleanTitle)</title>
+            <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; margin: 0 auto; max-width: 700px; padding: 2rem 1.5rem; line-height: 1.6; background: #f5f5f5; color: #1f1f1f; }
+                a { color: #007aff; }
+                img { max-width: 100%; height: auto; }
+                pre { overflow-x: auto; }
+            </style>
+        </head>
+        <body>
+            \(content)
+        </body>
+        </html>
+        """
     }
 
-    func webView(_ webView: WKWebView, didFinish _: WKNavigation!) {
-        webView.createWebArchiveData { [weak self] result in
-            self?.didArchive?(webView.url, try? result.get())
+    private func fetchReadableArticle(for url: URL, endpoint: String) async throws -> ReadableArticle {
+        guard var components = URLComponents(string: endpoint) else {
+            throw ArchiveServiceError.invalidEndpoint
         }
+
+        var path = components.path
+        if path.hasSuffix("/") {
+            path.removeLast()
+        }
+
+        if path.lowercased().hasSuffix("/api") {
+            path += "/readable"
+        } else {
+            path += "/api/readable"
+        }
+
+        components.path = path
+        components.query = nil
+
+        guard let endpointURL = components.url else {
+            throw ArchiveServiceError.invalidEndpoint
+        }
+
+        var request = URLRequest(url: endpointURL)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body = ["url": url.absoluteString]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+        let (data, response) = try await session.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse, (200 ... 299).contains(httpResponse.statusCode) else {
+            throw ArchiveServiceError.networkError
+        }
+
+        let readableResponse: MscrapReadableResponse
+        do {
+            readableResponse = try JSONDecoder().decode(MscrapReadableResponse.self, from: data)
+        } catch {
+            throw ArchiveServiceError.decodingError
+        }
+
+        guard let content = readableResponse.resolvedContent else {
+            throw ArchiveServiceError.missingContent
+        }
+
+        return ReadableArticle(
+            title: readableResponse.title,
+            excerpt: readableResponse.excerpt,
+            content: content
+        )
     }
 }
 

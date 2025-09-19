@@ -317,28 +317,28 @@ struct DataWebView: View {
 
         func updateNSView(_ nsView: WKWebView, context _: Context) {
             DispatchQueue.main.async {
-                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { 
+                if archiveLink.content != nil {
+                    nsView.loadFileURL(
+                        archiveLink.dataURL,
+                        allowingReadAccessTo: archiveLink.dataURL.deletingLastPathComponent()
+                    )
+                } else if let data = try? Data(contentsOf: archiveLink.dataURL) {
+                    let baseURL = archiveLink.url
+                    let mimeType = UTType.webArchive.preferredMIMEType!
+                    nsView.load(
+                        data,
+                        mimeType: mimeType,
+                        characterEncodingName: "utf-8",
+                        baseURL: baseURL
+                    )
+                } else {
                     isLoading = false
-                    return 
                 }
-                let baseURL = URL(string: "about:blank")!
-                let mimeType = UTType.webArchive.preferredMIMEType!
-                nsView.load(
-                    data,
-                    mimeType: mimeType,
-                    characterEncodingName: "utf-8",
-                    baseURL: baseURL
-                )
             }
         }
         
         func makeCoordinator() -> DataWebViewCoordinator {
             DataWebViewCoordinator(isLoading: $isLoading)
-        }
-
-        private func getDocumentsDirectory() -> URL {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            return paths[0]
         }
     }
 #else
@@ -354,28 +354,28 @@ struct DataWebView: View {
 
         func updateUIView(_ uiView: WKWebView, context _: Context) {
             DispatchQueue.main.async {
-                guard let data = try? Data(contentsOf: archiveLink.dataURL) else { 
+                if archiveLink.content != nil {
+                    uiView.loadFileURL(
+                        archiveLink.dataURL,
+                        allowingReadAccessTo: archiveLink.dataURL.deletingLastPathComponent()
+                    )
+                } else if let data = try? Data(contentsOf: archiveLink.dataURL) {
+                    let baseURL = archiveLink.url
+                    let mimeType = UTType.webArchive.preferredMIMEType!
+                    uiView.load(
+                        data,
+                        mimeType: mimeType,
+                        characterEncodingName: "utf-8",
+                        baseURL: baseURL
+                    )
+                } else {
                     isLoading = false
-                    return 
                 }
-                let baseURL = URL(string: "about:blank")!
-                let mimeType = UTType.webArchive.preferredMIMEType!
-                uiView.load(
-                    data,
-                    mimeType: mimeType,
-                    characterEncodingName: "utf-8",
-                    baseURL: baseURL
-                )
             }
         }
         
         func makeCoordinator() -> DataWebViewCoordinator {
             DataWebViewCoordinator(isLoading: $isLoading)
-        }
-
-        private func getDocumentsDirectory() -> URL {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-            return paths[0]
         }
     }
 #endif

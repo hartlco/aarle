@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 public protocol ArchiveStateProtocol: ObservableObject {
     var archiveLinks: [ArchiveLink] { get }
 

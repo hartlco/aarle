@@ -141,7 +141,7 @@ struct LinkEditView: View {
         }
         .padding()
     }
-    
+#if os(iOS)
     private var iOSForm: some View {
         @Bindable var editState = editState
         return Form {
@@ -187,6 +187,7 @@ struct LinkEditView: View {
             }
         }
     }
+#endif
 }
 
 /// https://gist.github.com/marcprux/afd2f80baa5b6d60865182a828e83586

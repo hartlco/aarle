@@ -10,6 +10,7 @@ import SwiftUIX
 import Types
 import LinkPresentation
 
+// TODO: Clear state after a link was sucesfuly added
 struct LinkAddView: View {
   @Environment(\.presentationMode) var presentationMode
 

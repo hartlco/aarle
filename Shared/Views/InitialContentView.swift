@@ -135,6 +135,13 @@ struct InitialContentView: View {
         }
       }
     }
+    .alert(item: $overallAppState.archiveState.presentedError) { error in
+      Alert(
+        title: Text(error.title),
+        message: Text(error.message),
+        dismissButton: .default(Text("OK"))
+      )
+    }
   }
 
   @ViewBuilder
