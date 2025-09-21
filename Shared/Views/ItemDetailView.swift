@@ -12,10 +12,11 @@ import Navigation
 struct ItemDetailView: View {
     let link: Types.Link
 
-    var overallAppState: OverallAppState
+    @Bindable var overallAppState: OverallAppState
     @StateObject private var webViewData: WebViewData
 
     @State var shareSheetPresented = false
+    @State private var isLoadingReadable = false
 
     init(
         link: Types.Link,
@@ -66,6 +67,23 @@ struct ItemDetailView: View {
                     .help("Go Forward")
                     
                     Spacer()
+
+                    Button(action: {
+                        Task { await handleReadableArticleTap() }
+                    }) {
+                        Image(systemName: "doc.richtext")
+                            .foregroundColor(readableArchiveLink() != nil ? .accentColor : .primary)
+                            .overlay {
+                                if isLoadingReadable {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle())
+                                        .scaleEffect(0.6)
+                                }
+                            }
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isLoadingReadable)
+                    .help("Show Readable Article")
                     
                     Button(action: {
                         NSWorkspace.shared.open(link.url)
@@ -129,6 +147,21 @@ struct ItemDetailView: View {
                 .disabled(!webViewData.canGoForward)
                 
                 Spacer()
+
+                Button(action: {
+                    Task { await handleReadableArticleTap() }
+                }) {
+                    Image(systemName: "doc.richtext")
+                        .foregroundColor(readableArchiveLink() != nil ? .accentColor : .primary)
+                        .overlay {
+                            if isLoadingReadable {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .scaleEffect(0.6)
+                            }
+                        }
+                }
+                .disabled(isLoadingReadable)
                 
                 Button(action: {
                     UIApplication.shared.open(link.url)
@@ -157,5 +190,40 @@ struct ItemDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(link.title ?? "")
 #endif
+    }
+
+    private func readableArchiveLink() -> ArchiveLink? {
+        if let archiveLink = overallAppState.archiveState.archiveLinks.first(where: { $0.originalLinkId == link.id }) {
+            return archiveLink
+        }
+
+        return overallAppState.archiveState.archiveLinks.first(where: { $0.url == link.url })
+    }
+
+    @MainActor
+    private func handleReadableArticleTap() async {
+        if let archiveLink = readableArchiveLink() {
+            openReadableArchiveLink(archiveLink)
+            return
+        }
+
+        guard isLoadingReadable == false else { return }
+
+        isLoadingReadable = true
+        defer { isLoadingReadable = false }
+
+        await overallAppState.archiveState.archiveLink(link: link)
+
+        if let archiveLink = readableArchiveLink() {
+            openReadableArchiveLink(archiveLink)
+        }
+    }
+
+    @MainActor
+    private func openReadableArchiveLink(_ archiveLink: ArchiveLink) {
+        let destination = DetailNavigationDestination.archiveLink(archiveLink)
+        if overallAppState.navigationState.detailNavigationStack.contains(destination) == false {
+            overallAppState.navigationState.detailNavigationStack.append(destination)
+        }
     }
 }
