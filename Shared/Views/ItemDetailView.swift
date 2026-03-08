@@ -129,51 +129,57 @@ struct ItemDetailView: View {
                     webViewData.clearNavigationHistory()
                     webViewData.url = newURL
                 }
-            HStack(spacing: 12) {
+            HStack(spacing: 0) {
                 Button(action: {
                     webViewData.goBack()
                 }) {
                     Image(systemName: "chevron.backward")
-                        .foregroundColor(webViewData.canGoBack ? .primary : .secondary)
+                        .font(.system(size: 18))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
                 .disabled(!webViewData.canGoBack)
-                
+
                 Button(action: {
                     webViewData.goForward()
                 }) {
                     Image(systemName: "chevron.forward")
-                        .foregroundColor(webViewData.canGoForward ? .primary : .secondary)
+                        .font(.system(size: 18))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
                 .disabled(!webViewData.canGoForward)
-                
+
                 Spacer()
 
                 Button(action: {
                     Task { await handleReadableArticleTap() }
                 }) {
                     Image(systemName: "doc.richtext")
-                        .foregroundColor(readableArchiveLink() != nil ? .accentColor : .primary)
+                        .font(.system(size: 18))
+                        .foregroundColor(readableArchiveLink() != nil ? .accentColor : nil)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                         .overlay {
                             if isLoadingReadable {
                                 ProgressView()
                                     .progressViewStyle(CircularProgressViewStyle())
-                                    .scaleEffect(0.6)
+                                    .scaleEffect(0.7)
                             }
                         }
                 }
                 .disabled(isLoadingReadable)
-                
+
                 Button(action: {
                     UIApplication.shared.open(link.url)
                 }) {
                     Image(systemName: "safari")
-                        .foregroundColor(.primary)
+                        .font(.system(size: 18))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(Color(UIColor.systemBackground))
-            .frame(minHeight: 32)
+            .background(Color(UIColor.secondarySystemBackground))
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
