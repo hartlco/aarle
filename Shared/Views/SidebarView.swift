@@ -27,8 +27,10 @@ struct SidebarView: View {
                 NavigationLink(value: ListType.tags(selectedTag: nil)) {
                     Label("Tags", systemImage: "tray.2")
                 }
-                NavigationLink(value: ListType.downloaded) {
-                    Label("Unread", systemImage: "book")
+                if overallAppState.settingsState.autoSyncUnread {
+                    NavigationLink(value: ListType.downloaded) {
+                        Label("Unread", systemImage: "book")
+                    }
                 }
             }
             Section(header: "Favorites") {

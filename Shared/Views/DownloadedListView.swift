@@ -77,25 +77,8 @@ struct DownloadedListView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom) {
-            if archiveState.isSyncing && !archiveState.archiveLinks.isEmpty {
-                HStack(spacing: 8) {
-                    ProgressView()
-                        .controlSize(.small)
-                    Text(archiveState.syncProgress)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
-                .background(.bar)
-            }
-        }
         .refreshable {
-            await overallAppState.syncUnreadIfEnabled()
-        }
-        .task {
-            await overallAppState.syncUnreadIfEnabled()
+            overallAppState.syncUnreadIfEnabled()
         }
         .navigationTitle("Unread")
         .sheet(item: $navigationState.presentedEditArchiveLink) { archiveLink in

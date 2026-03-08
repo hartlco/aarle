@@ -69,15 +69,21 @@ final class OverallAppState {
   var addState: AddState
   var editState: EditState
 
-  func syncUnreadIfEnabled() async {
+  private var syncTask: Task<Void, Never>?
+
+  func syncUnreadIfEnabled() {
     guard settingsState.autoSyncUnread,
           settingsState.accountType == .linkding,
-          let universalClient else { return }
-    do {
-      let unreadLinks = try await universalClient.loadUnread()
-      await archiveState.syncUnreadBookmarks(unreadLinks: unreadLinks)
-    } catch {
-      // Sync errors are non-fatal
+          let universalClient,
+          !archiveState.isSyncing else { return }
+
+    syncTask = Task {
+      do {
+        let unreadLinks = try await universalClient.loadUnread()
+        await archiveState.syncUnreadBookmarks(unreadLinks: unreadLinks)
+      } catch {
+        // Sync errors are non-fatal
+      }
     }
   }
 

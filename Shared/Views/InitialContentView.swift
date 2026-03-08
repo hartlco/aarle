@@ -164,6 +164,20 @@ struct InitialContentView: View {
         dismissButton: .default(Text("OK"))
       )
     }
+    .safeAreaInset(edge: .bottom) {
+      if overallAppState.archiveState.isSyncing {
+        HStack(spacing: 8) {
+          ProgressView()
+            .controlSize(.small)
+          Text(overallAppState.archiveState.syncProgress)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+        .background(.bar)
+      }
+    }
   }
 
   @ViewBuilder
