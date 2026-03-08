@@ -62,7 +62,8 @@ final class ArchiveService: NSObject {
             content: htmlDocument,
             dataURL: fileURL,
             tags: link.tags,
-            url: link.url
+            url: link.url,
+            dateAdded: link.created
         )
 
         var links = userDefaults.archiveLinks
@@ -94,7 +95,8 @@ final class ArchiveService: NSObject {
             dataURL: URL(string: "about:blank")!,
             tags: link.tags,
             url: link.url,
-            downloadFailed: true
+            downloadFailed: true,
+            dateAdded: link.created
         )
         var links = userDefaults.archiveLinks
         links.append(archiveLink)

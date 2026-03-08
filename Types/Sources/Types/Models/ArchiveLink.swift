@@ -10,7 +10,8 @@ public struct ArchiveLink: Codable, Identifiable, Hashable {
         dataURL: URL,
         tags: [String],
         url: URL,
-        downloadFailed: Bool = false
+        downloadFailed: Bool = false,
+        dateAdded: Date = Date()
     ) {
         self.id = id
         self.originalLinkId = originalLinkId
@@ -21,6 +22,7 @@ public struct ArchiveLink: Codable, Identifiable, Hashable {
         self.tags = tags
         self.url = url
         self.downloadFailed = downloadFailed
+        self.dateAdded = dateAdded
     }
 
     public var id: String
@@ -32,6 +34,7 @@ public struct ArchiveLink: Codable, Identifiable, Hashable {
     public var tags: [String]
     public var url: URL
     public var downloadFailed: Bool
+    public var dateAdded: Date
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -44,5 +47,6 @@ public struct ArchiveLink: Codable, Identifiable, Hashable {
         tags = try container.decode([String].self, forKey: .tags)
         url = try container.decode(URL.self, forKey: .url)
         downloadFailed = try container.decodeIfPresent(Bool.self, forKey: .downloadFailed) ?? false
+        dateAdded = try container.decodeIfPresent(Date.self, forKey: .dateAdded) ?? Date()
     }
 }

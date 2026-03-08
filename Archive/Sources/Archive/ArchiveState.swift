@@ -31,7 +31,11 @@ public final class ArchiveState: ArchiveStateProtocol {
         self.archiveService = ArchiveService(userDefaults: userDefaults)
         self.metadataEndpointProvider = metadataEndpointProvider
 
-        archiveLinks = userDefaults.archiveLinks
+        archiveLinks = Self.sortedByDateAdded(userDefaults.archiveLinks)
+    }
+
+    private static func sortedByDateAdded(_ links: [ArchiveLink]) -> [ArchiveLink] {
+        links.sorted { $0.dateAdded > $1.dateAdded }
     }
 
     public func archiveLink(link: Link) async {
@@ -40,7 +44,7 @@ public final class ArchiveState: ArchiveStateProtocol {
             try await archiveService.archive(link: link, metadataEndpoint: endpoint)
             let newLinks = archiveService.archiveLinks
             presentedError = nil
-            archiveLinks = newLinks
+            archiveLinks = Self.sortedByDateAdded(newLinks)
         } catch {
             presentedError = ArchiveError(
                 title: "Download Failed",
@@ -70,7 +74,7 @@ public final class ArchiveState: ArchiveStateProtocol {
     }
 
     public func refresh() {
-        archiveLinks = archiveService.archiveLinks
+        archiveLinks = Self.sortedByDateAdded(archiveService.archiveLinks)
     }
 
     public func clearAllArchives() {
@@ -116,7 +120,7 @@ public final class ArchiveState: ArchiveStateProtocol {
                 archiveService.addFailedArchiveLink(for: link)
             }
             pendingDownloadIds.remove(link.id)
-            archiveLinks = archiveService.archiveLinks
+            archiveLinks = Self.sortedByDateAdded(archiveService.archiveLinks)
         }
     }
 
@@ -144,7 +148,7 @@ public final class ArchiveState: ArchiveStateProtocol {
         } catch {
             archiveService.addFailedArchiveLink(for: link)
         }
-        archiveLinks = archiveService.archiveLinks
+        archiveLinks = Self.sortedByDateAdded(archiveService.archiveLinks)
     }
 
     private func errorMessage(for error: Error) -> String {
