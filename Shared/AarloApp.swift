@@ -27,6 +27,9 @@ struct AarleApp: App {
     WindowGroup {
       InitialContentView()
         .environment(overallAppState)
+        .task {
+          await overallAppState.syncUnreadIfEnabled()
+        }
     }
     // TODO: Refactor out creation of commands
     .commands {

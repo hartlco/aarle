@@ -14,4 +14,8 @@ public protocol AarleKeychain {
     func setEndpoint(endpoint: String)
 
     func setMetadataEndpoint(endpoint: String)
+
+    var autoSyncUnread: Bool { get }
+
+    func setAutoSyncUnread(enabled: Bool)
 }

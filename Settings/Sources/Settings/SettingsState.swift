@@ -24,6 +24,11 @@ public final class SettingsState: SettingsStateProtocol {
             keychain.setMetadataEndpoint(endpoint: metadataEndpoint)
         }
     }
+    public var autoSyncUnread: Bool = false {
+        didSet {
+            keychain.setAutoSyncUnread(enabled: autoSyncUnread)
+        }
+    }
 
     private let keychain: AarleKeychain
 
@@ -33,6 +38,7 @@ public final class SettingsState: SettingsStateProtocol {
         self.secret = keychain.secret
         self.endpoint = keychain.endpoint
         self.metadataEndpoint = keychain.metadataEndpoint
+        self.autoSyncUnread = keychain.autoSyncUnread
     }
 
     public var isLoggedOut: Bool {

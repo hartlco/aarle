@@ -28,7 +28,7 @@ struct SidebarView: View {
                     Label("Tags", systemImage: "tray.2")
                 }
                 NavigationLink(value: ListType.downloaded) {
-                    Label("Offline", systemImage: "archivebox")
+                    Label("Unread", systemImage: "book")
                 }
             }
             Section(header: "Favorites") {

@@ -71,9 +71,33 @@ final class ArchiveService: NSObject {
     }
 
     func delete(link: ArchiveLink) throws {
-        try fileManager.removeItem(at: link.dataURL)
+        if fileManager.fileExists(atPath: link.dataURL.path) {
+            try fileManager.removeItem(at: link.dataURL)
+        }
         var links = userDefaults.archiveLinks
         links.removeAll(where: { $0.id == link.id })
+        userDefaults.archiveLinks = links
+    }
+
+    func removeFromList(link: ArchiveLink) {
+        var links = userDefaults.archiveLinks
+        links.removeAll(where: { $0.id == link.id })
+        userDefaults.archiveLinks = links
+    }
+
+    func addFailedArchiveLink(for link: Link) {
+        let archiveLink = ArchiveLink(
+            id: UUID().uuidString,
+            originalLinkId: link.id,
+            title: link.title,
+            description: link.description,
+            dataURL: URL(string: "about:blank")!,
+            tags: link.tags,
+            url: link.url,
+            downloadFailed: true
+        )
+        var links = userDefaults.archiveLinks
+        links.append(archiveLink)
         userDefaults.archiveLinks = links
     }
 

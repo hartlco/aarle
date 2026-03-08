@@ -98,11 +98,33 @@ struct InitialContentView: View {
                 .toolbar {
                   #if os(iOS)
                   ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                      Task {
+                        await overallAppState.markAsRead(archiveLink: archiveLink)
+                        overallAppState.navigationState.selectedDetailDestination = .empty
+                        overallAppState.navigationState.detailNavigationStack.removeAll()
+                      }
+                    } label: {
+                      Label("Mark as Read", systemImage: "checkmark.circle")
+                    }
+                  }
+                  ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Edit") {
                       overallAppState.navigationState.presentedEditArchiveLink = archiveLink
                     }
                   }
                   #else
+                  ToolbarItem {
+                    Button {
+                      Task {
+                        await overallAppState.markAsRead(archiveLink: archiveLink)
+                        overallAppState.navigationState.selectedDetailDestination = .empty
+                        overallAppState.navigationState.detailNavigationStack.removeAll()
+                      }
+                    } label: {
+                      Label("Mark as Read", systemImage: "checkmark.circle")
+                    }
+                  }
                   ToolbarItem {
                     Button("Edit") {
                       overallAppState.navigationState.presentedEditArchiveLink = archiveLink
@@ -200,6 +222,16 @@ struct InitialContentView: View {
       }
       #endif
         .toolbar {
+          ToolbarItem {
+            Button {
+              Task {
+                await overallAppState.markAsRead(archiveLink: archiveLink)
+                overallAppState.navigationState.selectedDetailDestination = .empty
+              }
+            } label: {
+              Label("Mark as Read", systemImage: "checkmark.circle")
+            }
+          }
           ToolbarItem {
             ShareLink(item: archiveLink.url) {
               Label("Share", systemImage: "square.and.arrow.up")

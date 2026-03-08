@@ -128,6 +128,42 @@ final class LinkdingClient: BookmarkClient {
     let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
   }
 
+  func loadUnread() async throws -> [Link] {
+    guard var URL = URL(string: apiEndpoint + "/api/bookmarks/") else {
+      throw ClientError.unknownURL
+    }
+
+    var queryParameters: [String: String] = [:]
+    queryParameters["q"] = "!unread"
+    queryParameters["limit"] = String(pageSize)
+    URL = URL.appendingQueryParameters(queryParameters)
+
+    var request = URLRequest(url: URL)
+    request.httpMethod = "GET"
+    request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
+
+    let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
+    let decoder = JSONDecoder()
+    decoder.dateDecodingStrategy = .custom(date(from:))
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    let result = try decoder.decode(LinkdingResult.self, from: data)
+    return result.results.map(Link.fromLinkdingLink(link:))
+  }
+
+  func markAsRead(linkId: String) async throws {
+    guard let URL = URL(string: "\(apiEndpoint)/api/bookmarks/\(linkId)/") else {
+      throw ClientError.unknownURL
+    }
+
+    var request = URLRequest(url: URL)
+    request.httpMethod = "PATCH"
+    request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONSerialization.data(withJSONObject: ["unread": false])
+
+    let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
+  }
+
   func deleteLink(link: Link) async throws {
     guard let URL = URL(string: "\(apiEndpoint + "/api/bookmarks")/\(link.id)/") else {
       throw ClientError.unknownURL

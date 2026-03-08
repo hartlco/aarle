@@ -26,58 +26,66 @@ struct DownloadedListView: View {
     }
 
     var body: some View {
-        List(
-            archiveState.archiveLinks,
-            selection: $navigationState.selectedDetailDestination
-        ) { link in
-            NavigationLink(value: DetailNavigationDestination.archiveLink(link)) {
-                LinkItemView(link: link)
-            }
-            .contextMenu {
-                Button {
-                    navigationState.presentedEditArchiveLink = link
-                } label: {
-                    Label("Edit", systemImage: "pencil")
-                }
-                
-                Button(role: .destructive) {
-                    do {
-                        try archiveState.deleteLink(link: link)
-                        navigationState.selectedDetailDestination = .empty
-                    } catch {
-                        // TODO: Error Handling
+        ZStack {
+            List(
+                archiveState.archiveLinks,
+                selection: $navigationState.selectedDetailDestination
+            ) { link in
+                NavigationLink(value: destination(for: link)) {
+                    HStack {
+                        LinkItemView(link: link)
+                        if link.downloadFailed {
+                            Spacer()
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.orange)
+                                .font(.caption)
+                        }
                     }
-                } label: {
-                    Label("Delete Download", systemImage: "trash")
+                }
+                .swipeActions(edge: .trailing) {
+                    Button {
+                        Task {
+                            await overallAppState.markAsRead(archiveLink: link)
+                            navigationState.selectedDetailDestination = .empty
+                        }
+                    } label: {
+                        Label("Mark as Read", systemImage: "checkmark.circle")
+                    }
+                    .tint(.green)
+                }
+                .contextMenu {
+                    Button {
+                        Task {
+                            await overallAppState.markAsRead(archiveLink: link)
+                            navigationState.selectedDetailDestination = .empty
+                        }
+                    } label: {
+                        Label("Mark as Read", systemImage: "checkmark.circle")
+                    }
+
+                    Button {
+                        navigationState.presentedEditArchiveLink = link
+                    } label: {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                }
+            }
+            .listStyle(PlainListStyle())
+            if archiveState.isSyncing {
+                VStack {
+                    ProgressView()
+                        .padding()
+                    Spacer()
                 }
             }
         }
-        .listStyle(PlainListStyle())
         .refreshable {
-            archiveState.refresh()
+            await overallAppState.syncUnreadIfEnabled()
         }
-        .navigationTitle("Download")
-        .toolbar {
-            ToolbarItem {
-                Button {
-                    // TODO: Show add screen
-                } label: {
-                    Label("Add", systemImage: "plus")
-                }
-                #if os(iOS)
-//                .sheet(
-//                    isPresented: appViewStore.binding(
-//                        get: \.showsAddView,
-//                        send: { .setShowAddView($0) }
-//                    ),
-//                    onDismiss: nil,
-//                    content: {
-//                        LinkAddView()
-//                    }
-//                )
-                #endif
-            }
+        .task {
+            await overallAppState.syncUnreadIfEnabled()
         }
+        .navigationTitle("Unread")
         .sheet(item: $navigationState.presentedEditArchiveLink) { archiveLink in
             NavigationView {
                 LinkEditView(
@@ -93,5 +101,22 @@ struct DownloadedListView: View {
                 .navigationTitle("Edit Archive")
             }
         }
+    }
+
+    private func destination(for link: ArchiveLink) -> DetailNavigationDestination {
+        if link.downloadFailed {
+            // Fall back to web view for failed downloads
+            let webLink = Link(
+                id: link.originalLinkId ?? link.id,
+                url: link.url,
+                title: link.title,
+                description: link.description,
+                tags: link.tags,
+                private: false,
+                created: Date()
+            )
+            return .link(webLink)
+        }
+        return .archiveLink(link)
     }
 }

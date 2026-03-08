@@ -76,6 +76,16 @@ public struct SettingsView: View {
                 } header: {
                     Text("Metadata Fetching").font(.headline)
                 }
+                if settingsState.accountType == .linkding && !settingsState.metadataEndpoint.isEmpty {
+                    Section {
+                        Toggle("Auto-sync unread bookmarks", isOn: $settingsState.autoSyncUnread)
+                        Text("Automatically download unread Linkding bookmarks for offline reading. Mark as read to remove them.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    } header: {
+                        Text("Unread Sync").font(.headline)
+                    }
+                }
             }
             .tabItem {
                 Label("Metadata", systemImage: "doc.text")

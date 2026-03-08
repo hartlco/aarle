@@ -46,9 +46,18 @@ extension Keychain: AarleKeychain {
             self[metadataEndpointKey] = endpoint
         }
     }
+
+    public var autoSyncUnread: Bool {
+        self[autoSyncUnreadKey] == "true"
+    }
+
+    public func setAutoSyncUnread(enabled: Bool) {
+        self[autoSyncUnreadKey] = enabled ? "true" : "false"
+    }
 }
 
 let keychainKey = "secret"
 let endpointKey = "endpoint"
 let metadataEndpointKey = "metadataEndpoint"
 let servieKey = "servicekey"
+let autoSyncUnreadKey = "autoSyncUnread"

@@ -19,6 +19,7 @@ import Observation
 @Observable
 final class OverallAppState {
   let client: BookmarkClient
+  let universalClient: UniversalClient?
 
   init(
     client: BookmarkClient,
@@ -26,6 +27,7 @@ final class OverallAppState {
     keychain: AarleKeychain
   ) {
     self.client = client
+    self.universalClient = client as? UniversalClient
     let tagState = TagState(
       client: client,
       userDefaults: userDefaults,
@@ -62,6 +64,29 @@ final class OverallAppState {
   var listState: List.ListState
   var addState: AddState
   var editState: EditState
+
+  func syncUnreadIfEnabled() async {
+    guard settingsState.autoSyncUnread,
+          settingsState.accountType == .linkding,
+          let universalClient else { return }
+    do {
+      let unreadLinks = try await universalClient.loadUnread()
+      await archiveState.syncUnreadBookmarks(unreadLinks: unreadLinks)
+    } catch {
+      // Sync errors are non-fatal
+    }
+  }
+
+  func markAsRead(archiveLink: ArchiveLink) async {
+    guard let originalLinkId = archiveLink.originalLinkId,
+          let universalClient else { return }
+    do {
+      try await universalClient.markAsRead(linkId: originalLinkId)
+      try archiveState.deleteLink(link: archiveLink)
+    } catch {
+      // Mark-as-read errors are non-fatal
+    }
+  }
 }
 
 @MainActor

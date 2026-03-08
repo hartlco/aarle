@@ -17,6 +17,7 @@ public final class ArchiveState: ArchiveStateProtocol {
 
     public var archiveLinks: [ArchiveLink] = []
     public var presentedError: ArchiveError? = nil
+    public var isSyncing: Bool = false
 
     private let archiveService: ArchiveService
     private let metadataEndpointProvider: () -> String?
@@ -48,8 +49,12 @@ public final class ArchiveState: ArchiveStateProtocol {
 
     public func deleteLink(link: ArchiveLink) throws {
         do {
-            try archiveService.delete(link: link)
-            self.archiveLinks.removeAll(where: {$0.id == link.id })
+            if !link.downloadFailed {
+                try archiveService.delete(link: link)
+            } else {
+                archiveService.removeFromList(link: link)
+            }
+            self.archiveLinks.removeAll(where: { $0.id == link.id })
         } catch {
             throw ArchiveStateError.unableToDelete
         }
@@ -61,9 +66,47 @@ public final class ArchiveState: ArchiveStateProtocol {
             archiveLinks[index] = link
         }
     }
-    
+
     public func refresh() {
         archiveLinks = archiveService.archiveLinks
+    }
+
+    public func clearAllArchives() {
+        for link in archiveLinks {
+            try? archiveService.delete(link: link)
+        }
+        archiveLinks = []
+    }
+
+    public func syncUnreadBookmarks(unreadLinks: [Link]) async {
+        isSyncing = true
+        defer { isSyncing = false }
+
+        let existingIds = Set(archiveLinks.compactMap { $0.originalLinkId })
+        let unreadIds = Set(unreadLinks.map { $0.id })
+
+        // Remove archives whose original link is no longer unread
+        let toRemove = archiveLinks.filter { archiveLink in
+            guard let originalId = archiveLink.originalLinkId else { return false }
+            return !unreadIds.contains(originalId)
+        }
+        for link in toRemove {
+            try? deleteLink(link: link)
+        }
+
+        // Download new unread links not yet archived
+        let newLinks = unreadLinks.filter { !existingIds.contains($0.id) }
+        let endpoint = metadataEndpointProvider()
+
+        for link in newLinks {
+            do {
+                try await archiveService.archive(link: link, metadataEndpoint: endpoint)
+            } catch {
+                archiveService.addFailedArchiveLink(for: link)
+            }
+            // Update UI incrementally
+            archiveLinks = archiveService.archiveLinks
+        }
     }
 
     private func errorMessage(for error: Error) -> String {
