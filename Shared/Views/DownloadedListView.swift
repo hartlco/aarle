@@ -49,7 +49,29 @@ struct DownloadedListView: View {
                 }
                 .tint(.green)
             }
+            .swipeActions(edge: .leading) {
+                if link.downloadFailed {
+                    Button {
+                        Task {
+                            await archiveState.retryFailedDownload(archiveLink: link)
+                        }
+                    } label: {
+                        Label("Retry", systemImage: "arrow.clockwise")
+                    }
+                    .tint(.blue)
+                }
+            }
             .contextMenu {
+                if link.downloadFailed {
+                    Button {
+                        Task {
+                            await archiveState.retryFailedDownload(archiveLink: link)
+                        }
+                    } label: {
+                        Label("Retry Download", systemImage: "arrow.clockwise")
+                    }
+                }
+
                 Button {
                     Task {
                         await overallAppState.markAsRead(archiveLink: link)

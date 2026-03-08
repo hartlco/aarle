@@ -99,15 +99,9 @@ public final class ArchiveState: ArchiveStateProtocol {
             try? deleteLink(link: link)
         }
 
-        // Remove previously failed downloads so they get retried
-        let failedLinks = archiveLinks.filter { $0.downloadFailed }
-        for link in failedLinks {
-            try? deleteLink(link: link)
-        }
-
-        // Only consider successfully downloaded IDs as existing
-        let successfulIds = Set(archiveLinks.compactMap { $0.originalLinkId })
-        let linksToDownload = unreadLinks.filter { !successfulIds.contains($0.id) }
+        // Only download links not yet in the archive (successful or failed)
+        let existingIds = Set(archiveLinks.compactMap { $0.originalLinkId })
+        let linksToDownload = unreadLinks.filter { !existingIds.contains($0.id) }
         guard !linksToDownload.isEmpty else { return }
 
         pendingDownloadIds = Set(linksToDownload.map { $0.id })
@@ -124,6 +118,33 @@ public final class ArchiveState: ArchiveStateProtocol {
             pendingDownloadIds.remove(link.id)
             archiveLinks = archiveService.archiveLinks
         }
+    }
+
+    public func retryFailedDownload(archiveLink: ArchiveLink) async {
+        guard archiveLink.downloadFailed,
+              let originalLinkId = archiveLink.originalLinkId else { return }
+
+        let link = Link(
+            id: originalLinkId,
+            url: archiveLink.url,
+            title: archiveLink.title,
+            description: archiveLink.description,
+            tags: archiveLink.tags,
+            private: false,
+            created: Date()
+        )
+
+        // Remove the failed entry
+        try? deleteLink(link: archiveLink)
+
+        // Re-download
+        let endpoint = metadataEndpointProvider()
+        do {
+            try await archiveService.archive(link: link, metadataEndpoint: endpoint)
+        } catch {
+            archiveService.addFailedArchiveLink(for: link)
+        }
+        archiveLinks = archiveService.archiveLinks
     }
 
     private func errorMessage(for error: Error) -> String {
