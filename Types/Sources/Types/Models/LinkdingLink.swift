@@ -20,7 +20,8 @@ public struct LinkdingLink: Codable, Hashable {
         websiteTitle: String? = nil,
         websiteDescription: String? = nil,
         tagNames: [String]? = nil,
-        dateAdded: Date
+        dateAdded: Date,
+        previewImageUrl: URL? = nil
     ) {
         self.id = id
         self.url = url
@@ -30,6 +31,7 @@ public struct LinkdingLink: Codable, Hashable {
         self.websiteDescription = websiteDescription
         self.tagNames = tagNames
         self.dateAdded = dateAdded
+        self.previewImageUrl = previewImageUrl
     }
 
     public let id: Int
@@ -40,6 +42,7 @@ public struct LinkdingLink: Codable, Hashable {
     public let websiteDescription: String?
     public let tagNames: [String]?
     public let dateAdded: Date
+    public let previewImageUrl: URL?
 }
 
 public extension Link {
@@ -65,7 +68,8 @@ public extension Link {
             description: descriptionFallback,
             tags: link.tagNames ?? [],
             private: true,
-            created: link.dateAdded
+            created: link.dateAdded,
+            previewImageUrl: link.previewImageUrl
         )
     }
 }

@@ -35,7 +35,8 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         description: String? = nil,
         tags: [String],
         `private`: Bool,
-        created: Date
+        created: Date,
+        previewImageUrl: URL? = nil
     ) {
         self.id = id
         self.url = url
@@ -44,6 +45,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         self.tags = tags
         self.`private` = `private`
         self.created = created
+        self.previewImageUrl = previewImageUrl
     }
 
     @IntRepresentedString public var id: String
@@ -56,6 +58,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
     // TODO: Handle Date
 
     public let created: Date
+    public let previewImageUrl: URL?
 //    let updated: Date
 
 #if DEBUG
@@ -66,7 +69,8 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         description: "Description with a few more words than just the title",
         tags: ["swift", "macos"],
         private: false,
-        created: Date.now
+        created: Date.now,
+        previewImageUrl: nil
     )
 #endif
 }
