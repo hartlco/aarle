@@ -142,18 +142,8 @@ struct DownloadedListView: View {
     }
 
     private func destination(for link: ArchiveLink) -> DetailNavigationDestination {
-        if link.downloadFailed {
-            let webLink = Link(
-                id: link.originalLinkId ?? link.id,
-                url: link.url,
-                title: link.title,
-                description: link.description,
-                tags: link.tags,
-                private: false,
-                created: Date()
-            )
-            return .link(webLink)
-        }
+        // Always navigate as archiveLink so toolbar actions (edit, mark as read) work correctly.
+        // For failed downloads, InitialContentView handles the fallback to web view.
         return .archiveLink(link)
     }
 }

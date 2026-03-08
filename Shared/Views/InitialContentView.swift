@@ -94,48 +94,7 @@ struct InitialContentView: View {
               }
               #endif
             case .archiveLink(let archiveLink):
-              DataWebView(archiveLink: archiveLink)
-                .toolbar {
-                  #if os(iOS)
-                  ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                      Task {
-                        await overallAppState.markAsRead(archiveLink: archiveLink)
-                        overallAppState.navigationState.selectedDetailDestination = .empty
-                        overallAppState.navigationState.detailNavigationStack.removeAll()
-                      }
-                    } label: {
-                      Label("Mark as Read", systemImage: "checkmark.circle")
-                    }
-                  }
-                  ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Edit") {
-                      overallAppState.navigationState.presentedEditArchiveLink = archiveLink
-                    }
-                  }
-                  #else
-                  ToolbarItem {
-                    Button {
-                      Task {
-                        await overallAppState.markAsRead(archiveLink: archiveLink)
-                        overallAppState.navigationState.selectedDetailDestination = .empty
-                        overallAppState.navigationState.detailNavigationStack.removeAll()
-                      }
-                    } label: {
-                      Label("Mark as Read", systemImage: "checkmark.circle")
-                    }
-                  }
-                  ToolbarItem {
-                    Button("Edit") {
-                      overallAppState.navigationState.presentedEditArchiveLink = archiveLink
-                    }
-                  }
-                  #endif
-                }
-                #if os(iOS)
-                .navigationBarTitleDisplayMode(.inline)
-                #endif
-                .navigationTitle(archiveLink.title ?? "")
+              archiveLinkDetailView(archiveLink: archiveLink)
             default:
               Text("Empty")
             }
@@ -208,7 +167,7 @@ struct InitialContentView: View {
       }
       #endif
     case .archiveLink(let archiveLink):
-      DataWebView(archiveLink: archiveLink)
+      archiveLinkDetailView(archiveLink: archiveLink)
       #if os(macOS)
       .inspector(isPresented: $overallAppState.navigationState.showLinkEditorSidebar) {
         LinkEditView(
@@ -235,27 +194,114 @@ struct InitialContentView: View {
         }
       }
       #endif
-        .toolbar {
-          ToolbarItem {
-            Button {
-              Task {
-                await overallAppState.markAsRead(archiveLink: archiveLink)
-                overallAppState.navigationState.selectedDetailDestination = .empty
-              }
-            } label: {
-              Label("Mark as Read", systemImage: "checkmark.circle")
-            }
-          }
-          ToolbarItem {
-            ShareLink(item: archiveLink.url) {
-              Label("Share", systemImage: "square.and.arrow.up")
-            }
-          }
-        }
     case .tag(let tag):
       tagListContentView(selectedTag: tag)
     case .empty, .none:
       EmptyDetailView()
+    }
+  }
+
+  @ViewBuilder
+  private func archiveLinkDetailView(archiveLink: ArchiveLink) -> some View {
+    Group {
+      if archiveLink.downloadFailed {
+        ItemDetailView(
+          link: Link(
+            id: archiveLink.originalLinkId ?? archiveLink.id,
+            url: archiveLink.url,
+            title: archiveLink.title,
+            description: archiveLink.description,
+            tags: archiveLink.tags,
+            private: false,
+            created: Date()
+          ),
+          overallAppState: overallAppState
+        )
+      } else {
+        DataWebView(archiveLink: archiveLink)
+      }
+    }
+    .toolbar {
+      #if os(iOS)
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button {
+          Task {
+            await overallAppState.markAsRead(archiveLink: archiveLink)
+            overallAppState.navigationState.selectedDetailDestination = .empty
+            overallAppState.navigationState.detailNavigationStack.removeAll()
+          }
+        } label: {
+          Label("Mark as Read", systemImage: "checkmark.circle")
+        }
+      }
+      if !archiveLink.downloadFailed {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          NavigationLink(value: DetailNavigationDestination.link(
+            Link(
+              id: archiveLink.originalLinkId ?? archiveLink.id,
+              url: archiveLink.url,
+              title: archiveLink.title,
+              description: archiveLink.description,
+              tags: archiveLink.tags,
+              private: false,
+              created: Date()
+            )
+          )) {
+            Label("Open in Browser", systemImage: "globe")
+          }
+        }
+      }
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button("Edit") {
+          overallAppState.navigationState.presentedEditArchiveLink = archiveLink
+        }
+      }
+      #else
+      ToolbarItem {
+        Button {
+          Task {
+            await overallAppState.markAsRead(archiveLink: archiveLink)
+            overallAppState.navigationState.selectedDetailDestination = .empty
+            overallAppState.navigationState.detailNavigationStack.removeAll()
+          }
+        } label: {
+          Label("Mark as Read", systemImage: "checkmark.circle")
+        }
+      }
+      if !archiveLink.downloadFailed {
+        ToolbarItem {
+          NavigationLink(value: DetailNavigationDestination.link(
+            Link(
+              id: archiveLink.originalLinkId ?? archiveLink.id,
+              url: archiveLink.url,
+              title: archiveLink.title,
+              description: archiveLink.description,
+              tags: archiveLink.tags,
+              private: false,
+              created: Date()
+            )
+          )) {
+            Label("Open in Browser", systemImage: "globe")
+          }
+        }
+      }
+      ToolbarItem {
+        Button("Edit") {
+          overallAppState.navigationState.presentedEditArchiveLink = archiveLink
+        }
+      }
+      #endif
+    }
+    #if os(iOS)
+    .navigationBarTitleDisplayMode(.inline)
+    #endif
+    .navigationTitle(archiveLink.title ?? "")
+    .toolbar {
+      ToolbarItem {
+        ShareLink(item: archiveLink.url) {
+          Label("Share", systemImage: "square.and.arrow.up")
+        }
+      }
     }
   }
 
