@@ -88,7 +88,6 @@ public final class ArchiveState: ArchiveStateProtocol {
             pendingDownloadIds = []
         }
 
-        let existingIds = Set(archiveLinks.compactMap { $0.originalLinkId })
         let unreadIds = Set(unreadLinks.map { $0.id })
 
         // Remove archives whose original link is no longer unread
@@ -100,15 +99,22 @@ public final class ArchiveState: ArchiveStateProtocol {
             try? deleteLink(link: link)
         }
 
-        // Download new unread links not yet archived
-        let newLinks = unreadLinks.filter { !existingIds.contains($0.id) }
-        guard !newLinks.isEmpty else { return }
+        // Remove previously failed downloads so they get retried
+        let failedLinks = archiveLinks.filter { $0.downloadFailed }
+        for link in failedLinks {
+            try? deleteLink(link: link)
+        }
 
-        pendingDownloadIds = Set(newLinks.map { $0.id })
+        // Only consider successfully downloaded IDs as existing
+        let successfulIds = Set(archiveLinks.compactMap { $0.originalLinkId })
+        let linksToDownload = unreadLinks.filter { !successfulIds.contains($0.id) }
+        guard !linksToDownload.isEmpty else { return }
+
+        pendingDownloadIds = Set(linksToDownload.map { $0.id })
         let endpoint = metadataEndpointProvider()
-        let total = newLinks.count
+        let total = linksToDownload.count
 
-        for (index, link) in newLinks.enumerated() {
+        for (index, link) in linksToDownload.enumerated() {
             syncProgress = "Downloading \(index + 1) of \(total)..."
             do {
                 try await archiveService.archive(link: link, metadataEndpoint: endpoint)
