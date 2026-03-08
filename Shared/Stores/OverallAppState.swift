@@ -59,6 +59,10 @@ final class OverallAppState {
     settingsState.onAutoSyncChanged = { [weak archiveState] in
       archiveState?.clearAllArchives()
     }
+
+    self.editState.onMarkAsRead = { [weak self] archiveLink in
+      await self?.markAsRead(archiveLink: archiveLink)
+    }
   }
 
   var navigationState: NavigationState
@@ -136,6 +140,10 @@ final class OverallAppState {
   var title: String = ""
   var description: String = ""
   var tagsString: String = ""
+
+  var onMarkAsRead: ((ArchiveLink) async -> Void)?
+
+  var isEditingArchiveLink: Bool { currentArchiveLink != nil }
 
   init(
     tagState: TagState,
@@ -238,6 +246,12 @@ final class OverallAppState {
         await listState.update(link: syncedLink)
       }
     }
+  }
+
+  func markCurrentAsRead() async {
+    guard let archiveLink = currentArchiveLink else { return }
+    await onMarkAsRead?(archiveLink)
+    closeEditUI()
   }
 
   func closeEditUI() {

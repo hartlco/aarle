@@ -32,6 +32,15 @@ struct LinkEditView: View {
                         editState.closeEditUI()
                     }.hidden(!showCancelButton)
                 }
+                if editState.isEditingArchiveLink {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            Task { await editState.markCurrentAsRead() }
+                        } label: {
+                            Label("Mark as Read", systemImage: "checkmark.circle")
+                        }
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         Task { await editState.save() }
@@ -119,6 +128,13 @@ struct LinkEditView: View {
                     }
                     Spacer()
                     HStack {
+                        if editState.isEditingArchiveLink {
+                            Button {
+                                Task { await editState.markCurrentAsRead() }
+                            } label: {
+                                Label("Mark as Read", systemImage: "checkmark.circle")
+                            }
+                        }
                         Spacer()
                         if showCancelButton {
                             Button("Cancel", role: .cancel) {
