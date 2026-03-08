@@ -18,44 +18,42 @@ struct LinkItemView: View {
     let link: LinkItemViewRepresentation
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8.0) {
-            VStack(alignment: .leading, spacing: 2.0) {
-                if let title = link.title {
-                    Text(title)
-                        .font(.title3)
-                        .bold()
-                }
-                Text(link.url.host ?? link.url.absoluteString)
-                    .foregroundColor(.accentColor)
-                if let description = link.description, !description.isEmpty {
-                    Text(description)
-                        .lineLimit(0 ... 5)
-                        .font(.body)
-                }
-                if !tagsString.isEmpty {
-                    Text(tagsString)
-                        .font(.footnote)
-                        .foregroundColor(.secondaryLabel)
-                        .padding(2.0)
-                }
-            }
-            Spacer(minLength: 0)
+        HStack(alignment: .top, spacing: 12) {
             if let previewImageUrl = link.previewImageUrl {
                 AsyncImage(url: previewImageUrl) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 } placeholder: {
-                    Color.clear
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.secondary.opacity(0.15))
                 }
-                .frame(width: 60, height: 60)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
+                .frame(width: 56, height: 56)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+            VStack(alignment: .leading, spacing: 3) {
+                if let title = link.title {
+                    Text(title)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .lineLimit(2)
+                }
+                Text(link.url.host ?? link.url.absoluteString)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                if let description = link.description, !description.isEmpty {
+                    Text(description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
+                if !link.tags.isEmpty {
+                    Text(link.tags.joined(separator: " · "))
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
             }
         }
-        .padding(4.0)
-    }
-
-    private var tagsString: String {
-        return link.tags.joined(separator: " • ")
+        .padding(.vertical, 4)
     }
 }
