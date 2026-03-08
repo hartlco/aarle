@@ -27,10 +27,12 @@ public final class SettingsState: SettingsStateProtocol {
     public var autoSyncUnread: Bool = false {
         didSet {
             keychain.setAutoSyncUnread(enabled: autoSyncUnread)
+            onAutoSyncChanged?()
         }
     }
 
     private let keychain: AarleKeychain
+    public var onAutoSyncChanged: (() -> Void)?
 
     public init(keychain: AarleKeychain) {
         self.keychain = keychain

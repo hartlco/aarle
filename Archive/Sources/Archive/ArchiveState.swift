@@ -18,6 +18,8 @@ public final class ArchiveState: ArchiveStateProtocol {
     public var archiveLinks: [ArchiveLink] = []
     public var presentedError: ArchiveError? = nil
     public var isSyncing: Bool = false
+    public var syncProgress: String = ""
+    public var pendingDownloadIds: Set<String> = []
 
     private let archiveService: ArchiveService
     private let metadataEndpointProvider: () -> String?
@@ -80,7 +82,11 @@ public final class ArchiveState: ArchiveStateProtocol {
 
     public func syncUnreadBookmarks(unreadLinks: [Link]) async {
         isSyncing = true
-        defer { isSyncing = false }
+        defer {
+            isSyncing = false
+            syncProgress = ""
+            pendingDownloadIds = []
+        }
 
         let existingIds = Set(archiveLinks.compactMap { $0.originalLinkId })
         let unreadIds = Set(unreadLinks.map { $0.id })
@@ -96,15 +102,20 @@ public final class ArchiveState: ArchiveStateProtocol {
 
         // Download new unread links not yet archived
         let newLinks = unreadLinks.filter { !existingIds.contains($0.id) }
-        let endpoint = metadataEndpointProvider()
+        guard !newLinks.isEmpty else { return }
 
-        for link in newLinks {
+        pendingDownloadIds = Set(newLinks.map { $0.id })
+        let endpoint = metadataEndpointProvider()
+        let total = newLinks.count
+
+        for (index, link) in newLinks.enumerated() {
+            syncProgress = "Downloading \(index + 1) of \(total)..."
             do {
                 try await archiveService.archive(link: link, metadataEndpoint: endpoint)
             } catch {
                 archiveService.addFailedArchiveLink(for: link)
             }
-            // Update UI incrementally
+            pendingDownloadIds.remove(link.id)
             archiveLinks = archiveService.archiveLinks
         }
     }

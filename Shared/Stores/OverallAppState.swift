@@ -55,6 +55,10 @@ final class OverallAppState {
       navigationState: navigationState,
       archiveState: archiveState
     )
+
+    settingsState.onAutoSyncChanged = { [weak archiveState] in
+      archiveState?.clearAllArchives()
+    }
   }
 
   var navigationState: NavigationState

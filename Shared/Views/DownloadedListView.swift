@@ -26,57 +26,69 @@ struct DownloadedListView: View {
     }
 
     var body: some View {
-        ZStack {
-            List(
-                archiveState.archiveLinks,
-                selection: $navigationState.selectedDetailDestination
-            ) { link in
-                NavigationLink(value: destination(for: link)) {
-                    HStack {
-                        LinkItemView(link: link)
-                        if link.downloadFailed {
-                            Spacer()
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundStyle(.orange)
-                                .font(.caption)
-                        }
-                    }
+        List(
+            archiveState.archiveLinks,
+            selection: $navigationState.selectedDetailDestination
+        ) { link in
+            NavigationLink(value: destination(for: link)) {
+                HStack(spacing: 8) {
+                    statusIcon(for: link)
+                    LinkItemView(link: link)
                 }
-                .swipeActions(edge: .trailing) {
-                    Button {
-                        Task {
-                            await overallAppState.markAsRead(archiveLink: link)
-                            navigationState.selectedDetailDestination = .empty
-                        }
-                    } label: {
-                        Label("Mark as Read", systemImage: "checkmark.circle")
+                .opacity(isPending(link) ? 0.5 : 1.0)
+            }
+            .disabled(isPending(link))
+            .swipeActions(edge: .trailing) {
+                Button {
+                    Task {
+                        await overallAppState.markAsRead(archiveLink: link)
+                        navigationState.selectedDetailDestination = .empty
                     }
-                    .tint(.green)
+                } label: {
+                    Label("Mark as Read", systemImage: "checkmark.circle")
                 }
-                .contextMenu {
-                    Button {
-                        Task {
-                            await overallAppState.markAsRead(archiveLink: link)
-                            navigationState.selectedDetailDestination = .empty
-                        }
-                    } label: {
-                        Label("Mark as Read", systemImage: "checkmark.circle")
+                .tint(.green)
+            }
+            .contextMenu {
+                Button {
+                    Task {
+                        await overallAppState.markAsRead(archiveLink: link)
+                        navigationState.selectedDetailDestination = .empty
                     }
+                } label: {
+                    Label("Mark as Read", systemImage: "checkmark.circle")
+                }
 
-                    Button {
-                        navigationState.presentedEditArchiveLink = link
-                    } label: {
-                        Label("Edit", systemImage: "pencil")
-                    }
+                Button {
+                    navigationState.presentedEditArchiveLink = link
+                } label: {
+                    Label("Edit", systemImage: "pencil")
                 }
             }
-            .listStyle(PlainListStyle())
-            if archiveState.isSyncing {
-                VStack {
+        }
+        .listStyle(PlainListStyle())
+        .overlay {
+            if archiveState.isSyncing && archiveState.archiveLinks.isEmpty {
+                VStack(spacing: 8) {
                     ProgressView()
-                        .padding()
-                    Spacer()
+                    Text(archiveState.syncProgress)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            if archiveState.isSyncing && !archiveState.archiveLinks.isEmpty {
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text(archiveState.syncProgress)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(.bar)
             }
         }
         .refreshable {
@@ -103,9 +115,29 @@ struct DownloadedListView: View {
         }
     }
 
+    private func isPending(_ link: ArchiveLink) -> Bool {
+        guard let originalId = link.originalLinkId else { return false }
+        return archiveState.pendingDownloadIds.contains(originalId)
+    }
+
+    @ViewBuilder
+    private func statusIcon(for link: ArchiveLink) -> some View {
+        if isPending(link) {
+            ProgressView()
+                .controlSize(.small)
+        } else if link.downloadFailed {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+                .font(.caption)
+        } else {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+                .font(.caption)
+        }
+    }
+
     private func destination(for link: ArchiveLink) -> DetailNavigationDestination {
         if link.downloadFailed {
-            // Fall back to web view for failed downloads
             let webLink = Link(
                 id: link.originalLinkId ?? link.id,
                 url: link.url,
