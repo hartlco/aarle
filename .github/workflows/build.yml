@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-ios:
+    name: Build iOS
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build iOS
+        run: |
+          xcodebuild build \
+            -project Aarle.xcodeproj \
+            -scheme "Aarlo (iOS)" \
+            -destination "generic/platform=iOS Simulator" \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build macOS
+        run: |
+          xcodebuild build \
+            -project Aarle.xcodeproj \
+            -scheme "Aarle (macOS)" \
+            -destination "generic/platform=macOS" \
+            -skipPackagePluginValidation \
+            CODE_SIGNING_ALLOWED=NO
