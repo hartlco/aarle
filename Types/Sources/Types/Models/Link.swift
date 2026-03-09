@@ -116,6 +116,7 @@ public extension PostLink {
         tags = link.tags
         self.private = link.private
         created = link.created
+        unread = link.unread
 //        self.updated = link.updated
     }
 }
