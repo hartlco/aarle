@@ -126,6 +126,9 @@ struct LinkEditView: View {
                             )
                         }
                     }
+                    if !editState.isEditingArchiveLink {
+                        Toggle("Unread", isOn: $editState.unread)
+                    }
                     Spacer()
                     HStack {
                         if editState.isEditingArchiveLink {
@@ -200,6 +203,12 @@ struct LinkEditView: View {
                 TextField("Comma-separated tags", text: $editState.tagsString)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)
+            }
+
+            if !editState.isEditingArchiveLink {
+                Section("Status") {
+                    Toggle("Unread", isOn: $editState.unread)
+                }
             }
         }
     }

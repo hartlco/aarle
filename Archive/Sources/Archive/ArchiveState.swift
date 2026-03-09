@@ -35,7 +35,7 @@ public final class ArchiveState: ArchiveStateProtocol {
     }
 
     private static func sortedByDateAdded(_ links: [ArchiveLink]) -> [ArchiveLink] {
-        links.sorted { $0.dateAdded > $1.dateAdded }
+        links.sorted { $0.dateAdded < $1.dateAdded }
     }
 
     public func archiveLink(link: Link) async {

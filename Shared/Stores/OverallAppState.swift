@@ -63,6 +63,14 @@ final class OverallAppState {
     self.editState.onMarkAsRead = { [weak self] archiveLink in
       await self?.markAsRead(archiveLink: archiveLink)
     }
+
+    self.editState.onToggleUnread = { [weak self] link, unread in
+      if unread {
+        await self?.markLinkAsUnread(link: link)
+      } else {
+        await self?.markLinkAsRead(link: link)
+      }
+    }
   }
 
   var navigationState: NavigationState
@@ -168,8 +176,10 @@ final class OverallAppState {
   var title: String = ""
   var description: String = ""
   var tagsString: String = ""
+  var unread: Bool = false
 
   var onMarkAsRead: ((ArchiveLink) async -> Void)?
+  var onToggleUnread: ((Types.Link, Bool) async -> Void)?
 
   var isEditingArchiveLink: Bool { currentArchiveLink != nil }
 
@@ -194,6 +204,7 @@ final class OverallAppState {
     title = link.title ?? ""
     description = link.description ?? ""
     tagsString = link.tags.joined(separator: " ")
+    unread = link.unread
   }
 
   func load(archiveLink: ArchiveLink) {
@@ -203,6 +214,7 @@ final class OverallAppState {
     title = archiveLink.title ?? ""
     description = archiveLink.description ?? ""
     tagsString = archiveLink.tags.joined(separator: " ")
+    unread = false
   }
 
   func reset() {
@@ -212,6 +224,7 @@ final class OverallAppState {
     title = ""
     description = ""
     tagsString = ""
+    unread = false
   }
 
   func tagsStringContains(_ tag: Tag) -> Bool {
@@ -238,9 +251,14 @@ final class OverallAppState {
         description: description,
         tags: tags,
         private: false,
-        created: currentLink.created
+        created: currentLink.created,
+        unread: unread
       )
       await listState.update(link: newLink)
+      // If unread status changed, toggle via API
+      if unread != currentLink.unread {
+        await onToggleUnread?(newLink, unread)
+      }
     } else if let currentArchiveLink = currentArchiveLink {
       // Save archive link and sync to original if it exists
       let url = URL(string: urlString) ?? currentArchiveLink.url

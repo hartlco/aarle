@@ -118,7 +118,8 @@ final class LinkdingClient: BookmarkClient {
       url: link.url,
       title: link.title,
       description: link.description,
-      tagNames: link.tags
+      tagNames: link.tags,
+      unread: link.unread
     )
 
     let encoder = JSONEncoder()

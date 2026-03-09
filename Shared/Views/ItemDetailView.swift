@@ -17,6 +17,7 @@ struct ItemDetailView: View {
 
     @State var shareSheetPresented = false
     @State private var isLoadingReadable = false
+    @State private var isUnread: Bool
 
     init(
         link: Types.Link,
@@ -25,6 +26,7 @@ struct ItemDetailView: View {
         self.link = link
         self.overallAppState = overallAppState
         self._webViewData = StateObject(wrappedValue: WebViewData(url: nil))
+        self._isUnread = State(initialValue: link.unread)
     }
 
     private let pasteboard = DefaultPasteboard()
@@ -104,16 +106,17 @@ struct ItemDetailView: View {
                 ToolbarItem {
                     Button {
                         Task {
-                            if link.unread {
+                            if isUnread {
                                 await overallAppState.markLinkAsRead(link: link)
                             } else {
                                 await overallAppState.markLinkAsUnread(link: link)
                             }
+                            isUnread.toggle()
                         }
                     } label: {
                         Label(
-                            link.unread ? "Mark as Read" : "Mark as Unread",
-                            systemImage: link.unread ? "checkmark.circle" : "circle"
+                            isUnread ? "Mark as Read" : "Mark as Unread",
+                            systemImage: isUnread ? "checkmark.circle" : "circle"
                         )
                     }
                 }
@@ -204,16 +207,17 @@ struct ItemDetailView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         Task {
-                            if link.unread {
+                            if isUnread {
                                 await overallAppState.markLinkAsRead(link: link)
                             } else {
                                 await overallAppState.markLinkAsUnread(link: link)
                             }
+                            isUnread.toggle()
                         }
                     } label: {
                         Label(
-                            link.unread ? "Mark as Read" : "Mark as Unread",
-                            systemImage: link.unread ? "checkmark.circle" : "circle"
+                            isUnread ? "Mark as Read" : "Mark as Unread",
+                            systemImage: isUnread ? "checkmark.circle" : "circle"
                         )
                     }
                 }
