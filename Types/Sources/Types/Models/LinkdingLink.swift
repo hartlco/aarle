@@ -72,16 +72,18 @@ public extension Link {
             tags: link.tagNames ?? [],
             private: true,
             created: link.dateAdded,
-            previewImageUrl: link.previewImageUrl
+            previewImageUrl: link.previewImageUrl,
+            unread: link.unread
         )
     }
 }
 
 public struct LinkdingPostLink: Codable {
-    public init(url: URL, title: String? = nil, description: String? = nil, tagNames: [String]? = nil) {
+    public init(url: URL, title: String? = nil, description: String? = nil, tagNames: [String]? = nil, unread: Bool = false) {
         self.url = url
         self.title = title
         self.description = description
+        self.unread = unread
 
         if let tagNames {
             let tagNames: [String] = tagNames.compactMap { string in
@@ -102,6 +104,7 @@ public struct LinkdingPostLink: Codable {
     public let title: String?
     public let description: String?
     public let tagNames: [String]?
+    public let unread: Bool
 }
 
 public struct LinkdingTagResult: Codable {

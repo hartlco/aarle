@@ -42,7 +42,7 @@ struct DownloadedListView: View {
                 Button {
                     Task {
                         await overallAppState.markAsRead(archiveLink: link)
-                        navigationState.selectedDetailDestination = .empty
+                        navigationState.selectedDetailDestination = nil
                     }
                 } label: {
                     Label("Mark as Read", systemImage: "checkmark.circle")
@@ -75,7 +75,7 @@ struct DownloadedListView: View {
                 Button {
                     Task {
                         await overallAppState.markAsRead(archiveLink: link)
-                        navigationState.selectedDetailDestination = .empty
+                        navigationState.selectedDetailDestination = nil
                     }
                 } label: {
                     Label("Mark as Read", systemImage: "checkmark.circle")

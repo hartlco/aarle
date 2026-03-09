@@ -36,7 +36,8 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         tags: [String],
         `private`: Bool,
         created: Date,
-        previewImageUrl: URL? = nil
+        previewImageUrl: URL? = nil,
+        unread: Bool = false
     ) {
         self.id = id
         self.url = url
@@ -46,6 +47,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         self.`private` = `private`
         self.created = created
         self.previewImageUrl = previewImageUrl
+        self.unread = unread
     }
 
     @IntRepresentedString public var id: String
@@ -59,6 +61,7 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
 
     public let created: Date
     public let previewImageUrl: URL?
+    public let unread: Bool
 //    let updated: Date
 
 #if DEBUG
@@ -70,7 +73,8 @@ public struct Link: Codable, Identifiable, Hashable, Sendable {
         tags: ["swift", "macos"],
         private: false,
         created: Date.now,
-        previewImageUrl: nil
+        previewImageUrl: nil,
+        unread: false
     )
 #endif
 }
@@ -82,7 +86,8 @@ public struct PostLink: Codable {
         description: String? = nil,
         tags: [String],
         `private`: Bool,
-        created: Date
+        created: Date,
+        unread: Bool = false
     ) {
         self.url = url
         self.title = title
@@ -90,6 +95,7 @@ public struct PostLink: Codable {
         self.tags = tags
         self.`private` = `private`
         self.created = created
+        self.unread = unread
     }
 
     public let url: URL
@@ -98,6 +104,7 @@ public struct PostLink: Codable {
     public let tags: [String]
     public let `private`: Bool
     public let created: Date
+    public let unread: Bool
 //    let updated: Date
 }
 

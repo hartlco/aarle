@@ -91,8 +91,15 @@ struct LinkAddView: View {
       TextField("Tags", text: $overallAppState.addState.tagsString)
         .disableAutocorrection(true)
       
-      Section(header: "Options") {
-        Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
+      if overallAppState.isLinkding {
+        Section(header: "Options") {
+          Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
+          Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
+        }
+      } else {
+        Section(header: "Options") {
+          Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
+        }
       }
       
       HStack {
@@ -158,7 +165,8 @@ struct LinkAddView: View {
       description: overallAppState.addState.description,
       tags: tags,
       private: false,
-      created: Date().addingTimeInterval(-10.0)
+      created: Date().addingTimeInterval(-10.0),
+      unread: overallAppState.addState.markAsUnread
     )
 
     overallAppState.addState.isSaving = true

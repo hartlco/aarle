@@ -93,7 +93,8 @@ final class LinkdingClient: BookmarkClient {
       url: link.url,
       title: link.title,
       description: link.description,
-      tagNames: link.tags
+      tagNames: link.tags,
+      unread: link.unread
     )
 
     let encoder = JSONEncoder()
@@ -160,6 +161,20 @@ final class LinkdingClient: BookmarkClient {
     request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     request.httpBody = try JSONSerialization.data(withJSONObject: ["unread": false])
+
+    let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
+  }
+
+  func markAsUnread(linkId: String) async throws {
+    guard let URL = URL(string: "\(apiEndpoint)/api/bookmarks/\(linkId)/") else {
+      throw ClientError.unknownURL
+    }
+
+    var request = URLRequest(url: URL)
+    request.httpMethod = "PATCH"
+    request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONSerialization.data(withJSONObject: ["unread": true])
 
     let (_, _) = try await URLSession.shared.data(for: request, delegate: nil)
   }

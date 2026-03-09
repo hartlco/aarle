@@ -86,11 +86,61 @@ struct ContentView: View {
             ForEach(listState.links(for: listType)) { link in
                 NavigationLink(value: DetailNavigationDestination.link(link)) {
                     LinkItemView(link: link)
-                }.contextMenu {
+                }
+                .swipeActions(edge: .trailing) {
+                    if overallAppState.isLinkding {
+                        if link.unread {
+                            Button {
+                                Task {
+                                    await overallAppState.markLinkAsRead(link: link)
+                                    await listState.loadSearch(for: listType)
+                                }
+                            } label: {
+                                Label("Mark as Read", systemImage: "checkmark.circle")
+                            }
+                            .tint(.green)
+                        } else {
+                            Button {
+                                Task {
+                                    await overallAppState.markLinkAsUnread(link: link)
+                                    await listState.loadSearch(for: listType)
+                                }
+                            } label: {
+                                Label("Mark as Unread", systemImage: "circle")
+                            }
+                            .tint(.blue)
+                        }
+                    }
+                }
+                .contextMenu {
                     Button {
                         editAction(link: link)
                     } label: {
                         Label("Edit", systemImage: "pencil")
+                    }
+
+                    if overallAppState.isLinkding {
+                        Divider()
+
+                        if link.unread {
+                            Button {
+                                Task {
+                                    await overallAppState.markLinkAsRead(link: link)
+                                    await listState.loadSearch(for: listType)
+                                }
+                            } label: {
+                                Label("Mark as Read", systemImage: "checkmark.circle")
+                            }
+                        } else {
+                            Button {
+                                Task {
+                                    await overallAppState.markLinkAsUnread(link: link)
+                                    await listState.loadSearch(for: listType)
+                                }
+                            } label: {
+                                Label("Mark as Unread", systemImage: "circle")
+                            }
+                        }
                     }
 
                     Divider()

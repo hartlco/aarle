@@ -227,7 +227,7 @@ struct InitialContentView: View {
         Button {
           Task {
             await overallAppState.markAsRead(archiveLink: archiveLink)
-            overallAppState.navigationState.selectedDetailDestination = .empty
+            overallAppState.navigationState.selectedDetailDestination = nil
             overallAppState.navigationState.detailNavigationStack.removeAll()
           }
         } label: {
@@ -261,7 +261,7 @@ struct InitialContentView: View {
         Button {
           Task {
             await overallAppState.markAsRead(archiveLink: archiveLink)
-            overallAppState.navigationState.selectedDetailDestination = .empty
+            overallAppState.navigationState.selectedDetailDestination = nil
             overallAppState.navigationState.detailNavigationStack.removeAll()
           }
         } label: {

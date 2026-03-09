@@ -101,6 +101,32 @@ final class OverallAppState {
       // Mark-as-read errors are non-fatal
     }
   }
+
+  func markLinkAsRead(link: Link) async {
+    guard let universalClient else { return }
+    do {
+      try await universalClient.markAsRead(linkId: link.id)
+      // If there's a matching archive link, remove it
+      if let archiveLink = archiveState.archiveLinks.first(where: { $0.originalLinkId == link.id }) {
+        try archiveState.deleteLink(link: archiveLink)
+      }
+    } catch {
+      // Mark-as-read errors are non-fatal
+    }
+  }
+
+  func markLinkAsUnread(link: Link) async {
+    guard let universalClient else { return }
+    do {
+      try await universalClient.markAsUnread(linkId: link.id)
+    } catch {
+      // Mark-as-unread errors are non-fatal
+    }
+  }
+
+  var isLinkding: Bool {
+    settingsState.accountType == .linkding
+  }
 }
 
 @MainActor
@@ -110,6 +136,7 @@ final class OverallAppState {
   var description: String = ""
   var tagsString: String = ""
   var shouldArchive: Bool = false
+  var markAsUnread: Bool = false
   var isLoadingMetadata: Bool = false
   var isSaving: Bool = false
   var onSaveComplete: (() -> Void)?
@@ -120,6 +147,7 @@ final class OverallAppState {
     description = ""
     tagsString = ""
     shouldArchive = false
+    markAsUnread = false
     isLoadingMetadata = false
     isSaving = false
     onSaveComplete = nil

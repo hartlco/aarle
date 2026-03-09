@@ -86,6 +86,11 @@ final class UniversalClient: BookmarkClient {
         try await linkdingClient.markAsRead(linkId: linkId)
     }
 
+    func markAsUnread(linkId: String) async throws {
+        guard keychain.accountType == .linkding else { return }
+        try await linkdingClient.markAsUnread(linkId: linkId)
+    }
+
     private let keychain: AarleKeychain
     private var client: BookmarkClient {
         switch keychain.accountType {

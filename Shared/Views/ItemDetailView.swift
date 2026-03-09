@@ -100,6 +100,24 @@ struct ItemDetailView: View {
             }
         }
         .toolbar {
+            if overallAppState.isLinkding {
+                ToolbarItem {
+                    Button {
+                        Task {
+                            if link.unread {
+                                await overallAppState.markLinkAsRead(link: link)
+                            } else {
+                                await overallAppState.markLinkAsUnread(link: link)
+                            }
+                        }
+                    } label: {
+                        Label(
+                            link.unread ? "Mark as Read" : "Mark as Unread",
+                            systemImage: link.unread ? "checkmark.circle" : "circle"
+                        )
+                    }
+                }
+            }
             ToolbarItem {
                 ShareLink(item: link.url) {
                     Label("Share", systemImage: "square.and.arrow.up")
@@ -182,6 +200,24 @@ struct ItemDetailView: View {
             .background(Color(UIColor.secondarySystemBackground))
         }
         .toolbar {
+            if overallAppState.isLinkding {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        Task {
+                            if link.unread {
+                                await overallAppState.markLinkAsRead(link: link)
+                            } else {
+                                await overallAppState.markLinkAsUnread(link: link)
+                            }
+                        }
+                    } label: {
+                        Label(
+                            link.unread ? "Mark as Read" : "Mark as Unread",
+                            systemImage: link.unread ? "checkmark.circle" : "circle"
+                        )
+                    }
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 ShareLink(item: link.url) {
                     Label("Share", systemImage: "square.and.arrow.up")
