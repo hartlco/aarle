@@ -127,6 +127,7 @@ final class OverallAppState {
     guard let universalClient else { return }
     do {
       try await universalClient.markAsUnread(linkId: link.id)
+      syncUnreadIfEnabled()
     } catch {
       // Mark-as-unread errors are non-fatal
     }
