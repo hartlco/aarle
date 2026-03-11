@@ -115,6 +115,24 @@ final class ArchiveService: NSObject {
         userDefaults.archiveLinks
     }
 
+    func queuePendingMarkAsRead(linkId: String) {
+        var ids = userDefaults.pendingMarkAsReadIds
+        if !ids.contains(linkId) {
+            ids.append(linkId)
+            userDefaults.pendingMarkAsReadIds = ids
+        }
+    }
+
+    func peekPendingMarkAsReadIds() -> [String] {
+        userDefaults.pendingMarkAsReadIds
+    }
+
+    func dequeuePendingMarkAsReadIds() -> [String] {
+        let ids = userDefaults.pendingMarkAsReadIds
+        userDefaults.pendingMarkAsReadIds = []
+        return ids
+    }
+
     private func getDocumentsDirectory() -> URL {
         guard let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.co.hartl.Aarle") else {
             // Fallback to local documents directory if App Group is not available
@@ -236,6 +254,13 @@ extension ArchiveService {
 }
 
 extension UserDefaults {
+    private static let pendingMarkAsReadKey = "pendingMarkAsReadIds"
+
+    var pendingMarkAsReadIds: [String] {
+        get { stringArray(forKey: Self.pendingMarkAsReadKey) ?? [] }
+        set { set(newValue, forKey: Self.pendingMarkAsReadKey) }
+    }
+
     var archiveLinks: [ArchiveLink] {
         get {
             guard let data = data(forKey: #function),

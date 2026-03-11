@@ -77,6 +77,14 @@ public final class ArchiveState: ArchiveStateProtocol {
         archiveLinks = Self.sortedByDateAdded(archiveService.archiveLinks)
     }
 
+    public func queuePendingMarkAsRead(linkId: String) {
+        archiveService.queuePendingMarkAsRead(linkId: linkId)
+    }
+
+    public func dequeuePendingMarkAsReadIds() -> [String] {
+        archiveService.dequeuePendingMarkAsReadIds()
+    }
+
     public func clearAllArchives() {
         for link in archiveLinks {
             try? archiveService.delete(link: link)
@@ -92,7 +100,11 @@ public final class ArchiveState: ArchiveStateProtocol {
             pendingDownloadIds = []
         }
 
-        let unreadIds = Set(unreadLinks.map { $0.id })
+        // Exclude links that are pending mark-as-read locally
+        let pendingReadIds = Set(archiveService.peekPendingMarkAsReadIds())
+        let filteredUnreadLinks = unreadLinks.filter { !pendingReadIds.contains($0.id) }
+
+        let unreadIds = Set(filteredUnreadLinks.map { $0.id })
 
         // Remove archives whose original link is no longer unread
         let toRemove = archiveLinks.filter { archiveLink in
@@ -105,7 +117,7 @@ public final class ArchiveState: ArchiveStateProtocol {
 
         // Only download links not yet in the archive (successful or failed)
         let existingIds = Set(archiveLinks.compactMap { $0.originalLinkId })
-        let linksToDownload = unreadLinks.filter { !existingIds.contains($0.id) }
+        let linksToDownload = filteredUnreadLinks.filter { !existingIds.contains($0.id) }
         guard !linksToDownload.isEmpty else { return }
 
         pendingDownloadIds = Set(linksToDownload.map { $0.id })

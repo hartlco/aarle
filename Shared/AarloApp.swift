@@ -17,6 +17,7 @@ struct AarleApp: App {
   static let keyChain = Keychain(service: "co.hartl.Aarle")
 
   let pasteboard = DefaultPasteboard()
+  @Environment(\.scenePhase) private var scenePhase
 
   @State var overallAppState = OverallAppState(
     client: UniversalClient(keychain: keyChain),
@@ -28,7 +29,18 @@ struct AarleApp: App {
       InitialContentView()
         .environment(overallAppState)
         .onAppear {
+          Task {
+            await overallAppState.flushPendingMarkAsRead()
+          }
           overallAppState.syncUnreadIfEnabled()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+          if newPhase == .active {
+            Task {
+              await overallAppState.flushPendingMarkAsRead()
+            }
+            overallAppState.syncUnreadIfEnabled()
+          }
         }
     }
     // TODO: Refactor out creation of commands

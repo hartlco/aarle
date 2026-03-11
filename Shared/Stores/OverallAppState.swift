@@ -102,24 +102,51 @@ final class OverallAppState {
   func markAsRead(archiveLink: ArchiveLink) async {
     guard let originalLinkId = archiveLink.originalLinkId,
           let universalClient else { return }
+
+    // Optimistic: remove locally immediately
+    try? archiveState.deleteLink(link: archiveLink)
+
     do {
       try await universalClient.markAsRead(linkId: originalLinkId)
-      try archiveState.deleteLink(link: archiveLink)
     } catch {
-      // Mark-as-read errors are non-fatal
+      // Queue for later sync when back online
+      archiveState.queuePendingMarkAsRead(linkId: originalLinkId)
     }
   }
 
   func markLinkAsRead(link: Link) async {
     guard let universalClient else { return }
+
+    // Optimistic: remove matching archive link locally
+    if let archiveLink = archiveState.archiveLinks.first(where: { $0.originalLinkId == link.id }) {
+      try? archiveState.deleteLink(link: archiveLink)
+    }
+
     do {
       try await universalClient.markAsRead(linkId: link.id)
-      // If there's a matching archive link, remove it
-      if let archiveLink = archiveState.archiveLinks.first(where: { $0.originalLinkId == link.id }) {
-        try archiveState.deleteLink(link: archiveLink)
-      }
     } catch {
-      // Mark-as-read errors are non-fatal
+      // Queue for later sync when back online
+      archiveState.queuePendingMarkAsRead(linkId: link.id)
+    }
+  }
+
+  func flushPendingMarkAsRead() async {
+    guard let universalClient else { return }
+    let pendingIds = archiveState.dequeuePendingMarkAsReadIds()
+    guard !pendingIds.isEmpty else { return }
+
+    var failedIds: [String] = []
+    for id in pendingIds {
+      do {
+        try await universalClient.markAsRead(linkId: id)
+      } catch {
+        failedIds.append(id)
+      }
+    }
+
+    // Re-queue any that still failed
+    for id in failedIds {
+      archiveState.queuePendingMarkAsRead(linkId: id)
     }
   }
 
