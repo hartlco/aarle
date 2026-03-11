@@ -88,8 +88,10 @@ struct LinkAddView: View {
           )
         }
       }
-      TextField("Tags", text: $overallAppState.addState.tagsString)
-        .disableAutocorrection(true)
+      TagTextField(
+        tagsString: $overallAppState.addState.tagsString,
+        allTags: overallAppState.tagState.tags
+      )
       
       if overallAppState.isLinkding {
         Section(header: "Options") {

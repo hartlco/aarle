@@ -86,8 +86,10 @@ struct LinkEditView: View {
                     }
                 }
             }
-            TextField("Tags", text: $editState.tagsString)
-                .disableAutocorrection(true)
+            TagTextField(
+                tagsString: $editState.tagsString,
+                allTags: editState.allTags
+            )
         }
     }
 
@@ -104,9 +106,11 @@ struct LinkEditView: View {
                     TextEditor(text: $editState.description)
                         .formLabel(Text("Notes:"))
                         .frame(maxHeight: 400)
-                    TextField("Tags:", text: $editState.tagsString)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .disableAutocorrection(true)
+                    TagTextField(
+                        tagsString: $editState.tagsString,
+                        allTags: editState.allTags,
+                        placeholder: "Tags:"
+                    )
                     if !editState.favoriteTags.isEmpty {
                         ForEach(editState.favoriteTags) { tag in
                             Toggle(
@@ -200,9 +204,11 @@ struct LinkEditView: View {
             }
             
             Section("Tags") {
-                TextField("Comma-separated tags", text: $editState.tagsString)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
+                TagTextField(
+                    tagsString: $editState.tagsString,
+                    allTags: editState.allTags,
+                    placeholder: "Space-separated tags"
+                )
             }
 
             if !editState.isEditingArchiveLink {

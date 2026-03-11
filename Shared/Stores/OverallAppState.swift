@@ -224,6 +224,7 @@ final class OverallAppState {
   }
 
   var favoriteTags: [Tag] { tagState.favoriteTags }
+  var allTags: [Tag] { tagState.tags }
 
   func load(link: Types.Link) {
     currentLink = link
