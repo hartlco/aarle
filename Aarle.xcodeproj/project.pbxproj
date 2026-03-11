@@ -54,6 +54,8 @@
 		C5782B322781E97900321138 /* LinkItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5782B302781E97900321138 /* LinkItemView.swift */; };
 		D10A00012E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
 		D10A00022E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
+		D10A00032E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
+		D10A00042E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
 		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
 		C57A5E562B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */; };
@@ -731,6 +733,7 @@
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
 				C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				C585F1F827A5231E00AB0A6F /* PinboardClient.swift in Sources */,
+				D10A00032E5B000100000001 /* TagTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +752,7 @@
 				C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */,
 				C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				C585F1F927A5231E00AB0A6F /* PinboardClient.swift in Sources */,
+				D10A00042E5B000100000001 /* TagTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
