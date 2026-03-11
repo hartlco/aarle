@@ -46,29 +46,30 @@ struct TagTextField: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            TextField(placeholder, text: $tagsString)
-                .autocorrectionDisabled()
-                #if os(iOS)
-                .textInputAutocapitalization(.never)
-                #endif
-                .focused($isFocused)
-                .onChange(of: tagsString) {
-                    showSuggestions = !currentWord.isEmpty && !suggestions.isEmpty
-                }
-                .onChange(of: isFocused) {
-                    if !isFocused {
-                        // Delay hide so tap on suggestion registers
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                            showSuggestions = false
-                        }
+        TextField(placeholder, text: $tagsString)
+            .autocorrectionDisabled()
+            #if os(iOS)
+            .textInputAutocapitalization(.never)
+            #endif
+            .focused($isFocused)
+            .onChange(of: tagsString) {
+                showSuggestions = !currentWord.isEmpty && !suggestions.isEmpty
+            }
+            .onChange(of: isFocused) {
+                if !isFocused {
+                    // Delay hide so tap on suggestion registers
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showSuggestions = false
                     }
                 }
-
-            if showSuggestions && !suggestions.isEmpty {
-                suggestionList
             }
-        }
+            .overlay(alignment: .topLeading) {
+                if showSuggestions && !suggestions.isEmpty {
+                    suggestionList
+                        .offset(y: 36)
+                }
+            }
+            .zIndex(1)
     }
 
     private var suggestionList: some View {
@@ -105,7 +106,7 @@ struct TagTextField: View {
         .background(Color(.controlBackgroundColor))
         #endif
         .clipShape(RoundedRectangle(cornerRadius: 8))
-        .padding(.top, 4)
+        .shadow(color: .black.opacity(0.15), radius: 8, y: 4)
     }
 
     private func selectTag(_ tag: Types.Tag) {
