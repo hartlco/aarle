@@ -102,23 +102,21 @@ struct ItemDetailView: View {
             }
         }
         .toolbar {
-            if overallAppState.isLinkding {
-                ToolbarItem {
-                    Button {
-                        Task {
-                            if isUnread {
-                                await overallAppState.markLinkAsRead(link: link)
-                            } else {
-                                await overallAppState.markLinkAsUnread(link: link)
-                            }
-                            isUnread.toggle()
+            ToolbarItem {
+                Button {
+                    Task {
+                        if isUnread {
+                            await overallAppState.markLinkAsRead(link: link)
+                        } else {
+                            await overallAppState.markLinkAsUnread(link: link)
                         }
-                    } label: {
-                        Label(
-                            isUnread ? "Mark as Read" : "Mark as Unread",
-                            systemImage: isUnread ? "checkmark.circle" : "circle"
-                        )
+                        isUnread.toggle()
                     }
+                } label: {
+                    Label(
+                        isUnread ? "Mark as Read" : "Mark as Unread",
+                        systemImage: isUnread ? "checkmark.circle" : "circle"
+                    )
                 }
             }
             ToolbarItem {
@@ -203,23 +201,21 @@ struct ItemDetailView: View {
             .background(Color(UIColor.secondarySystemBackground))
         }
         .toolbar {
-            if overallAppState.isLinkding {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        Task {
-                            if isUnread {
-                                await overallAppState.markLinkAsRead(link: link)
-                            } else {
-                                await overallAppState.markLinkAsUnread(link: link)
-                            }
-                            isUnread.toggle()
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    Task {
+                        if isUnread {
+                            await overallAppState.markLinkAsRead(link: link)
+                        } else {
+                            await overallAppState.markLinkAsUnread(link: link)
                         }
-                    } label: {
-                        Label(
-                            isUnread ? "Mark as Read" : "Mark as Unread",
-                            systemImage: isUnread ? "checkmark.circle" : "circle"
-                        )
+                        isUnread.toggle()
                     }
+                } label: {
+                    Label(
+                        isUnread ? "Mark as Read" : "Mark as Unread",
+                        systemImage: isUnread ? "checkmark.circle" : "circle"
+                    )
                 }
             }
             ToolbarItem(placement: .navigationBarTrailing) {

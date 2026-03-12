@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Aarle is a native iOS and macOS SwiftUI client for bookmark services: **Shaarli**, **Pinboard**, and **Linkding**. Written in Swift 6.0, targeting iOS 16+/macOS 13+.
+Aarle is a native iOS and macOS SwiftUI client for **Linkding**. Written in Swift 6.0, targeting iOS 16+/macOS 13+.
 
 ## Build & Run
 
@@ -39,14 +39,12 @@ SwiftFormat config: `--wraparguments before-first`
 
 **Shared code** lives in `Shared/`:
 
-- `Networking/` — API clients: `ShaarliClient`, `PinboardClient`, `LinkdingClient`, plus `ClientFactory` (factory pattern via `UniversalClient`)
+- `Networking/` — `LinkdingClient` API client, plus `ClientFactory` (`UniversalClient` wrapper)
 - `Stores/OverallAppState.swift` — Main state container composing all sub-states
 - `Views/` — SwiftUI views (list, detail, add/edit forms, web view, sidebar)
 - `Services/MetadataService.swift` — Website metadata fetching
 
 **State management** uses Swift `@Observable` macro. `OverallAppState` is the root, composing `ListState`, `TagState`, `EditState`, `AddState`, `NavigationState`, `SettingsState`, `ArchiveState`.
-
-**Client abstraction**: All three bookmark services implement the `BookmarkClient` protocol. `ClientFactory.createClient()` returns a `UniversalClient` wrapping the appropriate implementation based on `AccountType`.
 
 ## Targets
 
@@ -55,5 +53,4 @@ Four build targets: iOS app, macOS app, iOS Share Extension, macOS Share Extensi
 ## Key Dependencies
 
 - `KeychainAccess` — Secure credential storage
-- `SwiftJWT` — JWT signing for Shaarli auth
 - `Introspect` / `SwiftUIX` — SwiftUI utilities

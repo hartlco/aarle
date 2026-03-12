@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftJWT
 import Types
 
 enum DateError: String, Error {

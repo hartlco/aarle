@@ -44,11 +44,6 @@ public final class SettingsState: SettingsStateProtocol {
     }
 
     public var isLoggedOut: Bool {
-        switch self.accountType {
-        case .shaarli, .linkding:
-            return self.secret.isEmpty || self.endpoint.isEmpty
-        case .pinboard:
-            return self.secret.isEmpty
-        }
+        self.secret.isEmpty || self.endpoint.isEmpty
     }
 }
