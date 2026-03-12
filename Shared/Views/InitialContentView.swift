@@ -57,7 +57,8 @@ struct InitialContentView: View {
         DownloadedListView(
           archiveState: overallAppState.archiveState,
           navigationState: overallAppState.navigationState,
-          overallAppState: overallAppState
+          overallAppState: overallAppState,
+          showDownloadStatus: overallAppState.settingsState.autoSyncUnread
         )
       case .tags:
         List(overallAppState.tagState.tags, selection: $overallAppState.navigationState.selectedDetailDestination) { tag in

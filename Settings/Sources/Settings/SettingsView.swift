@@ -1,12 +1,48 @@
 import SwiftUI
 import Types
 
+public struct UnreadSyncStatus: Sendable {
+    public let isSyncing: Bool
+    public let syncProgress: String
+    public let totalCount: Int
+    public let downloadedCount: Int
+    public let failedCount: Int
+    public let pendingCount: Int
+
+    public init(
+        isSyncing: Bool,
+        syncProgress: String,
+        totalCount: Int,
+        downloadedCount: Int,
+        failedCount: Int,
+        pendingCount: Int
+    ) {
+        self.isSyncing = isSyncing
+        self.syncProgress = syncProgress
+        self.totalCount = totalCount
+        self.downloadedCount = downloadedCount
+        self.failedCount = failedCount
+        self.pendingCount = pendingCount
+    }
+}
+
 public struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Bindable var settingsState: SettingsState
+    var syncStatus: UnreadSyncStatus?
+    var onClearAllDownloads: (() -> Void)?
+    var onRetryAllFailed: (() async -> Void)?
 
-    public init(settingsState: SettingsState) {
+    public init(
+        settingsState: SettingsState,
+        syncStatus: UnreadSyncStatus? = nil,
+        onClearAllDownloads: (() -> Void)? = nil,
+        onRetryAllFailed: (() async -> Void)? = nil
+    ) {
         self.settingsState = settingsState
+        self.syncStatus = syncStatus
+        self.onClearAllDownloads = onClearAllDownloads
+        self.onRetryAllFailed = onRetryAllFailed
     }
 
     public var body: some View {
@@ -84,6 +120,49 @@ public struct SettingsView: View {
                             .foregroundColor(.secondary)
                     } header: {
                         Text("Unread Sync").font(.headline)
+                    }
+                    if let syncStatus {
+                        Section {
+                            if syncStatus.isSyncing {
+                                HStack {
+                                    ProgressView()
+                                        .controlSize(.small)
+                                    Text(syncStatus.syncProgress.isEmpty ? "Syncing..." : syncStatus.syncProgress)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            LabeledContent("Total items", value: "\(syncStatus.totalCount)")
+                            LabeledContent("Downloaded", value: "\(syncStatus.downloadedCount)")
+                            if syncStatus.failedCount > 0 {
+                                LabeledContent("Failed", value: "\(syncStatus.failedCount)")
+                                    .foregroundStyle(.orange)
+                            }
+                            if syncStatus.pendingCount > 0 {
+                                LabeledContent("Pending", value: "\(syncStatus.pendingCount)")
+                            }
+                        } header: {
+                            Text("Download Status").font(.headline)
+                        }
+                        Section {
+                            if syncStatus.failedCount > 0 {
+                                Button {
+                                    Task {
+                                        await onRetryAllFailed?()
+                                    }
+                                } label: {
+                                    Label("Retry All Failed Downloads", systemImage: "arrow.clockwise")
+                                }
+                                .disabled(syncStatus.isSyncing)
+                            }
+                            Button(role: .destructive) {
+                                onClearAllDownloads?()
+                            } label: {
+                                Label("Clear All Downloads", systemImage: "trash")
+                            }
+                            .disabled(syncStatus.isSyncing || syncStatus.totalCount == 0)
+                        } header: {
+                            Text("Manage Downloads").font(.headline)
+                        }
                     }
                 }
             }

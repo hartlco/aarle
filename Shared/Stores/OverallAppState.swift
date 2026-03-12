@@ -163,6 +163,17 @@ final class OverallAppState {
   var isLinkding: Bool {
     settingsState.accountType == .linkding
   }
+
+  var unreadSyncStatus: UnreadSyncStatus {
+    UnreadSyncStatus(
+      isSyncing: archiveState.isSyncing,
+      syncProgress: archiveState.syncProgress,
+      totalCount: archiveState.archiveLinks.count,
+      downloadedCount: archiveState.downloadedCount,
+      failedCount: archiveState.failedCount,
+      pendingCount: archiveState.pendingDownloadIds.count
+    )
+  }
 }
 
 @MainActor

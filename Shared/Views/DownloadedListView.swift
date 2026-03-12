@@ -14,15 +14,18 @@ struct DownloadedListView: View {
     @Bindable var archiveState: ArchiveState
     @Bindable var navigationState: NavigationState
     var overallAppState: OverallAppState
+    var showDownloadStatus: Bool
 
     public init(
         archiveState: ArchiveState,
         navigationState: NavigationState,
-        overallAppState: OverallAppState
+        overallAppState: OverallAppState,
+        showDownloadStatus: Bool
     ) {
         self.archiveState = archiveState
         self.navigationState = navigationState
         self.overallAppState = overallAppState
+        self.showDownloadStatus = showDownloadStatus
     }
 
     var body: some View {
@@ -32,7 +35,9 @@ struct DownloadedListView: View {
         ) { link in
             NavigationLink(value: destination(for: link)) {
                 HStack(spacing: 8) {
-                    statusIcon(for: link)
+                    if showDownloadStatus {
+                        statusIcon(for: link)
+                    }
                     LinkItemView(link: link)
                 }
                 .opacity(isPending(link) ? 0.5 : 1.0)

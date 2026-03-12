@@ -136,6 +136,56 @@ public final class ArchiveState: ArchiveStateProtocol {
         }
     }
 
+    public var failedCount: Int {
+        archiveLinks.filter { $0.downloadFailed }.count
+    }
+
+    public var downloadedCount: Int {
+        archiveLinks.filter { !$0.downloadFailed }.count
+    }
+
+    public func retryAllFailed() async {
+        let failedLinks = archiveLinks.filter { $0.downloadFailed }
+        guard !failedLinks.isEmpty else { return }
+
+        isSyncing = true
+        defer {
+            isSyncing = false
+            syncProgress = ""
+            pendingDownloadIds = []
+        }
+
+        let endpoint = metadataEndpointProvider()
+        let total = failedLinks.count
+
+        for (index, archiveLink) in failedLinks.enumerated() {
+            guard let originalLinkId = archiveLink.originalLinkId else { continue }
+
+            syncProgress = "Retrying \(index + 1) of \(total)..."
+            pendingDownloadIds.insert(originalLinkId)
+
+            let link = Link(
+                id: originalLinkId,
+                url: archiveLink.url,
+                title: archiveLink.title,
+                description: archiveLink.description,
+                tags: archiveLink.tags,
+                private: false,
+                created: Date()
+            )
+
+            try? deleteLink(link: archiveLink)
+
+            do {
+                try await archiveService.archive(link: link, metadataEndpoint: endpoint)
+            } catch {
+                archiveService.addFailedArchiveLink(for: link)
+            }
+            pendingDownloadIds.remove(originalLinkId)
+            archiveLinks = Self.sortedByDateAdded(archiveService.archiveLinks)
+        }
+    }
+
     public func retryFailedDownload(archiveLink: ArchiveLink) async {
         guard archiveLink.downloadFailed,
               let originalLinkId = archiveLink.originalLinkId else { return }

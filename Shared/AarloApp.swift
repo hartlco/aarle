@@ -88,16 +88,34 @@ struct AarleApp: App {
     ).handlesExternalEvents(matching: Set([WindowRoutes.editLink.rawValue]))
 #if os(macOS)
     WindowGroup {
-      SettingsView(settingsState: overallAppState.settingsState)
+      SettingsView(
+        settingsState: overallAppState.settingsState,
+        syncStatus: overallAppState.unreadSyncStatus,
+        onClearAllDownloads: {
+          overallAppState.archiveState.clearAllArchives()
+        },
+        onRetryAllFailed: {
+          await overallAppState.archiveState.retryAllFailed()
+        }
+      )
         .onDisappear {
           overallAppState.navigationState.showsSettings = false
         }
-        .frame(width: 500, height: 300)
+        .frame(width: 500, height: 400)
     }
     .handlesExternalEvents(matching: Set([WindowRoutes.settings.rawValue]))
     Settings {
-      SettingsView(settingsState: overallAppState.settingsState)
-        .frame(width: 500, height: 300)
+      SettingsView(
+        settingsState: overallAppState.settingsState,
+        syncStatus: overallAppState.unreadSyncStatus,
+        onClearAllDownloads: {
+          overallAppState.archiveState.clearAllArchives()
+        },
+        onRetryAllFailed: {
+          await overallAppState.archiveState.retryAllFailed()
+        }
+      )
+        .frame(width: 500, height: 400)
     }
 #endif
   }

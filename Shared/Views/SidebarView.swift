@@ -27,10 +27,8 @@ struct SidebarView: View {
                 NavigationLink(value: ListType.tags(selectedTag: nil)) {
                     Label("Tags", systemImage: "tray.2")
                 }
-                if overallAppState.settingsState.autoSyncUnread {
-                    NavigationLink(value: ListType.downloaded) {
-                        Label("Unread", systemImage: "book")
-                    }
+                NavigationLink(value: ListType.downloaded) {
+                    Label("Unread", systemImage: "book")
                 }
             }
             Section(header: "Favorites") {
@@ -65,7 +63,14 @@ struct SidebarView: View {
                 isPresented: $overallAppState.navigationState.showsSettings,
                 content: {
                     SettingsView(
-                        settingsState: overallAppState.settingsState
+                        settingsState: overallAppState.settingsState,
+                        syncStatus: overallAppState.unreadSyncStatus,
+                        onClearAllDownloads: {
+                            overallAppState.archiveState.clearAllArchives()
+                        },
+                        onRetryAllFailed: {
+                            await overallAppState.archiveState.retryAllFailed()
+                        }
                     )
                 }
             )
