@@ -37,69 +37,52 @@ enum ClientError: Error {
 #endif
 
 final class UniversalClient: BookmarkClient {
-    private let shaarliClient: ShaarliClient
-    private let pinboardClient: PinboardClient
     private let linkdingClient: LinkdingClient
 
     init(keychain: AarleKeychain) {
         self.keychain = keychain
-        shaarliClient = ShaarliClient(keychain: keychain)
-        pinboardClient = PinboardClient(keychain: keychain)
         linkdingClient = LinkdingClient(keychain: keychain)
     }
 
     var pageSize: Int {
-        client.pageSize
+        linkdingClient.pageSize
     }
 
     func load(filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
-        try await client.load(filteredByTags: tags, searchTerm: searchTerm)
+        try await linkdingClient.load(filteredByTags: tags, searchTerm: searchTerm)
     }
 
     func loadMore(offset: Int, filteredByTags tags: [String], searchTerm: String?) async throws -> [Link] {
-        try await client.loadMore(offset: offset, filteredByTags: tags, searchTerm: searchTerm)
+        try await linkdingClient.loadMore(offset: offset, filteredByTags: tags, searchTerm: searchTerm)
     }
 
     func createLink(link: PostLink) async throws {
-        try await client.createLink(link: link)
+        try await linkdingClient.createLink(link: link)
     }
 
     func updateLink(link: Link) async throws {
-        try await client.updateLink(link: link)
+        try await linkdingClient.updateLink(link: link)
     }
 
     func deleteLink(link: Link) async throws {
-        try await client.deleteLink(link: link)
+        try await linkdingClient.deleteLink(link: link)
     }
 
     func loadTags() async throws -> [Tag] {
-        try await client.loadTags()
+        try await linkdingClient.loadTags()
     }
 
     func loadUnread() async throws -> [Link] {
-        guard keychain.accountType == .linkding else { return [] }
-        return try await linkdingClient.loadUnread()
+        try await linkdingClient.loadUnread()
     }
 
     func markAsRead(linkId: String) async throws {
-        guard keychain.accountType == .linkding else { return }
         try await linkdingClient.markAsRead(linkId: linkId)
     }
 
     func markAsUnread(linkId: String) async throws {
-        guard keychain.accountType == .linkding else { return }
         try await linkdingClient.markAsUnread(linkId: linkId)
     }
 
     private let keychain: AarleKeychain
-    private var client: BookmarkClient {
-        switch keychain.accountType {
-        case .shaarli:
-            return shaarliClient
-        case .pinboard:
-            return pinboardClient
-        case .linkding:
-            return linkdingClient
-        }
-    }
 }

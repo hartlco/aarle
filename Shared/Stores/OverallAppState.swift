@@ -88,8 +88,7 @@ final class OverallAppState {
   private var syncTask: Task<Void, Never>?
 
   func loadUnreadLinks() async {
-    guard settingsState.accountType == .linkding,
-          let universalClient else { return }
+    guard let universalClient else { return }
     guard !isLoadingUnread else { return }
 
     isLoadingUnread = true
@@ -182,9 +181,6 @@ final class OverallAppState {
     }
   }
 
-  var isLinkding: Bool {
-    settingsState.accountType == .linkding
-  }
 
   var unreadSyncStatus: UnreadSyncStatus {
     UnreadSyncStatus(

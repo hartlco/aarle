@@ -5,7 +5,6 @@
 //  Created by martinhartl on 02.01.22.
 //
 
-import SwiftJWT
 import SwiftUI
 import WebKit
 import Types
@@ -88,28 +87,26 @@ struct ContentView: View {
                     LinkItemView(link: link)
                 }
                 .swipeActions(edge: .trailing) {
-                    if overallAppState.isLinkding {
-                        if link.unread {
-                            Button {
-                                Task {
-                                    await overallAppState.markLinkAsRead(link: link)
-                                    await listState.loadSearch(for: listType)
-                                }
-                            } label: {
-                                Label("Mark as Read", systemImage: "checkmark.circle")
+                    if link.unread {
+                        Button {
+                            Task {
+                                await overallAppState.markLinkAsRead(link: link)
+                                await listState.loadSearch(for: listType)
                             }
-                            .tint(.green)
-                        } else {
-                            Button {
-                                Task {
-                                    await overallAppState.markLinkAsUnread(link: link)
-                                    await listState.loadSearch(for: listType)
-                                }
-                            } label: {
-                                Label("Mark as Unread", systemImage: "circle")
-                            }
-                            .tint(.blue)
+                        } label: {
+                            Label("Mark as Read", systemImage: "checkmark.circle")
                         }
+                        .tint(.green)
+                    } else {
+                        Button {
+                            Task {
+                                await overallAppState.markLinkAsUnread(link: link)
+                                await listState.loadSearch(for: listType)
+                            }
+                        } label: {
+                            Label("Mark as Unread", systemImage: "circle")
+                        }
+                        .tint(.blue)
                     }
                 }
                 .contextMenu {
@@ -119,27 +116,25 @@ struct ContentView: View {
                         Label("Edit", systemImage: "pencil")
                     }
 
-                    if overallAppState.isLinkding {
-                        Divider()
+                    Divider()
 
-                        if link.unread {
-                            Button {
-                                Task {
-                                    await overallAppState.markLinkAsRead(link: link)
-                                    await listState.loadSearch(for: listType)
-                                }
-                            } label: {
-                                Label("Mark as Read", systemImage: "checkmark.circle")
+                    if link.unread {
+                        Button {
+                            Task {
+                                await overallAppState.markLinkAsRead(link: link)
+                                await listState.loadSearch(for: listType)
                             }
-                        } else {
-                            Button {
-                                Task {
-                                    await overallAppState.markLinkAsUnread(link: link)
-                                    await listState.loadSearch(for: listType)
-                                }
-                            } label: {
-                                Label("Mark as Unread", systemImage: "circle")
+                        } label: {
+                            Label("Mark as Read", systemImage: "checkmark.circle")
+                        }
+                    } else {
+                        Button {
+                            Task {
+                                await overallAppState.markLinkAsUnread(link: link)
+                                await listState.loadSearch(for: listType)
                             }
+                        } label: {
+                            Label("Mark as Unread", systemImage: "circle")
                         }
                     }
 

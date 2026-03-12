@@ -4,7 +4,7 @@ import Types
 extension Keychain: AarleKeychain {
     public var accountType: AccountType {
         let serviceString = self[servieKey]
-        return AccountType(rawValue: serviceString ?? "") ?? .shaarli
+        return AccountType(rawValue: serviceString ?? "") ?? .linkding
     }
     
     public var secret: String {

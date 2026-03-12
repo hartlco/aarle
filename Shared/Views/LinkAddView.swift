@@ -93,15 +93,9 @@ struct LinkAddView: View {
         allTags: overallAppState.tagState.tags
       )
       
-      if overallAppState.isLinkding {
-        Section(header: "Options") {
-          Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
-          Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
-        }
-      } else {
-        Section(header: "Options") {
-          Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
-        }
+      Section(header: "Options") {
+        Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
+        Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
       }
       
       HStack {

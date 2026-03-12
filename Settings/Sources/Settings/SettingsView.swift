@@ -60,39 +60,18 @@ public struct SettingsView: View {
         // TODO: Add API endpoint info
         TabView {
             Form {
-                Picker(
-                    "Service",
-                    selection: $settingsState.accountType
-                ) {
-                    ForEach(AccountType.allCases, id: \.self) {
-                        Text($0.rawValue)
-                    }
-                }
-                .pickerStyle(.segmented)
                 TextField(
-                    "Key",
+                    "API Key",
                     text: $settingsState.secret
                 )
                 .disableAutocorrection(true)
-                if settingsState.accountType == .shaarli {
-                    TextField(
-                        "API Endpoint",
-                        text: $settingsState.endpoint
-                    )
-                    .disableAutocorrection(true)
-                    Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
-                        .font(.caption)
-                }
-                if settingsState.accountType == .linkding {
-                    TextField(
-                        "API Endpoint",
-                        text: $settingsState.endpoint
-                    )
-                    .disableAutocorrection(true)
-                    // TODO: Update link
-                    Text("Enter the endpoint in the following format: https://demo.shaarli.org/api/v1")
-                        .font(.caption)
-                }
+                TextField(
+                    "API Endpoint",
+                    text: $settingsState.endpoint
+                )
+                .disableAutocorrection(true)
+                Text("Enter the endpoint in the following format: https://linkding.example.com/api")
+                    .font(.caption)
             }
             .tabItem {
                 Label("Account", systemImage: "person.crop.circle")
@@ -112,7 +91,7 @@ public struct SettingsView: View {
                 } header: {
                     Text("Metadata Fetching").font(.headline)
                 }
-                if settingsState.accountType == .linkding && !settingsState.metadataEndpoint.isEmpty {
+                if !settingsState.metadataEndpoint.isEmpty {
                     Section {
                         Toggle("Auto-sync unread bookmarks", isOn: $settingsState.autoSyncUnread)
                         Text("Automatically download unread Linkding bookmarks for offline reading. Mark as read to remove them.")
@@ -177,9 +156,9 @@ public struct SettingsView: View {
                     Text("aarle").font(.headline)
                 }
                 Section {
-                    Text("https://github.com/shaarli/Shaarli")
+                    Text("https://github.com/sissbruecker/linkding")
                 } header: {
-                    Text("Shaarli").font(.headline)
+                    Text("Linkding").font(.headline)
                 }
             }
             .tabItem {
