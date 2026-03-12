@@ -32,14 +32,14 @@ struct AarleApp: App {
           Task {
             await overallAppState.flushPendingMarkAsRead()
           }
-          overallAppState.syncUnreadIfEnabled()
+          overallAppState.refreshUnread()
         }
         .onChange(of: scenePhase) { _, newPhase in
           if newPhase == .active {
             Task {
               await overallAppState.flushPendingMarkAsRead()
             }
-            overallAppState.syncUnreadIfEnabled()
+            overallAppState.refreshUnread()
           }
         }
     }

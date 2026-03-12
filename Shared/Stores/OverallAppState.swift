@@ -81,21 +81,41 @@ final class OverallAppState {
   var addState: AddState
   var editState: EditState
 
+  var unreadLinks: [Link] = []
+  var isLoadingUnread = false
+  var useOfflineFallback = false
+
   private var syncTask: Task<Void, Never>?
 
-  func syncUnreadIfEnabled() {
-    guard settingsState.autoSyncUnread,
-          settingsState.accountType == .linkding,
-          let universalClient,
-          !archiveState.isSyncing else { return }
+  func loadUnreadLinks() async {
+    guard settingsState.accountType == .linkding,
+          let universalClient else { return }
+    guard !isLoadingUnread else { return }
 
-    syncTask = Task {
-      do {
-        let unreadLinks = try await universalClient.loadUnread()
-        await archiveState.syncUnreadBookmarks(unreadLinks: unreadLinks)
-      } catch {
-        // Sync errors are non-fatal
+    isLoadingUnread = true
+    do {
+      let links = try await universalClient.loadUnread()
+      unreadLinks = links
+      useOfflineFallback = false
+      isLoadingUnread = false
+
+      // If auto-sync is enabled, also trigger download sync
+      if settingsState.autoSyncUnread {
+        await archiveState.syncUnreadBookmarks(unreadLinks: links)
       }
+    } catch {
+      // API failed — fall back to offline archive if available
+      if !archiveState.archiveLinks.isEmpty {
+        useOfflineFallback = true
+      }
+      isLoadingUnread = false
+    }
+  }
+
+  func refreshUnread() {
+    syncTask?.cancel()
+    syncTask = Task {
+      await loadUnreadLinks()
     }
   }
 
@@ -104,6 +124,7 @@ final class OverallAppState {
           let universalClient else { return }
 
     // Optimistic: remove locally immediately
+    unreadLinks.removeAll { $0.id == originalLinkId }
     try? archiveState.deleteLink(link: archiveLink)
 
     do {
@@ -117,7 +138,8 @@ final class OverallAppState {
   func markLinkAsRead(link: Link) async {
     guard let universalClient else { return }
 
-    // Optimistic: remove matching archive link locally
+    // Optimistic: remove from unread list and matching archive link locally
+    unreadLinks.removeAll { $0.id == link.id }
     if let archiveLink = archiveState.archiveLinks.first(where: { $0.originalLinkId == link.id }) {
       try? archiveState.deleteLink(link: archiveLink)
     }
@@ -154,7 +176,7 @@ final class OverallAppState {
     guard let universalClient else { return }
     do {
       try await universalClient.markAsUnread(linkId: link.id)
-      syncUnreadIfEnabled()
+      refreshUnread()
     } catch {
       // Mark-as-unread errors are non-fatal
     }
