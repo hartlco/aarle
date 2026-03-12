@@ -214,11 +214,11 @@ struct DownloadedListView: View {
 
     // MARK: - Helpers
 
-    private func archiveLinkFor(_ link: Link) -> ArchiveLink? {
+    private func archiveLinkFor(_ link: Types.Link) -> ArchiveLink? {
         archiveState.archiveLinks.first { $0.originalLinkId == link.id }
     }
 
-    private func onlineDestination(for link: Link) -> DetailNavigationDestination {
+    private func onlineDestination(for link: Types.Link) -> DetailNavigationDestination {
         // If there's a successfully downloaded archive, navigate to it
         if showDownloadStatus,
            let archiveLink = archiveLinkFor(link),
@@ -237,7 +237,7 @@ struct DownloadedListView: View {
     // MARK: - Status icons
 
     @ViewBuilder
-    private func onlineStatusIcon(for link: Link) -> some View {
+    private func onlineStatusIcon(for link: Types.Link) -> some View {
         if archiveState.pendingDownloadIds.contains(link.id) {
             ProgressView()
                 .controlSize(.small)
