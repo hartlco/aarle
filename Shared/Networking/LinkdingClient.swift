@@ -239,3 +239,31 @@ final class LinkdingClient: BookmarkClient {
     return mappedTags
   }
 }
+
+// MARK: - URL Query Parameter Helpers
+
+extension Dictionary: URLQueryParameterStringConvertible {
+  var queryParameters: String {
+    var parts: [String] = []
+    for (key, value) in self {
+      let part = String(
+        format: "%@=%@",
+        String(describing: key).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!,
+        String(describing: value).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+      )
+      parts.append(part as String)
+    }
+    return parts.joined(separator: "&")
+  }
+}
+
+protocol URLQueryParameterStringConvertible {
+  var queryParameters: String { get }
+}
+
+extension URL {
+  func appendingQueryParameters(_ parametersDictionary: [String: String]) -> URL {
+    let URLString = String(format: "%@?%@", absoluteString, parametersDictionary.queryParameters)
+    return URL(string: URLString)!
+  }
+}
