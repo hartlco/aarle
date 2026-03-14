@@ -4,7 +4,7 @@ import Types
 import Observation
 
 public enum DetailNavigationDestination: Hashable {
-    case link(Link)
+    case link(Types.Link)
     case archiveLink(ArchiveLink)
     case tag(Tag)
     case empty
@@ -42,7 +42,7 @@ public final class NavigationState {
     public var detailNavigationStack: [DetailNavigationDestination] = []
     public var columnVisibility: NavigationSplitViewVisibility = .automatic
     public var showLinkEditorSidebar = false
-    public var presentedEditLink: Link? = nil {
+    public var presentedEditLink: Types.Link? = nil {
         didSet {
             if presentedEditLink != nil {
 #if os(macOS)
