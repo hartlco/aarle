@@ -97,7 +97,29 @@ struct LinkAddView: View {
         Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
         Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
       }
-      
+
+      if overallAppState.addState.linkdingReachability != .unknown
+          || overallAppState.addState.metadataReachability != .unknown {
+        Section(header: "Services") {
+          if overallAppState.addState.linkdingReachability != .unknown {
+            HStack {
+              reachabilityIcon(overallAppState.addState.linkdingReachability)
+              Text("Linkding")
+              Spacer()
+              reachabilityLabel(overallAppState.addState.linkdingReachability)
+            }
+          }
+          if overallAppState.addState.metadataReachability != .unknown {
+            HStack {
+              reachabilityIcon(overallAppState.addState.metadataReachability)
+              Text("Metadata Service")
+              Spacer()
+              reachabilityLabel(overallAppState.addState.metadataReachability)
+            }
+          }
+        }
+      }
+
       HStack {
         if onCancel != nil {
           Button("Cancel") {
@@ -120,7 +142,7 @@ struct LinkAddView: View {
           }
         }
         .buttonStyle(.borderedProminent)
-        .disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata || overallAppState.addState.isSaving)
+        .disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata || overallAppState.addState.isSaving || overallAppState.addState.linkdingReachability == .unreachable)
       }
     }
     .onChange(of: isEditingURL) { _, isEditing in
@@ -180,6 +202,38 @@ struct LinkAddView: View {
         overallAppState.addState.onSaveComplete?()
         presentationMode.dismiss()
       }
+    }
+  }
+
+  @ViewBuilder
+  private func reachabilityIcon(_ status: ServiceReachability) -> some View {
+    switch status {
+    case .unknown:
+      Image(systemName: "questionmark.circle")
+        .foregroundStyle(.secondary)
+    case .checking:
+      ProgressView()
+        .scaleEffect(0.7)
+    case .reachable:
+      Image(systemName: "checkmark.circle.fill")
+        .foregroundStyle(.green)
+    case .unreachable:
+      Image(systemName: "xmark.circle.fill")
+        .foregroundStyle(.red)
+    }
+  }
+
+  @ViewBuilder
+  private func reachabilityLabel(_ status: ServiceReachability) -> some View {
+    switch status {
+    case .unknown:
+      Text("Unknown").font(.caption).foregroundStyle(.secondary)
+    case .checking:
+      Text("Checking...").font(.caption).foregroundStyle(.secondary)
+    case .reachable:
+      Text("Connected").font(.caption).foregroundStyle(.green)
+    case .unreachable:
+      Text("Unreachable").font(.caption).foregroundStyle(.red)
     }
   }
 

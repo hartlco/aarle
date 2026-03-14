@@ -194,6 +194,13 @@ final class OverallAppState {
   }
 }
 
+enum ServiceReachability: Equatable {
+  case unknown
+  case checking
+  case reachable
+  case unreachable
+}
+
 @MainActor
 @Observable class AddState {
   var urlString: String = ""
@@ -205,6 +212,8 @@ final class OverallAppState {
   var isLoadingMetadata: Bool = false
   var isSaving: Bool = false
   var onSaveComplete: (() -> Void)?
+  var linkdingReachability: ServiceReachability = .unknown
+  var metadataReachability: ServiceReachability = .unknown
 
   func reset() {
     urlString = ""
@@ -216,6 +225,8 @@ final class OverallAppState {
     isLoadingMetadata = false
     isSaving = false
     onSaveComplete = nil
+    linkdingReachability = .unknown
+    metadataReachability = .unknown
   }
 }
 
