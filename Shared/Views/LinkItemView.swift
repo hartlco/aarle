@@ -19,18 +19,6 @@ struct LinkItemView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            if let previewImageUrl = link.previewImageUrl {
-                AsyncImage(url: previewImageUrl) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.secondary.opacity(0.15))
-                }
-                .frame(width: 56, height: 56)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-            }
             VStack(alignment: .leading, spacing: 3) {
                 if let title = link.title {
                     Text(title)
@@ -52,6 +40,19 @@ struct LinkItemView: View {
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
+            }
+            Spacer()
+            if let previewImageUrl = link.previewImageUrl {
+                AsyncImage(url: previewImageUrl) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.secondary.opacity(0.15))
+                }
+                .frame(width: 56, height: 56)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
         .padding(.vertical, 4)
