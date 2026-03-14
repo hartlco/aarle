@@ -15,6 +15,7 @@ struct ItemDetailView: View {
     @Bindable var overallAppState: OverallAppState
     @StateObject private var webViewData: WebViewData
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State var shareSheetPresented = false
     @State private var isLoadingReadable = false
     @State private var isUnread: Bool
@@ -201,6 +202,24 @@ struct ItemDetailView: View {
             .background(Color(UIColor.secondarySystemBackground))
         }
         .toolbar {
+            if horizontalSizeClass == .regular {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        withAnimation {
+                            if overallAppState.navigationState.columnVisibility == .detailOnly {
+                                overallAppState.navigationState.columnVisibility = .automatic
+                            } else {
+                                overallAppState.navigationState.columnVisibility = .detailOnly
+                            }
+                        }
+                    } label: {
+                        Label(
+                            overallAppState.navigationState.columnVisibility == .detailOnly ? "Show Sidebar" : "Full Width",
+                            systemImage: overallAppState.navigationState.columnVisibility == .detailOnly ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right"
+                        )
+                    }
+                }
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     Task {

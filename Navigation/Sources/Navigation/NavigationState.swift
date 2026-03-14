@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import Types
 import Observation
 
@@ -39,6 +40,7 @@ public final class NavigationState {
     }
 
     public var detailNavigationStack: [DetailNavigationDestination] = []
+    public var columnVisibility: NavigationSplitViewVisibility = .automatic
     public var showLinkEditorSidebar = false
     public var presentedEditLink: Link? = nil {
         didSet {

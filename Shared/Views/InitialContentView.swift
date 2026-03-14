@@ -19,6 +19,7 @@ struct InitialContentView: View {
   var body: some View {
     @Bindable var overallAppState = overallAppState
     NavigationSplitView(
+      columnVisibility: $overallAppState.navigationState.columnVisibility,
       preferredCompactColumn: $preferredCompactColumn
     ) {
       SidebarView()
