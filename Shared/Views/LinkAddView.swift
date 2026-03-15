@@ -33,8 +33,10 @@ struct LinkAddView: View {
 
   var body: some View {
     #if os(macOS)
-      form
-        .padding()
+      ScrollView {
+        form
+          .padding()
+      }
     #else
       NavigationView {
         form
@@ -59,6 +61,7 @@ struct LinkAddView: View {
       }
       Section(header: "Description") {
         TextEditor(text: $overallAppState.addState.description)
+          .frame(minHeight: 60)
           .disabled(overallAppState.addState.isLoadingMetadata)
           .overlay(alignment: .topLeading) {
             if overallAppState.addState.isLoadingMetadata {

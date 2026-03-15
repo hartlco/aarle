@@ -23,7 +23,8 @@ class ShareViewController: NSViewController {
 
   @MainActor
   override func loadView() {
-    view = NSView(frame: NSMakeRect(0.0, 0.0, 300, 300))
+    view = NSView(frame: NSMakeRect(0.0, 0.0, 420, 500))
+    preferredContentSize = NSSize(width: 420, height: 500)
 
     guard let inputItems = extensionContext?.inputItems as? [NSExtensionItem]
     else {
