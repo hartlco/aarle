@@ -51,6 +51,10 @@
 		D10A00022E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
 		D10A00032E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
 		D10A00042E5B000100000001 /* TagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10A00002E5B000100000001 /* TagTextField.swift */; };
+		D10B00012E5B000200000001 /* BookmarkFormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B00002E5B000200000001 /* BookmarkFormFields.swift */; };
+		D10B00022E5B000200000001 /* BookmarkFormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B00002E5B000200000001 /* BookmarkFormFields.swift */; };
+		D10B00032E5B000200000001 /* BookmarkFormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B00002E5B000200000001 /* BookmarkFormFields.swift */; };
+		D10B00042E5B000200000001 /* BookmarkFormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10B00002E5B000200000001 /* BookmarkFormFields.swift */; };
 		C5782B382782E53800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B372782E53800321138 /* KeychainAccess */; };
 		C5782B3A2782E82800321138 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C5782B392782E82800321138 /* KeychainAccess */; };
 		C57A5E562B2C1609005F4EB7 /* MinimalProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */; };
@@ -173,6 +177,7 @@
 		C56A379627A1DCA2005A5B8E /* Aarle--macOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Aarle--macOS--Info.plist"; sourceTree = "<group>"; };
 		C5782B302781E97900321138 /* LinkItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItemView.swift; sourceTree = "<group>"; };
 		D10A00002E5B000100000001 /* TagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTextField.swift; sourceTree = "<group>"; };
+		D10B00002E5B000200000001 /* BookmarkFormFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFormFields.swift; sourceTree = "<group>"; };
 		C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalProgressViewStyle.swift; sourceTree = "<group>"; };
 		C585F1F027A51EAF00AB0A6F /* ClientFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientFactory.swift; sourceTree = "<group>"; };
 		C585F1FF27A5429000AB0A6F /* Aarle--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Aarle--iOS--Info.plist"; sourceTree = "<group>"; };
@@ -303,6 +308,7 @@
 				C57A5E552B2C1609005F4EB7 /* MinimalProgressViewStyle.swift */,
 				C5D68F6F2B30235800BE50EC /* EmptyDetailView.swift */,
 				D10A00002E5B000100000001 /* TagTextField.swift */,
+				D10B00002E5B000200000001 /* BookmarkFormFields.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -651,6 +657,7 @@
 				C5165653278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C585F1F127A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				D10A00012E5B000100000001 /* TagTextField.swift in Sources */,
+				D10B00012E5B000200000001 /* BookmarkFormFields.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +685,7 @@
 				C5165654278EB849006A55A7 /* InitialContentView.swift in Sources */,
 				C585F1F227A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				D10A00022E5B000100000001 /* TagTextField.swift in Sources */,
+				D10B00022E5B000200000001 /* BookmarkFormFields.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +702,7 @@
 				C5C9BB5727895F580005086C /* ShareViewController.swift in Sources */,
 				C585F1F327A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				D10A00032E5B000100000001 /* TagTextField.swift in Sources */,
+				D10B00032E5B000200000001 /* BookmarkFormFields.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +719,7 @@
 				C5FAE123279BE309007E763B /* UserDefaults+Suite.swift in Sources */,
 				C585F1F427A51EAF00AB0A6F /* ClientFactory.swift in Sources */,
 				D10A00042E5B000100000001 /* TagTextField.swift in Sources */,
+				D10B00042E5B000200000001 /* BookmarkFormFields.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -47,6 +47,106 @@ struct LinkAddView: View {
 
   var form: some View {
     @Bindable var overallAppState = overallAppState
+    #if os(macOS)
+    return macOSForm
+    #else
+    return iOSForm
+    #endif
+  }
+
+  #if os(macOS)
+  private var macOSForm: some View {
+    @Bindable var overallAppState = overallAppState
+    return VStack(alignment: .leading, spacing: 16) {
+      BookmarkFormFields(
+        urlString: $overallAppState.addState.urlString,
+        title: $overallAppState.addState.title,
+        description: $overallAppState.addState.description,
+        tagsString: $overallAppState.addState.tagsString,
+        allTags: overallAppState.tagState.tags,
+        favoriteTags: overallAppState.tagState.favoriteTags,
+        isDisabled: overallAppState.addState.isLoadingMetadata,
+        onToggleFavorite: { tag, isOn in
+          if isOn {
+            overallAppState.addState.tagsString = overallAppState.tagState.addingTag(
+              tag, toTagsString: overallAppState.addState.tagsString)
+          } else {
+            overallAppState.addState.tagsString = overallAppState.tagState.removingTag(
+              tag, fromTagsString: overallAppState.addState.tagsString)
+          }
+        }
+      )
+
+      VStack(alignment: .leading, spacing: 8) {
+        Text("Options")
+          .font(.headline)
+          .foregroundStyle(.secondary)
+        Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
+        Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
+      }
+
+      if overallAppState.addState.linkdingReachability != .unknown
+          || overallAppState.addState.metadataReachability != .unknown {
+        VStack(alignment: .leading, spacing: 8) {
+          Text("Services")
+            .font(.headline)
+            .foregroundStyle(.secondary)
+          if overallAppState.addState.linkdingReachability != .unknown {
+            HStack {
+              reachabilityIcon(overallAppState.addState.linkdingReachability)
+              Text("Linkding")
+              Spacer()
+              reachabilityLabel(overallAppState.addState.linkdingReachability)
+            }
+          }
+          if overallAppState.addState.metadataReachability != .unknown {
+            HStack {
+              reachabilityIcon(overallAppState.addState.metadataReachability)
+              Text("Metadata Service")
+              Spacer()
+              reachabilityLabel(overallAppState.addState.metadataReachability)
+            }
+          }
+        }
+      }
+
+      HStack {
+        if onCancel != nil {
+          Button("Cancel") {
+            onCancel?()
+          }
+          .buttonStyle(.bordered)
+          .keyboardShortcut(.cancelAction)
+        }
+
+        Spacer()
+
+        Button(action: {
+          save()
+        }) {
+          HStack {
+            if overallAppState.addState.isSaving {
+              ProgressView()
+                .scaleEffect(0.8)
+            }
+            Text("Add")
+          }
+        }
+        .buttonStyle(.borderedProminent)
+        .keyboardShortcut("s", modifiers: [.command])
+        .disabled(saveButtonDisabled || overallAppState.addState.isLoadingMetadata || overallAppState.addState.isSaving || overallAppState.addState.linkdingReachability == .unreachable)
+      }
+    }
+    .onChange(of: isEditingURL) { _, isEditing in
+      if isEditing == false {
+        handleURLChange(overallAppState.addState.urlString)
+      }
+    }
+  }
+  #endif
+
+  private var iOSForm: some View {
+    @Bindable var overallAppState = overallAppState
     return Form {
       Section(header: "Main Information") {
         TextField("URL", text: $overallAppState.addState.urlString)
@@ -95,7 +195,7 @@ struct LinkAddView: View {
         tagsString: $overallAppState.addState.tagsString,
         allTags: overallAppState.tagState.tags
       )
-      
+
       Section(header: "Options") {
         Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
         Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
@@ -130,9 +230,9 @@ struct LinkAddView: View {
           }
           .buttonStyle(.bordered)
         }
-        
+
         Spacer()
-        
+
         Button(action: {
           save()
         }) {

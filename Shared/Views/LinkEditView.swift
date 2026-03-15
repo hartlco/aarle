@@ -54,115 +54,58 @@ struct LinkEditView: View {
         #endif
     }
 
-    private var form: some View {
-        @Bindable var editState = editState
-        return VStack(alignment: .leading, spacing: 10) {
-            Section(header: "Main Information") {
-                TextField("Link", text: $editState.urlString)
-                    .disableAutocorrection(true)
-                TextField("Title", text: $editState.title)
-            }
-            Section(header: "Description") {
-                TextEditor(text: $editState.description)
-            }
-            if !editState.favoriteTags.isEmpty {
-                Section(header: "Favorites") {
-                    ForEach(editState.favoriteTags) { tag in
-                        Toggle(
-                            tag.name,
-                            isOn: Binding(
-                                get: {
-                                    editState.tagsStringContains(tag)
-                                },
-                                set: { newValue in
-                                    if newValue {
-                                        editState.appendTag(tag)
-                                    } else {
-                                        editState.removeTag(tag)
-                                    }
-                                }
-                            )
-                        )
-                    }
-                }
-            }
-            TagTextField(
-                tagsString: $editState.tagsString,
-                allTags: editState.allTags
-            )
-        }
-    }
-
     private var macOSForm: some View {
         @Bindable var editState = editState
-        return HStack {
-            VStack {
-                Form {
-                    TextField("Link:", text: $editState.urlString)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .disableAutocorrection(true)
-                    TextField("Title:", text: $editState.title)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    TextEditor(text: $editState.description)
-                        .formLabel(Text("Notes:"))
-                        .frame(maxHeight: 400)
-                    TagTextField(
-                        tagsString: $editState.tagsString,
-                        allTags: editState.allTags,
-                        placeholder: "Tags:"
-                    )
-                    if !editState.favoriteTags.isEmpty {
-                        ForEach(editState.favoriteTags) { tag in
-                            Toggle(
-                                tag.name,
-                                isOn: Binding(
-                                    get: {
-                                        editState.tagsStringContains(tag)
-                                    },
-                                    set: { newValue in
-                                        if newValue {
-                                            editState.appendTag(tag)
-                                        } else {
-                                            editState.removeTag(tag)
-                                        }
-                                    }
-                                )
-                            )
+        return ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                BookmarkFormFields(
+                    urlString: $editState.urlString,
+                    title: $editState.title,
+                    description: $editState.description,
+                    tagsString: $editState.tagsString,
+                    allTags: editState.allTags,
+                    favoriteTags: editState.favoriteTags,
+                    isDisabled: false,
+                    onToggleFavorite: { tag, isOn in
+                        if isOn {
+                            editState.appendTag(tag)
+                        } else {
+                            editState.removeTag(tag)
                         }
                     }
-                    if !editState.isEditingArchiveLink {
-                        Toggle("Unread", isOn: $editState.unread)
+                )
+
+                if !editState.isEditingArchiveLink {
+                    Toggle("Unread", isOn: $editState.unread)
+                }
+
+                HStack {
+                    if editState.isEditingArchiveLink {
+                        Button {
+                            Task { await editState.markCurrentAsRead() }
+                        } label: {
+                            Label("Mark as Read", systemImage: "checkmark.circle")
+                        }
                     }
                     Spacer()
-                    HStack {
-                        if editState.isEditingArchiveLink {
-                            Button {
-                                Task { await editState.markCurrentAsRead() }
-                            } label: {
-                                Label("Mark as Read", systemImage: "checkmark.circle")
-                            }
+                    if showCancelButton {
+                        Button("Cancel", role: .cancel) {
+                            editState.closeEditUI()
                         }
-                        Spacer()
-                        if showCancelButton {
-                            Button("Cancel", role: .cancel) {
-                                editState.closeEditUI()
-                            }
-                            .keyboardShortcut(.cancelAction)
-                        }
-                        Button("Save") {
-                            Task { await editState.save() }
-                            if showCancelButton {
-                                editState.closeEditUI()
-                            }
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .keyboardShortcut("s", modifiers: [.command])
+                        .keyboardShortcut(.cancelAction)
                     }
+                    Button("Save") {
+                        Task { await editState.save() }
+                        if showCancelButton {
+                            editState.closeEditUI()
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .keyboardShortcut("s", modifiers: [.command])
                 }
             }
-            Spacer()
+            .padding()
         }
-        .padding()
     }
 #if os(iOS)
     private var iOSForm: some View {
@@ -221,29 +164,3 @@ struct LinkEditView: View {
 #endif
 }
 
-/// https://gist.github.com/marcprux/afd2f80baa5b6d60865182a828e83586
-/// Alignment guide for aligning a text field in a `Form`.
-/// Thanks for Jim Dovey  https://developer.apple.com/forums/thread/126268
-extension HorizontalAlignment {
-    private enum ControlAlignment: AlignmentID {
-        static func defaultValue(in context: ViewDimensions) -> CGFloat {
-            return context[HorizontalAlignment.center]
-        }
-    }
-
-    static let controlAlignment = HorizontalAlignment(ControlAlignment.self)
-}
-
-public extension View {
-    /// Attaches a label to this view for laying out in a `Form`
-    /// - Parameter view: the label view to use
-    /// - Returns: an `HStack` with an alignment guide for placing in a form
-    func formLabel<V: View>(_ view: V) -> some View {
-        HStack {
-            view
-            self
-                .alignmentGuide(.controlAlignment) { $0[.leading] }
-        }
-        .alignmentGuide(.leading) { $0[.controlAlignment] }
-    }
-}
