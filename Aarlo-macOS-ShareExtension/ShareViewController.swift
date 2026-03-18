@@ -13,6 +13,7 @@ import Tag
 @MainActor
 class ShareViewController: NSViewController {
   static let keyChain = Keychain(service: "co.hartl.Aarle")
+    .accessibility(.afterFirstUnlock)
 
   @Environment(TagState.self) var tagState: TagState
 

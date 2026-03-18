@@ -15,6 +15,7 @@ import Navigation
 @main
 struct AarleApp: App {
   static let keyChain = Keychain(service: "co.hartl.Aarle")
+    .accessibility(.afterFirstUnlock)
 
   let pasteboard = DefaultPasteboard()
   @Environment(\.scenePhase) private var scenePhase

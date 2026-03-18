@@ -13,6 +13,7 @@ import Tag
 
 final class ShareViewController: UIViewController {
     static let keyChain = Keychain(service: "co.hartl.Aarle")
+        .accessibility(.afterFirstUnlock)
     
     required init?(coder: NSCoder) {
       super.init(coder: coder)
