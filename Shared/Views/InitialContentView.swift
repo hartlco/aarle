@@ -15,6 +15,9 @@ import Archive
 struct InitialContentView: View {
   @State private var preferredCompactColumn = NavigationSplitViewColumn.sidebar
   @Environment(OverallAppState.self) private var overallAppState
+  #if os(iOS)
+  @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  #endif
 
   var body: some View {
     @Bindable var overallAppState = overallAppState
@@ -225,6 +228,24 @@ struct InitialContentView: View {
     }
     .toolbar {
       #if os(iOS)
+      if horizontalSizeClass == .regular {
+        ToolbarItem(placement: .navigationBarLeading) {
+          Button {
+            withAnimation {
+              if overallAppState.navigationState.columnVisibility == .detailOnly {
+                overallAppState.navigationState.columnVisibility = .automatic
+              } else {
+                overallAppState.navigationState.columnVisibility = .detailOnly
+              }
+            }
+          } label: {
+            Label(
+              overallAppState.navigationState.columnVisibility == .detailOnly ? "Show Sidebar" : "Full Width",
+              systemImage: overallAppState.navigationState.columnVisibility == .detailOnly ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right"
+            )
+          }
+        }
+      }
       ToolbarItem(placement: .navigationBarTrailing) {
         Button {
           Task {
