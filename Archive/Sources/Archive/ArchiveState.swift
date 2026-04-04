@@ -171,7 +171,7 @@ public final class ArchiveState: ArchiveStateProtocol {
                 description: archiveLink.description,
                 tags: archiveLink.tags,
                 private: false,
-                created: Date()
+                created: archiveLink.dateAdded
             )
 
             try? deleteLink(link: archiveLink)
@@ -197,7 +197,7 @@ public final class ArchiveState: ArchiveStateProtocol {
             description: archiveLink.description,
             tags: archiveLink.tags,
             private: false,
-            created: Date()
+            created: archiveLink.dateAdded
         )
 
         // Remove the failed entry
