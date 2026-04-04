@@ -5,6 +5,7 @@
 //  Created by Martin Hartl on 18.04.22.
 //
 
+import CryptoKit
 import Foundation
 import Types
 
@@ -41,9 +42,18 @@ final class ArchiveService: NSObject {
         let readableArticle = try await fetchReadableArticle(for: link.url, endpoint: endpoint)
 
         let fileUUID = UUID()
-        let fileURL = getDocumentsDirectory().appendingPathComponent("\(fileUUID.uuidString).html")
+        let archivesDir = getDocumentsDirectory()
+        let imagesDir = archivesDir.appendingPathComponent("\(fileUUID.uuidString)_images")
+        let fileURL = archivesDir.appendingPathComponent("\(fileUUID.uuidString).html")
+
+        let contentWithLocalImages = await downloadImages(
+            in: readableArticle.content,
+            imagesDirectory: imagesDir,
+            articleUUID: fileUUID.uuidString
+        )
+
         let htmlDocument = makeHTMLDocument(
-            content: readableArticle.content,
+            content: contentWithLocalImages,
             title: readableArticle.title ?? link.title,
             originalURL: link.url
         )
@@ -74,6 +84,14 @@ final class ArchiveService: NSObject {
     func delete(link: ArchiveLink) throws {
         if fileManager.fileExists(atPath: link.dataURL.path) {
             try fileManager.removeItem(at: link.dataURL)
+        }
+        // Remove associated images directory ({uuid}_images)
+        let imagesDirURL = link.dataURL.deletingLastPathComponent()
+            .appendingPathComponent(
+                link.dataURL.deletingPathExtension().lastPathComponent + "_images"
+            )
+        if fileManager.fileExists(atPath: imagesDirURL.path) {
+            try? fileManager.removeItem(at: imagesDirURL)
         }
         var links = userDefaults.archiveLinks
         links.removeAll(where: { $0.id == link.id })
@@ -131,6 +149,153 @@ final class ArchiveService: NSObject {
         let ids = userDefaults.pendingMarkAsReadIds
         userDefaults.pendingMarkAsReadIds = []
         return ids
+    }
+
+    // MARK: - Image downloading
+
+    private static let imgSrcPattern = try! NSRegularExpression(
+        pattern: #"<img\b[^>]*?\bsrc\s*=\s*"([^"]+)"#,
+        options: .caseInsensitive
+    )
+
+    /// Finds all `<img src="...">` URLs in HTML, downloads each image to a
+    /// local directory, and returns the HTML with `src` attributes rewritten
+    /// to point to the local files.
+    private func downloadImages(
+        in html: String,
+        imagesDirectory: URL,
+        articleUUID: String
+    ) async -> String {
+        let matches = Self.imgSrcPattern.matches(
+            in: html,
+            range: NSRange(html.startIndex..., in: html)
+        )
+
+        // Collect unique remote image URLs
+        var urlStrings: [String] = []
+        for match in matches {
+            guard let range = Range(match.range(at: 1), in: html) else { continue }
+            let src = String(html[range])
+            if src.hasPrefix("http://") || src.hasPrefix("https://") {
+                urlStrings.append(src)
+            }
+        }
+        let uniqueURLs = Array(Set(urlStrings))
+        guard !uniqueURLs.isEmpty else { return html }
+
+        // Create images directory
+        try? fileManager.createDirectory(at: imagesDirectory, withIntermediateDirectories: true)
+
+        // Download images concurrently (max 6 at a time)
+        let downloaded = await withTaskGroup(
+            of: (String, String?).self,
+            returning: [String: String].self
+        ) { group in
+            var active = 0
+            var index = 0
+            var mapping: [String: String] = [:]
+
+            for urlString in uniqueURLs {
+                group.addTask { [session] in
+                    await self.downloadSingleImage(
+                        urlString: urlString,
+                        to: imagesDirectory,
+                        session: session
+                    )
+                }
+                active += 1
+                index += 1
+
+                if active >= 6 {
+                    if let (remoteURL, localName) = await group.next() {
+                        if let localName {
+                            mapping[remoteURL] = localName
+                        }
+                        active -= 1
+                    }
+                }
+            }
+
+            for await (remoteURL, localName) in group {
+                if let localName {
+                    mapping[remoteURL] = localName
+                }
+            }
+
+            return mapping
+        }
+
+        guard !downloaded.isEmpty else {
+            // No images were successfully downloaded — remove the empty directory
+            try? fileManager.removeItem(at: imagesDirectory)
+            return html
+        }
+
+        // Rewrite HTML src attributes to local paths
+        var result = html
+        for (remoteURL, localFilename) in downloaded {
+            let localPath = "\(articleUUID)_images/\(localFilename)"
+            result = result.replacingOccurrences(of: remoteURL, with: localPath)
+        }
+
+        return result
+    }
+
+    private nonisolated func downloadSingleImage(
+        urlString: String,
+        to directory: URL,
+        session: URLSession
+    ) async -> (String, String?) {
+        guard let url = URL(string: urlString) else {
+            return (urlString, nil)
+        }
+
+        do {
+            let (data, response) = try await session.data(from: url)
+
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200 ... 299).contains(httpResponse.statusCode),
+                  data.count <= 10_000_000 // Skip images larger than 10 MB
+            else {
+                return (urlString, nil)
+            }
+
+            let hash = SHA256.hash(data: data)
+            let hashString = hash.prefix(16).map { String(format: "%02x", $0) }.joined()
+            let ext = Self.imageExtension(
+                from: httpResponse.mimeType,
+                fallbackURL: url
+            )
+            let filename = "\(hashString).\(ext)"
+            let fileURL = directory.appendingPathComponent(filename)
+
+            if !FileManager.default.fileExists(atPath: fileURL.path) {
+                try data.write(to: fileURL)
+            }
+
+            return (urlString, filename)
+        } catch {
+            return (urlString, nil)
+        }
+    }
+
+    private nonisolated static func imageExtension(from mimeType: String?, fallbackURL: URL) -> String {
+        if let mimeType {
+            switch mimeType.lowercased() {
+            case "image/jpeg": return "jpg"
+            case "image/png": return "png"
+            case "image/gif": return "gif"
+            case "image/webp": return "webp"
+            case "image/svg+xml": return "svg"
+            case "image/avif": return "avif"
+            default: break
+            }
+        }
+        let pathExt = fallbackURL.pathExtension.lowercased()
+        if ["jpg", "jpeg", "png", "gif", "webp", "svg", "avif"].contains(pathExt) {
+            return pathExt
+        }
+        return "jpg"
     }
 
     private func getDocumentsDirectory() -> URL {
