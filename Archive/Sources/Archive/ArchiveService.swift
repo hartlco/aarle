@@ -67,8 +67,8 @@ final class ArchiveService: NSObject {
         let archiveLink = ArchiveLink(
             id: UUID().uuidString,
             originalLinkId: link.id,
-            title: readableArticle.title ?? link.title ?? "",
-            description: readableArticle.excerpt ?? link.description ?? "",
+            title: link.title ?? readableArticle.title ?? "",
+            description: link.description ?? readableArticle.excerpt ?? "",
             content: htmlDocument,
             dataURL: fileURL,
             tags: link.tags,
