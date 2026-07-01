@@ -3,6 +3,7 @@ import Types
 import Observation
 
 @Observable
+@MainActor
 public final class SettingsState: SettingsStateProtocol {
     public var accountType: AccountType = .linkding {
         didSet {

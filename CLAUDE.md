@@ -53,4 +53,4 @@ Four build targets: iOS app, macOS app, iOS Share Extension, macOS Share Extensi
 ## Key Dependencies
 
 - `KeychainAccess` — Secure credential storage
-- `Introspect` / `SwiftUIX` — SwiftUI utilities
+- `Introspect` — SwiftUI utilities

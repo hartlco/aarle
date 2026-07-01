@@ -26,6 +26,7 @@ public enum DetailNavigationDestination: Hashable {
 }
 
 @Observable
+@MainActor
 public final class NavigationState {
     public var selectedListType: ListType? = .all
     public var selectedDetailDestination: DetailNavigationDestination? = nil

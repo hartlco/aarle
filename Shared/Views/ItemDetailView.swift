@@ -45,7 +45,7 @@ struct ItemDetailView: View {
                     .onAppear {
                         webViewData.url = link.url
                     }
-                    .onChange(of: link.url) { newURL in
+                    .onChange(of: link.url) { _, newURL in
                         // Clear navigation history when loading a new link
                         webViewData.clearNavigationHistory()
                         webViewData.url = newURL
@@ -144,7 +144,7 @@ struct ItemDetailView: View {
                 .onAppear {
                     webViewData.url = link.url
                 }
-                .onChange(of: link.url) { newURL in
+                .onChange(of: link.url) { _, newURL in
                     // Clear navigation history when loading a new link
                     webViewData.clearNavigationHistory()
                     webViewData.url = newURL
@@ -203,7 +203,7 @@ struct ItemDetailView: View {
         }
         .toolbar {
             if horizontalSizeClass == .regular {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         withAnimation {
                             if overallAppState.navigationState.columnVisibility == .detailOnly {
@@ -220,7 +220,7 @@ struct ItemDetailView: View {
                     }
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
                         if isUnread {
@@ -237,12 +237,12 @@ struct ItemDetailView: View {
                     )
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 ShareLink(item: link.url) {
                     Label("Share", systemImage: "square.and.arrow.up")
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("Edit") {
                     overallAppState.navigationState.presentedEditLink = link
                 }

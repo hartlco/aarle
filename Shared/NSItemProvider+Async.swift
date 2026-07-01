@@ -7,10 +7,9 @@
 
 import Foundation
 import Types
+import UniformTypeIdentifiers
 
-#if os(iOS)
-    import MobileCoreServices
-#elseif os(macOS)
+#if os(macOS)
     import Cocoa
 #endif
 
@@ -19,28 +18,49 @@ extension NSItemProvider {
         case dataNotConvertible
     }
 
+    @MainActor
     func loadWebsiteInformation() async throws -> WebsiteInformation {
-        try await withCheckedThrowingContinuation { continuation in
-            loadItem(
-                forTypeIdentifier: String(kUTTypePropertyList),
-                options: nil
-            ) { coding, error in
+        let typeIdentifier = UTType.propertyList.identifier
+        guard hasItemConformingToTypeIdentifier(typeIdentifier) else {
+            throw ProviderError.dataNotConvertible
+        }
+
+        return try await withCheckedThrowingContinuation {
+            (continuation: CheckedContinuation<WebsiteInformation, any Error>) in
+            loadDataRepresentation(forTypeIdentifier: typeIdentifier) { (data: Data?, error: (any Error)?) in
                 if let error = error {
-                    return continuation.resume(throwing: error)
+                    continuation.resume(throwing: error)
+                    return
                 }
 
-                if let coding = coding as? NSDictionary,
-                   let model = WebsiteInformation(fromJavaScriptPreprocessing: coding)
-                {
-                    print(coding)
-                    return continuation.resume(returning: model)
+                guard let data else {
+                    continuation.resume(throwing: ProviderError.dataNotConvertible)
+                    return
                 }
 
-                return continuation.resume(throwing: ProviderError.dataNotConvertible)
+                do {
+                    let propertyList = try PropertyListSerialization.propertyList(
+                        from: data,
+                        options: [],
+                        format: nil
+                    )
+                    if let coding = propertyList as? NSDictionary,
+                       let model = WebsiteInformation(fromJavaScriptPreprocessing: coding)
+                    {
+                        continuation.resume(returning: model)
+                        return
+                    }
+                } catch {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                continuation.resume(throwing: ProviderError.dataNotConvertible)
             }
         }
     }
 
+    @MainActor
     func loadURL() async throws -> URL {
         try await withCheckedThrowingContinuation { continuation in
             guard canLoadObject(ofClass: URL.self) else {

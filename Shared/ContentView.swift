@@ -161,8 +161,8 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     Label("Loading More", systemImage: "ellipsis")
-                        .font(.body, weight: .medium)
-                        .foregroundStyle(Color.secondaryLabel)
+                        .font(.body.weight(.medium))
+                        .foregroundStyle(.secondary)
                     Spacer()
                 }.onAppear {
                     guard let lastLink = listState.links(for: listType).last else { return }

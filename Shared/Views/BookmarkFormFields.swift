@@ -22,7 +22,7 @@ struct BookmarkFormFields: View {
         VStack(alignment: .leading, spacing: 16) {
             fieldSection("URL") {
                 TextField("URL", text: $urlString)
-                    .disableAutocorrection(true)
+                    .autocorrectionDisabled()
                     .disabled(isDisabled)
             }
 

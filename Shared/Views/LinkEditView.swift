@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIX
 import Types
 
 struct LinkEditView: View {
@@ -27,13 +26,15 @@ struct LinkEditView: View {
             macOSForm
         #elseif os(iOS)
             iOSForm.toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel", role: .cancel) {
-                        editState.closeEditUI()
-                    }.hidden(!showCancelButton)
+                if showCancelButton {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Cancel", role: .cancel) {
+                            editState.closeEditUI()
+                        }
+                    }
                 }
                 if editState.isEditingArchiveLink {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             Task { await editState.markCurrentAsRead() }
                         } label: {
@@ -41,7 +42,7 @@ struct LinkEditView: View {
                         }
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         Task { await editState.save() }
                         if showCancelButton {
@@ -163,4 +164,3 @@ struct LinkEditView: View {
     }
 #endif
 }
-

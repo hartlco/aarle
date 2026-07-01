@@ -229,7 +229,7 @@ struct InitialContentView: View {
     .toolbar {
       #if os(iOS)
       if horizontalSizeClass == .regular {
-        ToolbarItem(placement: .navigationBarLeading) {
+        ToolbarItem(placement: .topBarLeading) {
           Button {
             withAnimation {
               if overallAppState.navigationState.columnVisibility == .detailOnly {
@@ -246,7 +246,7 @@ struct InitialContentView: View {
           }
         }
       }
-      ToolbarItem(placement: .navigationBarTrailing) {
+      ToolbarItem(placement: .topBarTrailing) {
         Button {
           Task {
             await overallAppState.markAsRead(archiveLink: archiveLink)
@@ -258,7 +258,7 @@ struct InitialContentView: View {
         }
       }
       if !archiveLink.downloadFailed {
-        ToolbarItem(placement: .navigationBarTrailing) {
+        ToolbarItem(placement: .topBarTrailing) {
           NavigationLink(value: DetailNavigationDestination.link(
             Link(
               id: archiveLink.originalLinkId ?? archiveLink.id,
@@ -274,7 +274,7 @@ struct InitialContentView: View {
           }
         }
       }
-      ToolbarItem(placement: .navigationBarTrailing) {
+      ToolbarItem(placement: .topBarTrailing) {
         Button("Edit") {
           overallAppState.navigationState.presentedEditArchiveLink = archiveLink
         }

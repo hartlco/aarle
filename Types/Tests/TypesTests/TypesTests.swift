@@ -2,10 +2,16 @@ import XCTest
 @testable import Types
 
 final class TypesTests: XCTestCase {
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(Types().text, "Hello, World!")
+    func testListTypeScopedTags() {
+        let tag = Tag(name: "swift", occurrences: 2)
+
+        XCTAssertEqual(ListType.all.scopedTags, [])
+        XCTAssertEqual(ListType.tagScoped(tag).scopedTags, ["swift"])
+        XCTAssertEqual(ListType.tags(selectedTag: tag).scopedTags, ["swift"])
+        XCTAssertEqual(ListType.tags(selectedTag: nil).scopedTags, [])
+    }
+
+    func testAccountTypeDefaults() {
+        XCTAssertEqual(AccountType.allCases, [.linkding])
     }
 }

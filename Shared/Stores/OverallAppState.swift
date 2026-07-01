@@ -246,8 +246,8 @@ enum ServiceReachability: Equatable {
   var tagsString: String = ""
   var unread: Bool = false
 
-  var onMarkAsRead: ((ArchiveLink) async -> Void)?
-  var onToggleUnread: ((Types.Link, Bool) async -> Void)?
+  var onMarkAsRead: (@MainActor (ArchiveLink) async -> Void)?
+  var onToggleUnread: (@MainActor (Types.Link, Bool) async -> Void)?
 
   var isEditingArchiveLink: Bool { currentArchiveLink != nil }
 
@@ -344,7 +344,7 @@ enum ServiceReachability: Equatable {
       )
       
       // Update the archive link in local storage
-      await archiveState.updateLink(link: updatedArchiveLink)
+      archiveState.updateLink(link: updatedArchiveLink)
       
       // If there's an originalLinkId, sync changes back to the original link
       if let originalLinkId = currentArchiveLink.originalLinkId,

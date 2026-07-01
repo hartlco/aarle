@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIX
 import Types
 import Settings
 import Navigation
@@ -20,7 +19,7 @@ struct SidebarView: View {
         List(
             selection: $overallAppState.navigationState.selectedListType
         ) {
-            Section(header: "Links") {
+            Section("Links") {
                 NavigationLink(value: ListType.all) {
                     Label("All", systemImage: "tray.2")
                 }
@@ -31,7 +30,7 @@ struct SidebarView: View {
                     Label("Unread", systemImage: "book")
                 }
             }
-            Section(header: "Favorites") {
+            Section("Favorites") {
                 ForEach(overallAppState.tagState.favoriteTags) { tag in
                     NavigationLink(value: ListType.tagScoped(tag)) {
                         Label(tag.name, systemImage: "tag")
@@ -51,7 +50,7 @@ struct SidebarView: View {
         .listStyle(SidebarListStyle())
         #if os(iOS)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         overallAppState.navigationState.showsSettings = true
                     } label: {

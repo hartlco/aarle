@@ -12,18 +12,11 @@ enum DateError: String, Error {
   case invalidDate
 }
 
+@MainActor
 final class LinkdingClient: BookmarkClient {
   let pageSize = 100
 
   let keychain: AarleKeychain
-
-  private let formatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar(identifier: .iso8601)
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    return formatter
-  }()
 
   init(keychain: AarleKeychain) {
     self.keychain = keychain
@@ -44,13 +37,7 @@ final class LinkdingClient: BookmarkClient {
     request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
 
     let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-    let decoder = JSONDecoder()
-    let formatter = DateFormatter()
-    formatter.calendar = Calendar(identifier: .iso8601)
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.timeZone = TimeZone(secondsFromGMT: 0)
-    decoder.dateDecodingStrategy = .custom(date(from:))
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    let decoder = Self.makeLinkDecoder()
     let result = try decoder.decode(LinkdingResult.self, from: data)
 
     return result.results.map(Link.fromLinkdingLink(link:))
@@ -72,9 +59,7 @@ final class LinkdingClient: BookmarkClient {
     request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
 
     let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .custom(date(from:))
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    let decoder = Self.makeLinkDecoder()
     let result = try decoder.decode(LinkdingResult.self, from: data)
     return result.results.map(Link.fromLinkdingLink(link:))
   }
@@ -144,9 +129,7 @@ final class LinkdingClient: BookmarkClient {
     request.addValue("Token " + keychain.secret, forHTTPHeaderField: "Authorization")
 
     let (data, _) = try await URLSession.shared.data(for: request, delegate: nil)
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .custom(date(from:))
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    let decoder = Self.makeLinkDecoder()
     let result = try decoder.decode(LinkdingResult.self, from: data)
     return result.results.map(Link.fromLinkdingLink(link:))
   }
@@ -214,9 +197,23 @@ final class LinkdingClient: BookmarkClient {
     return keychain.endpoint
   }
 
-  private func date(from decoder: Decoder) throws -> Date {
+  nonisolated private static func makeLinkDecoder() -> JSONDecoder {
+    let decoder = JSONDecoder()
+    let dateDecoder: @Sendable (Decoder) throws -> Date = { decoder in
+      try Self.date(from: decoder)
+    }
+    decoder.dateDecodingStrategy = .custom(dateDecoder)
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    return decoder
+  }
+
+  nonisolated private static func date(from decoder: Decoder) throws -> Date {
     let container = try decoder.singleValueContainer()
     let dateStr = try container.decode(String.self)
+    let formatter = DateFormatter()
+    formatter.calendar = Calendar(identifier: .iso8601)
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.timeZone = TimeZone(secondsFromGMT: 0)
 
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
     if let date = formatter.date(from: dateStr) {

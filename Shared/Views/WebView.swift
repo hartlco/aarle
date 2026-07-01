@@ -6,6 +6,7 @@ import UniformTypeIdentifiers
 import WebKit
 import Types
 
+@MainActor
 final class WebViewData: ObservableObject {
     @Published var loading: Bool = false
     @Published var scrollPercent: Float = 0
@@ -53,8 +54,11 @@ final class WebViewData: ObservableObject {
             data.coordinator = context.coordinator
             guard context.coordinator.loadedUrl != data.url else { return }
             nsView.evaluateJavaScript("document.body.remove()")
-            data.observation = nsView.observe(\.estimatedProgress) { view, _ in
-                data.progress = view.estimatedProgress
+            data.observation = nsView.observe(\.estimatedProgress) { [weak data] view, _ in
+                Task { @MainActor [weak data, weak view] in
+                    guard let view else { return }
+                    data?.progress = view.estimatedProgress
+                }
             }
 
             guard context.coordinator.loadedUrl != data.url else { return }
@@ -87,8 +91,11 @@ final class WebViewData: ObservableObject {
             data.coordinator = context.coordinator
             guard context.coordinator.loadedUrl != data.url else { return }
             uiView.evaluateJavaScript("document.body.remove()")
-            data.observation = uiView.observe(\.estimatedProgress) { view, _ in
-                data.progress = view.estimatedProgress
+            data.observation = uiView.observe(\.estimatedProgress) { [weak data] view, _ in
+                Task { @MainActor [weak data, weak view] in
+                    guard let view else { return }
+                    data?.progress = view.estimatedProgress
+                }
             }
 
             guard context.coordinator.loadedUrl != data.url else { return }
@@ -111,6 +118,7 @@ final class WebViewData: ObservableObject {
 
 #endif
 
+@MainActor
 final class WebViewCoordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
     @ObservedObject var data: WebViewData
 
@@ -380,6 +388,7 @@ struct DataWebView: View {
     }
 #endif
 
+@MainActor
 class DataWebViewCoordinator: NSObject, WKNavigationDelegate {
     @Binding var isLoading: Bool
     

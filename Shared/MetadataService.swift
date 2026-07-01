@@ -1,12 +1,12 @@
 import Foundation
 import LinkPresentation
 
-struct WebsiteMetadata {
+struct WebsiteMetadata: Sendable {
     let title: String?
     let description: String?
 }
 
-protocol MetadataServiceProtocol {
+protocol MetadataServiceProtocol: Sendable {
     func fetchMetadata(for url: URL) async throws -> WebsiteMetadata
 }
 
@@ -15,7 +15,7 @@ protocol MetadataServiceProtocol {
 /// For custom endpoint usage, provide the base URL of your mscrap instance (https://github.com/hartlco/mscrap).
 /// The service will automatically append `/api/scrape` to the provided endpoint.
 /// Example: If you provide "https://your-mscrap-instance.com", requests will be made to "https://your-mscrap-instance.com/api/scrape"
-final class MetadataService: MetadataServiceProtocol {
+final class MetadataService: MetadataServiceProtocol, Sendable {
     private let customEndpoint: String?
     
     /// Initialize MetadataService
@@ -92,7 +92,7 @@ final class MetadataService: MetadataServiceProtocol {
     }
 }
 
-enum MetadataError: Error {
+enum MetadataError: Error, Sendable {
     case invalidEndpoint
     case invalidURL
     case networkError
@@ -100,7 +100,7 @@ enum MetadataError: Error {
     case encodingError
 }
 
-private struct MscrapResponse: Codable {
+private struct MscrapResponse: Codable, Sendable {
     let title: String?
     let description: String?
 }

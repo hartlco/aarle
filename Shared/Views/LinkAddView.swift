@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import SwiftUIX
 import Types
 import LinkPresentation
 
 // TODO: Clear state after a link was sucesfuly added
 struct LinkAddView: View {
-  @Environment(\.presentationMode) var presentationMode
+  @Environment(\.dismiss) private var dismiss
 
   var overallAppState: OverallAppState
   var onCancel: (() -> Void)?
@@ -38,7 +37,7 @@ struct LinkAddView: View {
           .padding()
       }
     #else
-      NavigationView {
+      NavigationStack {
         form
           .navigationTitle("Add Link")
       }
@@ -148,9 +147,9 @@ struct LinkAddView: View {
   private var iOSForm: some View {
     @Bindable var overallAppState = overallAppState
     return Form {
-      Section(header: "Main Information") {
+      Section("Main Information") {
         TextField("URL", text: $overallAppState.addState.urlString)
-          .disableAutocorrection(true)
+          .autocorrectionDisabled()
           .disabled(overallAppState.addState.isLoadingMetadata)
           .focused($isEditingURL)
           .onSubmit {
@@ -159,7 +158,7 @@ struct LinkAddView: View {
         TextField("Title", text: $overallAppState.addState.title)
           .disabled(overallAppState.addState.isLoadingMetadata)
       }
-      Section(header: "Description") {
+      Section("Description") {
         TextEditor(text: $overallAppState.addState.description)
           .frame(minHeight: 60)
           .disabled(overallAppState.addState.isLoadingMetadata)
@@ -169,7 +168,7 @@ struct LinkAddView: View {
             }
           }
       }
-      Section(header: "Favorites") {
+      Section("Favorites") {
         ForEach(overallAppState.tagState.favoriteTags) { tag in
           Toggle(
             tag.name,
@@ -196,14 +195,14 @@ struct LinkAddView: View {
         allTags: overallAppState.tagState.tags
       )
 
-      Section(header: "Options") {
+      Section("Options") {
         Toggle("Mark as Unread", isOn: $overallAppState.addState.markAsUnread)
         Toggle("Download for offline reading", isOn: $overallAppState.addState.shouldArchive)
       }
 
       if overallAppState.addState.linkdingReachability != .unknown
           || overallAppState.addState.metadataReachability != .unknown {
-        Section(header: "Services") {
+        Section("Services") {
           if overallAppState.addState.linkdingReachability != .unknown {
             HStack {
               reachabilityIcon(overallAppState.addState.linkdingReachability)
@@ -303,7 +302,7 @@ struct LinkAddView: View {
       await MainActor.run {
         overallAppState.addState.isSaving = false
         overallAppState.addState.onSaveComplete?()
-        presentationMode.dismiss()
+        dismiss()
       }
     }
   }

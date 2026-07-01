@@ -13,6 +13,7 @@ enum ClientError: Error {
 }
 
 #if DEBUG
+    @MainActor
     final class MockClient: BookmarkClient {
         let pageSize = 20
 
@@ -36,6 +37,7 @@ enum ClientError: Error {
     }
 #endif
 
+@MainActor
 final class UniversalClient: BookmarkClient {
     private let linkdingClient: LinkdingClient
 

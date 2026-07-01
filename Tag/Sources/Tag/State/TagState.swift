@@ -3,6 +3,7 @@ import Types
 import Observation
 
 @Observable
+@MainActor
 public final class TagState {
     public var isLoading = false
     public var didLoad = false

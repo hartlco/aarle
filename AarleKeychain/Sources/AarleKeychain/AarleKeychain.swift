@@ -1,7 +1,7 @@
 import KeychainAccess
 import Types
 
-extension Keychain: AarleKeychain {
+extension Keychain: @retroactive AarleKeychain {
     public var accountType: AccountType {
         let serviceString = self[servieKey]
         return AccountType(rawValue: serviceString ?? "") ?? .linkding

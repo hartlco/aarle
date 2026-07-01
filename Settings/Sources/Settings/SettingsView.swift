@@ -27,7 +27,6 @@ public struct UnreadSyncStatus: Sendable {
 }
 
 public struct SettingsView: View {
-    @Environment(\.presentationMode) var presentationMode
     @Bindable var settingsState: SettingsState
     var syncStatus: UnreadSyncStatus?
     var onClearAllDownloads: (() -> Void)?
@@ -50,7 +49,7 @@ public struct SettingsView: View {
             form
                 .padding()
         #else
-            NavigationView {
+            NavigationStack {
                 form
             }
         #endif
@@ -64,12 +63,12 @@ public struct SettingsView: View {
                     "API Key",
                     text: $settingsState.secret
                 )
-                .disableAutocorrection(true)
+                .autocorrectionDisabled()
                 TextField(
                     "API Endpoint",
                     text: $settingsState.endpoint
                 )
-                .disableAutocorrection(true)
+                .autocorrectionDisabled()
                 Text("Enter the endpoint in the following format: https://linkding.example.com/api")
                     .font(.caption)
             }
@@ -82,7 +81,7 @@ public struct SettingsView: View {
                         "Metadata Endpoint (Optional)",
                         text: $settingsState.metadataEndpoint
                     )
-                    .disableAutocorrection(true)
+                    .autocorrectionDisabled()
                     Text("Enter the base URL of your mscrap instance. If set, this will be used instead of native APIs to fetch website metadata including descriptions. Leave empty to use native iOS/macOS metadata fetching.")
                         .font(.caption)
                     Text("Requires mscrap service: https://github.com/hartlco/mscrap")
